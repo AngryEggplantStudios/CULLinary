@@ -17,81 +17,47 @@ public class PlayerController : MonoBehaviour
 
     //height
     [SerializeField] private float jumpHeight;
-    [SerializeField] private float turnSmoothTime;
-
 
     //Cameras
-    [SerializeField] private Transform cam; //Main camera
-    [SerializeField] private GameObject tpCam; //Third Person Camera
-    [SerializeField] private GameObject aimCam; //Aim Camera
+    [SerializeField] private GameObject cam; //Main camera
 
-    private float moveSpeed = 1.0f;
+    //Directions
     private Vector3 direction;
     private Vector3 normalizedDirection;
     private Vector3 moveDirection;
     private Vector3 velocity;
-    private float turnSmoothVelocity;
-    private CharacterController controller;
+
+    //Defaults
+    private float moveSpeed = 1.0f;
     private Animator animator;
-    private bool isAttacking = false;
+    private CharacterController controller;
+    private PlayerAim playerAim;
+    private PlayerRegularAttack playerRegularAttack;
 
     void Start()
     {
-        controller = GetComponent<CharacterController>();
+        playerAim = GetComponent<PlayerAim>();
+        playerRegularAttack = GetComponent<PlayerRegularAttack>();
         animator = GetComponentInChildren<Animator>();
+        controller = GetComponent<CharacterController>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        Aim();
-        Punch();
         Move();
-        
-    }
-
-    private void Punch()
-    {
-        if (Input.GetKey(KeyCode.F))
-        {
-            isAttacking = true;
-            animator.SetBool("isPunch", true);
-        } else
-        {
-            isAttacking = false;
-            animator.SetBool("isPunch", false);
-        }
-    }
-
-    private void Aim()
-    {
-        if (Input.GetMouseButton(1))
-        {
-            isAttacking = true;
-            tpCam.SetActive(false);
-            aimCam.SetActive(true);
-            animator.SetBool("isAim", true);
-            
-        } else
-        {
-            isAttacking = false;
-            tpCam.SetActive(true);
-            aimCam.SetActive(false);
-            animator.SetBool("isAim", false);
-        }
     }
 
     private void Move()
     {
-        //Get input
         float moveVertical = Input.GetAxisRaw("Vertical");
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
 
         direction = new Vector3(moveHorizontal, 0.0f, moveVertical);
         normalizedDirection = direction.normalized;
 
-        float targetAngle = Mathf.Atan2(normalizedDirection.x, normalizedDirection.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-
+        float targetAngle = Mathf.Atan2(normalizedDirection.x, normalizedDirection.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
         moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
 
         isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundMask);
@@ -100,8 +66,8 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = -2f;
         }
-
-        if (isGrounded && !isAttacking)
+        
+        if (isGrounded && !playerAim.GetIsAiming() && !playerRegularAttack.GetIsRegularAttack())
         {
             if (direction == Vector3.zero)
             {
@@ -123,9 +89,6 @@ public class PlayerController : MonoBehaviour
                 Jump();
             }
         }
-
-        //Rotation
-        transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
 
         //Gravity
         velocity.y += gravity * Time.deltaTime;
