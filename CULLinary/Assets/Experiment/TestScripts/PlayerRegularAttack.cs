@@ -5,36 +5,36 @@ using UnityEngine;
 public class PlayerRegularAttack : MonoBehaviour
 {
 
-    private Animator animator;
-    private bool isRegularAttack = false;
-    void Start()
-    {
-        animator = GetComponentInChildren<Animator>();
-    }
+  private Animator animator;
+  private bool isRegularAttack = false;
+  void Start()
+  {
+    animator = GetComponentInChildren<Animator>();
+  }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Punch();
-    }
+  // Update is called once per frame
+  void Update()
+  {
+    Punch();
+  }
 
-    private void Punch()
+  private void Punch()
+  {
+    if (Input.GetKey(KeyCode.F))
     {
-        if (Input.GetKey(KeyCode.F))
-        {
-            isRegularAttack = true;
-            animator.SetBool("isPunch", true);
-        }
-        else
-        {
-            isRegularAttack = false;
-            animator.SetBool("isPunch", false);
-        }
+      isRegularAttack = true;
+      animator.SetBool("isPunch", true);
     }
+    else
+    {
+      isRegularAttack = false;
+      animator.SetBool("isPunch", false);
+    }
+  }
 
-    public bool GetIsRegularAttack()
-    {
-        return this.isRegularAttack;
-    }
+  public bool GetIsRegularAttack()
+  {
+    return this.isRegularAttack;
+  }
 
 }

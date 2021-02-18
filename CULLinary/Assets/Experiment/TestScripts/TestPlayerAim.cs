@@ -2,50 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAim : MonoBehaviour
+public class TestPlayerAim : GenericCharacterBehaviour
 {
-  [SerializeField] private float turnSpeed = 15;
+  [SerializeField] private float turnSpeed;
   [SerializeField] private Camera mainCamera;
   [SerializeField] private Transform cameraLookAt;
   [SerializeField] private GameObject reticle;
   [SerializeField] private Cinemachine.AxisState xAxis;
   [SerializeField] private Cinemachine.AxisState yAxis;
 
+  public GenericCharacterBehaviour[] suppressedBh;
   private Animator animator;
-  private bool isAiming = false;
-
-  private void Start()
+  override public void InvokeBehaviour()
   {
-    animator = GetComponentInChildren<Animator>();
-    mainCamera = Camera.main;
-    Cursor.visible = false;
-    Cursor.lockState = CursorLockMode.Locked;
-  }
-  private void Update()
-  {
-    Aim();
-  }
-
-  private void Aim()
-  {
+    foreach (GenericCharacterBehaviour charBh in suppressedBh)
+    {
+      if (charBh.GetIsInvoked())
+      {
+        return;
+      }
+    }
     if (Input.GetMouseButton(1))
     {
-      isAiming = true;
+      this.SetIsInvoked(true);
       reticle.SetActive(true);
       animator.SetBool("isAim", true);
 
     }
     else
     {
-      isAiming = false;
+      this.SetIsInvoked(false);
       reticle.SetActive(false);
       animator.SetBool("isAim", false);
     }
   }
 
-  public bool GetIsAiming()
+  void Start()
   {
-    return this.isAiming;
+    animator = GetComponentInChildren<Animator>();
   }
 
   private void FixedUpdate()
@@ -56,4 +50,5 @@ public class PlayerAim : MonoBehaviour
     float yawCamera = mainCamera.transform.rotation.eulerAngles.y;
     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0), turnSpeed * Time.deltaTime);
   }
+
 }

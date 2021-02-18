@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class TestPlayerLocomotion : GenericCharacterBehaviour
 {
+  public GenericCharacterBehaviour[] suppressedBh;
   //Speed
   [SerializeField] private float walkSpeed;
   [SerializeField] private float runSpeed;
@@ -31,25 +31,14 @@ public class PlayerController : MonoBehaviour
   private float moveSpeed = 1.0f;
   private Animator animator;
   private CharacterController controller;
-  private PlayerAim playerAim;
-  private PlayerRegularAttack playerRegularAttack;
 
   void Start()
   {
-    playerAim = GetComponent<PlayerAim>();
-    playerRegularAttack = GetComponent<PlayerRegularAttack>();
     animator = GetComponentInChildren<Animator>();
     controller = GetComponent<CharacterController>();
-    Cursor.visible = false;
-    Cursor.lockState = CursorLockMode.Locked;
   }
 
-  void Update()
-  {
-    Move();
-  }
-
-  private void Move()
+  override public void InvokeBehaviour()
   {
     float moveVertical = Input.GetAxisRaw("Vertical");
     float moveHorizontal = Input.GetAxisRaw("Horizontal");
@@ -61,13 +50,23 @@ public class PlayerController : MonoBehaviour
     moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
 
     isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundMask);
+    bool isMoveSuppressed = false;
+
+    foreach (GenericCharacterBehaviour charBh in suppressedBh)
+    {
+      if (charBh.GetIsInvoked())
+      {
+        isMoveSuppressed = true;
+        break;
+      }
+    }
 
     if (isGrounded && velocity.y < 0)
     {
       velocity.y = -2f;
     }
 
-    if (isGrounded && !playerAim.GetIsAiming() && !playerRegularAttack.GetIsRegularAttack())
+    if (isGrounded && !isMoveSuppressed)
     {
       if (direction == Vector3.zero)
       {
@@ -118,4 +117,5 @@ public class PlayerController : MonoBehaviour
   {
     velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
   }
+
 }

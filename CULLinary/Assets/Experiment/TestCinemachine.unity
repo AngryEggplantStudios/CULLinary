@@ -974,6 +974,7 @@ GameObject:
   - component: {fileID: 317851705}
   - component: {fileID: 317851704}
   - component: {fileID: 317851703}
+  - component: {fileID: 317851707}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
@@ -1058,6 +1059,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &317851707
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317851702}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 2.220446e-16, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &440112668
 GameObject:
   m_ObjectHideFlags: 3
@@ -1479,8 +1493,12 @@ GameObject:
   - component: {fileID: 542343120}
   - component: {fileID: 542343119}
   - component: {fileID: 542343121}
+  - component: {fileID: 542343127}
   - component: {fileID: 542343122}
   - component: {fileID: 542343123}
+  - component: {fileID: 542343124}
+  - component: {fileID: 542343125}
+  - component: {fileID: 542343126}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1528,7 +1546,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542343117}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e3badc9ca8bafbba9786924aa678160, type: 3}
   m_Name: 
@@ -1566,7 +1584,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542343117}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6fbc8c77b360f348a48d74a480e3101, type: 3}
   m_Name: 
@@ -1618,11 +1636,118 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542343117}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 976801784952dec4699c8fe8d5fd3ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &542343124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542343117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd598fe09d596c47818b1c31c0fe5f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suppressedBh:
+  - {fileID: 542343127}
+--- !u!114 &542343125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542343117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3feff54ebe514f44bc33c00c99fc376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviours:
+  - {fileID: 542343126}
+  - {fileID: 542343124}
+  - {fileID: 542343127}
+--- !u!114 &542343126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542343117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c29c089c4d52444bbb770a7d4795bca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suppressedBh: []
+  walkSpeed: 10
+  runSpeed: 20
+  isGrounded: 0
+  groundCheckDistance: 0.2
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  gravity: -9.81
+  jumpHeight: 1
+  cam: {fileID: 963194225}
+--- !u!114 &542343127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542343117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5669afb339cde0348826f32b56dcf96a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSpeed: 15
+  mainCamera: {fileID: 963194227}
+  cameraLookAt: {fileID: 1090900062}
+  reticle: {fileID: 1454128668}
+  xAxis:
+    Value: 0
+    m_SpeedMode: 0
+    m_MaxSpeed: 300
+    m_AccelTime: 0.02
+    m_DecelTime: 0.02
+    m_InputAxisName: Mouse X
+    m_InputAxisValue: 0
+    m_InvertInput: 0
+    m_MinValue: -180
+    m_MaxValue: 180
+    m_Wrap: 1
+    m_Recentering:
+      m_enabled: 0
+      m_WaitTime: 0
+      m_RecenteringTime: 0
+      m_LegacyHeadingDefinition: 0
+      m_LegacyVelocityFilterStrength: 0
+  yAxis:
+    Value: 0
+    m_SpeedMode: 0
+    m_MaxSpeed: 300
+    m_AccelTime: 0.02
+    m_DecelTime: 0.02
+    m_InputAxisName: Mouse Y
+    m_InputAxisValue: 0
+    m_InvertInput: 0
+    m_MinValue: -90
+    m_MaxValue: 90
+    m_Wrap: 1
+    m_Recentering:
+      m_enabled: 0
+      m_WaitTime: 0
+      m_RecenteringTime: 0
+      m_LegacyHeadingDefinition: 0
+      m_LegacyVelocityFilterStrength: 0
+  suppressedBh:
+  - {fileID: 542343124}
 --- !u!1 &699198446
 GameObject:
   m_ObjectHideFlags: 3
