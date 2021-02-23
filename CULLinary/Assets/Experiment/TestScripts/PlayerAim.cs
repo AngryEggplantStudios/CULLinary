@@ -34,7 +34,7 @@ public class PlayerAim : MonoBehaviour
             isAiming = true;
             reticle.SetActive(true);
             animator.SetBool("isAim", true);
-
+            animator.SetFloat("AimAngle", Vector3.Angle(Vector3.down, mainCamera.transform.forward)/180);
         }
         else
         {
