@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private PlayerAim playerAim;
     private PlayerRegularAttack playerRegularAttack;
+    private GameObject playerBody;
 
     void Start()
     {
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         playerRegularAttack = GetComponent<PlayerRegularAttack>();
         animator = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
+        playerBody = GameObject.FindWithTag("PlayerBody");
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -93,6 +95,12 @@ public class PlayerController : MonoBehaviour
         //Gravity
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        //Orientation
+        if (direction != Vector3.zero)
+        {
+            playerBody.transform.rotation = Quaternion.Slerp(playerBody.transform.rotation, Quaternion.LookRotation(normalizedDirection), Time.deltaTime * 5);
+        }
     }
     
     private void Idle()

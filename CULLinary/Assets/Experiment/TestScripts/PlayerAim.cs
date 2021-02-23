@@ -20,7 +20,7 @@ public class PlayerAim : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         mainCamera = Camera.main;
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {
@@ -51,10 +51,10 @@ public class PlayerAim : MonoBehaviour
 
     private void FixedUpdate()
     {
-        xAxis.Update(Time.fixedDeltaTime);
+        /* xAxis.Update(Time.fixedDeltaTime);
         yAxis.Update(Time.fixedDeltaTime);
         cameraLookAt.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
         float yawCamera = mainCamera.transform.rotation.eulerAngles.y;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0), turnSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0), turnSpeed * Time.deltaTime); */
     }
 }
