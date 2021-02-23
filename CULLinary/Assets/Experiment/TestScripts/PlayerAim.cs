@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAim : MonoBehaviour
 {
-    [SerializeField] private float turnSpeed = 15;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Transform cameraLookAt;
     [SerializeField] private GameObject reticle;
@@ -19,8 +18,6 @@ public class PlayerAim : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         mainCamera = Camera.main;
-        Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {
