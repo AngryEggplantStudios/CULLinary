@@ -9,15 +9,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
 
-    //Check ground
-    [SerializeField] private bool isGrounded;
-    [SerializeField] private float groundCheckDistance;
-    [SerializeField] private LayerMask groundMask;
-    [SerializeField] private float gravity;
-
-    //height
-    [SerializeField] private float jumpHeight;
-
     //Cameras
     [SerializeField] private GameObject cam; //Main camera
 
@@ -25,10 +16,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     private Vector3 normalizedDirection;
     private Vector3 moveDirection;
-    private Vector3 velocity;
 
     //Defaults
     private float moveSpeed = 1.0f;
+    private float turnSpeed = 10.0f;
     private Animator animator;
     private CharacterController controller;
     private PlayerAim playerAim;
@@ -59,15 +50,8 @@ public class PlayerController : MonoBehaviour
 
         float targetAngle = Mathf.Atan2(normalizedDirection.x, normalizedDirection.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
         moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
-
-        isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundMask);
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
         
-        if (isGrounded && !playerAim.GetIsAiming() && !playerRegularAttack.GetIsRegularAttack())
+        if (!playerAim.GetIsAiming() && !playerRegularAttack.GetIsRegularAttack())
         {
             if (direction == Vector3.zero)
             {
@@ -84,20 +68,12 @@ public class PlayerController : MonoBehaviour
                     Walk();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Space))
+
+            //Orientation
+            if (direction != Vector3.zero)
             {
-                Jump();
+                playerBody.transform.rotation = Quaternion.Slerp(playerBody.transform.rotation, Quaternion.LookRotation(normalizedDirection), Time.deltaTime * turnSpeed);
             }
-        }
-
-        //Gravity
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-
-        //Orientation
-        if (direction != Vector3.zero)
-        {
-            playerBody.transform.rotation = Quaternion.Slerp(playerBody.transform.rotation, Quaternion.LookRotation(normalizedDirection), Time.deltaTime * 5);
         }
     }
     
@@ -118,10 +94,5 @@ public class PlayerController : MonoBehaviour
         moveSpeed = runSpeed;
         animator.SetFloat("Speed", 1.0f, 0.1f, Time.deltaTime);
         controller.Move(moveDirection.normalized * moveSpeed * Time.deltaTime);
-    }
-
-    private void Jump()
-    {
-        velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
     }
 }
