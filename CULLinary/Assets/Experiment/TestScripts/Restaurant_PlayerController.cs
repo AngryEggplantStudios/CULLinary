@@ -6,7 +6,8 @@ public class Restaurant_PlayerController : MonoBehaviour
     public Camera cam;
     public NavMeshAgent agent;
     public float wasdAvoidanceRadius = 0.0f;
-    
+    public bool clickedCooking = false;
+
     bool keyInput = false;
     float defaultRadius;
 
@@ -17,6 +18,13 @@ public class Restaurant_PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Stop spinning at the destination
+        if ((agent.transform.position - agent.destination).magnitude < 0.5f) {
+            agent.isStopped = true;
+        } else {
+            agent.isStopped = false;
+        }
+
         if (Input.GetMouseButton(0))
         {
             agent.radius = defaultRadius;
@@ -28,7 +36,12 @@ public class Restaurant_PlayerController : MonoBehaviour
             {
                 //Move our agent
                 agent.SetDestination(hit.point);
-                Debug.Log("Moving the agent!");
+
+                if (hit.collider != null && hit.collider.gameObject.tag == "CookingStation") {
+                    clickedCooking = true;
+                } else {
+                    clickedCooking = false;
+                }
             }
         }
 
