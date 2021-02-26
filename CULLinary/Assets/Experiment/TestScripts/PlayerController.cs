@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
         //Orientation
         if (direction != Vector3.zero)
         {
-            playerBody.transform.rotation = Quaternion.Slerp(playerBody.transform.rotation, Quaternion.LookRotation(normalizedDirection), Time.deltaTime * 5);
+            playerBody.transform.rotation = Quaternion.Slerp(playerBody.transform.rotation, Quaternion.LookRotation(normalizedDirection), Time.deltaTime * 10);
         }
     }
     
