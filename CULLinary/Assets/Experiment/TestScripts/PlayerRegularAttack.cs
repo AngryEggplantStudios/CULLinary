@@ -20,7 +20,7 @@ public class PlayerRegularAttack : MonoBehaviour
 
     private void Punch()
     {
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetMouseButton(0))
         {
             isRegularAttack = true;
             animator.SetBool("isPunch", true);
