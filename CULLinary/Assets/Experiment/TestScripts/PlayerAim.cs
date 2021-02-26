@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class PlayerAim : MonoBehaviour
 {
-    [SerializeField] private float turnSpeed = 15;
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] private Transform cameraLookAt;
-    [SerializeField] private GameObject reticle;
-
-    [SerializeField] private Cinemachine.AxisState xAxis;
-    [SerializeField] private Cinemachine.AxisState yAxis;
+    [SerializeField] private Texture2D reticle;
 
     private Animator animator;
+    private GameObject playerBody;
     private bool isAiming = false;
+
+    // UI
+    private Vector2 cursorHotspot;
+    private LineRenderer LR;
+
+    // Constants
+    private const float MAX_DIST_CAM_TO_GROUND = 100f;
+    private const float LINE_HEIGHT_FROM_GROUND = 0.2f;
 
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
-        mainCamera = Camera.main;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        playerBody = GameObject.FindWithTag("PlayerBody");
+        cursorHotspot = new Vector2(reticle.width/2, reticle.height/2);
+        LR = GetComponent<LineRenderer>();
+        LR.positionCount = 0;
     }
     private void Update()
     {
@@ -32,15 +36,29 @@ public class PlayerAim : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             isAiming = true;
-            reticle.SetActive(true);
             animator.SetBool("isAim", true);
 
+            Cursor.SetCursor(reticle, cursorHotspot, CursorMode.Auto);
+
+            // Draw line from player to mouse
+            LR.positionCount = 2;
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, MAX_DIST_CAM_TO_GROUND, 1 << LayerMask.NameToLayer("Ground")))
+            {
+                playerBody.transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
+                LR.SetPosition(0, new Vector3(transform.position.x, LINE_HEIGHT_FROM_GROUND, transform.position.z));
+                LR.SetPosition(1, new Vector3(hit.point.x, LINE_HEIGHT_FROM_GROUND, hit.point.z));
+            }
         }
         else
         {
             isAiming = false;
-            reticle.SetActive(false);
             animator.SetBool("isAim", false);
+
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
+            LR.positionCount = 0;
         }
     }
 
@@ -51,10 +69,6 @@ public class PlayerAim : MonoBehaviour
 
     private void FixedUpdate()
     {
-        xAxis.Update(Time.fixedDeltaTime);
-        yAxis.Update(Time.fixedDeltaTime);
-        cameraLookAt.eulerAngles = new Vector3(yAxis.Value, xAxis.Value, 0);
-        float yawCamera = mainCamera.transform.rotation.eulerAngles.y;
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0), turnSpeed * Time.deltaTime);
+
     }
 }
