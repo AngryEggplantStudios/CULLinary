@@ -62,9 +62,9 @@ public class Restaurant_PlayerController : MonoBehaviour
             keyInput = true;
             movementOffset = movementOffset + new Vector3(-5.0f, 0.0f, 0.0f);
         }
-        if (keyInput) {
+        if (keyInput) { // maybe should call an API here to "interact" with the object that was clicked instead (interact with pan / interact with table etc)
             agent.radius = wasdAvoidanceRadius;
-            agent.SetDestination(agent.transform.position + movementOffset);
+            agent.SetDestination(agent.transform.position + movementOffset); // Might have to edit this because if it's an navmesh obstacle (ie. table/chair) then it will override the collider??
         }
     }
 }
