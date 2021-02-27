@@ -1,15 +1,18 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class Restaurant_PlayerController : MonoBehaviour
 {
     public Camera cam;
     public NavMeshAgent agent;
-    public float wasdAvoidanceRadius = 0.0f;
+    public float wasdAvoidanceRadius = 0.86f;
     public bool clickedCooking = false;
 
     bool keyInput = false;
     float defaultRadius;
+
+    bool reachedDest = false;
 
     void Start() {
         defaultRadius = agent.radius;
@@ -19,23 +22,43 @@ public class Restaurant_PlayerController : MonoBehaviour
     void Update()
     {
         // Stop spinning at the destination
-        if ((agent.transform.position - agent.destination).magnitude < 0.5f) {
-            agent.isStopped = true;
+        if ((agent.transform.position - agent.destination).magnitude < 0.9f) {
+            if (reachedDest == true)
+            {
+                // do nothing?
+            } else // already triggered the reachedDest bool
+            {
+                reachedDest = true;
+                agent.isStopped = true;
+            }          
         } else {
-            agent.isStopped = false;
+            // do nothing?
         }
 
         if (Input.GetMouseButton(0))
         {
-            agent.radius = defaultRadius;
+            agent.isStopped = false;
+            reachedDest = false;  // reset values to allow movement
+
+            agent.radius = 0.86f; // defaultRadius;
             keyInput = false;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
             {
-                //Move our agent
-                agent.SetDestination(hit.point);
+                // to check if path is possible 
+                NavMeshPath path = new NavMeshPath();
+                Vector3 targetPos = hit.point;
+                agent.CalculatePath(targetPos, path);
+
+                // Might have to edit this because if it's an navmesh obstacle (ie. table/chair) then it will override the collider??
+                // Check if path is possible before moving the agent (player)
+                if (path.status == NavMeshPathStatus.PathComplete)
+                {
+                    //Move our agent
+                    agent.SetDestination(targetPos);
+                }
 
                 if (hit.collider != null && hit.collider.gameObject.tag == "CookingStation") {
                     clickedCooking = true;
@@ -64,7 +87,20 @@ public class Restaurant_PlayerController : MonoBehaviour
         }
         if (keyInput) { // maybe should call an API here to "interact" with the object that was clicked instead (interact with pan / interact with table etc)
             agent.radius = wasdAvoidanceRadius;
-            agent.SetDestination(agent.transform.position + movementOffset); // Might have to edit this because if it's an navmesh obstacle (ie. table/chair) then it will override the collider??
+            agent.isStopped = false;
+            reachedDest = false; // reset values to allow movement
+
+            // to check if path is possible 
+            NavMeshPath path = new NavMeshPath();
+            Vector3 targetPos = agent.transform.position + movementOffset;
+            agent.CalculatePath(targetPos, path);
+
+            // Might have to edit this because if it's an navmesh obstacle (ie. table/chair) then it will override the collider??
+            // Check if path is possible before moving the agent (player)
+            if (path.status == NavMeshPathStatus.PathComplete)
+            {
+                agent.SetDestination(targetPos);
+            }
         }
     }
 }
