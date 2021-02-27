@@ -62,8 +62,10 @@ public class Restaurant_PlayerController : MonoBehaviour
 
                 if (hit.collider != null && hit.collider.gameObject.tag == "CookingStation") {
                     clickedCooking = true;
+                    Debug.Log("clickedCooking is: " + clickedCooking);
                 } else {
                     clickedCooking = false;
+                    Debug.Log("clickedCooking is: " + clickedCooking);
                 }
             }
         }
