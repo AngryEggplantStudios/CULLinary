@@ -3730,28 +3730,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 4.55, z: 2}
   m_Center: {x: 1, y: 2.275, z: 1}
---- !u!195 &430093167
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149585514045}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 0.86
-  m_Speed: 45
-  m_Acceleration: 999
-  avoidancePriority: 50
-  m_AngularSpeed: 999
-  m_StoppingDistance: 0.5
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
-  m_AutoRepath: 0
-  m_Height: 3.14
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 3
 --- !u!1 &451898729
 GameObject:
   m_ObjectHideFlags: 0
@@ -10065,7 +10043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -32.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10073,7 +10051,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 35.947296
+      value: 19.09
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10131,6 +10109,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: ced9209fb71531e4792a3fd7d0298e24, type: 2}
+    - target: {fileID: 5866666021909216657, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 1
@@ -10197,6 +10179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1158809158}
   agent: {fileID: 1408549529}
+  animator: {fileID: 1408549532}
   wasdAvoidanceRadius: 0
   clickedCooking: 0
 --- !u!95 &1408549531
@@ -10208,7 +10191,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408549527}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 1bc07dbab1f09e090bd12f52a4a5329e, type: 3}
+  m_Avatar: {fileID: 9000000, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
   m_Controller: {fileID: 9100000, guid: d87227d9777021d45a47918d550b0ae1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -10218,6 +10201,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!95 &1408549532 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
+  m_PrefabInstance: {fileID: 1408549525}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1408549533 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
@@ -15356,7 +15344,7 @@ MonoBehaviour:
   cookingEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5866666021483581181}
+      - m_Target: {fileID: 1408549532}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
         m_Mode: 5
@@ -15371,7 +15359,7 @@ MonoBehaviour:
   stopCookingEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5866666021483581181}
+      - m_Target: {fileID: 1408549532}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
         m_Mode: 5
@@ -15383,7 +15371,7 @@ MonoBehaviour:
           m_StringArgument: stopFrying
           m_BoolArgument: 0
         m_CallState: 2
-  playerController: {fileID: 635547659941828358}
+  playerController: {fileID: 1408549530}
   stationLocation: {fileID: 2146380155}
   minimumDistance: 7
 --- !u!64 &2146380157
@@ -15424,7 +15412,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149585514045}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35.9, y: 0.48, z: 18.1}
+  m_LocalPosition: {x: -37.21, y: 1.68, z: 29.7}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 4167280743791016278}
@@ -15459,7 +15447,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635547659941828356}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1bc07dbab1f09e090bd12f52a4a5329e, type: 3}
   m_Controller: {fileID: 9100000, guid: d87227d9777021d45a47918d550b0ae1, type: 2}
   m_CullingMode: 0
@@ -15477,15 +15465,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635547659941828356}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 748d72d27bfa4544e803cb9ed26f7247, type: 3}
+  m_Script: {fileID: 11500000, guid: 268cd5959bd12d746b3c4919c2c53274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 1158809158}
-  agent: {fileID: 430093167}
-  wasdAvoidanceRadius: 0
-  clickedCooking: 0
+  customer: {fileID: 919132149585514045}
 --- !u!4 &763026628901603206
 Transform:
   m_ObjectHideFlags: 0
@@ -15527,7 +15512,6 @@ GameObject:
   m_Component:
   - component: {fileID: 543450653303755911}
   - component: {fileID: 5866666021483581181}
-  - component: {fileID: 430093167}
   - component: {fileID: 919132149585514046}
   m_Layer: 7
   m_Name: Test_Customer
@@ -15545,7 +15529,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 919132149585514045}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.8128544
   m_Height: 3.191642
   m_Direction: 1
@@ -16012,7 +15996,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635547659941828356}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 3.23, y: -0.00000023841858, z: 0}
+  m_LocalPosition: {x: 3.23, y: -0.00000023841858, z: 4.17}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 543450653303755911}
@@ -16269,9 +16253,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149585514045}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1bc07dbab1f09e090bd12f52a4a5329e, type: 3}
-  m_Controller: {fileID: 9100000, guid: ced9209fb71531e4792a3fd7d0298e24, type: 2}
+  m_Controller: {fileID: 9100000, guid: 73d91e9fc6d38894cb6cfd56bc0e582c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -16472,15 +16456,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7816196680083583244, guid: cb0a8d8957c00944f86a4e67df7a10f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.6
+      value: -33.48
       objectReference: {fileID: 0}
     - target: {fileID: 7816196680083583244, guid: cb0a8d8957c00944f86a4e67df7a10f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.56
+      value: 24.56
       objectReference: {fileID: 0}
     - target: {fileID: 7816196680083583244, guid: cb0a8d8957c00944f86a4e67df7a10f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 65
+      value: 55.58
       objectReference: {fileID: 0}
     - target: {fileID: 7816196680083583244, guid: cb0a8d8957c00944f86a4e67df7a10f8, type: 3}
       propertyPath: m_LocalRotation.w

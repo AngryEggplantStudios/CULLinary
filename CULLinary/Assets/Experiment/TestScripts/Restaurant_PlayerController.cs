@@ -6,6 +6,7 @@ public class Restaurant_PlayerController : MonoBehaviour
 {
     public Camera cam;
     public NavMeshAgent agent;
+    public Animator animator;
     public float wasdAvoidanceRadius = 0.86f;
     public bool clickedCooking = false;
 
@@ -29,6 +30,7 @@ public class Restaurant_PlayerController : MonoBehaviour
             } else // already triggered the reachedDest bool
             {
                 reachedDest = true;
+                animator.SetBool("stopWalking", true);
                 agent.isStopped = true;
             }          
         } else {
@@ -57,6 +59,7 @@ public class Restaurant_PlayerController : MonoBehaviour
                 if (path.status == NavMeshPathStatus.PathComplete)
                 {
                     //Move our agent
+                    //animator.SetBool("startWalking", true); // apply animation
                     agent.SetDestination(targetPos);
                 }
 
@@ -73,19 +76,19 @@ public class Restaurant_PlayerController : MonoBehaviour
         Vector3 movementOffset = new Vector3(0.0f, 0.0f, 0.0f);
         if (Input.GetKey(KeyCode.W)) {
             keyInput = true;
-            movementOffset = movementOffset + new Vector3(0.0f, 0.0f, -5.0f);
+            movementOffset = movementOffset + new Vector3(0.0f, 0.0f, -1.0f);
         }
         if (Input.GetKey(KeyCode.A)) {
             keyInput = true;
-            movementOffset = movementOffset + new Vector3(5.0f, 0.0f, 0.0f);
+            movementOffset = movementOffset + new Vector3(1.0f, 0.0f, 0.0f);
         }
         if (Input.GetKey(KeyCode.S)) {
             keyInput = true;
-            movementOffset = movementOffset + new Vector3(0.0f, 0.0f, 5.0f);
+            movementOffset = movementOffset + new Vector3(0.0f, 0.0f, 1.0f);
         }
         if (Input.GetKey(KeyCode.D)) {
             keyInput = true;
-            movementOffset = movementOffset + new Vector3(-5.0f, 0.0f, 0.0f);
+            movementOffset = movementOffset + new Vector3(-1.0f, 0.0f, 0.0f);
         }
         if (keyInput) { // maybe should call an API here to "interact" with the object that was clicked instead (interact with pan / interact with table etc)
             agent.radius = wasdAvoidanceRadius;
@@ -101,6 +104,7 @@ public class Restaurant_PlayerController : MonoBehaviour
             // Check if path is possible before moving the agent (player)
             if (path.status == NavMeshPathStatus.PathComplete)
             {
+                animator.SetBool("startWalking", true);
                 agent.SetDestination(targetPos);
             }
         }
