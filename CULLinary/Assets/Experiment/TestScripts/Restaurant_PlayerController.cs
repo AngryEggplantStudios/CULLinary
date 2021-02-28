@@ -7,8 +7,14 @@ public class Restaurant_PlayerController : MonoBehaviour
     public Camera cam;
     public NavMeshAgent agent;
     public Animator animator;
+    
     public float wasdAvoidanceRadius = 0.86f;
     public bool clickedCooking = false;
+
+    public ServingController controller;
+    public float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
+    public float speed = 5.0f;
 
     bool keyInput = false;
     float defaultRadius;
@@ -22,6 +28,15 @@ public class Restaurant_PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        StartCoroutine("resetKeyInput");
+
+        // Test if this stops the animations
+        if ( !keyInput )
+        {
+            animator.SetBool("walking", false);
+            animator.SetBool("walkingWithFood", false);
+        }
+
         // Stop spinning at the destination
         if ((agent.transform.position - agent.destination).magnitude < 0.9f) {
             if (reachedDest == true)
@@ -30,7 +45,7 @@ public class Restaurant_PlayerController : MonoBehaviour
             } else // already triggered the reachedDest bool
             {
                 reachedDest = true;
-                animator.SetBool("stopWalking", true);
+                
                 agent.isStopped = true;
             }          
         } else {
@@ -49,6 +64,9 @@ public class Restaurant_PlayerController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
+                /*
+                 *  CAN DELETE THIS COMMENTED PART LATER IF WE NOT GONNA USE MOUSE INPUT FOR MOVEMENT
+                 *  
                 // to check if path is possible 
                 NavMeshPath path = new NavMeshPath();
                 Vector3 targetPos = hit.point;
@@ -59,10 +77,14 @@ public class Restaurant_PlayerController : MonoBehaviour
                 if (path.status == NavMeshPathStatus.PathComplete)
                 {
                     //Move our agent
-                    //animator.SetBool("startWalking", true); // apply animation
+                    if (controller.holdingItem == true)
+                        animator.SetBool("walkingWithFood", true); // apply animation accordingly 
+                    else
+                        animator.SetBool("walking", true); 
                     agent.SetDestination(targetPos);
-                }
+                }*/
 
+                // Checking if cooking station is selected
                 if (hit.collider != null && hit.collider.gameObject.tag == "CookingStation") {
                     clickedCooking = true;
                     Debug.Log("clickedCooking is: " + clickedCooking);
@@ -72,7 +94,7 @@ public class Restaurant_PlayerController : MonoBehaviour
                 }
             }
         }
-
+        
         Vector3 movementOffset = new Vector3(0.0f, 0.0f, 0.0f);
         if (Input.GetKey(KeyCode.W)) {
             keyInput = true;
@@ -104,9 +126,21 @@ public class Restaurant_PlayerController : MonoBehaviour
             // Check if path is possible before moving the agent (player)
             if (path.status == NavMeshPathStatus.PathComplete)
             {
-                animator.SetBool("startWalking", true);
+                if (controller.holdingItem == true)
+                    animator.SetBool("walkingWithFood", true); // apply animation accordingly 
+                else
+                    animator.SetBool("walking", true);
+
+                agent.GetComponent<NavMeshAgent>().speed = 20.0f; // Adjust the speed of navmesh agent (player)
                 agent.SetDestination(targetPos);
             }
         }
+    }
+
+    IEnumerator resetKeyInput()
+    {
+        yield return new WaitForSeconds(3);
+
+        keyInput = false;
     }
 }
