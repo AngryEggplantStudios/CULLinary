@@ -8,6 +8,8 @@ public class PlayerAim : MonoBehaviour
 
     private Animator animator;
     private GameObject playerBody;
+    private GameObject meleeWeapon;
+    private GameObject rangedWeapon;
     private bool isAiming = false;
 
     // UI
@@ -22,9 +24,14 @@ public class PlayerAim : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         playerBody = GameObject.FindWithTag("PlayerBody");
+        meleeWeapon = GameObject.FindWithTag("MeleeWeapon");
+        rangedWeapon = GameObject.FindWithTag("RangedWeapon");
+
         cursorHotspot = new Vector2(reticle.width/2, reticle.height/2);
         LR = GetComponent<LineRenderer>();
         LR.positionCount = 0;
+
+        rangedWeapon.SetActive(false);
     }
     private void Update()
     {
@@ -38,6 +45,7 @@ public class PlayerAim : MonoBehaviour
             isAiming = true;
             animator.SetBool("isAim", true);
 
+            // Enable reticle
             Cursor.SetCursor(reticle, cursorHotspot, CursorMode.Auto);
 
             // Draw line from player to mouse
@@ -50,15 +58,25 @@ public class PlayerAim : MonoBehaviour
                 LR.SetPosition(0, new Vector3(transform.position.x, LINE_HEIGHT_FROM_GROUND, transform.position.z));
                 LR.SetPosition(1, new Vector3(hit.point.x, LINE_HEIGHT_FROM_GROUND, hit.point.z));
             }
+
+            // Switch visible weapon
+            rangedWeapon.SetActive(true);
+            meleeWeapon.SetActive(false);
         }
         else
         {
             isAiming = false;
             animator.SetBool("isAim", false);
 
+            // Disable reticle
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
+            // Delete line
             LR.positionCount = 0;
+
+            // Switch visible weapon
+            meleeWeapon.SetActive(true);
+            rangedWeapon.SetActive(false);
         }
     }
 
