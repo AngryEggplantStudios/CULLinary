@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [SerializeField] private float health;
+    [SerializeField] private GameObject loot;
+
+    public void HandleHit(float damage)
     {
-        
+        this.health -= damage;
+        if (this.health <= 0)
+        {   
+            Destroy(gameObject, 0.5f);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDestroy()
     {
-        
+        Debug.Log("Eggplant died uwu");
+        DropLoot();
     }
+
+    private void DropLoot()
+    {
+        Instantiate(loot, transform.position, Quaternion.identity);
+    }
+
+
 }

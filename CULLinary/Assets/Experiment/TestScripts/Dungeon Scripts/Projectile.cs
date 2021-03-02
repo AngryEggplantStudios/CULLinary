@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
 
     private Vector3 projDir;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float damage;
     public void Setup(Vector3 projDir, Vector3 lookVector)
     {
         this.projDir = projDir;
@@ -35,8 +36,11 @@ public class Projectile : MonoBehaviour
         EnemyScript target = collider.GetComponent<EnemyScript>();
         if (target != null)
         {
+            target.HandleHit(damage);
+            Destroy(gameObject);
             Debug.Log("Hit!");
         }
     }
+
 
 }

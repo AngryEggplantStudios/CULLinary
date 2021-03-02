@@ -25,6 +25,7 @@ public class DungeonPlayerAim : MonoBehaviour
     private Vector3 sourcePosition = new Vector3();
     private Vector3 lookVector = new Vector3();
     private bool targetFound = false;
+    private bool canShoot = true;
 
     private void Start()
     {
@@ -73,9 +74,17 @@ public class DungeonPlayerAim : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(1) && targetFound) {
+        if (Input.GetMouseButtonUp(1) && targetFound && canShoot) {
+            canShoot = false;
             OnPlayerShoot?.Invoke(sourcePosition, targetPosition, lookVector);
+            StartCoroutine(DelayFire());
         }
+    }
+
+    private IEnumerator DelayFire()
+    {
+        yield return new WaitForSeconds(1.0f);
+        canShoot = true;
     }
 
     //Cleanup event to provoke
