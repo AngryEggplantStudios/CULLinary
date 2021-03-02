@@ -9,9 +9,17 @@ public class DungeonPlayerMelee : DungeonPlayerAction
     public event PlayerMeleeDelegate OnPlayerMelee;
     public event PlayerStopDelegate OnPlayerStop;
 
+    //Actions prevented
+    private DungeonPlayerRange dungeonPlayerRange;
+    private void Start()
+    {
+        dungeonPlayerRange = GetComponent<DungeonPlayerRange>();
+    }
+
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        bool isRangeInvoked = dungeonPlayerRange ? dungeonPlayerRange.GetIsInvoking() : false;
+        if (Input.GetMouseButton(0) && !isRangeInvoked)
         {
             this.SetIsInvoking(true);
             OnPlayerMelee?.Invoke();

@@ -13,10 +13,18 @@ public class DungeonPlayerRange : DungeonPlayerAction
     [SerializeField] private GameObject meleeWeapon;
     [SerializeField] private GameObject rangedWeapon;
 
-    
+    //Actions prevented
+    private DungeonPlayerMelee dungeonPlayerMelee;
+
+    private void Start()
+    {
+        dungeonPlayerMelee = GetComponent<DungeonPlayerMelee>();
+    }
+
     private void Update()
     {
-        if (Input.GetMouseButton(1))
+        bool isMeleeInvoked = dungeonPlayerMelee ? dungeonPlayerMelee.GetIsInvoking() : false;
+        if (Input.GetMouseButton(1) && !isMeleeInvoked)
         {
             this.SetIsInvoking(true);
             OnPlayerAim?.Invoke();

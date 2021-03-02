@@ -25,12 +25,12 @@ public class DungeonPlayerController : DungeonPlayerAction
 
     //Actions prevented
     private DungeonPlayerRange dungeonPlayerRange;
-    private DungeonPlayerMelee dungeonPlayerAttack;
+    private DungeonPlayerMelee dungeonPlayerMelee;
    
 
     private void Start(){
         dungeonPlayerRange = GetComponent<DungeonPlayerRange>();
-        dungeonPlayerAttack = GetComponent<DungeonPlayerMelee>();
+        dungeonPlayerMelee = GetComponent<DungeonPlayerMelee>();
     }
 
     private void Update()
@@ -45,7 +45,9 @@ public class DungeonPlayerController : DungeonPlayerAction
         float targetAngle = Mathf.Atan2(normalizedDirection.x, normalizedDirection.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
         moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
         
-        if (!dungeonPlayerRange.GetIsInvoking() && !dungeonPlayerAttack.GetIsInvoking())
+        bool isRangeInvoked = dungeonPlayerRange ? dungeonPlayerRange.GetIsInvoking() : false;
+        bool isMeleeInvoked = dungeonPlayerMelee ? dungeonPlayerMelee.GetIsInvoking() : false;
+        if (!isRangeInvoked && !isMeleeInvoked)
         {
             this.SetIsInvoking(true);
 
