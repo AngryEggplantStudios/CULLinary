@@ -11,16 +11,18 @@ public class EnemyScript : MonoBehaviour
     public void HandleHit(float damage)
     {
         this.health -= damage;
+        Debug.Log("Current health: " + health);
         if (this.health <= 0)
         {   
-            Destroy(gameObject, 0.5f);
+            DropLoot();
+            Destroy(gameObject, 0.2f);
         }
     }
 
     private void OnDestroy()
     {
         Debug.Log("Eggplant died uwu");
-        DropLoot();
+        
     }
 
     private void DropLoot()

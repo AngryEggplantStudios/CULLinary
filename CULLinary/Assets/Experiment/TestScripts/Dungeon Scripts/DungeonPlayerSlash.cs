@@ -6,6 +6,7 @@ public class DungeonPlayerSlash : MonoBehaviour
 {
     private Animator animator;
     private DungeonPlayerMelee dungeonPlayerAttack;
+    [SerializeField] private GameObject weapon;
     
     private void Start()
     {
@@ -22,10 +23,12 @@ public class DungeonPlayerSlash : MonoBehaviour
     private void Slash()
     {
         animator.SetBool("isPunch", true);
+        weapon.GetComponent<Collider>().enabled = true;
     }
 
     private void Stop()
     {
+        weapon.GetComponent<Collider>().enabled = false;
         animator.SetBool("isPunch", false);
     }
 
