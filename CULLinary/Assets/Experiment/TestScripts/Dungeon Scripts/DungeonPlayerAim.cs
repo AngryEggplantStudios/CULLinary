@@ -9,6 +9,10 @@ public class DungeonPlayerAim : MonoBehaviour
     private Animator animator;
     private DungeonPlayerRange dungeonPlayerRange;
 
+    //Projectile Class
+    public delegate void PlayerProjectileDelegate(Vector3 sourcePosition, Vector3 endPosition, Vector3 lookVector);
+    public event PlayerProjectileDelegate OnPlayerShoot;
+
     //UI
     private Vector2 cursorHotspot;
     private LineRenderer lineRenderer;
@@ -17,6 +21,10 @@ public class DungeonPlayerAim : MonoBehaviour
     private const float MAX_DIST_CAM_TO_GROUND = 100f;
     private const float LINE_HEIGHT_FROM_GROUND = 0.2f;
 
+    private Vector3 targetPosition = new Vector3();
+    private Vector3 sourcePosition = new Vector3();
+    private Vector3 lookVector = new Vector3();
+    private bool targetFound = false;
 
     private void Start()
     {
@@ -46,13 +54,28 @@ public class DungeonPlayerAim : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, MAX_DIST_CAM_TO_GROUND, 1 << LayerMask.NameToLayer("Ground")))
-            {
-                Debug.Log("Hit!");
-                playerBody.transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
-                lineRenderer.SetPosition(0, new Vector3(transform.position.x, LINE_HEIGHT_FROM_GROUND, transform.position.z));
-                lineRenderer.SetPosition(1, new Vector3(hit.point.x, LINE_HEIGHT_FROM_GROUND, hit.point.z));
-            }
+        {
+            this.lookVector = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            this.sourcePosition = new Vector3(transform.position.x, LINE_HEIGHT_FROM_GROUND, transform.position.z);
+            this.targetPosition = new Vector3(hit.point.x, LINE_HEIGHT_FROM_GROUND, hit.point.z);
 
+            playerBody.transform.LookAt(this.lookVector);
+            lineRenderer.SetPosition(0, this.sourcePosition);
+            lineRenderer.SetPosition(1, this.targetPosition);
+            targetFound = true;
+        }
+        else 
+        {
+            targetFound = false;
+        }
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonUp(1) && targetFound) {
+            OnPlayerShoot?.Invoke(sourcePosition, targetPosition, lookVector);
+        }
     }
 
     //Cleanup event to provoke
