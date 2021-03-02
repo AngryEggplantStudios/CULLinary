@@ -1,33 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class DungeonPlayerSlash : MonoBehaviour
 {
     private Animator animator;
-    private DungeonPlayerAttack dungeonPlayerAttack;
-    private UnityEvent onPlayerAttackEvent; 
+    private DungeonPlayerMelee dungeonPlayerAttack;
     
     private void Start()
     {
         animator = GetComponentInChildren<Animator>();
+
     }
     private void Awake()
     {
-        dungeonPlayerAttack = GetComponent<DungeonPlayerAttack>();
-        onPlayerAttackEvent = dungeonPlayerAttack.GetOnPlayerAttack();
+        dungeonPlayerAttack = GetComponent<DungeonPlayerMelee>();
+        dungeonPlayerAttack.OnPlayerMelee += Slash;
+        dungeonPlayerAttack.OnPlayerStop += Stop;
     }
 
-    public void PlayerSlash()
+    private void Slash()
     {
         animator.SetBool("isPunch", true);
-        onPlayerAttackEvent.RemoveListener(PlayerSlash);
     }
 
-    public void PlayerStop()
+    private void Stop()
     {
         animator.SetBool("isPunch", false);
-        onPlayerAttackEvent.RemoveListener(PlayerStop);
+    }
+
+    private void OnDestroy()
+    {
+        dungeonPlayerAttack.OnPlayerMelee -= Slash;
+        dungeonPlayerAttack.OnPlayerStop -= Stop;
     }
 }

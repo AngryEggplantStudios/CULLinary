@@ -6,12 +6,12 @@ public class DungeonPlayerAction : MonoBehaviour
 {
     private bool isInvoking = false;
 
-    protected void setIsInvoking(bool b) 
+    protected void SetIsInvoking(bool b) 
     {
         this.isInvoking = b;
     }
 
-    protected bool getIsInvoking()
+    public bool GetIsInvoking()
     {
         return this.isInvoking;
     }

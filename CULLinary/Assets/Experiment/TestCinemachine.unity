@@ -1483,14 +1483,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 542343118}
-  - component: {fileID: 542343120}
   - component: {fileID: 542343119}
   - component: {fileID: 542343121}
-  - component: {fileID: 542343122}
-  - component: {fileID: 542343123}
   - component: {fileID: 542343124}
   - component: {fileID: 542343126}
   - component: {fileID: 542343125}
+  - component: {fileID: 542343127}
+  - component: {fileID: 542343123}
+  - component: {fileID: 542343120}
+  - component: {fileID: 542343122}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1541,12 +1542,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 542343117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e3badc9ca8bafbba9786924aa678160, type: 3}
+  m_Script: {fileID: 11500000, guid: c27b8627b3ec09a1db9cacf979881480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 10
-  runSpeed: 20
-  cam: {fileID: 963194225}
+  reticle: {fileID: 2800000, guid: 735a953bcaefa3b47adf5776fbd1996f, type: 3}
+  playerBody: {fileID: 1555453128}
 --- !u!54 &542343121
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1572,10 +1572,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 542343117}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6fbc8c77b360f348a48d74a480e3101, type: 3}
+  m_Script: {fileID: 11500000, guid: dc998970ca9027022a7a343ae0412d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reticle: {fileID: 2800000, guid: 735a953bcaefa3b47adf5776fbd1996f, type: 3}
+  playerBody: {fileID: 1555453128}
 --- !u!114 &542343123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1583,11 +1583,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 542343117}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 976801784952dec4699c8fe8d5fd3ec4, type: 3}
+  m_Script: {fileID: 11500000, guid: 9092d567b68395692aba23ca14bd30a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meleeWeapon: {fileID: 1487632294}
+  rangedWeapon: {fileID: 1990385642}
 --- !u!120 &542343124
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -1698,36 +1700,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 157ae0f66aeae9a7bb62e2899ba2f4e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnPlayerAttack:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 542343126}
-        m_TargetAssemblyTypeName: DungeonPlayerSlash, Assembly-CSharp
-        m_MethodName: PlayerSlash
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnPlayerStopAttack:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 542343126}
-        m_TargetAssemblyTypeName: DungeonPlayerSlash, Assembly-CSharp
-        m_MethodName: PlayerStop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &542343126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1740,6 +1712,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb18d41233de8235f8739095a89789d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &542343127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542343117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e898fc7bc3fb720f1987999783fdaa09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 10
+  runSpeed: 20
+  turnSpeed: 10
+  cam: {fileID: 963194225}
 --- !u!1 &699198446
 GameObject:
   m_ObjectHideFlags: 3
@@ -2543,6 +2531,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454128668}
   m_CullTransparentMesh: 1
+--- !u!1 &1487632294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8f7daf3dfbc913a439e790625d3aa278, type: 3}
+  m_PrefabInstance: {fileID: 228839602}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1497849209
 GameObject:
   m_ObjectHideFlags: 3
@@ -3361,6 +3354,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c94f5a7c564dde249bc151852a9a08d2, type: 3}
+--- !u!1 &1990385642 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
+  m_PrefabInstance: {fileID: 987502108}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2049581418
 GameObject:
   m_ObjectHideFlags: 0
