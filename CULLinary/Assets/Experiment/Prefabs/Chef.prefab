@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &4081890796559956340
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3775322555925057514}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 94b72f6b813d56104b8e40fd588733a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4081890794464694899
 GameObject:
   m_ObjectHideFlags: 0
@@ -19,7 +38,7 @@ GameObject:
   - component: {fileID: 4081890794464694888}
   - component: {fileID: 4081890794464694891}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Chef
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb18d41233de8235f8739095a89789d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon: {fileID: 0}
 --- !u!1 &4081890794887905487
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,7 +331,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -337,25 +357,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4081890794887905487}
   m_Enabled: 1
---- !u!95 &4081890796559956340
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3775322555925057514}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 94b72f6b813d56104b8e40fd588733a2, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &4081890794910137250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -369,43 +370,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.04
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.04
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.04
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00235
+      value: -0.00002
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00132
+      value: -0.00097
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.01152
+      value: 0.00534
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.56730294
+      value: 0.51685166
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.541261
+      value: -0.4937966
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.4250683
+      value: -0.47938645
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.45223975
+      value: -0.50913453
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -417,7 +418,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -84.574
+      value: -96.59
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 734d66a6b75ffcf4b8b6517f8b8d0894, type: 3}
       propertyPath: m_Name
