@@ -27,8 +27,6 @@ public class Projectile : MonoBehaviour
         {
             n += 360;
         }
-        Debug.Log(n);
-
         return n;
     }
 
