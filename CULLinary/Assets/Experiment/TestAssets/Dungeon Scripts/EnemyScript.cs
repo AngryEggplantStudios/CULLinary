@@ -108,6 +108,38 @@ public class EnemyScript : MonoBehaviour
     private void DropLoot()
     {
         Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity);
+
     }
 
 }
