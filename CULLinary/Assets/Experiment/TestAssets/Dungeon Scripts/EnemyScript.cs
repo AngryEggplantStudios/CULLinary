@@ -14,10 +14,12 @@ public class EnemyScript : MonoBehaviour
 
     [SerializeField] private float health;
     [SerializeField] private GameObject loot;
+
     private Vector3 startingPosition;
     private Vector3 roamPosition;
     private float nextShootTime;
     private float dist;
+    private Animator animator;
     private State state;
     private Transform player;
     public float distanceTriggered = 5f;
@@ -35,27 +37,33 @@ public class EnemyScript : MonoBehaviour
     {
         startingPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
     {
+        animator.ResetTrigger("attack");
+
         switch (state)
         {
             default:
             case State.Roaming:
+                animator.SetBool("isMoving", false);
                 FindTarget();
                 break;
             case State.ChaseTarget:
+                animator.SetBool("isMoving", true);
                 transform.LookAt(player);
                 if (Vector3.Distance(transform.position, player.position) < attackRange)
                 {
                     // Target within attack range
-                    Debug.Log("Attack Player");
+                    animator.SetTrigger("attack");
+                    //Debug.Log("Attack Player");
                     // Add new state to attack player
                 }
                 else
                 {
-                    Debug.Log("Chase");
+                    //Debug.Log("Chase");
                     transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
                 }
 
@@ -66,6 +74,7 @@ public class EnemyScript : MonoBehaviour
                 }
                 break;
             case State.GoingBackToStart:
+                animator.SetBool("isMoving", true);
                 float reachedPositionDistance = 1f;
                 transform.LookAt(startingPosition);
                 transform.position = Vector3.MoveTowards(transform.position, startingPosition, moveSpeed * Time.deltaTime);
@@ -108,6 +117,7 @@ public class EnemyScript : MonoBehaviour
     private void DropLoot()
     {
         Instantiate(loot, transform.position, Quaternion.identity);
+        /* Instantiate(loot, transform.position, Quaternion.identity);
         Instantiate(loot, transform.position, Quaternion.identity);
         Instantiate(loot, transform.position, Quaternion.identity);
         Instantiate(loot, transform.position, Quaternion.identity);
@@ -127,8 +137,7 @@ public class EnemyScript : MonoBehaviour
         Instantiate(loot, transform.position, Quaternion.identity);
         Instantiate(loot, transform.position, Quaternion.identity);
         Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
+        Instantiate(loot, transform.position, Quaternion.identity); */
     }
 
 }

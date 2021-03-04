@@ -6,7 +6,7 @@ public class InventoryUI : MonoBehaviour
 {
 	public GameObject inventoryUI;  // The entire UI
 	public Transform inventoryPanel;   // The parent object of all the items
-	private bool isShowing;
+	private bool isShowing = false;
 
 	DungeonPlayerInventory inventory;  
 
@@ -18,6 +18,8 @@ public class InventoryUI : MonoBehaviour
 		inventory.onItemChangedCallback += UpdateUI;
 
 		slots = inventoryPanel.GetComponentsInChildren<InventorySlot>();
+
+		inventoryUI.SetActive(false);
 	}
 
 	void Update()

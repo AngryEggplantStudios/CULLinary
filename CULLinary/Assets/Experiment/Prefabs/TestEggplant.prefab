@@ -44,6 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4acbcb503a83b5f98dbcb351139a5c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 50
+  loot: {fileID: 8663875604269662378, guid: 1a800744b8c18d675bddac5655c0d060, type: 3}
+  distanceTriggered: 5
+  moveSpeed: 2
+  attackRange: 2
+  stopChase: 10
+  drops: {fileID: 0}
 --- !u!1001 &2724194868926299589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57,27 +64,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 65781edef69e87b48b3ac11a4d244923, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 65781edef69e87b48b3ac11a4d244923, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 65781edef69e87b48b3ac11a4d244923, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 65781edef69e87b48b3ac11a4d244923, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.442482
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 65781edef69e87b48b3ac11a4d244923, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 65781edef69e87b48b3ac11a4d244923, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.362173
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 65781edef69e87b48b3ac11a4d244923, type: 3}
       propertyPath: m_LocalRotation.w
