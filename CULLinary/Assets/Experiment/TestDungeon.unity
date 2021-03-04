@@ -895,6 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0caca9b3782195d4ab1cd51c96dbbe20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  space: 20
 --- !u!65 &345206633
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2949,8 +2950,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3775322556320235613, guid: b7ab081291acc12938a62467f6b8295d, type: 3}
   m_PrefabInstance: {fileID: 695656912}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &756564181
-MeshCollider:
+--- !u!65 &756564181
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2959,10 +2960,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5759143756260490386, guid: 8f7daf3dfbc913a439e790625d3aa278, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.5999999, y: 0.02000011, z: 0.20000003}
+  m_Center: {x: 0.00000007361174, y: 0.009999971, z: 0.00000014930964}
 --- !u!224 &759934680 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8073090765205594129, guid: 12b96d0f469ad9c47abe9fb62a346dc5, type: 3}
@@ -10263,7 +10263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: moveSpeed
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: attackRange

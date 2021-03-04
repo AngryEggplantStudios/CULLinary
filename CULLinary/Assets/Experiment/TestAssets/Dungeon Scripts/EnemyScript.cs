@@ -129,17 +129,6 @@ public class EnemyScript : MonoBehaviour
         Instantiate(loot, transform.position, Quaternion.identity);
         Instantiate(loot, transform.position, Quaternion.identity);
         Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-
     }
 
 }
