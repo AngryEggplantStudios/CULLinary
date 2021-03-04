@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     //Cameras
     [SerializeField] private GameObject cam; //Main camera
 
+    //Player Body
+    [SerializeField] private GameObject playerBody;
+
     //Directions
     private Vector3 direction;
     private Vector3 normalizedDirection;
@@ -24,7 +27,6 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private PlayerAim playerAim;
     private PlayerRegularAttack playerRegularAttack;
-    private GameObject playerBody;
 
     void Start()
     {
@@ -32,7 +34,6 @@ public class PlayerController : MonoBehaviour
         playerRegularAttack = GetComponent<PlayerRegularAttack>();
         animator = GetComponentInChildren<Animator>();
         controller = GetComponent<CharacterController>();
-        playerBody = GameObject.FindWithTag("PlayerBody");
     }
 
     void Update()

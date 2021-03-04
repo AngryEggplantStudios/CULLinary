@@ -2193,7 +2193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0f47a435bae66bc8b85446c6642afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 20
 --- !u!1 &1497849209
 GameObject:
   m_ObjectHideFlags: 3
@@ -3216,6 +3216,14 @@ PrefabInstance:
     - target: {fileID: 1610086151934559932, guid: b7ab081291acc12938a62467f6b8295d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.195
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081890794464694889, guid: b7ab081291acc12938a62467f6b8295d, type: 3}
+      propertyPath: runSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081890794464694889, guid: b7ab081291acc12938a62467f6b8295d, type: 3}
+      propertyPath: walkSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4081890794464694891, guid: b7ab081291acc12938a62467f6b8295d, type: 3}
       propertyPath: weapon
