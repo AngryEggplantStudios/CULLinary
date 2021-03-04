@@ -19,7 +19,7 @@ public class PlayerRegularAttack : MonoBehaviour
     }
 
     private void Punch()
-    {
+    {   
         if (Input.GetMouseButton(0))
         {
             isRegularAttack = true;
