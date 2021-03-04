@@ -10154,7 +10154,6 @@ MonoBehaviour:
   agent: {fileID: 1408549529}
   animator: {fileID: 919132148415987653}
   wasdAvoidanceRadius: 0
-  clickedCooking: 0
   controller: {fileID: 47042467}
   turnSmoothTime: 0.1
   speed: 5
@@ -15180,40 +15179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c7ca26cb32100429096fd94384a8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: startFrying
-          m_BoolArgument: 0
-        m_CallState: 2
-  stopCookingEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: stopFrying
-          m_BoolArgument: 0
-        m_CallState: 2
   playerController: {fileID: 1408549530}
   stationLocation: {fileID: 2146380155}
   minimumDistance: 7
-  animator: {fileID: 0}
+  animator: {fileID: 919132148415987653}
 --- !u!64 &2146380157
 MeshCollider:
   m_ObjectHideFlags: 0
