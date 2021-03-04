@@ -5,11 +5,10 @@ using UnityEngine.Events;
 
 public class CookingStation : MonoBehaviour
 {
-    public UnityEvent cookingEvent;
-    public UnityEvent stopCookingEvent;
     public Restaurant_PlayerController playerController;
     public Transform stationLocation;
     public float minimumDistance = 7.0f;
+    public Animator animator;
 
     bool isCooking = false;
 
@@ -21,18 +20,24 @@ public class CookingStation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isCooking && playerController.clickedCooking &&
-            Vector3.Distance(playerController.transform.position,
-                             stationLocation.position) <= minimumDistance) {
-                
-            cookingEvent.Invoke();
-            isCooking = true;
-        } else if (isCooking &&
-                   Vector3.Distance(playerController.transform.position,
-                                    stationLocation.position) > minimumDistance) {
-
-            stopCookingEvent.Invoke();
+        if (isCooking && !PlayerWithinRange())
+        {
             isCooking = false;
         }
+
+        animator.SetBool("isCooking", isCooking);
+    }
+
+    public void Cook()
+    {
+        if (PlayerWithinRange()) {
+            isCooking = true;
+        }
+    }
+
+    bool PlayerWithinRange()
+    {
+        return Vector3.Distance(playerController.transform.position,
+                                stationLocation.position) <= minimumDistance;
     }
 }
