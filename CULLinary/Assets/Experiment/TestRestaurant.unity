@@ -10152,31 +10152,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1158809158}
   agent: {fileID: 1408549529}
-  animator: {fileID: 5866666020507516676}
+  animator: {fileID: 919132148415987653}
   wasdAvoidanceRadius: 0
-  clickedCooking: 0
   controller: {fileID: 47042467}
   turnSmoothTime: 0.1
   speed: 5
---- !u!95 &1408549531
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635547660920530685}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
-  m_Controller: {fileID: 9100000, guid: d87227d9777021d45a47918d550b0ae1, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1415024304
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15199,39 +15179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c7ca26cb32100429096fd94384a8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5866666020507516676}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: startFrying
-          m_BoolArgument: 0
-        m_CallState: 2
-  stopCookingEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5866666020507516676}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: stopFrying
-          m_BoolArgument: 0
-        m_CallState: 2
   playerController: {fileID: 1408549530}
   stationLocation: {fileID: 2146380155}
   minimumDistance: 7
+  animator: {fileID: 919132148415987653}
 --- !u!64 &2146380157
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -15430,7 +15381,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4167280742611241135}
   - component: {fileID: 1630794974104788935}
-  - component: {fileID: 1408549531}
   - component: {fileID: 1408549530}
   m_Layer: 7
   m_Name: Body
@@ -15515,9 +15465,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652333417854}
-  - component: {fileID: 5866666020507516676}
   - component: {fileID: 1408549528}
   - component: {fileID: 1408549529}
+  - component: {fileID: 919132148415987653}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -15525,6 +15475,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &919132148415987653
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148415987652}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
+  m_Controller: {fileID: 9100000, guid: ced9209fb71531e4792a3fd7d0298e24, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &919132148464951181 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6592548615729770505, guid: 89b495a7b9439094dbe583af28679a22, type: 3}
@@ -16984,25 +16953,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &5866666020507516676
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148415987652}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f4991595bf65e6df4a57bf25605c47ed, type: 3}
-  m_Controller: {fileID: 9100000, guid: ced9209fb71531e4792a3fd7d0298e24, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &5866666021483581181
 Animator:
   serializedVersion: 3
