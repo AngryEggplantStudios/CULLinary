@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class DungeonPlayerInventory : MonoBehaviour
 {
-    private bool showInventory;
-    private List<Item> itemList = new List<Item>();
     public static DungeonPlayerInventory instance;
     private Loot currentCollidedItem; 
-    public int space = 20;	// Amount of item spaces
 
-    public delegate void OnItemChanged();
-    public OnItemChanged onItemChangedCallback;
+    public delegate void OnItemChanged(Item item);
+    public OnItemChanged OnItemAdd;
+    public OnItemChanged OnItemRemove;
 
     void Awake()
     {
@@ -20,43 +18,21 @@ public class DungeonPlayerInventory : MonoBehaviour
 
     public void AddItemIntoInventory(Loot loot)
     {
-        itemList.Add(loot.getItem());
+        Item item = loot.getItem();
         loot.pickUp();
         currentCollidedItem = null;
-        if (onItemChangedCallback != null)
-            onItemChangedCallback.Invoke();
+        OnItemAdd?.Invoke(item);
     }
 
     public void Remove(Item item)
     {
-        itemList.Remove(item);
-
-        if (onItemChangedCallback != null)
-            onItemChangedCallback.Invoke();
+        OnItemRemove?.Invoke(item);
     }
 
-    public List<Item> getItems()
-    {
-        return this.itemList;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F) && currentCollidedItem != null)
         {
-            if (itemList.Count >= space)
-            {
-                Debug.Log("Not enough room.");
-                return;
-            }
-
             AddItemIntoInventory(currentCollidedItem);
         }
     }

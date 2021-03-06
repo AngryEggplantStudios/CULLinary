@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-	public GameObject inventoryUI;  // The entire UI
-	public Transform inventoryPanel;   // The parent object of all the items
+	[SerializeField] private GameObject inventoryUI;  // The entire UI
+	[SerializeField] private Transform inventoryPanel;   // The parent object of all the items
 	private bool isShowing = false;
 
-	DungeonPlayerInventory inventory;  
+	private DungeonPlayerInventory inventory;
 
-	InventorySlot[] slots;
+	private InventorySlot[] slots;
+	private List<Item> itemList = new List<Item>(); // Inventory
+	[SerializeField] private int inventoryLimit = 20;
 
 	void Start()
 	{
 		inventory = DungeonPlayerInventory.instance;
-		inventory.onItemChangedCallback += UpdateUI;
-
+		inventory.OnItemAdd += AddItem;
+		inventory.OnItemRemove += RemoveItem;
 		slots = inventoryPanel.GetComponentsInChildren<InventorySlot>();
-
 		inventoryUI.SetActive(false);
 	}
 
-	void Update()
+
+	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.I))
 		{
@@ -31,16 +33,41 @@ public class InventoryUI : MonoBehaviour
 		}
 	}
 
+	private void AddItem(Item item)
+	{
+		if (itemList.Count < inventoryLimit)
+		{
+					itemList.Add(item);
+			UpdateUI();
+		}
+        else
+        {
+            Debug.Log("Not enough room");
+        }
+
+	}
+
+	private void RemoveItem(Item item)
+	{
+		itemList.Remove(item);
+		UpdateUI();
+	}
+
+	private void OnDestroy()
+	{
+		inventory.OnItemAdd -= AddItem;
+		inventory.OnItemRemove -= RemoveItem;
+	}
+
 	// Update the inventory UI by:
 	//		- Adding items
 	//		- Clearing empty slots
 	// This is called using a delegate on the Inventory.
-	public void UpdateUI()
+	private void UpdateUI()
 	{
 
 		for (int i = 0; i < slots.Length; i++)
 		{
-			List < Item > itemList = inventory.getItems();
 			if (i < itemList.Count)
 			{
 				slots[i].AddItem(itemList[i]);
