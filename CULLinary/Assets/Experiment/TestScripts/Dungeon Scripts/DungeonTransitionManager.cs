@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class DungeonTransitionManager : MonoBehaviour
 {
-    [SerializeField] private int sceneIndex;
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerManager;
 
-    
-
-    
+    private void OnEnable()
+    {
+    }
 }

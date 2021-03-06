@@ -6,14 +6,23 @@ using UnityEngine.SceneManagement;
 public class TransitionPortal : MonoBehaviour
 {
     [SerializeField] private int sceneIndex;
+    [SerializeField] private GameObject playerManagerObj;
     
     private bool isTriggered;
+    private PlayerManager playerManager;
+
+    private void Start()
+    {
+        playerManager = playerManagerObj.GetComponent<PlayerManager>();
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && isTriggered)
         {
+
             Debug.Log("Player can transit");
+            playerManager.SaveData();
             LoadScene();
         }
     }

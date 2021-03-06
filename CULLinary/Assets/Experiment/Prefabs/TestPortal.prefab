@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 2062472786286145479}
   - component: {fileID: 2062472786286145478}
   - component: {fileID: 2062472786286145477}
-  - component: {fileID: 2062472786286145528}
   m_Layer: 0
-  m_Name: Transition
+  m_Name: TestPortal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,20 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneIndex: 1
---- !u!114 &2062472786286145528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2062472786286145476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84bba5b15f5aab1a8bbfa1001e09e34b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneIndex: 0
-  player: {fileID: 0}
+  transitionManager: {fileID: 0}
 --- !u!1 &3731866784430530234
 GameObject:
   m_ObjectHideFlags: 0
