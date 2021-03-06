@@ -5,13 +5,19 @@ using UnityEngine;
 public class Loot : MonoBehaviour
 {
     [SerializeField] private Item itemForLoot;
+    [SerializeField] private int itemNo;
 
-    public Item getItem()
+    public Item GetItem()
     {
         return itemForLoot;
     }
 
-    public void pickUp()
+    public int GetItemNo()
+    {
+        return itemNo;
+    }
+
+    public void PickUp()
     {
         Destroy(gameObject);
     }

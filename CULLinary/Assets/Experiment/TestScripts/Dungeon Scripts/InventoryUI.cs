@@ -37,7 +37,7 @@ public class InventoryUI : MonoBehaviour
 	{
 		if (itemList.Count < inventoryLimit)
 		{
-					itemList.Add(item);
+			itemList.Add(item);
 			UpdateUI();
 		}
         else
@@ -52,6 +52,11 @@ public class InventoryUI : MonoBehaviour
 		itemList.Remove(item);
 		UpdateUI();
 	}
+
+    public List<Item> GetItemList()
+    {
+        return itemList;
+    }
 
 	private void OnDestroy()
 	{
