@@ -10,7 +10,7 @@ public class DungeonPlayerSlash : MonoBehaviour
     
     private void Start()
     {
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
 
     }
     private void Awake()
@@ -23,7 +23,6 @@ public class DungeonPlayerSlash : MonoBehaviour
     private void Slash()
     {
         animator.SetBool("isPunch", true);
-        weapon.GetComponent<Collider>().enabled = true;
     }
 
     private void Stop()
@@ -36,5 +35,15 @@ public class DungeonPlayerSlash : MonoBehaviour
     {
         dungeonPlayerAttack.OnPlayerMelee -= Slash;
         dungeonPlayerAttack.OnPlayerStop -= Stop;
+    }
+
+    public void ToggleColliderOn()
+    {
+        weapon.GetComponent<Collider>().enabled = true;
+    }
+
+    public void ToggleColliderOff()
+    {
+        weapon.GetComponent<Collider>().enabled = false;
     }
 }

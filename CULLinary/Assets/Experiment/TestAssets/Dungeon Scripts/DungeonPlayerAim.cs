@@ -29,7 +29,7 @@ public class DungeonPlayerAim : MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
         lineRenderer = GetComponent<LineRenderer>();
         
         cursorHotspot = new Vector2(reticle.width/2, reticle.height/2);

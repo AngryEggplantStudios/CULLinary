@@ -13,7 +13,7 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
 
     private void Start()
     {
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
     }
 
