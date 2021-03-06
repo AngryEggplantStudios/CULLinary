@@ -8,7 +8,7 @@ public class Melee : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         EnemyScript target = collider.GetComponent<EnemyScript>();
-        if (target != null) 
+        if (target != null)
         {
             target.HandleHit(damage);
             Debug.Log("Melee!");
