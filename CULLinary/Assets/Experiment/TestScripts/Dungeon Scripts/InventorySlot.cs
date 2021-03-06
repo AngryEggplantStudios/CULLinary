@@ -8,10 +8,10 @@ using UnityEngine.EventSystems;
 public class InventorySlot : MonoBehaviour
 {
 
-	public Image icon;
-	public Button removeButton;
+	[SerializeField] private Image icon;
+	[SerializeField] private Button removeButton;
 
-	Item item;  // Current item in the slot
+	private Item item;  // Current item in the slot
 
 	// Add item to the slot
 	public void AddItem(Item newItem)
@@ -26,7 +26,6 @@ public class InventorySlot : MonoBehaviour
 	public void ClearSlot()
 	{
 		item = null;
-
 		icon.sprite = null;
 		icon.enabled = false;
 		removeButton.interactable = false;

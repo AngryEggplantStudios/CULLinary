@@ -13,7 +13,35 @@ public class EnemyScript : MonoBehaviour
     }
 
     [SerializeField] private float health;
-    [SerializeField] private GameObject loot;
+    [SerializeField] private float distanceTriggered = 5f;
+    [SerializeField] private float moveSpeed = 2.0f;
+    [SerializeField] private float attackRange = 2.0f;
+    [SerializeField] private float stopChase = 10f;
+
+    
+    [System.Serializable] private class LootTuple
+    {
+        [SerializeField] private GameObject loot;
+        [SerializeField] private int ratio;
+
+        public LootTuple(GameObject loot, int ratio)
+        {
+            this.loot = loot;
+            this.ratio = ratio;
+        }
+
+        public GameObject GetLoot()
+        {
+            return loot;
+        }
+
+        public int GetRatio()
+        {
+            return ratio;
+        }
+    }
+
+    [SerializeField] private LootTuple[] lootTuples;
 
     private Vector3 startingPosition;
     private Vector3 roamPosition;
@@ -22,11 +50,8 @@ public class EnemyScript : MonoBehaviour
     private Animator animator;
     private State state;
     private Transform player;
-    public float distanceTriggered = 5f;
-    public float moveSpeed;
-    public float attackRange;
-    public float stopChase = 10f;
-    public GameObject drops;
+    private GameObject lootDropped;
+
 
     private void Awake()
     {
@@ -38,6 +63,29 @@ public class EnemyScript : MonoBehaviour
         startingPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
+        SetupLoot();
+    }
+
+    private void SetupLoot()
+    {
+        int currentWeight = 0;
+        Dictionary<GameObject, int> dropTuples = new Dictionary<GameObject, int>();
+        foreach (var loot in lootTuples)
+        {
+            currentWeight += loot.GetRatio();
+            dropTuples.Add(loot.GetLoot(), currentWeight);
+        }
+        int randomWeight = Random.Range(1, currentWeight + 1);
+        foreach (var tpl in dropTuples)
+        {
+            if (randomWeight <= tpl.Value)
+            {
+                lootDropped = tpl.Key;
+                return;
+            }
+        }
+        lootDropped = lootTuples[0].GetLoot();
+        return;
     }
 
     private void Update()
@@ -108,36 +156,9 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        Debug.Log("Eggplant died uwu");
-
-    }
-
     private void DropLoot()
     {
-        Instantiate(loot, transform.position, Quaternion.identity);
-        /* Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity);
-        Instantiate(loot, transform.position, Quaternion.identity); */
+        Instantiate(lootDropped, transform.position, Quaternion.identity);
     }
 
 }
