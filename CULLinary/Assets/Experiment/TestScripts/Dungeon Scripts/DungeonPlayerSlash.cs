@@ -21,7 +21,7 @@ public class DungeonPlayerSlash : MonoBehaviour
 
     private void Slash()
     {
-        animator.SetTrigger("melee");
+        animator.SetBool("isMelee", true);
     }
 
     private void OnDestroy()
@@ -36,7 +36,7 @@ public class DungeonPlayerSlash : MonoBehaviour
 
     public void AttackEnd()
     {
-        animator.ResetTrigger("melee");
+        animator.SetBool("isMelee", false);
         weapon.GetComponent<Collider>().enabled = false;
         dungeonPlayerAttack.StopInvoking();
     }
