@@ -17,33 +17,27 @@ public class DungeonPlayerSlash : MonoBehaviour
     {
         dungeonPlayerAttack = GetComponent<DungeonPlayerMelee>();
         dungeonPlayerAttack.OnPlayerMelee += Slash;
-        dungeonPlayerAttack.OnPlayerStop += Stop;
     }
 
     private void Slash()
     {
-        animator.SetBool("isPunch", true);
-    }
-
-    private void Stop()
-    {
-        weapon.GetComponent<Collider>().enabled = false;
-        animator.SetBool("isPunch", false);
+        animator.SetTrigger("melee");
     }
 
     private void OnDestroy()
     {
         dungeonPlayerAttack.OnPlayerMelee -= Slash;
-        dungeonPlayerAttack.OnPlayerStop -= Stop;
     }
 
-    public void ToggleColliderOn()
+    public void AttackStart()
     {
         weapon.GetComponent<Collider>().enabled = true;
     }
 
-    public void ToggleColliderOff()
+    public void AttackEnd()
     {
+        animator.ResetTrigger("melee");
         weapon.GetComponent<Collider>().enabled = false;
+        dungeonPlayerAttack.StopInvoking();
     }
 }
