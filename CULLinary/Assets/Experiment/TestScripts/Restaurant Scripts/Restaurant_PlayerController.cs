@@ -9,7 +9,6 @@ public class Restaurant_PlayerController : MonoBehaviour
     public Animator animator;
     
     public float wasdAvoidanceRadius = 0.86f;
-    public bool clickedCooking = false;
 
     public ServingController controller;
     public float turnSmoothTime = 0.1f;
@@ -29,13 +28,6 @@ public class Restaurant_PlayerController : MonoBehaviour
     void Update()
     {
         StartCoroutine("resetKeyInput");
-
-        // Test if this stops the animations
-        if ( !keyInput )
-        {
-            animator.SetBool("walking", false);
-            animator.SetBool("walkingWithFood", false);
-        }
 
         // Stop spinning at the destination
         if ((agent.transform.position - agent.destination).magnitude < 0.9f) {
@@ -86,11 +78,7 @@ public class Restaurant_PlayerController : MonoBehaviour
 
                 // Checking if cooking station is selected
                 if (hit.collider != null && hit.collider.gameObject.tag == "CookingStation") {
-                    clickedCooking = true;
-                    Debug.Log("clickedCooking is: " + clickedCooking);
-                } else {
-                    clickedCooking = false;
-                    Debug.Log("clickedCooking is: " + clickedCooking);
+                    hit.collider.gameObject.GetComponent<CookingStation>().Cook();
                 }
             }
         }
@@ -126,15 +114,14 @@ public class Restaurant_PlayerController : MonoBehaviour
             // Check if path is possible before moving the agent (player)
             if (path.status == NavMeshPathStatus.PathComplete)
             {
-                if (controller.holdingItem == true)
-                    animator.SetBool("walkingWithFood", true); // apply animation accordingly 
-                else
-                    animator.SetBool("walking", true);
-
                 agent.GetComponent<NavMeshAgent>().speed = 20.0f; // Adjust the speed of navmesh agent (player)
                 agent.SetDestination(targetPos);
             }
         }
+        
+        // Handle animations
+        animator.SetBool("isWalking", movementOffset != Vector3.zero);
+        animator.SetBool("hasFood", controller.holdingItem);
     }
 
     IEnumerator resetKeyInput()
