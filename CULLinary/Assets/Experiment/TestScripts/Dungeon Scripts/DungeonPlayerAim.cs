@@ -27,6 +27,10 @@ public class DungeonPlayerAim : MonoBehaviour
     private bool targetFound = false;
     private bool canShoot = true;
 
+    //Audio
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip attackSound;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -76,6 +80,8 @@ public class DungeonPlayerAim : MonoBehaviour
         if (Input.GetMouseButtonUp(1) && targetFound && canShoot) {
             canShoot = false;
             OnPlayerShoot?.Invoke(sourcePosition, targetPosition, lookVector);
+            audioSource.clip = attackSound;
+            audioSource.Play();
             StartCoroutine(DelayFire());
         }
     }
