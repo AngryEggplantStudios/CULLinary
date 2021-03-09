@@ -28,9 +28,14 @@ public class InventoryUI : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.I))
 		{
-			isShowing = !isShowing;
-			inventoryUI.SetActive(isShowing);
+			ToggleVisiblity();
 		}
+	}
+
+	public void ToggleVisiblity()
+	{
+		isShowing = !isShowing;
+		inventoryUI.SetActive(isShowing);
 	}
 
 	private void AddItem(Item item)
