@@ -5,12 +5,13 @@ using UnityEngine.Events;
 
 public class CookingStation : MonoBehaviour
 {
-    public Restaurant_PlayerController playerController;
+    public Restaurant_newPlayerController playerController;
+    public CookingProgressbar cookingProgressBar;
     public Transform stationLocation;
     public float minimumDistance = 7.0f;
     public Animator animator;
 
-    bool isCooking = false;
+    public bool isCooking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,13 +26,14 @@ public class CookingStation : MonoBehaviour
             isCooking = false;
         }
 
-        animator.SetBool("isCooking", isCooking);
+        animator.SetBool("isCooking", isCooking);    
     }
 
     public void Cook()
     {
         if (PlayerWithinRange()) {
             isCooking = true;
+            cookingProgressBar.cookingNow = true;
         }
     }
 
