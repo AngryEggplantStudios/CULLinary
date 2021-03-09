@@ -19,6 +19,8 @@ public class UiButtonClose : MonoBehaviour
             {
                 ui.SetActive(false);
             }
+        } else if (Input.GetKeyDown(KeyCode.Escape)) {
+            ui.SetActive(false);
         }
     }
 }
