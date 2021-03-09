@@ -10,16 +10,16 @@ public class DungeonPlayerSlash : MonoBehaviour
     [SerializeField] private GameObject weapon;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] attackSounds;
-    
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
 
-    }
+    private Collider weaponCollider;
+    
     private void Awake()
     {
         dungeonPlayerAttack = GetComponent<DungeonPlayerMelee>();
         dungeonPlayerAttack.OnPlayerMelee += Slash;
+        weaponCollider = weapon.GetComponent<Collider>();
+        animator = GetComponent<Animator>();
+        weaponCollider.enabled = false;
     }
 
     private void Slash()
@@ -34,7 +34,7 @@ public class DungeonPlayerSlash : MonoBehaviour
 
     public void AttackStart()
     {
-        weapon.GetComponent<Collider>().enabled = true;
+        weaponCollider.enabled = true;
         audioSource.clip = attackSounds[Random.Range(0, attackSounds.Length)];
         audioSource.Play();
     }
@@ -42,7 +42,7 @@ public class DungeonPlayerSlash : MonoBehaviour
     public void AttackEnd()
     {
         animator.SetBool("isMelee", false);
-        weapon.GetComponent<Collider>().enabled = false;
+        weaponCollider.enabled = false;
         dungeonPlayerAttack.StopInvoking();
     }
 }

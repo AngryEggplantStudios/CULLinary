@@ -6853,6 +6853,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3217400702491024725, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217400702491024725, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4757314950517091208, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
       propertyPath: m_Name
       value: EnemyEggplant
@@ -6900,6 +6908,18 @@ PrefabInstance:
     - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6978228103297125724, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
+      propertyPath: onDamageColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6978228103297125724, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
+      propertyPath: onDamageColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6978228103297125724, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
+      propertyPath: onDamageColor.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
@@ -11863,6 +11883,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reticle: {fileID: 2800000, guid: 735a953bcaefa3b47adf5776fbd1996f, type: 3}
   playerBody: {fileID: 3775322555533504058}
+  audioSource: {fileID: 846977067}
+  attackSound: {fileID: 8300000, guid: 02cef16b0cd5ed443ad059ac457f9d91, type: 3}
 --- !u!54 &4081890795160318911
 Rigidbody:
   m_ObjectHideFlags: 0
