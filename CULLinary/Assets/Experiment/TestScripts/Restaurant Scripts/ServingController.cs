@@ -30,17 +30,19 @@ public class ServingController : MonoBehaviour
                 if (hit.collider != null && hit.collider.gameObject.tag == "FoodToServe")
                 {
                     string selectedDish = hit.collider.gameObject.name;
-                    if (selectedDish == ("plateDinner") && !holdingItem)
+                    if (selectedDish == ("plateDinner(Clone)") && !holdingItem)
                     {
                         Debug.Log("Picked up plate");
                         foodId = 0;
                         CollectFood();
+                        Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
                     }
-                    else if (selectedDish == ("bowlBroth") && !holdingItem)
+                    else if (selectedDish == ("bowlBroth(Clone)") && !holdingItem)
                     {
                         Debug.Log("Picked up bowl");
                         foodId = 1;
                         CollectFood();
+                        Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
                     }
                 }
 
@@ -69,7 +71,7 @@ public class ServingController : MonoBehaviour
         GameObject plateDish = Instantiate(foodPrefabs[foodId], foodLocation.position, Quaternion.identity);
         plateDish.transform.SetParent(foodLocation);
 
-        Destroy(foodOnCounter[foodId]);
+        //Destroy(foodOnCounter[foodId]);
     }
 
     // Shift food so player looks has served food to customer

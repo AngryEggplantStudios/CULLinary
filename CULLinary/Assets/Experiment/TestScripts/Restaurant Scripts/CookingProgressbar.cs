@@ -50,6 +50,7 @@ public class CookingProgressbar : MonoBehaviour
             progressIcon.SetActive(false);
             currentAmount = 0; // Reset value for next cooking
             cookingStation.isCooking = false;
+            cookingStation.ServeDish(); // Spawn food at next available location
             recipeActivator.enabled = true;
         }
 
