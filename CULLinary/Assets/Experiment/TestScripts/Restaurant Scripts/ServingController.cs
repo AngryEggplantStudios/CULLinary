@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ServingController : MonoBehaviour
 {
-    public GameObject[] foodOnCounter; // Can edit later to make this dynamic as more food gets cooked
+    // public GameObject[] foodOnCounter; // Can edit later to make this dynamic as more food gets cooked
     public GameObject player;
     public Camera cam;
 
@@ -27,9 +27,12 @@ public class ServingController : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 // Pick up food from counter
+                Debug.Log("Clicking on: " + hit.collider.gameObject.name);
+
                 if (hit.collider != null && hit.collider.gameObject.tag == "FoodToServe")
                 {
                     string selectedDish = hit.collider.gameObject.name;
+                    
                     if (selectedDish == ("plateDinner(Clone)") && !holdingItem)
                     {
                         Debug.Log("Picked up plate");
@@ -41,6 +44,13 @@ public class ServingController : MonoBehaviour
                     {
                         Debug.Log("Picked up bowl");
                         foodId = 1;
+                        CollectFood();
+                        Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
+                    }
+                    else if (selectedDish == ("pizza(Clone)") && !holdingItem)
+                    {
+                        Debug.Log("Picked up pizza");
+                        foodId = 2;
                         CollectFood();
                         Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
                     }
