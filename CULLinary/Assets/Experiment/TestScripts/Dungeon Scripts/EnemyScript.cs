@@ -52,6 +52,9 @@ public class EnemyScript : MonoBehaviour
     private Transform player;
     private GameObject lootDropped;
 
+    private Renderer rend;
+    private Color[] originalColors;
+    private Color onDamageColor = Color.white;
 
     private void Awake()
     {
@@ -63,6 +66,13 @@ public class EnemyScript : MonoBehaviour
         startingPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
+        
+        rend = GetComponentInChildren<Renderer>();
+        originalColors = new Color[rend.materials.Length];
+        for (var i = 0; i < rend.materials.Length; i++) {
+            originalColors[i] = rend.materials[i].color;
+        }
+
         SetupLoot();
     }
 
@@ -149,10 +159,31 @@ public class EnemyScript : MonoBehaviour
     {
         this.health -= damage;
         Debug.Log("Current health: " + health);
+
+        StartCoroutine(FlashOnDamage());
+
         if (this.health <= 0)
         {
             DropLoot();
             Destroy(gameObject, 0.2f);
+        }
+    }
+
+    private IEnumerator FlashOnDamage()
+    {
+        for (var i = 0; i < rend.materials.Length; i++) {
+            rend.materials[i].color = onDamageColor;
+        }
+
+        float duration = 0.1f;
+        while (duration > 0)
+        {
+            duration -= Time.deltaTime;
+            yield return null;
+        }
+
+        for (var i = 0; i < rend.materials.Length; i++) {
+            rend.materials[i].color = originalColors[i];
         }
     }
 
