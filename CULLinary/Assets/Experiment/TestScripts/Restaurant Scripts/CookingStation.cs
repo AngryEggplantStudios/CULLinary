@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class CookingStation : MonoBehaviour
 {
-    public Restaurant_PlayerController playerController;
+    public Restaurant_newPlayerController playerController;
     public Transform stationLocation;
     public float minimumDistance = 7.0f;
     public Animator animator;
