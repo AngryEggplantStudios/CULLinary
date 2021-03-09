@@ -6,7 +6,10 @@ public class DungeonPlayerSlash : MonoBehaviour
 {
     private Animator animator;
     private DungeonPlayerMelee dungeonPlayerAttack;
+
     [SerializeField] private GameObject weapon;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] attackSounds;
     
     private void Start()
     {
@@ -32,6 +35,8 @@ public class DungeonPlayerSlash : MonoBehaviour
     public void AttackStart()
     {
         weapon.GetComponent<Collider>().enabled = true;
+        audioSource.clip = attackSounds[Random.Range(0, attackSounds.Length)];
+        audioSource.Play();
     }
 
     public void AttackEnd()
