@@ -7,7 +7,6 @@ public class DungeonPlayerMelee : DungeonPlayerAction
     public delegate void PlayerMeleeDelegate();
     public delegate void PlayerStopDelegate();
     public event PlayerMeleeDelegate OnPlayerMelee;
-    public event PlayerStopDelegate OnPlayerStop;
 
     //Actions prevented
     private DungeonPlayerRange dungeonPlayerRange;
@@ -24,10 +23,10 @@ public class DungeonPlayerMelee : DungeonPlayerAction
             this.SetIsInvoking(true);
             OnPlayerMelee?.Invoke();
         }
-        else
-        {
-            this.SetIsInvoking(false);
-            OnPlayerStop?.Invoke();
-        }
+    }
+
+    public void StopInvoking()
+    {
+        this.SetIsInvoking(false);
     }
 }
