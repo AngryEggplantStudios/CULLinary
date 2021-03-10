@@ -11,6 +11,7 @@ public class EnemyScript : MonoBehaviour
     private enum State
     {
         Roaming,
+        Idle,
         ChaseTarget,
         ShootingTarget,
         GoingBackToStart,
@@ -19,7 +20,8 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private float health;
     [SerializeField] private float distanceTriggered = 5f;
     [SerializeField] private float stopChase = 10f;
-    [SerializeField] private Slider slider;
+    [SerializeField] private float wanderTimer;
+    [SerializeField] private float idleTimer;
 
 
     [System.Serializable] private class LootTuple
@@ -45,9 +47,10 @@ public class EnemyScript : MonoBehaviour
     }
 
     [SerializeField] private LootTuple[] lootTuples;
-
+    private float wanderRadius = 15.0f;
     private Vector3 startingPosition;
     private Vector3 roamPosition;
+    private float timer;
     private float nextShootTime;
     private float dist;
     private Animator animator;
@@ -61,7 +64,7 @@ public class EnemyScript : MonoBehaviour
 
     private void Awake()
     {
-        state = State.Roaming;
+        state = State.Idle;
     }
 
     private void Start()
@@ -69,8 +72,7 @@ public class EnemyScript : MonoBehaviour
         startingPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
-        slider.maxValue = health;
-        slider.value = health;
+        timer = wanderTimer;
         rend = GetComponentInChildren<Renderer>();
         originalColors = new Color[rend.materials.Length];
         for (var i = 0; i < rend.materials.Length; i++) {
@@ -108,9 +110,30 @@ public class EnemyScript : MonoBehaviour
         switch (state)
         {
             default:
-            case State.Roaming:
+            case State.Idle:
                 animator.SetBool("isMoving", false);
+                timer += Time.deltaTime;
                 FindTarget();
+                if (timer >= idleTimer)
+                {
+                    Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+                    agent.SetDestination(newPos);
+                    timer = 0;
+                    state = State.Roaming;
+                    roamPosition = newPos;
+                }
+                break;
+            case State.Roaming:
+                animator.SetBool("isMoving", true);
+                timer += Time.deltaTime;
+                FindTarget();
+                Vector3 distanceToFinalPosition = transform.position - roamPosition;
+                //without this the eggplant wandering will be buggy as it may be within the Navmesh Obstacles itself
+                if (timer >= wanderTimer || distanceToFinalPosition.magnitude < 3.0f)
+                {
+                    timer = 0;
+                    state = State.Idle;
+                }
                 break;
             case State.ChaseTarget:
                 animator.SetBool("isMoving", true);
@@ -138,13 +161,13 @@ public class EnemyScript : MonoBehaviour
                 break;
             case State.GoingBackToStart:
                 animator.SetBool("isMoving", true);
-                float reachedPositionDistance = 1f;
+                float reachedPositionDistance = 5f;
                 transform.LookAt(startingPosition);
                 agent.SetDestination(startingPosition);
-                if (Vector3.Distance(transform.position, startingPosition) < reachedPositionDistance)
+                if (Vector3.Distance(transform.position, startingPosition) <= reachedPositionDistance)
                 {
                     // Reached Start Position
-                    state = State.Roaming;
+                    state = State.Idle;
                 }
                 break;
         }
@@ -156,6 +179,7 @@ public class EnemyScript : MonoBehaviour
 
         if (dist <= distanceTriggered)
         {
+            timer = 0;
             state = State.ChaseTarget;
         }
     }
@@ -163,7 +187,6 @@ public class EnemyScript : MonoBehaviour
     public void HandleHit(float damage)
     {
         this.health -= damage;
-        slider.value = health;
         StartCoroutine(FlashOnDamage());
 
         if (this.health <= 0)
@@ -196,4 +219,22 @@ public class EnemyScript : MonoBehaviour
         Instantiate(lootDropped, transform.position, Quaternion.identity);
     }
 
+
+    private Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector2 randPos = Random.insideUnitCircle * dist;
+        Vector3 randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);
+        while ((randDirection - origin).magnitude < 7.0f)
+        {
+            randPos = Random.insideUnitCircle * dist;
+            randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);
+        }
+        randDirection += origin;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+
+        return navHit.position;
+    }
 }
