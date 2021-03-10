@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ServingController : MonoBehaviour
 {
-    public GameObject[] foodOnCounter; // Can edit later to make this dynamic as more food gets cooked
+    // public GameObject[] foodOnCounter; // Can edit later to make this dynamic as more food gets cooked
     public GameObject player;
     public Camera cam;
 
@@ -27,20 +27,39 @@ public class ServingController : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 // Pick up food from counter
+                Debug.Log("Clicking on: " + hit.collider.gameObject.name);
+
                 if (hit.collider != null && hit.collider.gameObject.tag == "FoodToServe")
                 {
                     string selectedDish = hit.collider.gameObject.name;
-                    if (selectedDish == ("plateDinner") && !holdingItem)
+                    
+                    if (selectedDish == ("plateDinner(Clone)") && !holdingItem)
                     {
                         Debug.Log("Picked up plate");
                         foodId = 0;
                         CollectFood();
+                        Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
                     }
-                    else if (selectedDish == ("bowlBroth") && !holdingItem)
+                    else if (selectedDish == ("bowlBroth(Clone)") && !holdingItem)
                     {
                         Debug.Log("Picked up bowl");
                         foodId = 1;
                         CollectFood();
+                        Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
+                    }
+                    else if (selectedDish == ("pizza(Clone)") && !holdingItem)
+                    {
+                        Debug.Log("Picked up pizza");
+                        foodId = 2;
+                        CollectFood();
+                        Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
+                    }
+                    else if (selectedDish == ("burrito(Clone)") && !holdingItem)
+                    {
+                        Debug.Log("Picked up burrito");
+                        foodId = 3;
+                        CollectFood();
+                        Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
                     }
                 }
 
@@ -69,7 +88,7 @@ public class ServingController : MonoBehaviour
         GameObject plateDish = Instantiate(foodPrefabs[foodId], foodLocation.position, Quaternion.identity);
         plateDish.transform.SetParent(foodLocation);
 
-        Destroy(foodOnCounter[foodId]);
+        //Destroy(foodOnCounter[foodId]);
     }
 
     // Shift food so player looks has served food to customer

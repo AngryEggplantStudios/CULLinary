@@ -17,7 +17,6 @@ public class Restaurant_newPlayerController : MonoBehaviour
     private Vector3 direction;
     private Vector3 moveDirection;
 
-
     private void Update()
     {
         // Get movement input
@@ -40,22 +39,5 @@ public class Restaurant_newPlayerController : MonoBehaviour
         // Handle animations
         animator.SetBool("isWalking", (moveVertical != 0.0f || moveHorizontal != 0.0f) );
         animator.SetBool("hasFood", servingController.holdingItem);
-
-        // For cooking animation
-        if (Input.GetMouseButton(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                // Checking if cooking station is selected
-                if (hit.collider != null && hit.collider.gameObject.tag == "CookingStation")
-                {
-                    // Debug.Log("Clicked cooking station!");
-                    hit.collider.gameObject.GetComponent<CookingStation>().Cook();
-                }
-            }
-        }
     }
 }
