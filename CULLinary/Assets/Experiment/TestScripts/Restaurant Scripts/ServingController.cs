@@ -54,6 +54,13 @@ public class ServingController : MonoBehaviour
                         CollectFood();
                         Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
                     }
+                    else if (selectedDish == ("burrito(Clone)") && !holdingItem)
+                    {
+                        Debug.Log("Picked up burrito");
+                        foodId = 3;
+                        CollectFood();
+                        Destroy(hit.collider.gameObject); // comment this out if want unlimited servings of the dish after cooking
+                    }
                 }
 
                 // Serve customer
