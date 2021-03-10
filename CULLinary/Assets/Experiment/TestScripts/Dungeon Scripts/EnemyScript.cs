@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyScript : MonoBehaviour
 {
+    public NavMeshAgent agent;
+
     private enum State
     {
         Roaming,
@@ -14,11 +18,10 @@ public class EnemyScript : MonoBehaviour
 
     [SerializeField] private float health;
     [SerializeField] private float distanceTriggered = 5f;
-    [SerializeField] private float moveSpeed = 2.0f;
-    [SerializeField] private float attackRange = 2.0f;
     [SerializeField] private float stopChase = 10f;
+    [SerializeField] private Slider slider;
 
-    
+
     [System.Serializable] private class LootTuple
     {
         [SerializeField] private GameObject loot;
@@ -66,13 +69,13 @@ public class EnemyScript : MonoBehaviour
         startingPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponentInChildren<Animator>();
-        
+        slider.maxValue = health;
+        slider.value = health;
         rend = GetComponentInChildren<Renderer>();
         originalColors = new Color[rend.materials.Length];
         for (var i = 0; i < rend.materials.Length; i++) {
             originalColors[i] = rend.materials[i].color;
         }
-
         SetupLoot();
     }
 
@@ -112,17 +115,19 @@ public class EnemyScript : MonoBehaviour
             case State.ChaseTarget:
                 animator.SetBool("isMoving", true);
                 transform.LookAt(player);
-                if (Vector3.Distance(transform.position, player.position) < attackRange)
+
+                    //Debug.Log("Chase");
+                    //transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+                    float directionVector = Vector3.Distance(transform.position, player.position);
+                if (directionVector <= agent.stoppingDistance)
                 {
                     // Target within attack range
                     animator.SetTrigger("attack");
-                    //Debug.Log("Attack Player");
                     // Add new state to attack player
-                }
-                else
+                } else
                 {
-                    //Debug.Log("Chase");
-                    transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+                    agent.SetDestination(player.position);
+
                 }
 
                 if (Vector3.Distance(transform.position, player.position) > stopChase)
@@ -135,7 +140,7 @@ public class EnemyScript : MonoBehaviour
                 animator.SetBool("isMoving", true);
                 float reachedPositionDistance = 1f;
                 transform.LookAt(startingPosition);
-                transform.position = Vector3.MoveTowards(transform.position, startingPosition, moveSpeed * Time.deltaTime);
+                agent.SetDestination(startingPosition);
                 if (Vector3.Distance(transform.position, startingPosition) < reachedPositionDistance)
                 {
                     // Reached Start Position
@@ -158,8 +163,7 @@ public class EnemyScript : MonoBehaviour
     public void HandleHit(float damage)
     {
         this.health -= damage;
-        Debug.Log("Current health: " + health);
-
+        slider.value = health;
         StartCoroutine(FlashOnDamage());
 
         if (this.health <= 0)

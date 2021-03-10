@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DungeonPlayerMelee : DungeonPlayerAction
 {
@@ -18,7 +19,7 @@ public class DungeonPlayerMelee : DungeonPlayerAction
     private void Update()
     {
         bool isRangeInvoked = dungeonPlayerRange ? dungeonPlayerRange.GetIsInvoking() : false;
-        if (Input.GetMouseButton(0) && !isRangeInvoked)
+        if (Input.GetMouseButton(0) && !isRangeInvoked && !(EventSystem.current.IsPointerOverGameObject()))
         {
             this.SetIsInvoking(true);
             OnPlayerMelee?.Invoke();
