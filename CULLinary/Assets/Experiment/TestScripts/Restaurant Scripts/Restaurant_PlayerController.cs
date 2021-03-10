@@ -77,9 +77,9 @@ public class Restaurant_PlayerController : MonoBehaviour
                 }*/
 
                 // Checking if cooking station is selected
-                if (hit.collider != null && hit.collider.gameObject.tag == "CookingStation") {
-                    hit.collider.gameObject.GetComponent<CookingStation>().Cook();
-                }
+                //if (hit.collider != null && hit.collider.gameObject.tag == "CookingStation") {
+                //    hit.collider.gameObject.GetComponent<CookingStation>().Cook();
+                //}
             }
         }
         

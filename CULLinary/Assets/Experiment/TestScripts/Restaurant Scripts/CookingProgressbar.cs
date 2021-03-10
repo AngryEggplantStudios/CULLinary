@@ -9,6 +9,8 @@ public class CookingProgressbar : MonoBehaviour
     public Transform progressBar;
     public CookingStation cookingStation;
 
+    public Collider recipeActivator;
+
     [SerializeField] private float currentAmount;
     [SerializeField] private float speed;
     public bool cookingNow = false;
@@ -39,6 +41,7 @@ public class CookingProgressbar : MonoBehaviour
         if (currentAmount < 100)
         {
             currentAmount += speed * Time.deltaTime;
+            recipeActivator.enabled = false; // ensure player doesn't open another recipe instance when something is currently cooking
         }
         else
         {
@@ -47,9 +50,10 @@ public class CookingProgressbar : MonoBehaviour
             progressIcon.SetActive(false);
             currentAmount = 0; // Reset value for next cooking
             cookingStation.isCooking = false;
+            cookingStation.ServeDish(); // Spawn food at next available location
+            recipeActivator.enabled = true;
         }
 
         progressBar.GetComponent<Image>().fillAmount = currentAmount / 100;
-        // Debug.Log("progress is now: " + currentAmount.ToString());
     }
 }
