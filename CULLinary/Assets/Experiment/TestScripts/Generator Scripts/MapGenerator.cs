@@ -12,6 +12,14 @@ public class MapGenerator : MonoBehaviour
     
     private static Queue<ConnectionPoint> connectionPoints = new Queue<ConnectionPoint>();
     private bool isGenerated = false;
+    [SerializeField] private GameObject player;
+
+    private void Start()
+    {
+        isGenerated = true;
+        StartCoroutine(GenerateMap());
+        
+    }
 
     private IEnumerator GenerateMap()
     {
@@ -59,7 +67,7 @@ public class MapGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isGenerated)
+        if (Input.GetKeyDown(KeyCode.Space) && !isGenerated && false)
         {
             isGenerated = true;
             StartCoroutine(GenerateMap());
