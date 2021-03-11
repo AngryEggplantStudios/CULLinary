@@ -58,8 +58,10 @@ public class DungeonPlayerAim : MonoBehaviour
         lineRenderer.positionCount = 2;
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.Log("What");
         if (Physics.Raycast(ray, out hit, MAX_DIST_CAM_TO_GROUND, 1 << LayerMask.NameToLayer("Ground")))
         {
+            Debug.Log("Testoer");
             this.lookVector = new Vector3(hit.point.x, transform.position.y, hit.point.z);
             this.sourcePosition = new Vector3(transform.position.x, LINE_HEIGHT_FROM_GROUND, transform.position.z);
             this.targetPosition = new Vector3(hit.point.x, LINE_HEIGHT_FROM_GROUND, hit.point.z);

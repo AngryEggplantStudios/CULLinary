@@ -65,7 +65,7 @@ public class InventoryUI : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		inventory.OnItemAdd -= AddItem;
+ 		inventory.OnItemAdd -= AddItem;
 		inventory.OnItemRemove -= RemoveItem;
 	}
 

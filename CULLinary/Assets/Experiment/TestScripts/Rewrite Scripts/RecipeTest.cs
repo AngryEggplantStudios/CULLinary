@@ -1,11 +1,11 @@
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerData
+public class RecipeTest
 {
-    public string inventory;
-    public int stage;
-    public string playerName;
+    public int id;
+    public string name;
+    public int[] ingredientIds;
 
     public string ToJson()
     {
@@ -17,11 +17,10 @@ public class PlayerData
         try
         {
             JsonUtility.FromJsonOverwrite(jsonData, this);
-        } 
+        }
         catch
         {
-            Debug.Log("No save file...");
+            Debug.Log("No recipes to load. Please check your files.");
         }
     }
-
 }
