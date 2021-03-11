@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+// Starts cooking dish and fills up radial progress bar accordingly
 public class CookingStation : MonoBehaviour
 {
     [Header("For Cooking")] // For cooking anim
