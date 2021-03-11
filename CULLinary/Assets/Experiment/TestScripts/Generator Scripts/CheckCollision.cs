@@ -15,6 +15,11 @@ public class CheckCollision : MonoBehaviour
         
     }
 
+    public void SetIsNotCollided()
+    {
+        isCollided = false;
+    }
+
     public bool GetIsCollided()
     {
         return isCollided;

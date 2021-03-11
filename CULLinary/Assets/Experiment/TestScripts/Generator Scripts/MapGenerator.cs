@@ -27,12 +27,16 @@ public class MapGenerator : MonoBehaviour
             yield return null;
             yield return StartCoroutine(currentPoint.GenerateRoomTwo());
         }
+        Debug.Log(connectionPoints.Count);
+        yield return new WaitForSeconds(10);
+        Debug.Log(connectionPoints.Count);
     }
 
     public static void AddConnectionPoints(ConnectionPoint[] points)
     {
         foreach (ConnectionPoint c in points)
         {
+            Debug.Log("LOL");
             if (!c.GetIsConnected())
             {
                 Debug.Log("Wow!");

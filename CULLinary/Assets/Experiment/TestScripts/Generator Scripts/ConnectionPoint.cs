@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class ConnectionPoint : MonoBehaviour
 {
@@ -42,7 +43,6 @@ public class ConnectionPoint : MonoBehaviour
 
     public IEnumerator GenerateRoomTwo()
     {
-        Debug.Log("Let us run GenerateRoom Algorithm!");
         float generatedProb = Random.Range(0f, 1f);
         int ordinalSelected = 0;
         GameObject roomToGenerate = deadend;
@@ -66,13 +66,17 @@ public class ConnectionPoint : MonoBehaviour
         }
         yield return null;
 
-        Debug.Log("Let's generate a random number based on the ordinal");
+        //Debug.Log("Let's generate a random number based on the ordinal");
         int generatedOrdinal = Random.Range(0, ordinalSelected);
-        Debug.Log("Chosen ordinal is " + generatedOrdinal);
+        //Debug.Log("Chosen ordinal is " + generatedOrdinal);
         Debug.Log("Let's instantiate the room first");
 
         yield return null;
 
+        Debug.Log(roomToGenerate.name);
+        //GameObject generatedRoom = PrefabUtility.InstantiatePrefab(roomToGenerate.gameObject as GameObject) as GameObject;
+        //generatedRoom.transform.position = transform.position;
+        //generatedRoom.transform.rotation = Quaternion.identity;
         GameObject generatedRoom = Instantiate(roomToGenerate, transform.position, Quaternion.identity);
 
         yield return null;
@@ -80,11 +84,16 @@ public class ConnectionPoint : MonoBehaviour
         generatedRoom.name = "Generated";
         ConnectionPoint[] connectionPoints = generatedRoom.GetComponentsInChildren<ConnectionPoint>();
         ConnectionPoint chosenPoint = connectionPoints[0]; //generatedOrdinal
+        foreach (ConnectionPoint c in connectionPoints)
+        {
+            c.SetNotConnected();
+        }
 
         yield return StartCoroutine(TryPositioningRoom(chosenPoint));
 
         CheckCollision validatorNewRoom = chosenPoint.GetValidatorRef().GetComponent<CheckCollision>();
         validatorNewRoom.TurnOnCollider();
+
         yield return null;
 
         yield return StartCoroutine(DelayOneFrame(validatorNewRoom, generatedRoom, chosenPoint, connectionPoints));
@@ -98,14 +107,6 @@ public class ConnectionPoint : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator InstantiateRoom(GameObject roomToGenerate, System.Action<GameObject> callback)
-    {
-        yield return new WaitForEndOfFrame();
-        GameObject generatedRoom = Instantiate(roomToGenerate, transform.position, Quaternion.identity);
-        yield return new WaitForEndOfFrame();
-        callback(generatedRoom);
-    }
-
     private IEnumerator DelayOneFrame(CheckCollision validatorNewRoom, GameObject generatedRoom, ConnectionPoint chosenPoint, ConnectionPoint[] connectionPoints)
     {
         yield return null;
@@ -113,6 +114,8 @@ public class ConnectionPoint : MonoBehaviour
         {
             Debug.Log("Collided! Need to destroy the room");
             Destroy(generatedRoom);
+            validatorNewRoom.SetIsNotCollided();
+            yield return null;
             MapGenerator.AddConnectionPoints(new ConnectionPoint[]{this});
         }
         else
@@ -120,6 +123,8 @@ public class ConnectionPoint : MonoBehaviour
             Debug.Log("Room is valid. Let's add it to the dungeon!");
             this.SetConnected();
             chosenPoint.SetConnected();
+            yield return null;
+            Debug.Log("There are " + connectionPoints.Length + " cp");
             MapGenerator.AddConnectionPoints(connectionPoints);
         }
     }
@@ -159,9 +164,14 @@ public class ConnectionPoint : MonoBehaviour
         return validatorRef;
     }
 
-        public GameObject GetParentRef()
+    public GameObject GetParentRef()
     {
         return parentRef;
+    }
+
+    public void SetNotConnected()
+    {
+        isConnected = false;
     }
 
     public void SetConnected()
