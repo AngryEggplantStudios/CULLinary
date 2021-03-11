@@ -41,29 +41,27 @@ public class ConnectionPoint : MonoBehaviour
     public IEnumerator GenerateRoom()
     {
         float generatedProb = Random.Range(0f, 1f);
-        GameObject roomToGenerate = null;
+        GameObject roomToGenerate = deadend;
         foreach (SpawnRoom sr in spawnRooms)
         {
-            if (generatedProb <= sr.GetCumProb())
+            if (generatedProb <= sr.GetCumProb() && !spawnList.Contains(sr))
             {
-                if (!spawnList.Contains(sr))
-                {
-                    roomToGenerate = sr.GetCorridor();
-                    spawnList.Add(sr);
-                    break;
-                }
-                else
-                {
-                    Debug.Log(sr.GetTriedSpawning());
-                    Debug.Log("WHAT");
-                    continue;
-                }
+                roomToGenerate = sr.GetCorridor();
+                spawnList.Add(sr);
+                break;
             }
         }
 
         yield return null;
 
-        if (roomToGenerate != null)
+        if (roomToGenerate == deadend)
+        {
+            GameObject generatedRoom = Instantiate(roomToGenerate, transform.position, Quaternion.identity);
+            yield return null;
+            generatedRoom.name = "Deadend";
+            this.SetConnected();
+        }
+        else if (roomToGenerate != null)
         {
 
             GameObject generatedRoom = Instantiate(roomToGenerate, transform.position, Quaternion.identity);
@@ -79,6 +77,7 @@ public class ConnectionPoint : MonoBehaviour
             }
 
             yield return StartCoroutine(PositionRoom(chosenPoint));
+
             yield return null;
 
             CheckCollision validatorNewRoom = chosenPoint.GetValidatorRef().GetComponent<CheckCollision>();

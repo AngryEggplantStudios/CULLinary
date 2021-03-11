@@ -16,7 +16,6 @@ public class MapGenerator : MonoBehaviour
     private IEnumerator GenerateMap()
     {
         ConnectionPoint[] startingPoints = startingRoom.GetComponentsInChildren<ConnectionPoint>();
-        yield return null;
         foreach (ConnectionPoint c in startingPoints)
         {
             connectionPoints.Enqueue(c);
@@ -26,7 +25,6 @@ public class MapGenerator : MonoBehaviour
         {
             while (connectionPoints.Count > 0 && roomCounter < roomLimit ) //Include special rooms that will only generate at the end
             {
-                Debug.Log("Popping a connection point");
                 ConnectionPoint currentPoint = connectionPoints.Dequeue();
                 yield return null;
                 yield return StartCoroutine(currentPoint.GenerateRoom());
@@ -35,7 +33,6 @@ public class MapGenerator : MonoBehaviour
         else {
             while (connectionPoints.Count > 0)
             {
-                Debug.Log("Popping a connection point");
                 ConnectionPoint currentPoint = connectionPoints.Dequeue();
                 yield return null;
                 yield return StartCoroutine(currentPoint.GenerateRoom());
