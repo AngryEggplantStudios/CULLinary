@@ -30,18 +30,14 @@ public class CheckCollision : MonoBehaviour
         return isEnd;
     }
 
-    private void OnTriggerExit(Collider collider)
-    {
-        isCollided = false;
-    }
-
-    private void Awake()
-    {
-        GetComponent<BoxCollider>().enabled = false;
-    }
-
     public void TurnOnCollider()
     {
         GetComponent<BoxCollider>().enabled = true;
+    }
+
+
+    public void TurnOffCollider()
+    {
+        GetComponent<BoxCollider>().enabled = false;
     }
 }

@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class ConnectionPoint : MonoBehaviour
 {
-    [SerializeField] private bool isConnected = false;
-
-    [System.Serializable]
-    private class SpawnRoom
+    [System.Serializable] private class SpawnRoom
     {
         [SerializeField] private GameObject corridor;
         [SerializeField] private float cumProb;
-        [SerializeField] private int ordinal; //number of connection points
         private bool triedSpawning = false;
         public GameObject GetCorridor()
         {
@@ -30,107 +25,88 @@ public class ConnectionPoint : MonoBehaviour
         {
             return triedSpawning;
         }
-        public int GetOrdinal()
-        {
-            return ordinal;
-        }
     }
-    [SerializeField] private SpawnRoom[] spawnRooms;
-    [SerializeField] private GameObject deadend;
-    [SerializeField] private GameObject parentRef;
-    [SerializeField] private GameObject validatorRef;
-    [SerializeField] private float bias;
 
-    public IEnumerator GenerateRoomTwo()
+    [Header("Connection Settings")]
+    [Tooltip("List of spawn rooms that can be instantiated")]
+    [SerializeField] private SpawnRoom[] spawnRooms;
+    [Tooltip("Default deadend to be instantiated")]
+    [SerializeField] private GameObject deadend;
+    [Tooltip("Reference to parent")]
+    [SerializeField] private GameObject parentRef;
+    [Tooltip("Reference to validator")]
+    [SerializeField] private GameObject validatorRef;
+    [Tooltip("The number of blocks from the centre of the room generated")]
+    [SerializeField] private float bias;
+    private bool isConnected = false;
+
+    public IEnumerator GenerateRoom(bool checkTransform=false, float x=0f, float z=0f)
     {
         float generatedProb = Random.Range(0f, 1f);
-        int ordinalSelected = 0;
         GameObject roomToGenerate = deadend;
         foreach (SpawnRoom sr in spawnRooms)
         {
-            if (generatedProb <= sr.GetCumProb())
+            if (generatedProb <= sr.GetCumProb() && !sr.GetTriedSpawning())
             {
-                if (!sr.GetTriedSpawning())
-                {
-                    Debug.Log("Trying a room");
-                    roomToGenerate = sr.GetCorridor();
-                    ordinalSelected = sr.GetOrdinal();
-                    sr.SetTriedSpawning();
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
+                roomToGenerate = sr.GetCorridor();
+                sr.SetTriedSpawning();
+                break;
             }
         }
-        yield return null;
-
-        //Debug.Log("Let's generate a random number based on the ordinal");
-        int generatedOrdinal = Random.Range(0, ordinalSelected);
-        //Debug.Log("Chosen ordinal is " + generatedOrdinal);
-        Debug.Log("Let's instantiate the room first");
-
-        yield return null;
-
-        Debug.Log(roomToGenerate.name);
-        //GameObject generatedRoom = PrefabUtility.InstantiatePrefab(roomToGenerate.gameObject as GameObject) as GameObject;
-        //generatedRoom.transform.position = transform.position;
-        //generatedRoom.transform.rotation = Quaternion.identity;
-        GameObject generatedRoom = Instantiate(roomToGenerate, transform.position, Quaternion.identity);
-
-        yield return null;
-
-        generatedRoom.name = "Generated";
-        ConnectionPoint[] connectionPoints = generatedRoom.GetComponentsInChildren<ConnectionPoint>();
-        ConnectionPoint chosenPoint = connectionPoints[0]; //generatedOrdinal
-        foreach (ConnectionPoint c in connectionPoints)
+        if (roomToGenerate != null)
         {
-            c.SetNotConnected();
+            yield return null;
+            GameObject generatedRoom = Instantiate(roomToGenerate, transform.position, Quaternion.identity);
+            yield return null;
+            generatedRoom.name = "Generated";
+            ConnectionPoint[] connectionPoints = generatedRoom.GetComponentsInChildren<ConnectionPoint>();
+            foreach (ConnectionPoint c in connectionPoints)
+            {
+                c.SetNotConnected(); //Ensure all are not connected first
+            }
+            ConnectionPoint chosenPoint = connectionPoints[0];
+            yield return StartCoroutine(PositionRoom(chosenPoint));
+            CheckCollision validatorNewRoom = chosenPoint.GetValidatorRef().GetComponent<CheckCollision>();
+            yield return null;
+            validatorNewRoom.TurnOnCollider();
+            yield return null;
+            yield return StartCoroutine(CheckValidity(validatorNewRoom, generatedRoom, chosenPoint, connectionPoints, checkTransform, x, z));
         }
-
-        yield return StartCoroutine(TryPositioningRoom(chosenPoint));
-
-        CheckCollision validatorNewRoom = chosenPoint.GetValidatorRef().GetComponent<CheckCollision>();
-        validatorNewRoom.TurnOnCollider();
-
-        yield return null;
-
-        yield return StartCoroutine(DelayOneFrame(validatorNewRoom, generatedRoom, chosenPoint, connectionPoints));
-
     }
 
-    private IEnumerator TryPositioningRoom(ConnectionPoint newRoom)
+    private IEnumerator CheckValidity(CheckCollision validatorNewRoom, GameObject generatedRoom, 
+        ConnectionPoint chosenPoint, ConnectionPoint[] connectionPoints, bool checkTransform=false,
+        float x=0f, float z=0f
+        )
     {
         yield return null;
-        PositionRoom(newRoom);
-        yield return null;
-    }
-
-    private IEnumerator DelayOneFrame(CheckCollision validatorNewRoom, GameObject generatedRoom, ConnectionPoint chosenPoint, ConnectionPoint[] connectionPoints)
-    {
-        yield return null;
-        if (validatorNewRoom.GetIsCollided() && !validatorNewRoom.GetIsEnd())
+        if ((validatorNewRoom.GetIsCollided() && !validatorNewRoom.GetIsEnd()) || (checkTransform && checkBounds(generatedRoom.transform, x, z)))
         {
-            Debug.Log("Collided! Need to destroy the room");
             Destroy(generatedRoom);
             validatorNewRoom.SetIsNotCollided();
-            yield return null;
+            validatorNewRoom.TurnOffCollider();
             MapGenerator.AddConnectionPoints(new ConnectionPoint[]{this});
+            yield return null;
         }
         else
         {
-            Debug.Log("Room is valid. Let's add it to the dungeon!");
             this.SetConnected();
             chosenPoint.SetConnected();
-            yield return null;
-            Debug.Log("There are " + connectionPoints.Length + " cp");
+            MapGenerator.AddRoomCounter();
             MapGenerator.AddConnectionPoints(connectionPoints);
+            yield return null;
         }
     }
 
-    private ConnectionPoint PositionRoom(ConnectionPoint newRoom)
+    private bool checkBounds(Transform transform, float x, float z)
     {
+        bool value = Mathf.Abs(transform.position.x) > x || Mathf.Abs(transform.position.z) > z;
+        return value;
+    }
+
+    private IEnumerator PositionRoom(ConnectionPoint newRoom)
+    {
+        yield return null;
         Transform newTransform = newRoom.GetParentRef().transform;
         Transform currentTransform = this.transform;
         newTransform.rotation = Quaternion.LookRotation(currentTransform.forward);
@@ -155,7 +131,7 @@ public class ConnectionPoint : MonoBehaviour
             xBias = -newBias;
         }
         newTransform.position = new Vector3(currentTransform.position.x + xBias, currentTransform.position.y, currentTransform.position.z + zBias);
-        return newRoom;
+        yield return null;
     }
 
 
