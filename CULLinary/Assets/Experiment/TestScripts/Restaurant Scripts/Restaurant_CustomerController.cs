@@ -11,15 +11,11 @@ public class Restaurant_CustomerController : MonoBehaviour
     public GameObject serveFoodLocation;
     public TextMeshProUGUI foodText;
 
-    public CustomerSpawner CustomerSpawner;
-
     [SerializeField]
     public string[] dishNames;
 
     private void Start()
     {
-        CustomerSpawner = GameObject.Find("Customer Spawner").GetComponent<CustomerSpawner>();
-
         // Play the sitting down animation  
         Animator animator = gameObject.GetComponent<Animator>();
         animator.SetBool("SitDown", true);
@@ -41,8 +37,9 @@ public class Restaurant_CustomerController : MonoBehaviour
     // Play the eating anim for a fixed duration
     public void ReceiveFood()
     {
-        Debug.Log("customer eating now");
+        // Debug.Log("customer eating now");
         orderUI.SetActive(false);
+
         // play eating anim
 
         StartCoroutine(TimeToLeave());
@@ -58,19 +55,21 @@ public class Restaurant_CustomerController : MonoBehaviour
     // Destroy the customer once they are done eating
     void Leave()
     {
-        Debug.Log("customer leaving now");
+        // Debug.Log("customer leaving now");
         Animator animator = gameObject.GetComponent<Animator>();
-        animator.SetBool("SitDown", false);
+        animator.SetBool("SitDown", false); //wanted customer to play stand up anim b4 leaving but this one doesn't work :')
 
         StartCoroutine(DestroyCustomer());
     } 
 
     IEnumerator DestroyCustomer()
     {
+        CustomerSpawner customerSpawner = GameObject.Find("Customer Spawner").GetComponent<CustomerSpawner>();
+        
         yield return new WaitForSeconds(2);
 
-        Destroy(customer);
-        CustomerSpawner.currCustNum--; // -1 from total no. of curr cust because this customer left
+        customerSpawner.currCustNum--; // -1 from total no. of curr cust because this customer left
+        Destroy(customer); 
     }
 
 }
