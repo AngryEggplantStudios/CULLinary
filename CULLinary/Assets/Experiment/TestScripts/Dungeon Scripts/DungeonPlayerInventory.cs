@@ -5,7 +5,7 @@ using UnityEngine;
 public class DungeonPlayerInventory : MonoBehaviour
 {
     public static DungeonPlayerInventory instance;
-    private Loot currentCollidedItem; 
+    //private Loot currentCollidedItem; 
 
     public delegate void OnItemChanged(Item item);
     public OnItemChanged OnItemAdd;
@@ -21,7 +21,7 @@ public class DungeonPlayerInventory : MonoBehaviour
         Item item = loot.GetItem();
         item.SetItemNo(loot.GetItemNo());
         loot.PickUp();
-        currentCollidedItem = null;
+        //currentCollidedItem = null;
         OnItemAdd?.Invoke(item);
     }
 
@@ -30,38 +30,46 @@ public class DungeonPlayerInventory : MonoBehaviour
         OnItemRemove?.Invoke(item);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F) && currentCollidedItem != null)
-        {
-            AddItemIntoInventory(currentCollidedItem);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
-    {
-        Loot loot = other.GetComponent<Loot>();
-        if (loot != null && currentCollidedItem == null)
-        {
-            currentCollidedItem = loot;
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        Loot loot = other.GetComponent<Loot>();
-        if (loot != null && currentCollidedItem == null)
-        {
-            currentCollidedItem = loot;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
     {
         Loot loot = other.GetComponent<Loot>();
         if (loot != null)
         {
-            currentCollidedItem = loot;
+            AddItemIntoInventory(loot);
         }
     }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.F) && currentCollidedItem != null)
+    //    {
+    //        AddItemIntoInventory(currentCollidedItem);
+    //    }
+    //}
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Loot loot = other.GetComponent<Loot>();
+    //    if (loot != null && currentCollidedItem == null)
+    //    {
+    //        currentCollidedItem = loot;
+    //    }
+    //}
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    Loot loot = other.GetComponent<Loot>();
+    //    if (loot != null && currentCollidedItem == null)
+    //    {
+    //        currentCollidedItem = loot;
+    //    }
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    Loot loot = other.GetComponent<Loot>();
+    //    if (loot != null)
+    //    {
+    //        currentCollidedItem = loot;
+    //    }
+    //}
 }
