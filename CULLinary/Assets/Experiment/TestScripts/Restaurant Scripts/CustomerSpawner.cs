@@ -10,7 +10,7 @@ public class CustomerSpawner : MonoBehaviour
 
     public GameObject[] customerPrefabs;
 
-    int currCustNum;
+    public int currCustNum;
     bool canSpawn = false;
 
     // Start is called before the first frame update
@@ -58,7 +58,7 @@ public class CustomerSpawner : MonoBehaviour
                 int randomSeatIdx = Random.Range(0, Seats.Length);
                 bool canSit = GetRandomAvailableSeat(randomSeatIdx);
 
-                if (canSit)  // Add audio here if customer is instantiated in the end?
+                if (canSit)  // Can add audio here when customer is instantiated?
                 {
                     Transform seatLocation = Seats[randomSeatIdx];
                     GameObject customer = Instantiate(customerPrefabs[randomID], seatLocation.position, Quaternion.identity);
