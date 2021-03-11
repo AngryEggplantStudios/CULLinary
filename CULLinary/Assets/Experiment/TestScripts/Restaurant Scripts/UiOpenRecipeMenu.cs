@@ -15,6 +15,7 @@ public class UiOpenRecipeMenu : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
+            // Open the Recipe panel UI if registered that player clicked on the collider
             if (Physics.Raycast(ray, out hit) && hit.collider != null && hit.collider.gameObject.tag == "RecipeMenuActivator")
             {
                 ui.SetActive(true);
