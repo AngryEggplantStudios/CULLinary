@@ -10,16 +10,7 @@ public class UiButtonClose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit) && hit.collider != null && hit.collider.gameObject.tag == "CloseButton")
-            {
-                ui.SetActive(false);
-            }
-        } else if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             ui.SetActive(false);
         }
     }

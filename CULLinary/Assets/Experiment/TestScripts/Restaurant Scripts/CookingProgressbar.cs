@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CookingProgressbar : MonoBehaviour
 {
     public GameObject progressIcon;
-    public Transform progressBar;
+    public Transform progressBarTransform;
     public CookingStation cookingStation;
 
     public Collider recipeActivator;
@@ -54,6 +54,6 @@ public class CookingProgressbar : MonoBehaviour
             recipeActivator.enabled = true;
         }
 
-        progressBar.GetComponent<Image>().fillAmount = currentAmount / 100;
+        progressBarTransform.GetComponent<Image>().fillAmount = currentAmount / 100;
     }
 }
