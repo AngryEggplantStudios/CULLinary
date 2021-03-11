@@ -41,7 +41,7 @@ public class ConnectionPoint : MonoBehaviour
     [SerializeField] private GameObject validatorRef;
     [SerializeField] private float bias;
 
-    public IEnumerator GenerateRoomTwo()
+    public IEnumerator GenerateRoom()
     {
         float generatedProb = Random.Range(0f, 1f);
         int ordinalSelected = 0;
@@ -96,7 +96,7 @@ public class ConnectionPoint : MonoBehaviour
 
         yield return null;
 
-        yield return StartCoroutine(DelayOneFrame(validatorNewRoom, generatedRoom, chosenPoint, connectionPoints));
+        yield return StartCoroutine(CheckValidity(validatorNewRoom, generatedRoom, chosenPoint, connectionPoints));
 
     }
 
@@ -107,7 +107,7 @@ public class ConnectionPoint : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator DelayOneFrame(CheckCollision validatorNewRoom, GameObject generatedRoom, ConnectionPoint chosenPoint, ConnectionPoint[] connectionPoints)
+    private IEnumerator CheckValidity(CheckCollision validatorNewRoom, GameObject generatedRoom, ConnectionPoint chosenPoint, ConnectionPoint[] connectionPoints)
     {
         yield return null;
         if (validatorNewRoom.GetIsCollided() && !validatorNewRoom.GetIsEnd())
@@ -121,6 +121,7 @@ public class ConnectionPoint : MonoBehaviour
         else
         {
             Debug.Log("Room is valid. Let's add it to the dungeon!");
+            MapGenerator.AddRoomCounter();
             this.SetConnected();
             chosenPoint.SetConnected();
             yield return null;

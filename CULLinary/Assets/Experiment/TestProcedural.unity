@@ -459,6 +459,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingRoom: {fileID: 1576062117}
+  limitByRooms: 1
+  roomLimit: 10
 --- !u!4 &1567416259
 Transform:
   m_ObjectHideFlags: 0
@@ -515,7 +517,7 @@ PrefabInstance:
     - target: {fileID: 509220823418391380, guid: d9a21c0fc76f51b4a904d98e46032df5, type: 3}
       propertyPath: spawnRooms.Array.data[0].corridor
       value: 
-      objectReference: {fileID: 8992135951646714029, guid: 915e28d5020c78bdea01e6c3acc03d01, type: 3}
+      objectReference: {fileID: 7356515585501951289, guid: 658c6550a70280b99b1a5dfa2addc1dc, type: 3}
     - target: {fileID: 509220823418391385, guid: d9a21c0fc76f51b4a904d98e46032df5, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -579,6 +581,14 @@ PrefabInstance:
     - target: {fileID: 509220824566766413, guid: d9a21c0fc76f51b4a904d98e46032df5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 509220825177752399, guid: d9a21c0fc76f51b4a904d98e46032df5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5972509514526637868, guid: d9a21c0fc76f51b4a904d98e46032df5, type: 3}
+      propertyPath: isStart
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9a21c0fc76f51b4a904d98e46032df5, type: 3}
