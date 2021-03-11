@@ -470,7 +470,7 @@ MonoBehaviour:
   - {fileID: 6592548615729770505, guid: 89b495a7b9439094dbe583af28679a22, type: 3}
   - {fileID: 1144324383682540023, guid: 13344785ce456474b827e04558c9492e, type: 3}
   - {fileID: 4504998359878023393, guid: e2743ee5576c8d84c9641c751375d4ce, type: 3}
-  - {fileID: 0}
+  - {fileID: 3052301283080520949, guid: e87f7ab299e75f841b57270360232cda, type: 3}
   foodId: 0
   holdingItem: 0
   foodLocation: {fileID: 1203221107}
@@ -1503,7 +1503,7 @@ Transform:
   - {fileID: 1098685100}
   - {fileID: 1880306852}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &122385762
 PrefabInstance:
@@ -2941,7 +2941,7 @@ RectTransform:
   - {fileID: 1235000336}
   - {fileID: 1698611254}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3456,8 +3456,9 @@ GameObject:
   - component: {fileID: 221291661}
   - component: {fileID: 221291663}
   - component: {fileID: 221291664}
+  - component: {fileID: 221291665}
   m_Layer: 0
-  m_Name: Cooking Controller
+  m_Name: Recipe Controller
   m_TagString: RecipeMenuActivator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3516,8 +3517,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08691e144a6db1946888cb3069fee412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingStation: {fileID: 1400030884}
+  cookingStation: {fileID: 221291665}
   menuCanvas: {fileID: 182388386}
+--- !u!114 &221291665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221291660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c7ca26cb32100429096fd94384a8f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnFoodAreas:
+  - {fileID: 931329935}
+  - {fileID: 1268582631}
+  - {fileID: 23551657}
+  - {fileID: 1693088869}
+  - {fileID: 629993767}
+  foodPrefabs:
+  - {fileID: 6592548615729770505, guid: 89b495a7b9439094dbe583af28679a22, type: 3}
+  - {fileID: 1144324383682540023, guid: 13344785ce456474b827e04558c9492e, type: 3}
+  - {fileID: 4504998359878023393, guid: e2743ee5576c8d84c9641c751375d4ce, type: 3}
+  - {fileID: 3052301283080520949, guid: e87f7ab299e75f841b57270360232cda, type: 3}
+  playerController: {fileID: 665809931}
+  stationLocation: {fileID: 1545577394}
+  minimumDistance: 7
+  animator: {fileID: 665809926}
+  isCooking: 0
+  cookingProgressBar: {fileID: 1670922666}
+  progressIcon: {fileID: 581357873}
+  progressBarTransform: {fileID: 1166889352}
+  recipeActivator: {fileID: 221291661}
+  currentAmount: 0
+  speed: 30
 --- !u!1001 &229158846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5854,7 +5889,7 @@ Transform:
   - {fileID: 142344801}
   - {fileID: 726473794}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &407084206
 PrefabInstance:
@@ -6058,7 +6093,7 @@ Transform:
   - {fileID: 1461393406}
   - {fileID: 759603897}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &457447644 stripped
 GameObject:
@@ -8663,7 +8698,7 @@ Transform:
   - {fileID: 1248253083}
   - {fileID: 1768036633}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!143 &665809930
 CharacterController:
@@ -13305,7 +13340,7 @@ RectTransform:
   - {fileID: 597510563}
   - {fileID: 1842816153}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -16060,7 +16095,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400030883}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65c7ca26cb32100429096fd94384a8f7, type: 3}
   m_Name: 
@@ -16077,24 +16112,16 @@ MonoBehaviour:
   - {fileID: 4504998359878023393, guid: e2743ee5576c8d84c9641c751375d4ce, type: 3}
   - {fileID: 3052301283080520949, guid: e87f7ab299e75f841b57270360232cda, type: 3}
   playerController: {fileID: 665809931}
-  cookingProgressBar: {fileID: 1670922666}
   stationLocation: {fileID: 1545577394}
   minimumDistance: 7
   animator: {fileID: 665809926}
   isCooking: 0
---- !u!65 &1400030887
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1400030883}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6574496, y: 0.1206487, z: 1.022002}
-  m_Center: {x: 0.000000053692904, y: 0.06032435, z: -0.1983654}
+  cookingProgressBar: {fileID: 1670922666}
+  progressIcon: {fileID: 0}
+  progressBarTransform: {fileID: 0}
+  recipeActivator: {fileID: 0}
+  currentAmount: 0
+  speed: 0
 --- !u!1001 &1401820957
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16467,7 +16494,7 @@ Transform:
   - {fileID: 489177145}
   - {fileID: 1780070395}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1429287212
 PrefabInstance:
@@ -17082,7 +17109,7 @@ Transform:
   - {fileID: 1422467138}
   - {fileID: 1843321340}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1489148561
 PrefabInstance:
@@ -18873,7 +18900,7 @@ Transform:
   - {fileID: 1484226110}
   - {fileID: 1545577394}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1670922664
 GameObject:
@@ -18919,14 +18946,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670922664}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbd67a9722b3f944197667bd7eb76bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   progressIcon: {fileID: 581357873}
-  progressBar: {fileID: 1166889352}
-  cookingStation: {fileID: 1400030884}
+  progressBarTransform: {fileID: 0}
+  cookingStation: {fileID: 221291665}
   recipeActivator: {fileID: 221291661}
   currentAmount: 0
   speed: 30
@@ -21200,7 +21227,7 @@ Transform:
   - {fileID: 1938922345}
   - {fileID: 59311489}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1864271608
 BoxCollider:
@@ -21503,7 +21530,7 @@ PrefabInstance:
       objectReference: {fileID: 1919007457}
     - target: {fileID: 2062472786286145479, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2062472786286145479, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
       propertyPath: m_LocalScale.x
@@ -21951,7 +21978,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1973130386
 GameObject:
@@ -23902,7 +23929,7 @@ Transform:
   - {fileID: 5450003306297365745}
   - {fileID: 812451864}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &635547659941828356
 GameObject:
