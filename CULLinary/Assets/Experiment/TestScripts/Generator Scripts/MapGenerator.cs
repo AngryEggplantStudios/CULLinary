@@ -5,27 +5,46 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject startingRoom;
-    
-    private static Stack<ConnectionPoint> connectionPoints = new Stack<ConnectionPoint>();
-    private bool isGenerated = false;
 
-    private IEnumerator GenerateMapTwo()
+    [SerializeField] private bool limitByRooms;
+    [SerializeField] private int roomLimit;
+    private static int roomCounter = 0;
+    
+    private static Queue<ConnectionPoint> connectionPoints = new Queue<ConnectionPoint>();
+    private bool isGenerated = false;
+    [SerializeField] private GameObject player;
+
+    private void Start()
     {
-        Debug.Log("Starting Generation of Map");
+        isGenerated = true;
+        StartCoroutine(GenerateMap());
+        
+    }
+
+    private IEnumerator GenerateMap()
+    {
         ConnectionPoint[] startingPoints = startingRoom.GetComponentsInChildren<ConnectionPoint>();
-        Debug.Log("Collecting connection points of starting room");
-        yield return null;
         foreach (ConnectionPoint c in startingPoints)
         {
-            connectionPoints.Push(c);
+            connectionPoints.Enqueue(c);
         }
         yield return null;
-        while (connectionPoints.Count > 0) //Include special rooms that will only generate at the end
+        if (limitByRooms)
         {
-            Debug.Log("Popping a connection point");
-            ConnectionPoint currentPoint = connectionPoints.Pop();
-            yield return null;
-            yield return StartCoroutine(currentPoint.GenerateRoomTwo());
+            while (connectionPoints.Count > 0 && roomCounter < roomLimit ) //Include special rooms that will only generate at the end
+            {
+                ConnectionPoint currentPoint = connectionPoints.Dequeue();
+                yield return null;
+                yield return StartCoroutine(currentPoint.GenerateRoom());
+            }
+        }
+        else {
+            while (connectionPoints.Count > 0)
+            {
+                ConnectionPoint currentPoint = connectionPoints.Dequeue();
+                yield return null;
+                yield return StartCoroutine(currentPoint.GenerateRoom());
+            }
         }
     }
 
@@ -35,20 +54,23 @@ public class MapGenerator : MonoBehaviour
         {
             if (!c.GetIsConnected())
             {
-                Debug.Log("Wow!");
-                connectionPoints.Push(c);
+                connectionPoints.Enqueue(c);
             }
             
         }
     }
 
+    public static void AddRoomCounter()
+    {
+        roomCounter++;
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isGenerated)
+        if (Input.GetKeyDown(KeyCode.Space) && !isGenerated && false)
         {
             isGenerated = true;
-            Debug.Log("Generate map!");
-            StartCoroutine(GenerateMapTwo());
+            StartCoroutine(GenerateMap());
         }
 
     }

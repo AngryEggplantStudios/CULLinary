@@ -23,6 +23,9 @@ public class DungeonSpawn : MonoBehaviour
     [SerializeField] private float delayLoopTime;
     [Tooltip("Maximum number of enemies that can be spawned using this spawner")]
     [SerializeField] private int spawnCap; //It will not spawn more than this amount in total
+    [Tooltip("Initial Delay")]
+    [SerializeField] private int initialDelay = 0;
+    private bool delayFlag = false;
 
     private SpawnState state;
     private bool canSpawn = true;
@@ -35,11 +38,19 @@ public class DungeonSpawn : MonoBehaviour
         {
             this.state = SpawnState.Loop;
         }
+        if (initialDelay == 0)
+        {
+            delayFlag = true;
+        }
+        else
+        {
+            StartCoroutine(delayTimer(initialDelay));
+        }
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") && delayFlag)
         {
             if (this.state == SpawnState.Inactive)
             {
@@ -76,9 +87,16 @@ public class DungeonSpawn : MonoBehaviour
         }
     }
 
+    private IEnumerator delayTimer(int delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        delayFlag = true;
+    }
+
     private IEnumerator spawnTimer(float delayLoopTime)
     {
         yield return new WaitForSeconds(delayLoopTime);
         canSpawn = true;
+        
     }
 }

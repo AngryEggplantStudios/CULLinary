@@ -6,6 +6,7 @@ public class CheckCollision : MonoBehaviour
 {
     [SerializeField] bool isEnd;
     [SerializeField] private bool isCollided = false;
+    [SerializeField] private bool isStart;
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.CompareTag("Validator"))
@@ -13,6 +14,11 @@ public class CheckCollision : MonoBehaviour
             isCollided = true;
         }
         
+    }
+
+    public void SetIsNotCollided()
+    {
+        isCollided = false;
     }
 
     public bool GetIsCollided()
@@ -30,9 +36,13 @@ public class CheckCollision : MonoBehaviour
         isCollided = false;
     }
 
-    private void Awake()
+    private void Start()
     {
-        GetComponent<BoxCollider>().enabled = false;
+        if (!isStart)
+        {
+            GetComponent<BoxCollider>().enabled = false;
+        }
+        
     }
 
     public void TurnOnCollider()

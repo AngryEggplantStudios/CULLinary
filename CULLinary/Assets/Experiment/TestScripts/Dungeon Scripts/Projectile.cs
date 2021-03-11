@@ -8,13 +8,14 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float damage;
+    [SerializeField] private float height = 2f;
 
     private float spinSpeed = -1000;
 
     public void Setup(Vector3 projDir, Vector3 lookVector)
     {
         this.projDir = projDir;
-        transform.position += new Vector3(0, 2, 0);
+        transform.position += new Vector3(0, height, 0);
         transform.eulerAngles = new Vector3(0, CalculateAngle(projDir), 90);
         Destroy(gameObject, 5.0f);
     }
