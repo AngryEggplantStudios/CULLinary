@@ -30,14 +30,7 @@ public class DungeonPlayerInventory : MonoBehaviour
         OnItemRemove?.Invoke(item);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Loot loot = other.GetComponent<Loot>();
-        if (loot != null)
-        {
-            AddItemIntoInventory(loot);
-        }
-    }
+
     //private void Update()
     //{
     //    if (Input.GetKeyDown(KeyCode.F) && currentCollidedItem != null)

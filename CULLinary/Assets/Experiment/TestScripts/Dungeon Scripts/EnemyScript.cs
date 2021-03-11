@@ -13,6 +13,7 @@ public class EnemyScript : MonoBehaviour
         Roaming,
         Idle,
         ChaseTarget,
+        AttackTarget,
         ShootingTarget,
         GoingBackToStart,
     }
@@ -22,7 +23,8 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private float stopChase = 10f;
     [SerializeField] private float wanderTimer;
     [SerializeField] private float idleTimer;
-
+    [SerializeField] private float timeBetweenAttacks;
+    [SerializeField] private float collideDamage;
 
 
     [SerializeField] private GameObject hpBar_prefab;
@@ -56,6 +58,7 @@ public class EnemyScript : MonoBehaviour
     private Vector3 startingPosition;
     private Vector3 roamPosition;
     private float timer;
+    private float attackTimer;
     private float nextShootTime;
     private float dist;
     private float health;
@@ -64,7 +67,8 @@ public class EnemyScript : MonoBehaviour
     private State state;
     private Transform player;
     private GameObject lootDropped;
-
+    private DungeonPlayerHealth healthScript;
+    private bool canAttack = true;
     private Renderer rend;
     private Color[] originalColors;
     private Color onDamageColor = Color.white;
@@ -72,7 +76,6 @@ public class EnemyScript : MonoBehaviour
     private void Awake()
     {
         state = State.Idle;
-        state = State.Roaming;
         health = maxHealth;
     }
 
@@ -126,10 +129,36 @@ public class EnemyScript : MonoBehaviour
         hpBarFull = hpBar.transform.Find("hpBar_full").gameObject.GetComponent<Image>();
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (healthScript != null)
+        {
+            healthScript.HandleHit(collideDamage);
+            Debug.Log("Collided!");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        DungeonPlayerHealth target = other.GetComponent<DungeonPlayerHealth>();
+        if (target != null)
+        {
+            healthScript = target;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        DungeonPlayerHealth target = other.GetComponent<DungeonPlayerHealth>();
+        if (target != null)
+        {
+            healthScript = null;
+        }
+    }
+
     private void Update()
     {
-        animator.ResetTrigger("attack");
-
+        float directionVector;
         switch (state)
         {
             default:
@@ -164,11 +193,11 @@ public class EnemyScript : MonoBehaviour
 
                     //Debug.Log("Chase");
                     //transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
-                    float directionVector = Vector3.Distance(transform.position, player.position);
+                directionVector = Vector3.Distance(transform.position, player.position);
                 if (directionVector <= agent.stoppingDistance)
                 {
                     // Target within attack range
-                    animator.SetTrigger("attack");
+                    state = State.AttackTarget;
                     // Add new state to attack player
                 } else
                 {
@@ -181,6 +210,24 @@ public class EnemyScript : MonoBehaviour
                     // Too far, stop chasing
                     state = State.GoingBackToStart;
                 }
+                break;
+            case State.AttackTarget:
+                animator.ResetTrigger("attack");
+                if (canAttack == true)
+                {
+                    Debug.Log("Attack");
+                    animator.SetTrigger("attack");
+                    canAttack = false;
+                    StartCoroutine(DelayFire());
+                }
+                //animator.SetBool("isMoving", false);
+                directionVector = Vector3.Distance(transform.position, player.position);
+                if (directionVector > agent.stoppingDistance)
+                {
+                    // Target within attack range
+                    state = State.ChaseTarget;
+                }
+
                 break;
             case State.GoingBackToStart:
                 animator.SetBool("isMoving", true);
@@ -197,6 +244,12 @@ public class EnemyScript : MonoBehaviour
 
         // Set HP bar to current position
         hpBar.transform.position = cam.WorldToScreenPoint(transform.position);
+    }
+
+    private IEnumerator DelayFire()
+    {
+        yield return new WaitForSeconds(timeBetweenAttacks);
+        canAttack = true;
     }
 
     private void FindTarget()
