@@ -10,7 +10,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private int roomLimit;
     private static int roomCounter = 0;
     
-    private static Stack<ConnectionPoint> connectionPoints = new Stack<ConnectionPoint>();
+    private static Queue<ConnectionPoint> connectionPoints = new Queue<ConnectionPoint>();
     private bool isGenerated = false;
 
     private IEnumerator GenerateMap()
@@ -19,7 +19,7 @@ public class MapGenerator : MonoBehaviour
         yield return null;
         foreach (ConnectionPoint c in startingPoints)
         {
-            connectionPoints.Push(c);
+            connectionPoints.Enqueue(c);
         }
         yield return null;
         if (limitByRooms)
@@ -27,16 +27,16 @@ public class MapGenerator : MonoBehaviour
             while (connectionPoints.Count > 0 && roomCounter < roomLimit ) //Include special rooms that will only generate at the end
             {
                 Debug.Log("Popping a connection point");
-                ConnectionPoint currentPoint = connectionPoints.Pop();
+                ConnectionPoint currentPoint = connectionPoints.Dequeue();
                 yield return null;
                 yield return StartCoroutine(currentPoint.GenerateRoom());
             }
         }
         else {
-            while (connectionPoints.Count > 0) //Include special rooms that will only generate at the end
+            while (connectionPoints.Count > 0)
             {
                 Debug.Log("Popping a connection point");
-                ConnectionPoint currentPoint = connectionPoints.Pop();
+                ConnectionPoint currentPoint = connectionPoints.Dequeue();
                 yield return null;
                 yield return StartCoroutine(currentPoint.GenerateRoom());
             }
@@ -49,7 +49,7 @@ public class MapGenerator : MonoBehaviour
         {
             if (!c.GetIsConnected())
             {
-                connectionPoints.Push(c);
+                connectionPoints.Enqueue(c);
             }
             
         }
