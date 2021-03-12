@@ -1,8 +1,6 @@
 [System.Serializable]
-public class RecipeTest
+public class Ingredient
 {
     public int id;
     public string name;
-    public int[] ingredientIds;
-
 }

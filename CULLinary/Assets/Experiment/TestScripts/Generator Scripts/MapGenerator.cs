@@ -18,7 +18,6 @@ public class MapGenerator : MonoBehaviour
     {
         isGenerated = true;
         StartCoroutine(GenerateMap());
-        
     }
 
     private IEnumerator GenerateMap()

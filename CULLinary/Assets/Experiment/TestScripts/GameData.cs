@@ -5,13 +5,27 @@ using UnityEngine;
 public class GameData : MonoBehaviour
 {
     [SerializeField] private TextAsset recipesFile;
-    private void Start()
+    [SerializeField] private TextAsset ingredientsFile;
+    public static RecipeTest[] recipes;
+    public static Ingredient[] ingredients;
+    private void Awake()
+    {
+        LoadRecipeData();
+        LoadIngredientData();
+    }
+
+    private RecipeTest[] LoadRecipeData()
     {
         RecipesData r = JsonUtility.FromJson<RecipesData>(recipesFile.text);
-        Debug.Log(r.recipes);
-        foreach (RecipeTest rec in r.recipes)
-        {
-            Debug.Log(rec.id + ", " + rec.name + ", " + rec.ingredientIds[0]);
-        }
+        recipes = r.recipes;
+        return r.recipes;
     }
+
+    private Ingredient[] LoadIngredientData()
+    {
+        IngredientsData i = JsonUtility.FromJson<IngredientsData>(ingredientsFile.text);
+        ingredients = i.ingredients;
+        return i.ingredients;
+    }
+    
 }
