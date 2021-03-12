@@ -119,6 +119,7 @@ public class ConnectionPoint : MonoBehaviour
         Transform newTransform = newRoom.GetParentRef().transform;
         Transform currentTransform = this.transform;
         newTransform.rotation = Quaternion.LookRotation(currentTransform.forward);
+        yield return null;
         float newEulerAngle = newTransform.eulerAngles.y;
         float xBias = 0f;
         float zBias = 0f;
