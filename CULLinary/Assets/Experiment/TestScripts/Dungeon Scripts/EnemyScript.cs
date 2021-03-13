@@ -189,13 +189,13 @@ public class EnemyScript : MonoBehaviour
                 break;
             case State.ChaseTarget:
                 animator.SetBool("isMoving", true);
-                transform.LookAt(player);
 
                     //Debug.Log("Chase");
                     //transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
                 directionVector = Vector3.Distance(transform.position, player.position);
                 if (directionVector <= agent.stoppingDistance)
                 {
+                    transform.LookAt(player);
                     // Target within attack range
                     state = State.AttackTarget;
                     // Add new state to attack player
@@ -212,6 +212,7 @@ public class EnemyScript : MonoBehaviour
                 }
                 break;
             case State.AttackTarget:
+                transform.LookAt(player);
                 animator.ResetTrigger("attack");
                 if (canAttack == true)
                 {
@@ -220,7 +221,7 @@ public class EnemyScript : MonoBehaviour
                     canAttack = false;
                     StartCoroutine(DelayFire());
                 }
-                //animator.SetBool("isMoving", false);
+                animator.SetBool("isMoving", false);
                 directionVector = Vector3.Distance(transform.position, player.position);
                 if (directionVector > agent.stoppingDistance)
                 {
