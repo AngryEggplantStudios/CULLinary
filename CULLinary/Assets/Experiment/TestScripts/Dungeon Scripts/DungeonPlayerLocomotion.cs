@@ -45,13 +45,9 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
         dungeonPlayerController.OnPlayerRotate -= Rotate;
     }
 
-    private int count = 0;
-
     public void StepSound()
     {
         audioSource.clip = stepSound;
         audioSource.Play();
-        count++;
-        Debug.Log("step " + count);
     }
 }

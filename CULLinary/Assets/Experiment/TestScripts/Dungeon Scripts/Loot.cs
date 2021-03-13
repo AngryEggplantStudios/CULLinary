@@ -7,6 +7,16 @@ public class Loot : MonoBehaviour
     [SerializeField] private Item itemForLoot;
     [SerializeField] private int itemNo;
 
+    private GameObject player;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip itemPickupSound;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        audioSource = player.transform.GetComponentInChildren<AudioSource>();
+    }
+
     public Item GetItem()
     {
         return itemForLoot;
@@ -19,6 +29,9 @@ public class Loot : MonoBehaviour
 
     public void PickUp()
     {
+        audioSource.clip = itemPickupSound;
+        audioSource.Play();
+        Debug.Log("PICKUP");
         Destroy(gameObject);
     }
 

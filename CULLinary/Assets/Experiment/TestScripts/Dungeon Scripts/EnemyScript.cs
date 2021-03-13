@@ -135,7 +135,7 @@ public class EnemyScript : MonoBehaviour
         if (healthScript != null)
         {
             healthScript.HandleHit(collideDamage);
-            Debug.Log("Collided!");
+            //Debug.Log("Collided!");
         }
     }
 
