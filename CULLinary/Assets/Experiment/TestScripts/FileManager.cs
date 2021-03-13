@@ -22,9 +22,18 @@ public static class FileManager
         }
     }
 
-    public static bool LoadFromFile(string a_FileName, out string result)
+    public static bool LoadFromFile(string a_FileName, out string result, bool isAbsolutePath=false)
     {
-        var fullPath = Path.Combine(Application.persistentDataPath, a_FileName);
+        string fullPath;
+        if (isAbsolutePath)
+        {
+            fullPath = a_FileName;
+            
+        }
+        else
+        {
+            fullPath = Path.Combine(Application.persistentDataPath, a_FileName);
+        }
 
         try
         {

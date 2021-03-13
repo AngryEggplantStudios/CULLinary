@@ -2349,7 +2349,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6648001604773864952}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &3082158192090260359
 MeshFilter:
@@ -2848,7 +2848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConnected: 0
   spawnRooms:
-  - corridor: {fileID: 5558662417761119947}
+  - corridor: {fileID: 9196598596176376711, guid: 964d42e3a8e165eeea8692bf2c5bf58b, type: 3}
     cumProb: 1
   deadend: {fileID: 919132149155446097, guid: 2cbe8e10d9e186301a07cd182885248d, type: 3}
   parentRef: {fileID: 5558662417761119947}
@@ -3284,7 +3284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConnected: 0
   spawnRooms:
-  - corridor: {fileID: 5558662417761119947}
+  - corridor: {fileID: 9196598596176376711, guid: 964d42e3a8e165eeea8692bf2c5bf58b, type: 3}
     cumProb: 1
   deadend: {fileID: 919132149155446097, guid: b99547c051fda74d98010b20727ceffa, type: 3}
   parentRef: {fileID: 5558662417761119947}
@@ -4929,6 +4929,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5932391580333425463}
+  - component: {fileID: 9106406042015814526}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
@@ -5078,6 +5079,20 @@ Transform:
   m_Father: {fileID: 7939552925814195746}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9106406042015814526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162156792957935445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cff227d7f1ead4089e91c859bd48341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAwake: 0
+  addCollider: 1
 --- !u!1 &3238064094223086895
 GameObject:
   m_ObjectHideFlags: 0
@@ -5562,89 +5577,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 5738778707072835271, guid: dee9045b8627c9a4dbf24e4c2587d9ab, type: 3}
---- !u!1 &3479876700005989572
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4251628702958593662}
-  - component: {fileID: 913960597668538843}
-  - component: {fileID: 3119865462791101713}
-  m_Layer: 0
-  m_Name: path_stoneCorner (4)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4251628702958593662
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3479876700005989572}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6648001604773864952}
-  m_RootOrder: 21
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &913960597668538843
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3479876700005989572}
-  m_Mesh: {fileID: -8527557801193949293, guid: b876096caa496784ba8af06ffb58a6cd, type: 3}
---- !u!23 &3119865462791101713
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3479876700005989572}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: -3963241562183589234, guid: b876096caa496784ba8af06ffb58a6cd, type: 3}
-  - {fileID: -4231637370832951941, guid: b876096caa496784ba8af06ffb58a6cd, type: 3}
-  - {fileID: 7555185752953191562, guid: b876096caa496784ba8af06ffb58a6cd, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &3543153648607200867
 GameObject:
   m_ObjectHideFlags: 0
@@ -8305,7 +8237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5558662417761119947}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.770307, y: 0, z: -63}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7063434173709441327}
@@ -9083,6 +9015,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6648001604773864952}
+  - component: {fileID: 8066933406427341407}
   m_Layer: 0
   m_Name: Foliage
   m_TagString: Untagged
@@ -9122,11 +9055,24 @@ Transform:
   - {fileID: 676284796786871875}
   - {fileID: 4437167056854254202}
   - {fileID: 1717888836725454956}
-  - {fileID: 4251628702958593662}
   - {fileID: 2119468224651635746}
   m_Father: {fileID: 7939552925814195746}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8066933406427341407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6005254559815234092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cff227d7f1ead4089e91c859bd48341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAwake: 1
+  addCollider: 0
 --- !u!1 &6050781600720148727
 GameObject:
   m_ObjectHideFlags: 0
@@ -12808,7 +12754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConnected: 0
   spawnRooms:
-  - corridor: {fileID: 5558662417761119947}
+  - corridor: {fileID: 9196598596176376711, guid: 964d42e3a8e165eeea8692bf2c5bf58b, type: 3}
     cumProb: 1
   deadend: {fileID: 919132149155446097, guid: a992de758cfae004b9b08d92a3f2d1bc, type: 3}
   parentRef: {fileID: 5558662417761119947}
