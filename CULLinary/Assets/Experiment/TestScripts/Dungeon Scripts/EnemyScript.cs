@@ -269,16 +269,20 @@ public class EnemyScript : MonoBehaviour
         this.health -= damage;
         hpBarFull.fillAmount = health/maxHealth;
         StartCoroutine(FlashOnDamage());
-
-        GameObject damageCounter = Instantiate(damageCounter_prefab);
-        damageCounter.transform.SetParent(GameObject.Find("UI").transform);
-        damageCounter.transform.position = cam.WorldToScreenPoint(transform.position);
-        damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
+        SpawnDamageCounter(damage);
 
         if (this.health <= 0)
         {
             Die();
         }
+    }
+
+    private void SpawnDamageCounter(float damage)
+    {
+        GameObject damageCounter = Instantiate(damageCounter_prefab);
+        damageCounter.transform.SetParent(GameObject.Find("UI").transform);
+        damageCounter.transform.position = cam.WorldToScreenPoint(transform.position);
+        damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
     }
 
     private void Die()

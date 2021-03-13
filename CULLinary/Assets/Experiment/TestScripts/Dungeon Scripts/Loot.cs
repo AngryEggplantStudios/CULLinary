@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Loot : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Loot : MonoBehaviour
     private GameObject player;
     private AudioSource audioSource;
     [SerializeField] private AudioClip itemPickupSound;
+
+    [SerializeField] private GameObject itemPickupNotif_prefab;
 
     private void Start()
     {
@@ -29,9 +32,15 @@ public class Loot : MonoBehaviour
 
     public void PickUp()
     {
+        // Notif
+        GameObject itemPickupNotif = Instantiate(itemPickupNotif_prefab);
+        itemPickupNotif.transform.SetParent(GameObject.Find("UI").transform);
+        itemPickupNotif.transform.GetComponentInChildren<Image>().sprite = itemForLoot.icon;
+
+        // Sound
         audioSource.clip = itemPickupSound;
         audioSource.Play();
-        Debug.Log("PICKUP");
+
         Destroy(gameObject);
     }
 
