@@ -67,7 +67,7 @@ public class EnemyScript : MonoBehaviour
     private State state;
     private Transform player;
     private GameObject lootDropped;
-    private DungeonPlayerHealth healthScript;
+    private EnemyAttack refScript;
     private bool canAttack = true;
     private Renderer rend;
     private Color[] originalColors;
@@ -83,6 +83,9 @@ public class EnemyScript : MonoBehaviour
     {
         startingPosition = transform.position;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject attackRadius = gameObject.transform.Find("AttackRadius").gameObject;
+        refScript = attackRadius.GetComponent <EnemyAttack>();
+        Debug.Log(refScript.attackDamage);
         cam = player.GetComponentInChildren<Camera>();
         animator = GetComponentInChildren<Animator>();
         timer = wanderTimer;        
@@ -128,34 +131,6 @@ public class EnemyScript : MonoBehaviour
         hpBar.transform.SetParent(GameObject.Find("UI").transform);
         hpBarFull = hpBar.transform.Find("hpBar_full").gameObject.GetComponent<Image>();
     }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (healthScript != null)
-        {
-            healthScript.HandleHit(collideDamage);
-            Debug.Log("Collided!");
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        DungeonPlayerHealth target = other.GetComponent<DungeonPlayerHealth>();
-        if (target != null)
-        {
-            healthScript = target;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        DungeonPlayerHealth target = other.GetComponent<DungeonPlayerHealth>();
-        if (target != null)
-        {
-            healthScript = null;
-        }
-    }
-
     private void Update()
     {
         float directionVector;
@@ -322,5 +297,20 @@ public class EnemyScript : MonoBehaviour
         NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
 
         return navHit.position;
+    }
+    public void attackPlayerStart()
+    {
+        refScript.attackPlayerStart();
+    }
+
+    public void attackPlayerDealDamage()
+    {
+        refScript.attackPlayerDealDamage();
+    }
+
+
+    public void attackPlayerEnd()
+    {
+        refScript.attackPlayerEnd();
     }
 }

@@ -52,25 +52,30 @@ public class DungeonPlayerHealth : MonoBehaviour
     }
 
 
-    public void HandleHit(float damage)
+    //bool value is for if successfully hit the player, so can knockback.
+    public bool HandleHit(float damage)
     {
-        if (isInvincible) return;
+        if (isInvincible) return false;
 
         this.health -= damage;
         hpBarFull.fillAmount = health / maxHealth;
         hpText.text = health + "/" + maxHealth;
-        //StartCoroutine(FlashOnDamage());
 
         if (this.health <= 0)
         {
            //Die();
         }
         StartCoroutine(BecomeTemporarilyInvincible());
+        return true;
+    }
+
+    public void KnockbackPlayer(Vector3 positionOfEnemy)
+    {
+        //ToImplementKnockback
     }
 
     private IEnumerator BecomeTemporarilyInvincible()
     {
-        Debug.Log("Player turned invincible!");
         isInvincible = true;
         bool isFlashing = false;
         for (float i = 0; i < invincibilityDurationSeconds; i += invincibilityDeltaTime)
@@ -93,11 +98,16 @@ public class DungeonPlayerHealth : MonoBehaviour
             isFlashing = !isFlashing;
             yield return new WaitForSeconds(invincibilityDeltaTime);
         }
-        Debug.Log("Player is no longer invincible!");
         isInvincible = false;
     }
 
     private void ScaleModelTo(Vector3 scale)
+    {
+        model.transform.localScale = scale;
+    }
+
+
+    private void Knockbac(Vector3 scale)
     {
         model.transform.localScale = scale;
     }
