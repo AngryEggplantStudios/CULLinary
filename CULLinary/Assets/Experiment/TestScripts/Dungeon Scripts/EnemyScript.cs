@@ -1,28 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class EnemyScript : MonoBehaviour
 {
+    public NavMeshAgent agent;
+
     private enum State
     {
         Roaming,
+        Idle,
         ChaseTarget,
+        AttackTarget,
         ShootingTarget,
         GoingBackToStart,
     }
 
     [SerializeField] private float maxHealth;
     [SerializeField] private float distanceTriggered = 5f;
-    [SerializeField] private float moveSpeed = 2.0f;
-    [SerializeField] private float attackRange = 2.0f;
     [SerializeField] private float stopChase = 10f;
+    [SerializeField] private float wanderTimer;
+    [SerializeField] private float idleTimer;
+    [SerializeField] private float timeBetweenAttacks;
+    [SerializeField] private float collideDamage;
+
 
     [SerializeField] private GameObject hpBar_prefab;
     private GameObject hpBar;
     private Image hpBarFull;
-    
+
     [System.Serializable] private class LootTuple
     {
         [SerializeField] private GameObject loot;
@@ -46,9 +54,11 @@ public class EnemyScript : MonoBehaviour
     }
 
     [SerializeField] private LootTuple[] lootTuples;
-
+    private float wanderRadius = 15.0f;
     private Vector3 startingPosition;
     private Vector3 roamPosition;
+    private float timer;
+    private float attackTimer;
     private float nextShootTime;
     private float dist;
     private float health;
@@ -57,14 +67,15 @@ public class EnemyScript : MonoBehaviour
     private State state;
     private Transform player;
     private GameObject lootDropped;
-
+    private DungeonPlayerHealth healthScript;
+    private bool canAttack = true;
     private Renderer rend;
     private Color[] originalColors;
     private Color onDamageColor = Color.white;
 
     private void Awake()
     {
-        state = State.Roaming;
+        state = State.Idle;
         health = maxHealth;
     }
 
@@ -74,7 +85,7 @@ public class EnemyScript : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         cam = player.GetComponentInChildren<Camera>();
         animator = GetComponentInChildren<Animator>();
-        
+        timer = wanderTimer;        
         SetupFlash();
         SetupLoot();
         SetupHpBar();
@@ -118,31 +129,80 @@ public class EnemyScript : MonoBehaviour
         hpBarFull = hpBar.transform.Find("hpBar_full").gameObject.GetComponent<Image>();
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (healthScript != null)
+        {
+            healthScript.HandleHit(collideDamage);
+            Debug.Log("Collided!");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        DungeonPlayerHealth target = other.GetComponent<DungeonPlayerHealth>();
+        if (target != null)
+        {
+            healthScript = target;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        DungeonPlayerHealth target = other.GetComponent<DungeonPlayerHealth>();
+        if (target != null)
+        {
+            healthScript = null;
+        }
+    }
+
     private void Update()
     {
-        animator.ResetTrigger("attack");
-
+        float directionVector;
         switch (state)
         {
             default:
-            case State.Roaming:
+            case State.Idle:
                 animator.SetBool("isMoving", false);
+                timer += Time.deltaTime;
                 FindTarget();
+                if (timer >= idleTimer)
+                {
+                    Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+                    agent.SetDestination(newPos);
+                    timer = 0;
+                    state = State.Roaming;
+                    roamPosition = newPos;
+                }
+                break;
+            case State.Roaming:
+                animator.SetBool("isMoving", true);
+                timer += Time.deltaTime;
+                FindTarget();
+                Vector3 distanceToFinalPosition = transform.position - roamPosition;
+                //without this the eggplant wandering will be buggy as it may be within the Navmesh Obstacles itself
+                if (timer >= wanderTimer || distanceToFinalPosition.magnitude < 3.0f)
+                {
+                    timer = 0;
+                    state = State.Idle;
+                }
                 break;
             case State.ChaseTarget:
                 animator.SetBool("isMoving", true);
                 transform.LookAt(player);
-                if (Vector3.Distance(transform.position, player.position) < attackRange)
+
+                    //Debug.Log("Chase");
+                    //transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+                directionVector = Vector3.Distance(transform.position, player.position);
+                if (directionVector <= agent.stoppingDistance)
                 {
                     // Target within attack range
-                    animator.SetTrigger("attack");
-                    //Debug.Log("Attack Player");
+                    state = State.AttackTarget;
                     // Add new state to attack player
-                }
-                else
+                } else
                 {
-                    //Debug.Log("Chase");
-                    transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+                    agent.SetDestination(player.position);
+
                 }
 
                 if (Vector3.Distance(transform.position, player.position) > stopChase)
@@ -151,15 +211,33 @@ public class EnemyScript : MonoBehaviour
                     state = State.GoingBackToStart;
                 }
                 break;
+            case State.AttackTarget:
+                animator.ResetTrigger("attack");
+                if (canAttack == true)
+                {
+                    Debug.Log("Attack");
+                    animator.SetTrigger("attack");
+                    canAttack = false;
+                    StartCoroutine(DelayFire());
+                }
+                //animator.SetBool("isMoving", false);
+                directionVector = Vector3.Distance(transform.position, player.position);
+                if (directionVector > agent.stoppingDistance)
+                {
+                    // Target within attack range
+                    state = State.ChaseTarget;
+                }
+
+                break;
             case State.GoingBackToStart:
                 animator.SetBool("isMoving", true);
-                float reachedPositionDistance = 1f;
+                float reachedPositionDistance = 5f;
                 transform.LookAt(startingPosition);
-                transform.position = Vector3.MoveTowards(transform.position, startingPosition, moveSpeed * Time.deltaTime);
-                if (Vector3.Distance(transform.position, startingPosition) < reachedPositionDistance)
+                agent.SetDestination(startingPosition);
+                if (Vector3.Distance(transform.position, startingPosition) <= reachedPositionDistance)
                 {
                     // Reached Start Position
-                    state = State.Roaming;
+                    state = State.Idle;
                 }
                 break;
         }
@@ -168,12 +246,19 @@ public class EnemyScript : MonoBehaviour
         hpBar.transform.position = cam.WorldToScreenPoint(transform.position);
     }
 
+    private IEnumerator DelayFire()
+    {
+        yield return new WaitForSeconds(timeBetweenAttacks);
+        canAttack = true;
+    }
+
     private void FindTarget()
     {
         dist = Vector3.Distance(player.position, transform.position);
 
         if (dist <= distanceTriggered)
         {
+            timer = 0;
             state = State.ChaseTarget;
         }
     }
@@ -182,7 +267,6 @@ public class EnemyScript : MonoBehaviour
     {
         this.health -= damage;
         hpBarFull.fillAmount = health/maxHealth;
-
         StartCoroutine(FlashOnDamage());
 
         if (this.health <= 0)
@@ -219,5 +303,23 @@ public class EnemyScript : MonoBehaviour
     private void DropLoot()
     {
         Instantiate(lootDropped, transform.position, Quaternion.identity);
+    }
+
+    private Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector2 randPos = Random.insideUnitCircle * dist;
+        Vector3 randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);
+        while ((randDirection - origin).magnitude < 7.0f)
+        {
+            randPos = Random.insideUnitCircle * dist;
+            randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);
+        }
+        randDirection += origin;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+
+        return navHit.position;
     }
 }

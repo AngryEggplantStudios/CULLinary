@@ -21,4 +21,13 @@ public class Loot : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        DungeonPlayerInventory inventory = other.GetComponent<DungeonPlayerInventory>();
+        if (inventory != null)
+        {
+            inventory.AddItemIntoInventory(this);
+        }
+    }
 }
