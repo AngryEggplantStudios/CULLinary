@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1361690228870750093}
   - component: {fileID: -3555931757527854768}
   m_Layer: 5
-  m_Name: DamageCounter
+  m_Name: EnemyAlert
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 1419571865688757651}
   - component: {fileID: 3744506948251324546}
   - component: {fileID: 7210962054263050772}
-  - component: {fileID: 3358310623355233206}
+  - component: {fileID: 5217061582509740528}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.22075468, b: 0.22075468, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -130,8 +130,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 13
---- !u!95 &3358310623355233206
+  m_Text: '!'
+--- !u!95 &5217061582509740528
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0

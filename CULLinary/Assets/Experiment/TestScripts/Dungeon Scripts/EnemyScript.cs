@@ -31,6 +31,7 @@ public class EnemyScript : MonoBehaviour
     private Image hpBarFull;
 
     [SerializeField] private GameObject damageCounter_prefab;
+    [SerializeField] private GameObject enemyAlert_prefab;
 
     [System.Serializable] private class LootTuple
     {
@@ -261,6 +262,10 @@ public class EnemyScript : MonoBehaviour
         {
             timer = 0;
             state = State.ChaseTarget;
+            
+            GameObject enemyAlert = Instantiate(enemyAlert_prefab);
+            enemyAlert.transform.SetParent(GameObject.Find("UI").transform);
+            enemyAlert.transform.position = cam.WorldToScreenPoint(transform.position);
         }
     }
 
