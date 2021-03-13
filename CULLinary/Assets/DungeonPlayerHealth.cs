@@ -19,6 +19,7 @@ public class DungeonPlayerHealth : MonoBehaviour
     private Renderer rend;
     private Color[] originalColors;
     private Color onDamageColor = Color.white;
+    DungeonPlayerLocomotion dpl;
 
     private float health;
 
@@ -33,6 +34,7 @@ public class DungeonPlayerHealth : MonoBehaviour
         hpBarFull.fillAmount = health / maxHealth;
         hpText.text = health + "/" + maxHealth;
         SetupFlash();
+        dpl = this.gameObject.GetComponent<DungeonPlayerLocomotion>();
     }
 
     private void SetupFlash()
@@ -72,6 +74,21 @@ public class DungeonPlayerHealth : MonoBehaviour
     public void KnockbackPlayer(Vector3 positionOfEnemy)
     {
         //ToImplementKnockback
+        //StartCoroutine(KnockCoroutine(positionOfEnemy));
+        Vector3 forceDirection = transform.position - positionOfEnemy;
+        Vector3 force = forceDirection.normalized;
+        dpl.KnockBack(force, 50, 3, true);
+    }
+
+    private IEnumerator KnockCoroutine(Vector3 positionOfEnemy)
+    {
+
+        Vector3 forceDirection = transform.position - positionOfEnemy;
+        Vector3 force = forceDirection.normalized;
+        gameObject.GetComponent<Rigidbody>().velocity = force * 4;
+        yield return new WaitForSeconds(0.3f);
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
     }
 
     private IEnumerator BecomeTemporarilyInvincible()
@@ -99,16 +116,5 @@ public class DungeonPlayerHealth : MonoBehaviour
             yield return new WaitForSeconds(invincibilityDeltaTime);
         }
         isInvincible = false;
-    }
-
-    private void ScaleModelTo(Vector3 scale)
-    {
-        model.transform.localScale = scale;
-    }
-
-
-    private void Knockbac(Vector3 scale)
-    {
-        model.transform.localScale = scale;
     }
 }

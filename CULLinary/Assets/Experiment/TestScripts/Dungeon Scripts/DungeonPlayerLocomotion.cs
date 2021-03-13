@@ -31,7 +31,14 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
             controller.Move(direction.normalized * speed * Time.deltaTime);
         }
     }
-
+    public void KnockBack(Vector3 direction, float speed, float animValue, bool isMoving = true)
+    {
+//        animator.SetFloat("Speed", animValue, 0.1f, Time.deltaTime);
+        if (isMoving)
+        {
+            controller.Move(direction.normalized * speed * Time.deltaTime);
+        }
+    }
     private void Rotate(Vector3 direction, float speed)
     {
         playerBody.transform.rotation = Quaternion.Slerp(playerBody.transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * speed);
