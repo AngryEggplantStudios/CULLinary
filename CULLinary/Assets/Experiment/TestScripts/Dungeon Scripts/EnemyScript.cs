@@ -85,7 +85,6 @@ public class EnemyScript : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         GameObject attackRadius = gameObject.transform.Find("AttackRadius").gameObject;
         refScript = attackRadius.GetComponent <EnemyAttack>();
-        Debug.Log(refScript.attackDamage);
         cam = player.GetComponentInChildren<Camera>();
         animator = GetComponentInChildren<Animator>();
         timer = wanderTimer;        
@@ -164,9 +163,6 @@ public class EnemyScript : MonoBehaviour
                 break;
             case State.ChaseTarget:
                 animator.SetBool("isMoving", true);
-
-                    //Debug.Log("Chase");
-                    //transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
                 directionVector = Vector3.Distance(transform.position, player.position);
                 if (directionVector <= agent.stoppingDistance)
                 {
@@ -191,7 +187,6 @@ public class EnemyScript : MonoBehaviour
                 animator.ResetTrigger("attack");
                 if (canAttack == true)
                 {
-                    Debug.Log("Attack");
                     animator.SetTrigger("attack");
                     canAttack = false;
                     StartCoroutine(DelayFire());

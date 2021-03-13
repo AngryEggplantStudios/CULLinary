@@ -9,8 +9,14 @@ public class EggplantAttack : EnemyAttack
     private SphereCollider attackCollider;
     private DungeonPlayerHealth healthScript;
     private bool canDealDamage;
+    public GameObject selectionCirclePrefab;
+
+
     private void Awake()
     {
+        this.selectionCirclePrefab = Instantiate(this.selectionCirclePrefab);
+        this.selectionCirclePrefab.transform.SetParent(this.transform, false);
+        this.selectionCirclePrefab.transform.eulerAngles = new Vector3(90, 0, 0);
         attackSprite = gameObject.GetComponent<SpriteRenderer>();
         attackCollider = gameObject.GetComponent<SphereCollider>();
         canDealDamage = false;
@@ -37,7 +43,6 @@ public class EggplantAttack : EnemyAttack
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log(canDealDamage);
         if (canDealDamage)
         {
 
@@ -64,8 +69,6 @@ public class EggplantAttack : EnemyAttack
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exited");
-
         DungeonPlayerHealth target = other.GetComponent<DungeonPlayerHealth>();
         if (target != null)
         {
