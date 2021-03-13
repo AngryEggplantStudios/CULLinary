@@ -9,9 +9,11 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private bool limitByRooms;
     [SerializeField] private int roomLimit;
     private static int roomCounter = 0;
+    private static List<GameObject> generatedRooms = new List<GameObject>();
     
     private static Queue<ConnectionPoint> connectionPoints = new Queue<ConnectionPoint>();
     private bool isGenerated = false;
+    
     [SerializeField] private GameObject player;
 
     private void Start()
@@ -57,6 +59,12 @@ public class MapGenerator : MonoBehaviour
             }
             
         }
+        //Debug.Log("Added!");
+    }
+
+    public static void AddGeneratedRoom(GameObject room)
+    {
+        generatedRooms.Add(room);
     }
 
     public static void AddRoomCounter()

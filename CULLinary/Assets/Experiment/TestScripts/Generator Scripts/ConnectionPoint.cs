@@ -65,27 +65,19 @@ public class ConnectionPoint : MonoBehaviour
         {
 
             GameObject generatedRoom = Instantiate(roomToGenerate, transform.position, Quaternion.identity);
-
             yield return null;
-
-            generatedRoom.name = "Generated";
             ConnectionPoint[] connectionPoints = generatedRoom.GetComponentsInChildren<ConnectionPoint>();
             ConnectionPoint chosenPoint = connectionPoints[0];
-            foreach (ConnectionPoint c in connectionPoints)
-            {
-                c.SetNotConnected();
-            }
-
-            yield return StartCoroutine(PositionRoom(chosenPoint));
-
-            yield return null;
 
             CheckCollision validatorNewRoom = chosenPoint.GetValidatorRef().GetComponent<CheckCollision>();
-            validatorNewRoom.SetIsNotCollided();
+            //validatorNewRoom.SetIsNotCollided();
+            //Debug.Log(validatorNewRoom.GetIsCollided());
+
+            yield return StartCoroutine(PositionRoom(chosenPoint));
             validatorNewRoom.TurnOnCollider();
-
             yield return null;
-
+            yield return null;
+            yield return null;
             yield return StartCoroutine(CheckValidity(validatorNewRoom, generatedRoom, chosenPoint, connectionPoints));
         }
 
@@ -94,31 +86,35 @@ public class ConnectionPoint : MonoBehaviour
     private IEnumerator CheckValidity(CheckCollision validatorNewRoom, GameObject generatedRoom, ConnectionPoint chosenPoint, ConnectionPoint[] connectionPoints)
     {
         yield return null;
+        yield return null;
+        yield return null;
         if (validatorNewRoom.GetIsCollided() && !validatorNewRoom.GetIsEnd())
         {
-            Debug.Log("Collided! Need to destroy the room");
             Destroy(generatedRoom);
-            validatorNewRoom.SetIsNotCollided();
             yield return null;
             MapGenerator.AddConnectionPoints(new ConnectionPoint[]{this});
         }
         else
         {
-            Debug.Log("Room is valid. Let's add it to the dungeon!");
+            
+            //Debug.Log("Room is valid. Let's add it to the dungeon!");
             MapGenerator.AddRoomCounter();
+            MapGenerator.AddGeneratedRoom(generatedRoom);
+            yield return StartCoroutine(generatedRoom.GetComponentInChildren<MeshCombiner>().CombineMeshes());
             this.SetConnected();
             chosenPoint.SetConnected();
-            yield return null;
+            //Debug.Log("LMAO");
             MapGenerator.AddConnectionPoints(connectionPoints);
         }
     }
 
     private IEnumerator PositionRoom(ConnectionPoint newRoom)
     {
-        yield return null;
         Transform newTransform = newRoom.GetParentRef().transform;
         Transform currentTransform = this.transform;
         newTransform.rotation = Quaternion.LookRotation(currentTransform.forward);
+        yield return null;
+        yield return null;
         yield return null;
         float newEulerAngle = newTransform.eulerAngles.y;
         float xBias = 0f;
@@ -141,6 +137,8 @@ public class ConnectionPoint : MonoBehaviour
             xBias = -newBias;
         }
         newTransform.position = new Vector3(currentTransform.position.x + xBias, currentTransform.position.y, currentTransform.position.z + zBias);
+        yield return null;
+        yield return null;
         yield return null;
     }
 

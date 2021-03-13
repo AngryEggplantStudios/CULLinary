@@ -9,9 +9,12 @@ public class CheckCollision : MonoBehaviour
     [SerializeField] private bool isStart;
     private void OnTriggerEnter(Collider collider)
     {
+        //Debug.Log("I have triggered!");
         if (collider.CompareTag("Validator"))
         {
+            //Debug.Log("Why now then you fire");
             isCollided = true;
+            //Debug.Log("I have set the boolean flag true!");
         }
         
     }
@@ -33,7 +36,8 @@ public class CheckCollision : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
-        isCollided = false;
+        //Debug.Log("This happened");
+        //isCollided = false;
     }
 
     private void Start()
