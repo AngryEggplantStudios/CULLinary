@@ -32,6 +32,7 @@ public class EnemyScript : MonoBehaviour
 
     [SerializeField] private GameObject damageCounter_prefab;
     [SerializeField] private GameObject enemyAlert_prefab;
+    private List<GameObject> uiList = new List<GameObject>();
 
     [System.Serializable] private class LootTuple
     {
@@ -127,8 +128,15 @@ public class EnemyScript : MonoBehaviour
     private void SetupHpBar()
     {
         hpBar = Instantiate(hpBar_prefab);
-        hpBar.transform.SetParent(GameObject.Find("UI").transform);
         hpBarFull = hpBar.transform.Find("hpBar_full").gameObject.GetComponent<Image>();
+        SetupUI(hpBar);
+    }
+
+    private void SetupUI(GameObject ui)
+    {
+        ui.transform.SetParent(GameObject.Find("UI").transform);
+        ui.transform.position = cam.WorldToScreenPoint(transform.position);
+        uiList.Add(ui);
     }
 
     private void OnTriggerStay(Collider other)
@@ -244,8 +252,24 @@ public class EnemyScript : MonoBehaviour
                 break;
         }
 
-        // Set HP bar to current position
-        hpBar.transform.position = cam.WorldToScreenPoint(transform.position);
+        // Set UI to current position
+        Vector2 screenPos = cam.WorldToScreenPoint(transform.position);
+        if (screenPos != Vector2.zero)
+        {
+            foreach (GameObject ui in uiList)
+            {
+                if (ui != null)
+                {
+                    ui.transform.position = screenPos;
+                }
+                else
+                {
+                    uiList.Remove(null);
+                }
+            }
+        }
+
+        
     }
 
     private IEnumerator DelayFire()
@@ -263,9 +287,7 @@ public class EnemyScript : MonoBehaviour
             timer = 0;
             state = State.ChaseTarget;
             
-            GameObject enemyAlert = Instantiate(enemyAlert_prefab);
-            enemyAlert.transform.SetParent(GameObject.Find("UI").transform);
-            enemyAlert.transform.position = cam.WorldToScreenPoint(transform.position);
+            SetupUI(Instantiate(enemyAlert_prefab));
         }
     }
 
@@ -285,9 +307,8 @@ public class EnemyScript : MonoBehaviour
     private void SpawnDamageCounter(float damage)
     {
         GameObject damageCounter = Instantiate(damageCounter_prefab);
-        damageCounter.transform.SetParent(GameObject.Find("UI").transform);
-        damageCounter.transform.position = cam.WorldToScreenPoint(transform.position);
         damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
+        SetupUI(damageCounter);
     }
 
     private void Die()

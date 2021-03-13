@@ -11,7 +11,6 @@ public class Melee : MonoBehaviour
         if (target != null)
         {
             target.HandleHit(damage);
-            Debug.Log("Melee!");
         }
     }
 }
