@@ -10,6 +10,8 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
 
     [SerializeField] private GameObject playerBody;
     
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip stepSound;
 
     private void Start()
     {
@@ -41,5 +43,15 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
     {
         dungeonPlayerController.OnPlayerMove -= Move;
         dungeonPlayerController.OnPlayerRotate -= Rotate;
+    }
+
+    private int count = 0;
+
+    public void StepSound()
+    {
+        audioSource.clip = stepSound;
+        audioSource.Play();
+        count++;
+        Debug.Log("step " + count);
     }
 }

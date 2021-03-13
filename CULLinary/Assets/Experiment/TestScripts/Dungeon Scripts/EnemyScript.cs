@@ -284,8 +284,8 @@ public class EnemyScript : MonoBehaviour
     private void Die()
     {
         DropLoot();
-        Destroy(hpBar, 0.2f);
-        Destroy(gameObject, 0.2f);
+        Destroy(hpBar);
+        Destroy(gameObject);
     }
 
     private IEnumerator FlashOnDamage()
