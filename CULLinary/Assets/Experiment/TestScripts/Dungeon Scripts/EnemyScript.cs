@@ -26,10 +26,11 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private float collideDamage;
 
-
     [SerializeField] private GameObject hpBar_prefab;
     private GameObject hpBar;
     private Image hpBarFull;
+
+    [SerializeField] private GameObject damageCounter_prefab;
 
     [System.Serializable] private class LootTuple
     {
@@ -268,6 +269,11 @@ public class EnemyScript : MonoBehaviour
         this.health -= damage;
         hpBarFull.fillAmount = health/maxHealth;
         StartCoroutine(FlashOnDamage());
+
+        GameObject damageCounter = Instantiate(damageCounter_prefab);
+        damageCounter.transform.SetParent(GameObject.Find("UI").transform);
+        damageCounter.transform.position = cam.WorldToScreenPoint(transform.position);
+        damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
 
         if (this.health <= 0)
         {
