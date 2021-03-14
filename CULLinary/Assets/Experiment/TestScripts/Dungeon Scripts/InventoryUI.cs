@@ -13,6 +13,8 @@ public class InventoryUI : MonoBehaviour
 	private InventorySlot[] slots;
 	private List<Item> itemList = new List<Item>(); // Inventory
 	[SerializeField] private int inventoryLimit = 20;
+	
+    [SerializeField] private GameObject damageCounter_prefab;
 
 	void Start()
 	{
@@ -22,7 +24,6 @@ public class InventoryUI : MonoBehaviour
 		slots = inventoryPanel.GetComponentsInChildren<InventorySlot>();
 		inventoryUI.SetActive(false);
 	}
-
 
 	private void Update()
 	{

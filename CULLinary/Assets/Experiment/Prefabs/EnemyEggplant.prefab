@@ -30,16 +30,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -7396052864322631920, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: -7396052864322631920, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7396052864322631920, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_Size.z
-      value: 1.6364453
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: -7396052864322631920, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_Center.x
-      value: -0.02756995
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7396052864322631920, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
+      propertyPath: m_Center.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -7396052864322631920, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_Center.z
-      value: -0.03606212
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7396052864322631920, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_IsTrigger
@@ -98,9 +110,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: bbc2e21c0cafe6141a74c1a5dcc5e12a, type: 2}
     - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
+      propertyPath: enemyAlert_prefab
+      value: 
+      objectReference: {fileID: 1085209639500972291, guid: 186234b88676f4b4f872f98d3ab0973c, type: 3}
+    - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: timeBetweenAttacks
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
+      propertyPath: damageCounter_prefab
+      value: 
+      objectReference: {fileID: 1085209639500972291, guid: 24f41dda89c7bd648bd2796ac669721e, type: 3}
     - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: lootArrays.Array.size
       value: 2
