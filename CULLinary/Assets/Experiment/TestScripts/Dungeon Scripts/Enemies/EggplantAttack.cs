@@ -10,13 +10,12 @@ public class EggplantAttack : EnemyAttack
     private DungeonPlayerHealth healthScript;
     private bool canDealDamage;
     public GameObject selectionCirclePrefab;
+    public GameObject selectionCircleActual;
 
 
     private void Awake()
     {
-        this.selectionCirclePrefab = Instantiate(this.selectionCirclePrefab);
-        this.selectionCirclePrefab.transform.SetParent(this.transform, false);
-        this.selectionCirclePrefab.transform.eulerAngles = new Vector3(90, 0, 0);
+
         attackSprite = gameObject.GetComponent<SpriteRenderer>();
         attackCollider = gameObject.GetComponent<SphereCollider>();
         canDealDamage = false;
@@ -24,7 +23,10 @@ public class EggplantAttack : EnemyAttack
 
     public override void attackPlayerStart()
     {
-        attackSprite.enabled = true;
+        //attackSprite.enabled = true;
+        this.selectionCircleActual = Instantiate(this.selectionCirclePrefab);
+        this.selectionCircleActual.transform.SetParent(this.transform, false);
+        this.selectionCircleActual.transform.eulerAngles = new Vector3(90, 0, 0);
         attackCollider.enabled = true;
     }
 
@@ -36,7 +38,8 @@ public class EggplantAttack : EnemyAttack
 
     public override void attackPlayerEnd()
     {
-        attackSprite.enabled = false;
+        //attackSprite.enabled = false;
+        Destroy(selectionCircleActual.gameObject);
         attackCollider.enabled = false;
         canDealDamage = false;
     }

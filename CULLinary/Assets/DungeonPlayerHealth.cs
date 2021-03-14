@@ -76,6 +76,7 @@ public class DungeonPlayerHealth : MonoBehaviour
         //ToImplementKnockback
         //StartCoroutine(KnockCoroutine(positionOfEnemy));
         Vector3 forceDirection = transform.position - positionOfEnemy;
+        forceDirection.y = 0;
         Vector3 force = forceDirection.normalized;
         dpl.KnockBack(force, 50, 3, true);
     }
