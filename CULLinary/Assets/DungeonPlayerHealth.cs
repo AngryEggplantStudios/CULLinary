@@ -19,6 +19,7 @@ public class DungeonPlayerHealth : MonoBehaviour
     private Renderer rend;
     private Color[] originalColors;
     private Color onDamageColor = Color.white;
+    DungeonPlayerLocomotion dpl;
 
     private float health;
 
@@ -33,6 +34,7 @@ public class DungeonPlayerHealth : MonoBehaviour
         hpBarFull.fillAmount = health / maxHealth;
         hpText.text = health + "/" + maxHealth;
         SetupFlash();
+        dpl = this.gameObject.GetComponent<DungeonPlayerLocomotion>();
     }
 
     private void SetupFlash()
@@ -52,25 +54,46 @@ public class DungeonPlayerHealth : MonoBehaviour
     }
 
 
-    public void HandleHit(float damage)
+    //bool value is for if successfully hit the player, so can knockback.
+    public bool HandleHit(float damage)
     {
-        if (isInvincible) return;
+        if (isInvincible) return false;
 
         this.health -= damage;
         hpBarFull.fillAmount = health / maxHealth;
         hpText.text = health + "/" + maxHealth;
-        //StartCoroutine(FlashOnDamage());
 
         if (this.health <= 0)
         {
            //Die();
         }
         StartCoroutine(BecomeTemporarilyInvincible());
+        return true;
+    }
+
+    public void KnockbackPlayer(Vector3 positionOfEnemy)
+    {
+        //ToImplementKnockback
+        //StartCoroutine(KnockCoroutine(positionOfEnemy));
+        Vector3 forceDirection = transform.position - positionOfEnemy;
+        forceDirection.y = 0;
+        Vector3 force = forceDirection.normalized;
+        dpl.KnockBack(force, 50, 3, true);
+    }
+
+    private IEnumerator KnockCoroutine(Vector3 positionOfEnemy)
+    {
+
+        Vector3 forceDirection = transform.position - positionOfEnemy;
+        Vector3 force = forceDirection.normalized;
+        gameObject.GetComponent<Rigidbody>().velocity = force * 4;
+        yield return new WaitForSeconds(0.3f);
+        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
     }
 
     private IEnumerator BecomeTemporarilyInvincible()
     {
-        Debug.Log("Player turned invincible!");
         isInvincible = true;
         bool isFlashing = false;
         for (float i = 0; i < invincibilityDurationSeconds; i += invincibilityDeltaTime)
@@ -93,12 +116,6 @@ public class DungeonPlayerHealth : MonoBehaviour
             isFlashing = !isFlashing;
             yield return new WaitForSeconds(invincibilityDeltaTime);
         }
-        Debug.Log("Player is no longer invincible!");
         isInvincible = false;
-    }
-
-    private void ScaleModelTo(Vector3 scale)
-    {
-        model.transform.localScale = scale;
     }
 }
