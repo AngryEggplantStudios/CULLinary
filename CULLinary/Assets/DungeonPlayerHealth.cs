@@ -78,7 +78,7 @@ public class DungeonPlayerHealth : MonoBehaviour
         Vector3 forceDirection = transform.position - positionOfEnemy;
         forceDirection.y = 0;
         Vector3 force = forceDirection.normalized;
-        dpl.KnockBack(force, 50, 3, true);
+        //dpl.KnockBack(force, 50, 3, true);
     }
 
     private IEnumerator KnockCoroutine(Vector3 positionOfEnemy)
