@@ -26,9 +26,9 @@ public class ServingController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                // Pick up food from counter
                 Debug.Log("Clicking on: " + hit.collider.gameObject.name);
 
+                // Pick up food from counter
                 if (hit.collider != null && hit.collider.gameObject.tag == "FoodToServe" && !holdingItem)
                 {
                     string selectedDish = hit.collider.gameObject.name;
@@ -93,9 +93,7 @@ public class ServingController : MonoBehaviour
 
         holdingItem = false; // reset bool value since not carrying anything anymore
 
-        var foodLocation = player.transform.Find("FoodLocation"); // Destroy food the player was carrying
-        GameObject holdingPos = foodLocation.gameObject;
-
+        GameObject holdingPos = foodLocation.gameObject; // Destroy food the player was carrying
         foreach (Transform child in holdingPos.transform)
         {
             GameObject.Destroy(child.gameObject);
@@ -103,5 +101,4 @@ public class ServingController : MonoBehaviour
 
         currCustomer = null;
     }
-
-    }
+}

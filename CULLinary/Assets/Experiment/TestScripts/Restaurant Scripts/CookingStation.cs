@@ -8,7 +8,7 @@ using UnityEngine.Events;
 public class CookingStation : MonoBehaviour
 {
     [Header("For Cooking")] // For cooking anim
-    public Restaurant_newPlayerController playerController;
+    public DungeonPlayerController playerController;
     
     public Transform stationLocation;
     public float minimumDistance = 7.0f;
