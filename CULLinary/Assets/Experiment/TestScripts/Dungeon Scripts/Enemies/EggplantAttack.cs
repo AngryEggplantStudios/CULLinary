@@ -23,10 +23,10 @@ public class EggplantAttack : EnemyAttack
 
     public override void attackPlayerStart()
     {
-        //attackSprite.enabled = true;
-        this.selectionCircleActual = Instantiate(this.selectionCirclePrefab);
-        this.selectionCircleActual.transform.SetParent(this.transform, false);
-        this.selectionCircleActual.transform.eulerAngles = new Vector3(90, 0, 0);
+        attackSprite.enabled = true;
+        //this.selectionCircleActual = Instantiate(this.selectionCirclePrefab);
+        //this.selectionCircleActual.transform.SetParent(this.transform, false);
+        //this.selectionCircleActual.transform.eulerAngles = new Vector3(90, 0, 0);
         attackCollider.enabled = true;
     }
 
@@ -38,8 +38,8 @@ public class EggplantAttack : EnemyAttack
 
     public override void attackPlayerEnd()
     {
-        //attackSprite.enabled = false;
-        Destroy(selectionCircleActual.gameObject);
+        attackSprite.enabled = false;
+        //Destroy(selectionCircleActual.gameObject);
         attackCollider.enabled = false;
         canDealDamage = false;
     }

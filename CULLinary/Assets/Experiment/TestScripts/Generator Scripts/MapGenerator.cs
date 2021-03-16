@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField] private bool limitByRooms;
     [SerializeField] private int roomLimit;
+    private static GameObject parent;
     private static int roomCounter = 0;
     private static List<GameObject> generatedRooms = new List<GameObject>();
     
@@ -18,6 +20,8 @@ public class MapGenerator : MonoBehaviour
 
     private void Start()
     {
+        parent = new GameObject();
+        parent.AddComponent<NavMeshSurface>();
         isGenerated = true;
         StartCoroutine(GenerateMap());
     }
@@ -37,6 +41,11 @@ public class MapGenerator : MonoBehaviour
                 ConnectionPoint currentPoint = connectionPoints.Dequeue();
                 yield return null;
                 yield return StartCoroutine(currentPoint.GenerateRoom());
+            }
+            if (roomCounter == roomLimit)
+            {
+                parent.GetComponent<NavMeshSurface>().BuildNavMesh();
+                Debug.Log("Building Navmesh");
             }
         }
         else {
@@ -65,6 +74,7 @@ public class MapGenerator : MonoBehaviour
     public static void AddGeneratedRoom(GameObject room)
     {
         generatedRooms.Add(room);
+        room.transform.parent = parent.transform;
     }
 
     public static void AddRoomCounter()
