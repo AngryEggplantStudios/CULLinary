@@ -471,9 +471,9 @@ MonoBehaviour:
   - {fileID: 1144324383682540023, guid: 13344785ce456474b827e04558c9492e, type: 3}
   - {fileID: 4504998359878023393, guid: e2743ee5576c8d84c9641c751375d4ce, type: 3}
   - {fileID: 3052301283080520949, guid: e87f7ab299e75f841b57270360232cda, type: 3}
-  foodId: 0
-  holdingItem: 0
   foodLocation: {fileID: 2105855607}
+  holdingItem: 0
+  interactRange: 7
 --- !u!4 &47042468
 Transform:
   m_ObjectHideFlags: 0
@@ -1094,7 +1094,7 @@ GameObject:
   - component: {fileID: 89306462}
   m_Layer: 0
   m_Name: SeatPos_15
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1275,7 +1275,7 @@ GameObject:
   - component: {fileID: 97643413}
   m_Layer: 0
   m_Name: SeatPos_8
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3011,7 +3011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 20
-  runSpeed: 8
+  runSpeed: 32
   turnSpeed: 10
   invertKeys: 1
   canRun: 0
@@ -3669,7 +3669,7 @@ GameObject:
   - component: {fileID: 214057616}
   m_Layer: 0
   m_Name: SeatPos_9
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3797,6 +3797,7 @@ MonoBehaviour:
   recipeActivator: {fileID: 221291661}
   currentAmount: 0
   speed: 30
+  player: {fileID: 174383411}
 --- !u!1001 &229158846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5054,6 +5055,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2e35bd84497bf1648966e1f9459b41fd, type: 3}
       propertyPath: m_Name
       value: tableCloth
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2e35bd84497bf1648966e1f9459b41fd, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2e35bd84497bf1648966e1f9459b41fd, type: 3}
       propertyPath: m_NavMeshLayer
@@ -7050,6 +7055,10 @@ PrefabInstance:
       value: chairRounded
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 19e201071114f144ea5ad88f87aeb9c5, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 19e201071114f144ea5ad88f87aeb9c5, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -7654,7 +7663,7 @@ GameObject:
   - component: {fileID: 556620184}
   m_Layer: 0
   m_Name: SeatPos_10
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9660,7 +9669,7 @@ GameObject:
   - component: {fileID: 730363809}
   m_Layer: 0
   m_Name: SeatPos_13
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11736,7 +11745,7 @@ GameObject:
   - component: {fileID: 925884048}
   m_Layer: 0
   m_Name: SeatPos_3
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15638,7 +15647,7 @@ GameObject:
   - component: {fileID: 1289117875}
   m_Layer: 0
   m_Name: SeatPos_1
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16706,6 +16715,7 @@ MonoBehaviour:
   recipeActivator: {fileID: 0}
   currentAmount: 0
   speed: 0
+  player: {fileID: 0}
 --- !u!1001 &1401820957
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16899,7 +16909,7 @@ GameObject:
   - component: {fileID: 1413535007}
   m_Layer: 0
   m_Name: SeatPos_5
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17476,7 +17486,7 @@ GameObject:
   - component: {fileID: 1448330236}
   m_Layer: 0
   m_Name: SeatPos_2
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17732,7 +17742,7 @@ GameObject:
   - component: {fileID: 1478725987}
   m_Layer: 0
   m_Name: SeatPos_14
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19592,7 +19602,7 @@ GameObject:
   - component: {fileID: 1630822419}
   m_Layer: 0
   m_Name: SeatPos_11
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20149,7 +20159,7 @@ GameObject:
   - component: {fileID: 1677803519}
   m_Layer: 0
   m_Name: SeatPos_16
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21448,7 +21458,7 @@ GameObject:
   - component: {fileID: 1836785235}
   m_Layer: 0
   m_Name: SeatPos_12
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21509,7 +21519,7 @@ GameObject:
   - component: {fileID: 1838528719}
   m_Layer: 0
   m_Name: SeatPos_7
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24753,7 +24763,7 @@ GameObject:
   - component: {fileID: 2144384789}
   m_Layer: 0
   m_Name: SeatPos_4
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24830,6 +24840,10 @@ PrefabInstance:
     - target: {fileID: 2822748581313019769, guid: 12e419305b7db884dbb2fd7000775325, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2822748581313019769, guid: 12e419305b7db884dbb2fd7000775325, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2822748582857734326, guid: 12e419305b7db884dbb2fd7000775325, type: 3}
       propertyPath: m_Camera
