@@ -96,7 +96,7 @@ SphereCollider:
   m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.75
-  m_Center: {x: 0, y: 0, z: 0.0000000018626451}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1899975033449201685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 20
   selectionCirclePrefab: {fileID: 166266, guid: d3c876a629f651649b791d233e3969c0, type: 3}
+  selectionCircleActual: {fileID: 0}
 --- !u!195 &-972620333246954085
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -120,12 +121,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 4757314950517091208}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
+  m_Radius: 0.7
+  m_Speed: 1
+  m_Acceleration: 2
+  avoidancePriority: 80
   m_AngularSpeed: 120
-  m_StoppingDistance: 3
+  m_StoppingDistance: 0.75
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -205,6 +206,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
+      propertyPath: stopChase
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: attackRange
       value: 2
       objectReference: {fileID: 0}
@@ -224,6 +229,10 @@ PrefabInstance:
       propertyPath: onDamageMaterial
       value: 
       objectReference: {fileID: 2100000, guid: bbc2e21c0cafe6141a74c1a5dcc5e12a, type: 2}
+    - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
+      propertyPath: distanceTriggered
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: enemyAlert_prefab
       value: 
@@ -294,15 +303,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2469364241370864174, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2469364241370864174, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2469364241370864174, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2469364241370864174, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -310,7 +319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2469364241370864174, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.21443
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2469364241370864174, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_LocalPosition.z

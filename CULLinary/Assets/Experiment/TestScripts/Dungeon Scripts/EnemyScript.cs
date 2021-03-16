@@ -19,8 +19,8 @@ public class EnemyScript : MonoBehaviour
     }
 
     [SerializeField] private float maxHealth;
-    [SerializeField] private float distanceTriggered = 5f;
-    [SerializeField] private float stopChase = 10f;
+    [SerializeField] private float distanceTriggered;
+    [SerializeField] private float stopChase;
     [SerializeField] private float wanderTimer;
     [SerializeField] private float idleTimer;
     [SerializeField] private float timeBetweenAttacks;
@@ -57,12 +57,11 @@ public class EnemyScript : MonoBehaviour
     }
 
     [SerializeField] private LootTuple[] lootTuples;
-    private float wanderRadius = 15.0f;
+    private float wanderRadius = 5.0f;
     private Vector3 startingPosition;
     private Vector3 roamPosition;
     private float timer;
-    private float attackTimer;
-    private float nextShootTime;
+    private float goingBackToStartTimer;
     private float dist;
     private float health;
     private Animator animator;
@@ -75,6 +74,7 @@ public class EnemyScript : MonoBehaviour
     private Renderer rend;
     private Color[] originalColors;
     private Color onDamageColor = Color.white;
+    private bool canMoveDuringAttack = true;
 
     private void Awake()
     {
@@ -90,7 +90,8 @@ public class EnemyScript : MonoBehaviour
         refScript = attackRadius.GetComponent <EnemyAttack>();
         cam = player.GetComponentInChildren<Camera>();
         animator = GetComponentInChildren<Animator>();
-        timer = wanderTimer;        
+        timer = wanderTimer;
+        goingBackToStartTimer = 0;
         SetupFlash();
         SetupLoot();
         SetupHpBar();
@@ -143,6 +144,7 @@ public class EnemyScript : MonoBehaviour
 
     private void Update()
     {
+        Vector3 playerPositionWithoutYOffset = new Vector3(player.position.x, transform.position.y, player.position.z);
         float directionVector;
         switch (state)
         {
@@ -153,7 +155,7 @@ public class EnemyScript : MonoBehaviour
                 FindTarget();
                 if (timer >= idleTimer)
                 {
-                    Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+                    Vector3 newPos = RandomNavSphere(startingPosition, wanderRadius, -1);
                     agent.SetDestination(newPos);
                     timer = 0;
                     state = State.Roaming;
@@ -166,7 +168,7 @@ public class EnemyScript : MonoBehaviour
                 FindTarget();
                 Vector3 distanceToFinalPosition = transform.position - roamPosition;
                 //without this the eggplant wandering will be buggy as it may be within the Navmesh Obstacles itself
-                if (timer >= wanderTimer || distanceToFinalPosition.magnitude < 3.0f)
+                if (timer >= wanderTimer || distanceToFinalPosition.magnitude < 0.5f)
                 {
                     timer = 0;
                     state = State.Idle;
@@ -174,16 +176,16 @@ public class EnemyScript : MonoBehaviour
                 break;
             case State.ChaseTarget:
                 animator.SetBool("isMoving", true);
-                directionVector = Vector3.Distance(transform.position, player.position);
+                directionVector = Vector3.Distance(transform.position, playerPositionWithoutYOffset);
                 if (directionVector <= agent.stoppingDistance)
                 {
-                    transform.LookAt(player);
+                    transform.LookAt(playerPositionWithoutYOffset);
                     // Target within attack range
                     state = State.AttackTarget;
                     // Add new state to attack player
                 } else
                 {
-                    agent.SetDestination(player.position);
+                    agent.SetDestination(playerPositionWithoutYOffset);
 
                 }
 
@@ -194,7 +196,8 @@ public class EnemyScript : MonoBehaviour
                 }
                 break;
             case State.AttackTarget:
-                transform.LookAt(player);
+                transform.LookAt(playerPositionWithoutYOffset);
+                animator.SetBool("isMoving", false);
                 animator.ResetTrigger("attack");
                 if (canAttack == true)
                 {
@@ -202,9 +205,8 @@ public class EnemyScript : MonoBehaviour
                     canAttack = false;
                     StartCoroutine(DelayFire());
                 }
-                animator.SetBool("isMoving", false);
-                directionVector = Vector3.Distance(transform.position, player.position);
-                if (directionVector > agent.stoppingDistance)
+                directionVector = Vector3.Distance(transform.position, playerPositionWithoutYOffset);
+                if (directionVector > agent.stoppingDistance && canMoveDuringAttack)
                 {
                     // Target within attack range
                     state = State.ChaseTarget;
@@ -212,14 +214,16 @@ public class EnemyScript : MonoBehaviour
 
                 break;
             case State.GoingBackToStart:
+                goingBackToStartTimer += Time.deltaTime;
                 animator.SetBool("isMoving", true);
-                float reachedPositionDistance = 5f;
+                float reachedPositionDistance = 0.5f;
                 transform.LookAt(startingPosition);
                 agent.SetDestination(startingPosition);
-                if (Vector3.Distance(transform.position, startingPosition) <= reachedPositionDistance)
+                if (Vector3.Distance(transform.position, startingPosition) <= reachedPositionDistance || goingBackToStartTimer > 4.0f)
                 {
                     // Reached Start Position
                     state = State.Idle;
+                    goingBackToStartTimer = 0;
                 }
                 break;
         }
@@ -317,7 +321,7 @@ public class EnemyScript : MonoBehaviour
     {
         Vector2 randPos = Random.insideUnitCircle * dist;
         Vector3 randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);
-        while ((randDirection - origin).magnitude < 7.0f)
+        while ((randDirection - origin).magnitude < 3.0f)
         {
             randPos = Random.insideUnitCircle * dist;
             randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);
@@ -332,6 +336,7 @@ public class EnemyScript : MonoBehaviour
     }
     public void attackPlayerStart()
     {
+        canMoveDuringAttack = false;
         refScript.attackPlayerStart();
     }
 
@@ -343,6 +348,7 @@ public class EnemyScript : MonoBehaviour
 
     public void attackPlayerEnd()
     {
+        canMoveDuringAttack = true;
         refScript.attackPlayerEnd();
     }
 }
