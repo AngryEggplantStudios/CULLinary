@@ -33,6 +33,9 @@ public class CookingStation : MonoBehaviour
     [SerializeField] private float currentAmount;
     [SerializeField] private float speed;
 
+    [Header("Take Control of Player Movement")] // Prevent movement while cooking
+    public DungeonPlayerController player;
+
     void Update()
     {
         // Stop cooking anim if player walks away halfway
@@ -49,11 +52,13 @@ public class CookingStation : MonoBehaviour
             if (progressIcon.activeSelf == false)
             {
                 progressIcon.SetActive(true); // Show the icon only if cooking
+                player.DisableMovement();     // Disable movement of player
             }
             else
             {
                 FillUpBar(); // Start filling up the bar once it is active
             }
+            player.Face(stationLocation.position); // Face the station when cooking
         }
     }
 
@@ -74,6 +79,7 @@ public class CookingStation : MonoBehaviour
             isCooking = false;                  // Reset value since not cooking anymore
             ServeDish();                        // Spawn food at next available location
             recipeActivator.enabled = true;     // Reset collider so player can click again to open recipe menu
+            player.EnableMovement();            // Reenable player movement
         }
 
         progressBarTransform.GetComponent<Image>().fillAmount = currentAmount / 100;

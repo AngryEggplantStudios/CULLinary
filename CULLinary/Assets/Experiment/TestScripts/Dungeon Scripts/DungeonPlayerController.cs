@@ -7,8 +7,11 @@ public class DungeonPlayerController : DungeonPlayerAction
 
     public delegate void PlayerMoveDelegate(Vector3 direction, float speed, float animValue, bool isMoving);
     public delegate void PlayerRotateDelegate(Vector3 direction, float speed);
+    public delegate void PlayerRotateToLocationDelegate(Vector3 worldPosition, float speed);
+
     public event PlayerMoveDelegate OnPlayerMove;
     public event PlayerRotateDelegate OnPlayerRotate;
+    public event PlayerRotateToLocationDelegate OnPlayerInteract;
 
     //Speed
     [SerializeField] private float walkSpeed = 10.0f;
@@ -28,7 +31,24 @@ public class DungeonPlayerController : DungeonPlayerAction
     private DungeonPlayerRange dungeonPlayerRange;
     private DungeonPlayerMelee dungeonPlayerMelee;
    
-    private int directionMultiplier = 1;
+    // Helper variables for restaurant
+    private int directionMultiplier = 1;   // Restaurant camera is facing backwards
+    private bool isMovementAllowed = true; // Disable movement while cooking
+
+    // Disables movement of this player.
+    public void DisableMovement() {
+        isMovementAllowed = false;
+    }
+
+    // Enables movement of this player.
+    public void EnableMovement() {
+        isMovementAllowed = true;
+    }
+
+    // Face a certain position in world coordinates.
+    public void Face(Vector3 positionToLookAt) {
+        OnPlayerInteract?.Invoke(positionToLookAt, turnSpeed);
+    }
 
     private void Start(){
         dungeonPlayerRange = GetComponent<DungeonPlayerRange>();
@@ -38,6 +58,10 @@ public class DungeonPlayerController : DungeonPlayerAction
 
     private void Update()
     {
+        if (!isMovementAllowed) {
+            return;
+        }
+
         //Get input
         float moveVertical = Input.GetAxisRaw("Vertical");
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
