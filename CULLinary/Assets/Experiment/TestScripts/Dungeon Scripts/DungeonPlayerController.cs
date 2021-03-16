@@ -14,9 +14,10 @@ public class DungeonPlayerController : DungeonPlayerAction
     [SerializeField] private float walkSpeed = 10.0f;
     [SerializeField] private float runSpeed = 20.0f;
     [SerializeField] private float turnSpeed = 10.0f;
-
-    //Cameras
-    [SerializeField] private GameObject cam;
+    // Whether to invert movement directions and keyboard mapping
+    [SerializeField] private bool invertKeys = false;
+    // Whether run is enabled
+    [SerializeField] private bool canRun = true;
 
     //Directions
     private Vector3 direction;
@@ -27,10 +28,12 @@ public class DungeonPlayerController : DungeonPlayerAction
     private DungeonPlayerRange dungeonPlayerRange;
     private DungeonPlayerMelee dungeonPlayerMelee;
    
+    private int directionMultiplier = 1;
 
     private void Start(){
         dungeonPlayerRange = GetComponent<DungeonPlayerRange>();
         dungeonPlayerMelee = GetComponent<DungeonPlayerMelee>();
+        directionMultiplier = invertKeys ? -1 : 1;
     }
 
     private void Update()
@@ -41,8 +44,8 @@ public class DungeonPlayerController : DungeonPlayerAction
 
         //Calculations
         direction = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        normalizedDirection = direction.normalized;
-        float targetAngle = Mathf.Atan2(normalizedDirection.x, normalizedDirection.z) * Mathf.Rad2Deg + cam.transform.eulerAngles.y;
+        normalizedDirection = direction.normalized * directionMultiplier;
+        float targetAngle = Mathf.Atan2(normalizedDirection.x, normalizedDirection.z) * Mathf.Rad2Deg;
         moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
         
         bool isRangeInvoked = dungeonPlayerRange ? dungeonPlayerRange.GetIsInvoking() : false;
@@ -57,7 +60,7 @@ public class DungeonPlayerController : DungeonPlayerAction
             }
             else
             {
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (canRun && Input.GetKey(KeyCode.LeftShift))
                 {
                     OnPlayerMove?.Invoke(moveDirection.normalized, runSpeed, 1.0f, true);
                 }
