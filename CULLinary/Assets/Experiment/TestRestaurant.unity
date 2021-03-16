@@ -3160,6 +3160,7 @@ GameObject:
   - component: {fileID: 182388389}
   - component: {fileID: 182388388}
   - component: {fileID: 182388387}
+  - component: {fileID: 182388392}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -3266,6 +3267,45 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &182388392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182388386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b60827d2004d3c40a67313643a6e830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 221291665}
+        m_TargetAssemblyTypeName: CookingStation, Assembly-CSharp
+        m_MethodName: EnableMovementOfPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 221291664}
+        m_TargetAssemblyTypeName: RecipeSelector, Assembly-CSharp
+        m_MethodName: SelectCloseButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &182840151
 GameObject:
   m_ObjectHideFlags: 0
@@ -3698,7 +3738,6 @@ GameObject:
   m_Component:
   - component: {fileID: 221291662}
   - component: {fileID: 221291661}
-  - component: {fileID: 221291663}
   - component: {fileID: 221291664}
   - component: {fileID: 221291665}
   m_Layer: 0
@@ -3735,20 +3774,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &221291663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 221291660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07c6760aab7b26343bcd1f9f9e56d6fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ui: {fileID: 182388386}
-  cam: {fileID: 1158809158}
 --- !u!114 &221291664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3797,7 +3822,9 @@ MonoBehaviour:
   recipeActivator: {fileID: 221291661}
   currentAmount: 0
   speed: 30
-  player: {fileID: 174383411}
+  ui: {fileID: 182388386}
+  dungeonController: {fileID: 174383411}
+  restaurantController: {fileID: 174383403}
 --- !u!1001 &229158846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16540,7 +16567,6 @@ GameObject:
   - component: {fileID: 1393372349}
   - component: {fileID: 1393372348}
   - component: {fileID: 1393372347}
-  - component: {fileID: 1393372346}
   m_Layer: 5
   m_Name: closeButton
   m_TagString: Untagged
@@ -16568,20 +16594,6 @@ RectTransform:
   m_AnchoredPosition: {x: 300, y: -640}
   m_SizeDelta: {x: 490, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1393372346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1393372344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832905fcf511ef841aa7268743578d86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ui: {fileID: 182388386}
-  cam: {fileID: 1158809158}
 --- !u!114 &1393372347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16626,6 +16638,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 221291665}
+        m_TargetAssemblyTypeName: CookingStation, Assembly-CSharp
+        m_MethodName: EnableMovementOfPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 221291664}
         m_TargetAssemblyTypeName: RecipeSelector, Assembly-CSharp
         m_MethodName: SelectCloseButton
@@ -16715,7 +16739,9 @@ MonoBehaviour:
   recipeActivator: {fileID: 0}
   currentAmount: 0
   speed: 0
-  player: {fileID: 0}
+  ui: {fileID: 0}
+  dungeonController: {fileID: 0}
+  restaurantController: {fileID: 0}
 --- !u!1001 &1401820957
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -33,13 +33,30 @@ public class CookingStation : MonoBehaviour
     [SerializeField] private float currentAmount;
     [SerializeField] private float speed;
 
+    [Header("UI to Open the Menu")] // Where to open the menu, when interacted with
+    public GameObject ui;
+
     [Header("Take Control of Player Movement")] // Prevent movement while cooking
-    public DungeonPlayerController player;
+    public DungeonPlayerController dungeonController;
+    public Restaurant_MinimalPlayerController restaurantController;
+
+    // Helper function to disable both movement and restaurant-related animations
+    public void DisableMovementOfPlayer() {
+        dungeonController.DisableMovement();
+        restaurantController.DisableMovement();
+    }
+
+    // Helper function to enable both movement and restaurant-related animations
+    public void EnableMovementOfPlayer() {
+        dungeonController.EnableMovement();
+        restaurantController.EnableMovement();
+    }
 
     void Update()
     {
         // Stop cooking anim if player walks away halfway
         // Probably can remove this once we let player stop moving when cooking
+        // (we'll leave it for now just in case)
         if (isCooking && !PlayerWithinRange()) 
         {
             isCooking = false;
@@ -51,14 +68,21 @@ public class CookingStation : MonoBehaviour
         {
             if (progressIcon.activeSelf == false)
             {
-                progressIcon.SetActive(true); // Show the icon only if cooking
-                player.DisableMovement();     // Disable movement of player
+                progressIcon.SetActive(true);     // Show the icon only if cooking
+                DisableMovementOfPlayer(); // Disable movement of player
             }
             else
             {
                 FillUpBar(); // Start filling up the bar once it is active
             }
-            player.Face(stationLocation.position); // Face the station when cooking
+            dungeonController.Face(stationLocation.position); // Face the station when cooking
+        }
+
+        // Open Cooking Menu
+        if (!isCooking && Keybinds.WasTriggered(Keybind.Interact) && PlayerWithinRange())
+        {
+            ui.SetActive(true);
+            DisableMovementOfPlayer(); // Disable movement of player when menu is open
         }
     }
 
@@ -79,7 +103,7 @@ public class CookingStation : MonoBehaviour
             isCooking = false;                  // Reset value since not cooking anymore
             ServeDish();                        // Spawn food at next available location
             recipeActivator.enabled = true;     // Reset collider so player can click again to open recipe menu
-            player.EnableMovement();            // Reenable player movement
+            EnableMovementOfPlayer();           // Reenable player movement
         }
 
         progressBarTransform.GetComponent<Image>().fillAmount = currentAmount / 100;

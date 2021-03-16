@@ -4,13 +4,15 @@ using UnityEngine;
 
 public enum Keybind {
     Interact,
-    Trash
+    Trash,
+    CloseMenu
 }
 
 public class Keybinds {    
     private static Dictionary<Keybind, KeyCode> keybinds = new Dictionary<Keybind, KeyCode>{
         { Keybind.Interact, KeyCode.F },
-        { Keybind.Trash, KeyCode.Delete }
+        { Keybind.Trash, KeyCode.Delete },
+        { Keybind.CloseMenu, KeyCode.Escape }
     };
 
     public static bool WasTriggered(Keybind key) {
