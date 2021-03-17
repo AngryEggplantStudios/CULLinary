@@ -10,7 +10,7 @@ public class DungeonPlayerAim : MonoBehaviour
     private DungeonPlayerRange dungeonPlayerRange;
 
     //Projectile Class
-    public delegate void PlayerProjectileDelegate(Vector3 sourcePosition, Vector3 endPosition, Vector3 lookVector);
+    public delegate void PlayerProjectileDelegate(Vector3 sourcePosition, Vector3 targetPosition);
     public event PlayerProjectileDelegate OnPlayerShoot;
 
     //UI
@@ -19,7 +19,7 @@ public class DungeonPlayerAim : MonoBehaviour
 
     //Defaults
     private const float MAX_DIST_CAM_TO_GROUND = 100f;
-    private const float LINE_HEIGHT_FROM_GROUND = 0.1f;
+    private const float LINE_HEIGHT_FROM_GROUND = 0.01f;
 
     private Vector3 targetPosition = new Vector3();
     private Vector3 sourcePosition = new Vector3();
@@ -79,7 +79,7 @@ public class DungeonPlayerAim : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(1) && targetFound && canShoot) {
             canShoot = false;
-            OnPlayerShoot?.Invoke(sourcePosition, targetPosition, lookVector);
+            OnPlayerShoot?.Invoke(sourcePosition, targetPosition);
             audioSource.clip = attackSound;
             audioSource.Play();
             StartCoroutine(DelayFire());
