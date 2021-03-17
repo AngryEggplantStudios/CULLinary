@@ -16,6 +16,7 @@ public class DungeonPlayerAim : MonoBehaviour
     //UI
     private Vector2 cursorHotspot;
     private LineRenderer lineRenderer;
+    public Animator cooldownAnimator;
 
     //Defaults
     private const float MAX_DIST_CAM_TO_GROUND = 100f;
@@ -88,6 +89,7 @@ public class DungeonPlayerAim : MonoBehaviour
 
     private IEnumerator DelayFire()
     {
+        cooldownAnimator.SetTrigger("StartCooldown");
         yield return new WaitForSeconds(1.0f);
         canShoot = true;
     }
