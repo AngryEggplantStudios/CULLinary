@@ -9,7 +9,7 @@ public class Restaurant_CustomerController : MonoBehaviour
     public GameObject customer;
     public GameObject orderUI; // order customer places - rn is just text but can replace w image of the dish later(?)
     public GameObject serveFoodLocation;
-    public TextMeshProUGUI foodText;
+    public Text foodText;
 
     [SerializeField]
     public string[] dishNames;

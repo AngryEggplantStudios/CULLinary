@@ -14,11 +14,10 @@ public class DungeonPlayerProjectile : MonoBehaviour
         dungeonPlayerAim.OnPlayerShoot += ThrowKnife;
     }
 
-    private void ThrowKnife(Vector3 sourcePosition, Vector3 endPosition, Vector3 lookVector)
+    private void ThrowKnife(Vector3 sourcePosition, Vector3 targetPosition)
     {
         Transform knifeTransform = Instantiate(throwingKnife, sourcePosition, Quaternion.identity);
-        Vector3 projDir = (endPosition - sourcePosition).normalized;
-        knifeTransform.GetComponent<Projectile>().Setup(projDir, lookVector);
+        knifeTransform.GetComponent<Projectile>().Setup(sourcePosition, targetPosition);
     }
 
     private void OnDestroy()
