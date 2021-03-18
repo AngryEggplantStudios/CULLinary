@@ -42,7 +42,9 @@ MonoBehaviour:
   hpBar_prefab: {fileID: 1085209639500972291, guid: 4614e0511cb49b14ebf0c58217d9d222, type: 3}
   damageCounter_prefab: {fileID: 1085209639500972291, guid: 24f41dda89c7bd648bd2796ac669721e, type: 3}
   enemyAlert_prefab: {fileID: 1085209639500972291, guid: 186234b88676f4b4f872f98d3ab0973c, type: 3}
-  lootTuples: []
+  lootTuples:
+  - loot: {fileID: 3121572915000677017, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+    ratio: 1
   wanderRadius: 4
 --- !u!195 &-422948422211317915
 NavMeshAgent:
@@ -66,6 +68,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &2892472816598191648
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685020186128492628}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.5747135, z: 1}
+  m_Center: {x: 0, y: 0.28735536, z: 0}
 --- !u!1 &4663391080187662594
 GameObject:
   m_ObjectHideFlags: 0
