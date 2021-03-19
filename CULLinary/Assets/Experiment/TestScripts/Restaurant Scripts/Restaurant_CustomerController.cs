@@ -15,7 +15,6 @@ public class Restaurant_CustomerController : MonoBehaviour
     [SerializeField]
     public string[] dishNames;
 
-    private int amountToPay = 0;
     private int idx = 0;
     private bool alrReceivedFood = false;
 
@@ -46,6 +45,8 @@ public class Restaurant_CustomerController : MonoBehaviour
         orderUI.SetActive(false);
         alrReceivedFood = true;
 
+        UIController uiController = GameObject.Find("UI Controller").GetComponent<UIController>();
+
         // Play eating anim
 
         // Determine amount to pay and show UI of the score (based on whether they get the correct food or not)
@@ -53,18 +54,18 @@ public class Restaurant_CustomerController : MonoBehaviour
         string correctDishName = dishNames[idx] + "(Clone)";
         if (dishReceived == correctDishName) // Player served the correct dish
         {
-            Debug.Log("You served the correct dish!");
-            amountToPay = 100;
+            // Debug.Log("You served the correct dish!");
             moneyText.GetComponent<Text>().text = "+100";
+            uiController.AddCorrectDishEarnings();
         }
         else // Player served the wrong dish
         {
-            Debug.Log("Customer wants: "+ correctDishName + " but received: " + dishReceived + " >:(");
-            amountToPay = 50;
+            // Debug.Log("Customer wants: "+ correctDishName + " but received: " + dishReceived + " >:(");
             moneyText.GetComponent<Text>().text = "+50";
+            uiController.AddWrongDishEarnings(); 
         }
 
-        moneyText.SetActive(true); // add anims to text?
+        moneyText.SetActive(true); // add anims to money text?
 
         StartCoroutine(TimeToLeave());
     }
