@@ -8,14 +8,16 @@ public class Restaurant_CustomerController : MonoBehaviour
 {
     public GameObject customer;
     public GameObject orderUI; // order customer places - rn is just text but can replace w image of the dish later(?)
+    public GameObject moneyText;
     public GameObject serveFoodLocation;
     public Text foodText;
 
     [SerializeField]
     public string[] dishNames;
 
-    private int amountToPay;
+    private int amountToPay = 0;
     private int idx = 0;
+    private bool alrReceivedFood = false;
 
     private void Start()
     {
@@ -31,7 +33,7 @@ public class Restaurant_CustomerController : MonoBehaviour
 
     private void Update()
     {
-        if (serveFoodLocation.transform.childCount != 0) // ie. player received the food
+        if (serveFoodLocation.transform.childCount != 0 && !alrReceivedFood) // ie. player received the food
         {
             ReceiveFood();
         }
@@ -42,6 +44,7 @@ public class Restaurant_CustomerController : MonoBehaviour
     {
         // Debug.Log("customer eating now");
         orderUI.SetActive(false);
+        alrReceivedFood = true;
 
         // Play eating anim
 
@@ -51,11 +54,17 @@ public class Restaurant_CustomerController : MonoBehaviour
         if (dishReceived == correctDishName) // Player served the correct dish
         {
             Debug.Log("You served the correct dish!");
+            amountToPay = 100;
+            moneyText.GetComponent<Text>().text = "+100";
         }
         else // Player served the wrong dish
         {
             Debug.Log("Customer wants: "+ correctDishName + " but received: " + dishReceived + " >:(");
+            amountToPay = 50;
+            moneyText.GetComponent<Text>().text = "+50";
         }
+
+        moneyText.SetActive(true); // add anims to text?
 
         StartCoroutine(TimeToLeave());
     }
@@ -63,6 +72,8 @@ public class Restaurant_CustomerController : MonoBehaviour
     IEnumerator TimeToLeave()
     {
         yield return new WaitForSeconds(2);
+
+        moneyText.SetActive(false);
 
         Leave();
     }
