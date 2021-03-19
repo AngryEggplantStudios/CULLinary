@@ -24,6 +24,7 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
         dungeonPlayerController = GetComponent<DungeonPlayerController>();
         dungeonPlayerController.OnPlayerMove += Move;
         dungeonPlayerController.OnPlayerRotate += Rotate;
+        dungeonPlayerController.OnPlayerInteract += FaceWorldPosition;
     }
 
     private void Move(Vector3 direction, float speed, float animValue, bool isMoving=true)
@@ -59,5 +60,12 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
             audioSource.clip = stepSounds[Random.Range(0, stepSounds.Length)];
             audioSource.Play();
         }
+    }
+
+    public void FaceWorldPosition(Vector3 worldPosition, float speed)
+    {
+        Vector3 playerPosition = playerBody.transform.position;
+        Vector3 lookAtVector = worldPosition - playerPosition;
+        this.Rotate(new Vector3(lookAtVector.x, 0, lookAtVector.z), speed);
     }
 }

@@ -29,10 +29,14 @@ public class DungeonPlayerHealth : MonoBehaviour
         isInvincible = false;
         health = maxHealth;
         hpBar = hpBarUI;
-        hpBarFull = hpBar.transform.Find("HpBar").gameObject.GetComponent<Image>();
-        hpText = hpBar.transform.Find("HpText").gameObject.GetComponent<Text>();
-        hpBarFull.fillAmount = health / maxHealth;
-        hpText.text = health + "/" + maxHealth;
+        hpBarFull = hpBar.transform.Find("HpBar")?.gameObject.GetComponent<Image>();
+        hpText = hpBar.transform.Find("HpText")?.gameObject.GetComponent<Text>();
+        if (hpBarFull) {
+            hpBarFull.fillAmount = health / maxHealth;
+        }
+        if (hpText) {
+            hpText.text = health + "/" + maxHealth;
+        }
         SetupFlash();
         dpl = this.gameObject.GetComponent<DungeonPlayerLocomotion>();
     }
@@ -40,10 +44,12 @@ public class DungeonPlayerHealth : MonoBehaviour
     private void SetupFlash()
     {
         rend = model.GetComponentInChildren<Renderer>();
-        originalColors = new Color[rend.materials.Length];
-        for (var i = 0; i < rend.materials.Length; i++)
-        {
-            originalColors[i] = rend.materials[i].color;
+        if (rend) {
+            originalColors = new Color[rend.materials.Length];
+            for (var i = 0; i < rend.materials.Length; i++)
+            {
+                originalColors[i] = rend.materials[i].color;
+            }
         }
     }
 
