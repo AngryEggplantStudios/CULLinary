@@ -34,7 +34,8 @@ public class CookingStation : MonoBehaviour
     [SerializeField] private float speed;
 
     [Header("UI to Open the Menu")] // Where to open the menu, when interacted with
-    public GameObject ui;
+    // public GameObject ui;
+    public UIController uiController;
 
     [Header("Take Control of Player Movement")] // Prevent movement while cooking
     public DungeonPlayerController dungeonController;
@@ -81,7 +82,8 @@ public class CookingStation : MonoBehaviour
         // Open Cooking Menu
         if (!isCooking && Keybinds.WasTriggered(Keybind.Interact) && PlayerWithinRange())
         {
-            ui.SetActive(true);
+            //ui.SetActive(true);
+            uiController.ShowCookingPanel();
             DisableMovementOfPlayer(); // Disable movement of player when menu is open
         }
     }

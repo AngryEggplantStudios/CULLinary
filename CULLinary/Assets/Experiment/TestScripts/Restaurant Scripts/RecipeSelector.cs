@@ -8,11 +8,13 @@ public class RecipeSelector : MonoBehaviour
 {
     public CookingStation cookingStation;
     public GameObject menuCanvas;
+    public UIController uiController;
 
     // Closes the UI panel 
     public void SelectCloseButton()
     {
-        menuCanvas.SetActive(false);
+        //menuCanvas.SetActive(false);
+        uiController.CloseCookingPanel();
     }
 
     // Closes the Menu panel and cooks food if there is enough space on the counter
@@ -21,12 +23,14 @@ public class RecipeSelector : MonoBehaviour
         if (cookingStation.CheckAvailableSlots() == true)
         {
             Debug.Log("Selected: " + dishName);
-            menuCanvas.SetActive(false); // close the menu 
+            // menuCanvas.SetActive(false); // close the menu 
+            uiController.CloseCookingPanel();
             cookingStation.Cook(dishName); // start cooking
         } else
         {
             // Can we show a notif here that counter has no more space to place food(?)
-            Debug.Log("No more space on counter!!");
+            Debug.Log("No more space on counter!!"); // remove this if ui is working
+            uiController.ShowCounterNotifPanel();
         }
     }
 
