@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5399005785609934260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3053951611242312361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a706421652aea4793ed735a55b8c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  damage: 10
+  heightFromGround: 0.2
+--- !u!1001 &86657769872875568
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2313124712230209571, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3121572915000677017, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+      propertyPath: m_Name
+      value: CornProjectile
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -6500167467365616584, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+    - {fileID: -5568773282357767527, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+--- !u!1 &3053951611242312361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3121572915000677017, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
+  m_PrefabInstance: {fileID: 86657769872875568}
+  m_PrefabAsset: {fileID: 0}
