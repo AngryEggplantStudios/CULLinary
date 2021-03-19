@@ -32,7 +32,7 @@ public class UIController : MonoBehaviour
     // NOTIF: "Not enough counter space"
     public void ShowCounterNotifPanel()
     {
-        uiCanvas.SetActive(true); // for redudancy
+        uiCanvas.SetActive(true); // for redundancy
         InventoryPanel.SetActive(false);
         MenuPanel.SetActive(false);
         CounterNotifPanel.SetActive(true);

@@ -14,6 +14,9 @@ public class Restaurant_CustomerController : MonoBehaviour
     [SerializeField]
     public string[] dishNames;
 
+    private int amountToPay;
+    private int idx = 0;
+
     private void Start()
     {
         // Play the sitting down animation  
@@ -21,7 +24,7 @@ public class Restaurant_CustomerController : MonoBehaviour
         animator.SetBool("SitDown", true);
         Debug.Log("animator is: " + animator.ToString());
 
-        int idx = Random.Range(0, dishNames.Length);
+        idx = Random.Range(0, dishNames.Length); // set the idx here, it was 0 by default
         foodText.text = dishNames[idx];
         orderUI.SetActive(true);
     }
@@ -40,7 +43,19 @@ public class Restaurant_CustomerController : MonoBehaviour
         // Debug.Log("customer eating now");
         orderUI.SetActive(false);
 
-        // play eating anim
+        // Play eating anim
+
+        // Determine amount to pay and show UI of the score (based on whether they get the correct food or not)
+        string dishReceived = serveFoodLocation.transform.GetChild(0).name;
+        string correctDishName = dishNames[idx] + "(Clone)";
+        if (dishReceived == correctDishName) // Player served the correct dish
+        {
+            Debug.Log("You served the correct dish!");
+        }
+        else // Player served the wrong dish
+        {
+            Debug.Log("Customer wants: "+ correctDishName + " but received: " + dishReceived + " >:(");
+        }
 
         StartCoroutine(TimeToLeave());
     }

@@ -3367,6 +3367,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1870195482}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: CloseCounterNotifPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &182840151
 GameObject:
   m_ObjectHideFlags: 0
@@ -3856,7 +3868,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cookingStation: {fileID: 221291665}
-  menuCanvas: {fileID: 182388386}
   uiController: {fileID: 1870195482}
 --- !u!114 &221291665
 MonoBehaviour:
@@ -22911,11 +22922,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7c51a588322af34691c4a01d5934f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cookingStation: {fileID: 221291665}
   uiCanvas: {fileID: 182388386}
   InventoryPanel: {fileID: 833706171}
   MenuPanel: {fileID: 1698611253}
   CounterNotifPanel: {fileID: 701198546}
-  cookingStation: {fileID: 221291665}
 --- !u!4 &1870195483
 Transform:
   m_ObjectHideFlags: 0
