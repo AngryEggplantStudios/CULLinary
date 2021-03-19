@@ -8,11 +8,15 @@ public class Restaurant_CustomerController : MonoBehaviour
 {
     public GameObject customer;
     public GameObject orderUI; // order customer places - rn is just text but can replace w image of the dish later(?)
+    public GameObject moneyText;
     public GameObject serveFoodLocation;
     public Text foodText;
 
     [SerializeField]
     public string[] dishNames;
+
+    private int idx = 0;
+    private bool alrReceivedFood = false;
 
     private void Start()
     {
@@ -21,14 +25,14 @@ public class Restaurant_CustomerController : MonoBehaviour
         animator.SetBool("SitDown", true);
         Debug.Log("animator is: " + animator.ToString());
 
-        int idx = Random.Range(0, dishNames.Length);
+        idx = Random.Range(0, dishNames.Length); // set the idx here, it was 0 by default
         foodText.text = dishNames[idx];
         orderUI.SetActive(true);
     }
 
     private void Update()
     {
-        if (serveFoodLocation.transform.childCount != 0) // ie. player received the food
+        if (serveFoodLocation.transform.childCount != 0 && !alrReceivedFood) // ie. player received the food
         {
             ReceiveFood();
         }
@@ -39,8 +43,29 @@ public class Restaurant_CustomerController : MonoBehaviour
     {
         // Debug.Log("customer eating now");
         orderUI.SetActive(false);
+        alrReceivedFood = true;
 
-        // play eating anim
+        UIController uiController = GameObject.Find("UI Controller").GetComponent<UIController>();
+
+        // Play eating anim
+
+        // Determine amount to pay and show UI of the score (based on whether they get the correct food or not)
+        string dishReceived = serveFoodLocation.transform.GetChild(0).name;
+        string correctDishName = dishNames[idx] + "(Clone)";
+        if (dishReceived == correctDishName) // Player served the correct dish
+        {
+            // Debug.Log("You served the correct dish!");
+            moneyText.GetComponent<Text>().text = "+100";
+            uiController.AddCorrectDishEarnings();
+        }
+        else // Player served the wrong dish
+        {
+            // Debug.Log("Customer wants: "+ correctDishName + " but received: " + dishReceived + " >:(");
+            moneyText.GetComponent<Text>().text = "+50";
+            uiController.AddWrongDishEarnings(); 
+        }
+
+        moneyText.SetActive(true); // add anims to money text?
 
         StartCoroutine(TimeToLeave());
     }
@@ -48,6 +73,8 @@ public class Restaurant_CustomerController : MonoBehaviour
     IEnumerator TimeToLeave()
     {
         yield return new WaitForSeconds(2);
+
+        moneyText.SetActive(false);
 
         Leave();
     }
