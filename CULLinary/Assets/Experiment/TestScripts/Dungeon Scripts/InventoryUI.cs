@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -22,7 +23,10 @@ public class InventoryUI : MonoBehaviour
 		inventory.OnItemAdd += AddItem;
 		inventory.OnItemRemove += RemoveItem;
 		slots = inventoryPanel.GetComponentsInChildren<InventorySlot>();
-		inventoryUI.SetActive(false);
+
+		Scene scene = SceneManager.GetActiveScene();
+		if (scene.name != "TestRestaurant" ) // Might need to change later if restaurant scene's name changes
+			inventoryUI.SetActive(false); // Don't need this line for restaurant scene if not inventory won't show up on first interaction w cooking station
 	}
 
 	private void Update()
