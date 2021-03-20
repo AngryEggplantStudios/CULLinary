@@ -1132,7 +1132,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 182388387}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InventoryUI, Assembly-CSharp
         m_MethodName: ToggleVisiblity
         m_Mode: 1
@@ -3036,6 +3036,7 @@ GameObject:
   - component: {fileID: 174383404}
   - component: {fileID: 174383402}
   - component: {fileID: 174383401}
+  - component: {fileID: 174383406}
   m_Layer: 0
   m_Name: Chef
   m_TagString: Player
@@ -3117,6 +3118,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.3294706, y: 4, z: 1.0210276}
   m_Center: {x: -0.028457612, y: 1.78, z: 0.04661703}
+--- !u!114 &174383406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174383400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0caca9b3782195d4ab1cd51c96dbbe20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &174383409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3298,8 +3311,8 @@ GameObject:
   - component: {fileID: 182388390}
   - component: {fileID: 182388389}
   - component: {fileID: 182388388}
-  - component: {fileID: 182388387}
   - component: {fileID: 182388392}
+  - component: {fileID: 182388387}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -3321,6 +3334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 833706171}
   inventoryPanel: {fileID: 1688255972}
+  slots: []
   inventoryLimit: 20
   damageCounter_prefab: {fileID: 0}
 --- !u!114 &182388388
@@ -3395,11 +3409,11 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 833706172}
   - {fileID: 1235000336}
   - {fileID: 1698611254}
   - {fileID: 987461883}
   - {fileID: 701198547}
+  - {fileID: 833706172}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5329,6 +5343,49 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8.41488, y: 3.26734, z: 4.473733}
   m_Center: {x: 4.20744, y: 1.63367, z: 2.2368665}
+--- !u!1 &322325960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 322325962}
+  - component: {fileID: 322325961}
+  m_Layer: 0
+  m_Name: GameDataLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &322325961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322325960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf6b1e3492f7425608b13b4ef05dfba9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &322325962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322325960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -45.53563, y: 64.2514, z: 63.799812}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &328413460
 GameObject:
   m_ObjectHideFlags: 0
@@ -9881,7 +9938,7 @@ RectTransform:
   - {fileID: 1223179387}
   - {fileID: 1545650391}
   m_Father: {fileID: 182388391}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11227,8 +11284,8 @@ GameObject:
   - component: {fileID: 833706172}
   - component: {fileID: 833706173}
   m_Layer: 5
-  m_Name: Inventory
-  m_TagString: Untagged
+  m_Name: Inventory_Debug
+  m_TagString: InventoryPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11240,17 +11297,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833706171}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1688255972}
   m_Father: {fileID: 182388391}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 60, y: 60}
+  m_AnchoredPosition: {x: 60.000458, y: 60.000122}
   m_SizeDelta: {x: 600, y: 600}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &833706173
@@ -13078,7 +13135,7 @@ RectTransform:
   m_Children:
   - {fileID: 6421020}
   m_Father: {fileID: 182388391}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -15884,7 +15941,7 @@ RectTransform:
   - {fileID: 1330429016}
   - {fileID: 168573598}
   m_Father: {fileID: 182388391}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -21624,7 +21681,7 @@ RectTransform:
   m_Children:
   - {fileID: 563660953}
   m_Father: {fileID: 182388391}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -23258,7 +23315,7 @@ PrefabInstance:
     - target: {fileID: 2062472786286145477, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
       propertyPath: inventoryUI
       value: 
-      objectReference: {fileID: 182388387}
+      objectReference: {fileID: 0}
     - target: {fileID: 2062472786286145477, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
       propertyPath: enableGameSave
       value: 1

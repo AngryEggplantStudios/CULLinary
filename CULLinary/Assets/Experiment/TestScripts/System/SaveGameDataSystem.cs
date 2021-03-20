@@ -3,39 +3,27 @@ public class SaveGameDataSystem : MonoBehaviour
 {
     private PlayerManager playerManager;
     [SerializeField] private InventoryUI inventoryUI;
-    private bool hasPlayerManager = false;
-    private void Start()
+
+    private bool FindPlayerManager()
     {
         playerManager = FindObjectOfType<PlayerManager>();
         if (playerManager != null)
         {
-            hasPlayerManager = true;
+            return true;
         }
         else
         {
             Debug.Log("Cannot find player manager");
+            return false;
         }
     }
 
-    public void SetCurrentIndex(int index)
+    public void SaveGameData(int index)
     {
-        if (hasPlayerManager)
+        if (FindPlayerManager() && inventoryUI != null)
         {
             playerManager.SetCurrentIndex(index);
-        }
-        
-    }
-
-    public void SaveInventoryToPlayerManager()
-    {
-        if (hasPlayerManager)
-        {
             playerManager.SaveData(inventoryUI.GetItemList());
         }
-        else
-        {
-            Debug.Log("Unable to save inventory to player manager");
-        }
-        
     }
 }

@@ -2,30 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameData : MonoBehaviour
+public class GameData: MonoBehaviour
 {
-    [SerializeField] private TextAsset recipesFile;
-    [SerializeField] private TextAsset ingredientsFile;
-    public static RecipeTest[] recipes;
-    public static Ingredient[] ingredients;
+    [SerializeField] private ItemDatabase itemDatabase;
+    
+    private Dictionary<int, Item> itemDict;
+
     private void Awake()
     {
-        LoadRecipeData();
-        LoadIngredientData();
+        DontDestroyOnLoad(this);
     }
 
-    private RecipeTest[] LoadRecipeData()
+    private void Start()
     {
-        RecipesData r = JsonUtility.FromJson<RecipesData>(recipesFile.text);
-        recipes = r.recipes;
-        return r.recipes;
+        itemDict = new Dictionary<int, Item>();
+        StartCoroutine(PopulateItemDatabase());
     }
 
-    private Ingredient[] LoadIngredientData()
+    private IEnumerator PopulateItemDatabase()
     {
-        IngredientsData i = JsonUtility.FromJson<IngredientsData>(ingredientsFile.text);
-        ingredients = i.ingredients;
-        return i.ingredients;
+        foreach(Item i in itemDatabase.allItems)
+        {
+            try
+            {
+                itemDict.Add(i.itemId, i);
+            }
+            catch
+            {
+                Debug.Log("Unable to add item: " + i.name);
+            }
+            yield return null;
+        }
     }
-    
+
+    public Item GetItemById(int id)
+    {
+        return itemDict[id];
+    }
+
 }

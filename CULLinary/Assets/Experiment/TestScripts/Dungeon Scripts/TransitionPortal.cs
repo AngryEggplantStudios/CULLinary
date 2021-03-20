@@ -13,14 +13,13 @@ public class TransitionPortal : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && isTriggered)
+        if (Input.GetKeyDown(KeyCode.F) && isTriggered)
         {
 
             Debug.Log("Player can transit");
             if (enableGameSave)
             {
-                saveGameDataSystem.SetCurrentIndex(sceneIndex);
-                saveGameDataSystem.SaveInventoryToPlayerManager();
+                saveGameDataSystem.SaveGameData(sceneIndex);
             }
             LoadScene();
         }

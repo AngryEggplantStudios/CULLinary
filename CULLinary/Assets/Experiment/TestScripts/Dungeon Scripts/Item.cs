@@ -9,16 +9,6 @@ public class Item : ScriptableObject
 	new public string name = "New Item";    // Name of the item
 	public Sprite icon = null;              // Item icon
 	public bool showInInventory = true;
-	public int itemId = 0;
-	private int itemNo = -1;
+	public int itemId;
 
-	public void SetItemNo(int n)
-	{
-		itemNo = n;
-	}
-
-    public int GetItemNo()
-    {
-        return itemNo;
-    }
 }

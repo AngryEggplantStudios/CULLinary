@@ -16,6 +16,25 @@ public class UIController : MonoBehaviour
     public GameObject MenuPanel;
     public GameObject CounterNotifPanel;
 
+    private void Start()
+    {
+        //StartCoroutine(FindInventoryPanel());
+    }
+
+    private IEnumerator FindInventoryPanel()
+    {
+        while (true)
+        {
+            this.InventoryPanel = GameObject.FindGameObjectWithTag("InventoryPanel");
+            if (this.InventoryPanel != null)
+            {
+                this.InventoryPanel.SetActive(false);
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     // For Inventory Panel and Menu Panel (Called by CookingStation)
     public void ShowCookingPanel()
     {
