@@ -101,7 +101,7 @@ public class EnemyScript : MonoBehaviour
     {
         rend = GetComponentInChildren<Renderer>();
         originalColors = new Color[rend.materials.Length];
-        for (var i = 0; i < rend.materials.Length; i++) {
+        for (int i = 0; i < rend.materials.Length; i++) {
             originalColors[i] = rend.materials[i].color;
         }
     }
@@ -137,7 +137,7 @@ public class EnemyScript : MonoBehaviour
 
     private void SetupUI(GameObject ui)
     {
-        ui.transform.SetParent(GameObject.Find("UI").transform);
+        ui.transform.SetParent(GameObject.FindObjectOfType<InventoryUI>().transform);
         ui.transform.position = cam.WorldToScreenPoint(transform.position);
         uiList.Add(ui);
     }

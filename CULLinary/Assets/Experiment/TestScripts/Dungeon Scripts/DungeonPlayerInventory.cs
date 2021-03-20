@@ -19,7 +19,6 @@ public class DungeonPlayerInventory : MonoBehaviour
     public void AddItemIntoInventory(Loot loot)
     {
         Item item = loot.GetItem();
-        item.SetItemNo(loot.GetItemNo());
         loot.PickUp();
         //currentCollidedItem = null;
         OnItemAdd?.Invoke(item);

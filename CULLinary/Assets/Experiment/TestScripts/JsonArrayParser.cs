@@ -4,7 +4,20 @@ public static class JsonArrayParser
 {
     public static T[] FromJson<T>(string json)
     {
-        Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+        Wrapper<T> wrapper;
+        try
+        {
+            wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+        }
+        catch
+        {
+            Debug.Log("Unable to parse");
+            wrapper = new Wrapper<T>();
+        }
+        if (wrapper == null)
+        {
+            return Array.Empty<T>();
+        }
         return wrapper.Items;
     }
 

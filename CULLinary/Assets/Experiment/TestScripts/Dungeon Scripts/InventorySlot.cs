@@ -34,7 +34,7 @@ public class InventorySlot : MonoBehaviour
 	// If the remove button is pressed, this function will be called.
 	public void RemoveItemFromInventory()
 	{
-		DungeonPlayerInventory.instance.Remove(item);
+		InventoryUI.instance.RemoveItem(item);
 	}
 
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class MeshCombiner : MonoBehaviour
 {
@@ -123,6 +124,14 @@ public class MeshCombiner : MonoBehaviour
         yield return null;
         transform.rotation = baseRotation;
         yield return null;
+
+        var mf = gameObject.GetComponent<MeshFilter>();
+        if (mf)
+        {
+            var savePath = "Assets/" + gameObject.name + ".asset";
+            Debug.Log("Saved Mesh to:" + savePath);
+            AssetDatabase.CreateAsset(mf.mesh, savePath);
+        }
     }
 
     private int Contains(ArrayList searchList, string searchName)

@@ -22,6 +22,22 @@ public static class FileManager
         }
     }
 
+    public static bool CheckFile(string a_FileName)
+    {
+        string fullPath = Path.Combine(Application.persistentDataPath, a_FileName);
+        string result;
+        try 
+        {
+            result = File.ReadAllText(fullPath);
+            return true;
+        }
+        catch
+        {
+            Debug.Log("File not found");
+            return false;
+        }
+    }
+
     public static bool LoadFromFile(string a_FileName, out string result, bool isAbsolutePath=false)
     {
         string fullPath;
