@@ -5,35 +5,16 @@ using System;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] private GameObject inventoryUI;
-    [Serializable] public class GameInventoryItem
-    {
-        public int sno;
-        public int num;
-    }
 
-    private List<Item> itemList = new List<Item>();
-    private int stage = 1;
-    private string playerName = "Clown";
+    private List<Item> itemList = new List<Item>(); //Inventory
+    private int stage; //Current Stage
+    private int currentIndex; //Current index
+    private string playerName; //Player name
+    private int money; //Player amount
 
     private void Awake()
     {
-        LoadData();
-    }
-
-    private void Setup()
-    {
-        LoadList();
-        stage++;
-    }
-
-    private void LoadList()
-    {
-        if (inventoryUI != null) 
-        {
-        itemList.AddRange(inventoryUI.GetComponent<InventoryUI>().GetItemList());
-        }
-        
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public List<Item> GetItemList()
@@ -46,14 +27,41 @@ public class PlayerManager : MonoBehaviour
         return stage;
     }
 
-    public void SaveData()
+    public int GetCurrentIndex()
     {
-        Setup();
-        PlayerData playerData = new PlayerData();
-        playerData.stage = stage;
-        playerData.playerName = playerName;
-        playerData.inventory = SerializeInventory();
-        Debug.Log(playerData.inventory);
+        return currentIndex;
+    }
+
+    public string GetPlayerName()
+    {
+        return playerName;
+    }
+
+    public int GetMoney()
+    {
+        return money;
+    }
+
+    public void SetCurrentIndex(int index)
+    {
+        this.currentIndex = index;
+    }
+
+    public void SetMoney(int amt)
+    {
+        this.money = amt;
+    }
+
+    public void SetItemList(List<Item> items)
+    {
+        this.itemList = items;
+    }
+
+    public void SaveData(List<Item> items)
+    {
+        SetItemList(items);
+        string inventory = SerializeInventory();
+        PlayerData playerData = new PlayerData(inventory, stage, currentIndex, playerName);
         SaveSystem.SaveData(playerData);
     }
 
@@ -62,34 +70,30 @@ public class PlayerManager : MonoBehaviour
         PlayerData data = SaveSystem.LoadData();
         if (data == null)
         {
+            Debug.Log("Data cannot be found.");
             return;
         }
 
-        try 
+        stage = data.stage;
+        playerName = data.playerName;
+        money = data.money;
+        currentIndex = data.currentIndex;
+        InventoryItemData[] inventory = JsonArrayParser.FromJson<InventoryItemData>(data.inventory);
+        foreach (var item in inventory)
         {
-            stage = data.stage;
-            playerName = data.playerName;
-            GameInventoryItem[] inventory = JsonArrayParser.FromJson<GameInventoryItem>(data.inventory);
-            foreach (var item in inventory)
-            {
-                Debug.Log(item.sno);
-                Debug.Log(item.num);
-            }
-            Debug.Log(stage);
-            Debug.Log(playerName);
+            //Debug.Log(item.id);
+            //Debug.Log(item.count);
         }
-        catch
-        {
-            Debug.Log("File is corrupted");
-        }
+        Debug.Log(stage);
+        Debug.Log(playerName);
+        Debug.Log(money);
+        Debug.Log(currentIndex);
     }
 
     private void ParseInventory()
     {
         Debug.Log("parsing in progress");
     }
-
-
 
     private string SerializeInventory()
     {
@@ -106,13 +110,11 @@ public class PlayerManager : MonoBehaviour
                 inventory.Add(item.GetItemNo(), 1);
             }
         }
-        GameInventoryItem[] items = new GameInventoryItem[inventory.Count];
+        InventoryItemData[] items = new InventoryItemData[inventory.Count];
         int i = 0;
         foreach (var item in inventory)
         {
-            GameInventoryItem gameItem = new GameInventoryItem();
-            gameItem.sno = item.Key;
-            gameItem.num = item.Value;
+            InventoryItemData gameItem = new InventoryItemData(item.Key, item.Value);
             items[i] = gameItem;
             i++;
         }

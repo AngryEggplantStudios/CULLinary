@@ -1,19 +1,10 @@
-using System;
 using UnityEngine;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
     public static void SaveData(PlayerData playerData)
     {
-        /*
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = new FileStream(path, FileMode.Create);
-        PlayerData data = new PlayerData(playerManager.GetItemList(), playerManager.GetStage());
-        formatter.Serialize(stream, data);
-        stream.Close();
-        */
+
         FileManager.WriteToFile("saveFile.clown", playerData.ToJson());
     }
 
@@ -27,7 +18,30 @@ public static class SaveSystem
         }
         Debug.Log("Save file not loaded");
         return null;
-        /*
+
+    }
+
+    public static void CreateNewFile(PlayerData playerData)
+    {
+        
+        FileManager.WriteToFile("saveFile.clown", playerData.ToJson()); //Default save name
+    }
+}
+
+/*
+--- Old Implementation of using Binary Formatters
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System;
+
+SaveData
+BinaryFormatter formatter = new BinaryFormatter();
+FileStream stream = new FileStream(path, FileMode.Create);
+PlayerData data = new PlayerData(playerManager.GetItemList(), playerManager.GetStage());
+formatter.Serialize(stream, data);
+stream.Close();
+        
+LoadData
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -41,7 +55,4 @@ public static class SaveSystem
             Debug.Log("Save file not found in " + path);
             return null;
         }
-        */
-
-    }
-}
+*/

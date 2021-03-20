@@ -11,6 +11,9 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private GameObject character;
     [SerializeField] private Image foreground;
+    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private GameObject loadGameButtonNoData;
+    [SerializeField] private GameObject loadGameButtonData;
     
     private Animator animator;
 
@@ -18,12 +21,19 @@ public class MainMenu : MonoBehaviour
     private bool fading = false;
     private delegate void Action();
     private Action afterFade;
+    private bool hasSavedData = false;
 
     void Start()
     {
         animator = character.GetComponentInChildren<Animator>();
         foreground.color = Color.clear;
         foreground.enabled = false;
+        if (FileManager.CheckFile("saveFile.clown"))
+        {
+            loadGameButtonData.SetActive(true);
+            loadGameButtonNoData.SetActive(false);
+            hasSavedData = true;
+        }
     }
 
     void Update()
@@ -43,7 +53,21 @@ public class MainMenu : MonoBehaviour
     {
         Select();
         FadeToBlack(() => {
+            PlayerData newPlayerData = new PlayerData();
+            SaveSystem.SaveData(newPlayerData);
+            playerManager.LoadData();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+             //Need to be changed to go to the loading screen in the future
+        });
+    }
+
+    public void LoadGame()
+    {
+        Select();
+        FadeToBlack(() => {
+            playerManager.LoadData();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+             //Need to be changed to go to the loading screen in the future
         });
     }
 
@@ -76,10 +100,28 @@ public class MainMenu : MonoBehaviour
         animator.SetTrigger("select");
     }
 
+    public void LoadGameHover()
+    {
+        if (hasSavedData)
+        {
+            hoverSound.Play();
+            animator.SetBool("hover", true);
+        }
+    }
+
     private void FadeToBlack(Action action)
     {
         fading = true;
         afterFade = action;
         foreground.enabled = true;
     }
+
+    /**
+    This method checks for saved data within the com and returns a bool
+    */
+    private bool isThereSavedData()
+    {
+        return false;
+    }
+
 }
