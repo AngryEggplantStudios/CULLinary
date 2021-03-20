@@ -1,12 +1,12 @@
 using System;
 
-public class Recipe
+public class RecipeTest
 {
     private string name;
     private int recipeId;
     private int[] ingredientIds;
 
-    public Recipe(string nm, int id, int[] ingredients) {
+    public RecipeTest(string nm, int id, int[] ingredients) {
         name = nm;
         recipeId = id;
         ingredientIds = ingredients;
@@ -31,10 +31,10 @@ public class Recipe
 
 public class Recipes
 {
-    public Recipe[] recipes = new Recipe[]{
-        new Recipe("Fried Eggplant", 0, new int[]{0, 2, 3}),
-        new Recipe("Golden Fried Eggplant", 1, new int[]{1, 2, 3}),
-        new Recipe("Pizza", 2, new int[]{2, 3, 4, 5, 6}),
-        new Recipe("Burrito", 3, new int[]{4, 7, 8, 9, 10})
+    public RecipeTest[] recipes = new RecipeTest[]{
+        new RecipeTest("Fried Eggplant", 0, new int[]{0, 2, 3}),
+        new RecipeTest("Golden Fried Eggplant", 1, new int[]{1, 2, 3}),
+        new RecipeTest("Pizza", 2, new int[]{2, 3, 4, 5, 6}),
+        new RecipeTest("Burrito", 3, new int[]{4, 7, 8, 9, 10})
     };
 }

@@ -5,8 +5,11 @@ using UnityEngine;
 public class GameData: MonoBehaviour
 {
     [SerializeField] private ItemDatabase itemDatabase;
+    [SerializeField] private RecipeDatabase recipeDatabase;
     
     private Dictionary<int, Item> itemDict;
+    private List<Item> itemList = new List<Item>();
+    private List<Recipe> recipeList = new List<Recipe>();
 
     private void Awake()
     {
@@ -16,6 +19,8 @@ public class GameData: MonoBehaviour
     private void Start()
     {
         itemDict = new Dictionary<int, Item>();
+        itemList = itemDatabase.allItems;
+        recipeList = recipeDatabase.allRecipes;
         StartCoroutine(PopulateItemDatabase());
     }
 
@@ -38,6 +43,21 @@ public class GameData: MonoBehaviour
     public Item GetItemById(int id)
     {
         return itemDict[id];
+    }
+
+    public List<Item> GetItemList()
+    {
+        return itemList;
+    }
+
+    public List<Recipe> GetRecipeList()
+    {
+        return recipeList;
+    }
+
+    public Dictionary<int, Item> GetItemDict()
+    {
+        return itemDict;
     }
 
 }

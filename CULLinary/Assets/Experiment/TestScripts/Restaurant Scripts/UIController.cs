@@ -16,22 +16,15 @@ public class UIController : MonoBehaviour
     public GameObject MenuPanel;
     public GameObject CounterNotifPanel;
 
+    private PlayerManager playerManager;
+
     private void Start()
     {
-        //StartCoroutine(FindInventoryPanel());
-    }
-
-    private IEnumerator FindInventoryPanel()
-    {
-        while (true)
+        playerManager = PlayerManager.instance;
+        if (playerManager != null)
         {
-            this.InventoryPanel = GameObject.FindGameObjectWithTag("InventoryPanel");
-            if (this.InventoryPanel != null)
-            {
-                this.InventoryPanel.SetActive(false);
-                break;
-            }
-            yield return new WaitForSeconds(0.1f);
+            totalAmt = playerManager.GetMoney();
+            moneyText.GetComponent<Text>().text = "Amount earned: $" + totalAmt.ToString();
         }
     }
 
@@ -67,11 +60,22 @@ public class UIController : MonoBehaviour
     {
         totalAmt += 50;
         moneyText.GetComponent<Text>().text = "Amount earned: $" + totalAmt.ToString();
+        AddToGameData();
     }
 
     public void AddCorrectDishEarnings()
     {
         totalAmt += 100;
         moneyText.GetComponent<Text>().text = "Amount earned: $" + totalAmt.ToString();
+        AddToGameData();
+    }
+
+    private void AddToGameData()
+    {
+        
+        if (playerManager != null)
+        {
+            playerManager.SetMoney(totalAmt);
+        }
     }
 }

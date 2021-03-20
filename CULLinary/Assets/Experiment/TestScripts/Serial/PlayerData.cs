@@ -18,13 +18,13 @@ public class PlayerData
         this.playerName = "John Doe";
     }
 
-    public PlayerData(string inventory, int stage, int currentIndex, string playerName)
+    public PlayerData(string inventory, int stage, int currentIndex, string playerName, int money)
     {
         this.inventory = inventory;
         this.stage = stage;
         this.currentIndex = currentIndex; //Default goes to restaurant
         this.playerName = playerName;
-        this.money = 0;
+        this.money = money;
     }
 
     public string ToJson()

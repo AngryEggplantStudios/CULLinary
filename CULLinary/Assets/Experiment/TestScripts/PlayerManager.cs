@@ -71,16 +71,17 @@ public class PlayerManager : MonoBehaviour
     {
         SetItemList(items);
         string inventory = SerializeInventory();
-        PlayerData playerData = new PlayerData(inventory, stage, currentIndex, playerName);
+        PlayerData playerData = new PlayerData(inventory, stage, currentIndex, playerName, money);
         SaveSystem.SaveData(playerData);
     }
 
+    //Current fix until we can get the inventory to be the same object between scenes
     public void LoadData()
     {
         PlayerData data = SaveSystem.LoadData();
         if (data == null)
         {
-            Debug.Log("Data cannot be found. Setting defaults.");
+            Debug.Log("Data cannot be found. Setting game data to default.");
             SetCurrentIndex(1);
             SetStage(1);
             SetMoney(0);

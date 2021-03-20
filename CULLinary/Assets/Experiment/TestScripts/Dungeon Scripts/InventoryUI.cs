@@ -26,7 +26,6 @@ public class InventoryUI : MonoBehaviour
 	private void Start()
 	{
 		slots = inventoryPanel.GetComponentsInChildren<InventorySlot>();
-        Debug.Log(slots);
 	}
 
 	private void Update()
