@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DungeonPlayerHealth : MonoBehaviour
 {
-
+    [SerializeField] private GameObject gameOverUI;
     [SerializeField] private float maxHealth;
     [SerializeField] private GameObject hpBarUI;
     [SerializeField] private float invincibilityDurationSeconds;
@@ -71,6 +71,7 @@ public class DungeonPlayerHealth : MonoBehaviour
 
         if (this.health <= 0)
         {
+            gameOverUI.GetComponent<GameManager>().GameOver();
            //Die();
         }
         StartCoroutine(BecomeTemporarilyInvincible());

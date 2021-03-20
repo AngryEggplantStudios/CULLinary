@@ -29,10 +29,15 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
 
     private void Move(Vector3 direction, float speed, float animValue, bool isMoving=true)
     {
-        animator.SetFloat("Speed", animValue, 0.1f, Time.deltaTime);
-        if (isMoving) {
-            controller.Move(direction.normalized * speed * Time.deltaTime);
+        if (!dungeonPlayerController.gameOverBool)
+        {
+            animator.SetFloat("Speed", animValue, 0.1f, Time.deltaTime);
+            if (isMoving)
+            {
+                controller.Move(direction.normalized * speed * Time.deltaTime);
+            }
         }
+
     }
     public void KnockBack(Vector3 direction, float speed, float animValue, bool isMoving = true)
     {
@@ -55,10 +60,13 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
 
     public void StepSound(AnimationEvent evt)
     {
-        if (evt.animatorClipInfo.weight > 0.5)
+        if (!dungeonPlayerController.gameOverBool)
         {
-            audioSource.clip = stepSounds[Random.Range(0, stepSounds.Length)];
-            audioSource.Play();
+            if (evt.animatorClipInfo.weight > 0.5)
+            {
+                audioSource.clip = stepSounds[Random.Range(0, stepSounds.Length)];
+                audioSource.Play();
+            }
         }
     }
 

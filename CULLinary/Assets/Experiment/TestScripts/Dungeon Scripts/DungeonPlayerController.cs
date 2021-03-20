@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DungeonPlayerController : DungeonPlayerAction
 {
+    [SerializeField] private GameObject gameOver;
 
     public delegate void PlayerMoveDelegate(Vector3 direction, float speed, float animValue, bool isMoving);
     public delegate void PlayerRotateDelegate(Vector3 direction, float speed);
@@ -21,7 +22,7 @@ public class DungeonPlayerController : DungeonPlayerAction
     [SerializeField] private bool invertKeys = false;
     // Whether run is enabled
     [SerializeField] private bool canRun = true;
-
+    public bool gameOverBool;
     //Directions
     private Vector3 direction;
     private Vector3 normalizedDirection;
@@ -54,6 +55,7 @@ public class DungeonPlayerController : DungeonPlayerAction
         dungeonPlayerRange = GetComponent<DungeonPlayerRange>();
         dungeonPlayerMelee = GetComponent<DungeonPlayerMelee>();
         directionMultiplier = invertKeys ? -1 : 1;
+        gameOverBool = false;
     }
 
     private void Update()
@@ -63,46 +65,54 @@ public class DungeonPlayerController : DungeonPlayerAction
         }
 
         //Get input
-        float moveVertical = Input.GetAxisRaw("Vertical");
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-
-        //Calculations
-        direction = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        normalizedDirection = direction.normalized * directionMultiplier;
-        float targetAngle = Mathf.Atan2(normalizedDirection.x, normalizedDirection.z) * Mathf.Rad2Deg;
-        moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
-        
-        bool isRangeInvoked = dungeonPlayerRange ? dungeonPlayerRange.GetIsInvoking() : false;
-        bool isMeleeInvoked = dungeonPlayerMelee ? dungeonPlayerMelee.GetIsInvoking() : false;
-        if (!isRangeInvoked && !isMeleeInvoked)
+        if (!gameOver.activeSelf )
         {
-            this.SetIsInvoking(true);
+            float moveVertical = Input.GetAxisRaw("Vertical");
+            float moveHorizontal = Input.GetAxisRaw("Horizontal");
 
-            if (direction == Vector3.zero)
+            //Calculations
+            direction = new Vector3(moveHorizontal, 0.0f, moveVertical);
+            normalizedDirection = direction.normalized * directionMultiplier;
+            float targetAngle = Mathf.Atan2(normalizedDirection.x, normalizedDirection.z) * Mathf.Rad2Deg;
+            moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
+
+            bool isRangeInvoked = dungeonPlayerRange ? dungeonPlayerRange.GetIsInvoking() : false;
+            bool isMeleeInvoked = dungeonPlayerMelee ? dungeonPlayerMelee.GetIsInvoking() : false;
+            if (!isRangeInvoked && !isMeleeInvoked)
             {
-                OnPlayerMove?.Invoke(moveDirection.normalized, 0.0f, 0.0f, false);
-            }
-            else
-            {
-                if (canRun && Input.GetKey(KeyCode.LeftShift))
+                this.SetIsInvoking(true);
+
+                if (direction == Vector3.zero)
                 {
-                    OnPlayerMove?.Invoke(moveDirection.normalized, runSpeed, 1.0f, true);
+                    OnPlayerMove?.Invoke(moveDirection.normalized, 0.0f, 0.0f, false);
                 }
                 else
                 {
-                    OnPlayerMove?.Invoke(moveDirection.normalized, walkSpeed, 0.5f, true);
+                    if (canRun && Input.GetKey(KeyCode.LeftShift))
+                    {
+                        OnPlayerMove?.Invoke(moveDirection.normalized, runSpeed, 1.0f, true);
+                    }
+                    else
+                    {
+                        OnPlayerMove?.Invoke(moveDirection.normalized, walkSpeed, 0.5f, true);
+                    }
+                }
+
+                if (direction != Vector3.zero)
+                {
+                    OnPlayerRotate?.Invoke(normalizedDirection, turnSpeed);
                 }
             }
-
-            if (direction != Vector3.zero)
+            else
             {
-                OnPlayerRotate?.Invoke(normalizedDirection, turnSpeed);
+                this.SetIsInvoking(false);
             }
-        }
-        else 
+        } else
         {
-            this.SetIsInvoking(false);
+            gameOverBool = true;
+            this.DisableMovement();
         }
+
     }
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerLocomotion : MonoBehaviour
 {
     [SerializeField] Animator animator;
-
+    [SerializeField] private GameObject gameOver;
     private CharacterController controller;
     private Vector3 direction;
     private Vector3 normalizedDirection;

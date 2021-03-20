@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 595735064967446156}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0.00375, z: 0}
-  m_LocalScale: {x: 0.65625006, y: 0.65624994, z: 0.37500003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8008916349616235639}
   m_RootOrder: 2
@@ -43,7 +43,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &666300789314955927
 MonoBehaviour:
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c838e98f04c10f94284079cbec32b9f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 0
+  attackDamage: 2
   selectionCirclePrefab: {fileID: 0}
   selectionCircleActual: {fileID: 0}
 --- !u!1 &651471621309939363
@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 7236917708904857293}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
   m_Children:
   - {fileID: 1411236017546622185}
   - {fileID: 7485506057978364527}
@@ -346,7 +346,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 1.5
-  m_Acceleration: 2
+  m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1
