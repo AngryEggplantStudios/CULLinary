@@ -51,7 +51,6 @@ public class ConnectionPoint : MonoBehaviour
                 break;
             }
         }
-
         yield return null;
 
         if (roomToGenerate == deadend)

@@ -57,7 +57,7 @@ public class EnemyScript : MonoBehaviour
     }
 
     [SerializeField] private LootTuple[] lootTuples;
-    private float wanderRadius = 5.0f;
+    [SerializeField] private float wanderRadius;
     private Vector3 startingPosition;
     private Vector3 roamPosition;
     private float timer;
@@ -216,12 +216,13 @@ public class EnemyScript : MonoBehaviour
             case State.GoingBackToStart:
                 goingBackToStartTimer += Time.deltaTime;
                 animator.SetBool("isMoving", true);
-                float reachedPositionDistance = 0.5f;
+                float reachedPositionDistance = 1.0f;
                 transform.LookAt(startingPosition);
                 agent.SetDestination(startingPosition);
                 if (Vector3.Distance(transform.position, startingPosition) <= reachedPositionDistance || goingBackToStartTimer > 4.0f)
                 {
                     // Reached Start Position
+                    animator.SetBool("isMoving", false);
                     state = State.Idle;
                     goingBackToStartTimer = 0;
                 }
@@ -321,7 +322,7 @@ public class EnemyScript : MonoBehaviour
     {
         Vector2 randPos = Random.insideUnitCircle * dist;
         Vector3 randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);
-        while ((randDirection - origin).magnitude < 3.0f)
+        while ((randDirection - origin).magnitude < 5.0f)
         {
             randPos = Random.insideUnitCircle * dist;
             randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);

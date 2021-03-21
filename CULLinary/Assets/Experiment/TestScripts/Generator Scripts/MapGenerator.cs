@@ -18,10 +18,14 @@ public class MapGenerator : MonoBehaviour
     
     [SerializeField] private GameObject player;
 
+    //need to reinitialize the static components on loadscene.
     private void Start()
     {
         parent = new GameObject();
         parent.AddComponent<NavMeshSurface>();
+        roomCounter = 0;
+        generatedRooms = new List<GameObject>();
+        connectionPoints = new Queue<ConnectionPoint>();
         isGenerated = true;
         StartCoroutine(GenerateMap());
     }
@@ -49,6 +53,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
         else {
+            Debug.Log("Else Added!");
             while (connectionPoints.Count > 0)
             {
                 ConnectionPoint currentPoint = connectionPoints.Dequeue();
@@ -68,7 +73,6 @@ public class MapGenerator : MonoBehaviour
             }
             
         }
-        //Debug.Log("Added!");
     }
 
     public static void AddGeneratedRoom(GameObject room)
