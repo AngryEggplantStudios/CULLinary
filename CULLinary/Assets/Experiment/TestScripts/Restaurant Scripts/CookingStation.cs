@@ -26,6 +26,7 @@ public class CookingStation : MonoBehaviour
     [Header("Cooking Progress Bar")] // Progress Bar variables
     public CookingProgressbar cookingProgressBar;
     public GameObject progressIcon;
+    public GameObject inputTooltip;
     public Transform progressBarTransform;
 
     public Collider recipeActivator;
@@ -69,6 +70,7 @@ public class CookingStation : MonoBehaviour
             if (progressIcon.activeSelf == false)
             {
                 progressIcon.SetActive(true);     // Show the icon only if cooking
+                inputTooltip.SetActive(false);
                 DisableMovementOfPlayer(); // Disable movement of player
             }
             else
@@ -100,6 +102,7 @@ public class CookingStation : MonoBehaviour
             
             //cookingNow = false;
             progressIcon.SetActive(false);      // Hide timer once progress = 100%
+            inputTooltip.SetActive(true);
             currentAmount = 0;                  // Reset fill value for next cooking
             isCooking = false;                  // Reset value since not cooking anymore
             ServeDish();                        // Spawn food at next available location
