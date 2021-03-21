@@ -50,14 +50,6 @@ public class EnemyProjectile : MonoBehaviour
         {
             target.HandleHit(damage);
             Destroy(gameObject);
-            Debug.Log("Hit!");
-        } else
-        {
-            GameObject target2 = other.transform.Find("AttackRadius").gameObject;
-            if (target2 == null)
-            {
-                Destroy(gameObject);
-            }
         }
     }
 

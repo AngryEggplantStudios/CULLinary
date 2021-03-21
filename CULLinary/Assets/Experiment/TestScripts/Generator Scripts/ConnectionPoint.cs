@@ -99,7 +99,7 @@ public class ConnectionPoint : MonoBehaviour
             //Debug.Log("Room is valid. Let's add it to the dungeon!");
             MapGenerator.AddRoomCounter();
             MapGenerator.AddGeneratedRoom(generatedRoom);
-            yield return StartCoroutine(generatedRoom.GetComponentInChildren<MeshCombiner>().CombineMeshes());
+            //yield return StartCoroutine(generatedRoom.GetComponentInChildren<MeshCombiner>().CombineMeshes());
             this.SetConnected();
             chosenPoint.SetConnected();
             //Debug.Log("LMAO");

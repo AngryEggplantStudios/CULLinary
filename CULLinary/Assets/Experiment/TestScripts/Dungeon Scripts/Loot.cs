@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class Loot : MonoBehaviour
 {
     [SerializeField] private Item itemForLoot;
-    [SerializeField] private int itemNo;
 
     private GameObject player;
     private AudioSource audioSource;
+
     [SerializeField] private AudioClip itemPickupSound;
 
     [SerializeField] private GameObject itemPickupNotif_prefab;
@@ -23,11 +23,6 @@ public class Loot : MonoBehaviour
     public Item GetItem()
     {
         return itemForLoot;
-    }
-
-    public int GetItemNo()
-    {
-        return itemNo;
     }
 
     public void PickUp()
@@ -46,10 +41,7 @@ public class Loot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        DungeonPlayerInventory inventory = other.GetComponent<DungeonPlayerInventory>();
-        if (inventory != null)
-        {
-            inventory.AddItemIntoInventory(this);
-        }
+        PickUp();
+        InventoryUI.instance.AddItem(this.GetItem());
     }
 }

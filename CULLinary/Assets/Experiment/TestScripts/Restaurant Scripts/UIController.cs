@@ -16,6 +16,18 @@ public class UIController : MonoBehaviour
     public GameObject MenuPanel;
     public GameObject CounterNotifPanel;
 
+    private PlayerManager playerManager;
+
+    private void Start()
+    {
+        playerManager = PlayerManager.instance;
+        if (playerManager != null)
+        {
+            totalAmt = playerManager.GetMoney();
+            moneyText.GetComponent<Text>().text = "Amount earned: $" + totalAmt.ToString();
+        }
+    }
+
     // For Inventory Panel and Menu Panel (Called by CookingStation)
     public void ShowCookingPanel()
     {
@@ -48,11 +60,22 @@ public class UIController : MonoBehaviour
     {
         totalAmt += 50;
         moneyText.GetComponent<Text>().text = "Amount earned: $" + totalAmt.ToString();
+        AddToGameData();
     }
 
     public void AddCorrectDishEarnings()
     {
         totalAmt += 100;
         moneyText.GetComponent<Text>().text = "Amount earned: $" + totalAmt.ToString();
+        AddToGameData();
+    }
+
+    private void AddToGameData()
+    {
+        
+        if (playerManager != null)
+        {
+            playerManager.SetMoney(totalAmt);
+        }
     }
 }

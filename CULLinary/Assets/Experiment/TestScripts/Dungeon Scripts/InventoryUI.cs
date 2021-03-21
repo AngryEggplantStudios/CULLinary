@@ -11,22 +11,21 @@ public class InventoryUI : MonoBehaviour
 
 	private DungeonPlayerInventory inventory;
 
-	private InventorySlot[] slots;
+	[SerializeField] private InventorySlot[] slots;
 	private List<Item> itemList = new List<Item>(); // Inventory
-	[SerializeField] private int inventoryLimit = 20;
+	[SerializeField] private int inventoryLimit = 16;
 	
     [SerializeField] private GameObject damageCounter_prefab;
 
-	void Start()
-	{
-		inventory = DungeonPlayerInventory.instance;
-		inventory.OnItemAdd += AddItem;
-		inventory.OnItemRemove += RemoveItem;
-		slots = inventoryPanel.GetComponentsInChildren<InventorySlot>();
+    public static InventoryUI instance;
 
-		Scene scene = SceneManager.GetActiveScene();
-		if (scene.name != "TestRestaurant" ) // Might need to change later if restaurant scene's name changes
-			inventoryUI.SetActive(false); // Don't need this line for restaurant scene if not inventory won't show up on first interaction w cooking station
+    private void Awake()
+    {
+        instance = this;
+    }
+	private void Start()
+	{
+		slots = inventoryPanel.GetComponentsInChildren<InventorySlot>();
 	}
 
 	private void Update()
@@ -43,21 +42,28 @@ public class InventoryUI : MonoBehaviour
 		inventoryUI.SetActive(isShowing);
 	}
 
-	private void AddItem(Item item)
+	public void AddItem(Item item)
 	{
+        
 		if (itemList.Count < inventoryLimit)
 		{
 			itemList.Add(item);
 			UpdateUI();
 		}
-        else
-        {
-            Debug.Log("Not enough room");
-        }
+		else
+		{
+			Debug.Log("Not enough room");
+		}
 
 	}
 
-	private void RemoveItem(Item item)
+    public void PopulateUI(List<Item> items)
+    {
+        itemList = items;
+        UpdateUI();
+    }
+
+	public void RemoveItem(Item item)
 	{
 		itemList.Remove(item);
 		UpdateUI();
@@ -68,29 +74,26 @@ public class InventoryUI : MonoBehaviour
         return itemList;
     }
 
-	private void OnDestroy()
-	{
- 		inventory.OnItemAdd -= AddItem;
-		inventory.OnItemRemove -= RemoveItem;
-	}
-
 	// Update the inventory UI by:
 	//		- Adding items
 	//		- Clearing empty slots
 	// This is called using a delegate on the Inventory.
 	private void UpdateUI()
 	{
+        if (slots != null)
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (i < itemList.Count)
+                {
+                    slots[i].AddItem(itemList[i]);
+                }
+                else
+                {
+                    slots[i].ClearSlot();
+                }
+            }
+        }
 
-		for (int i = 0; i < slots.Length; i++)
-		{
-			if (i < itemList.Count)
-			{
-				slots[i].AddItem(itemList[i]);
-			}
-			else
-			{
-				slots[i].ClearSlot();
-			}
-		}
 	}
 }

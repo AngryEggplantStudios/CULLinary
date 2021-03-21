@@ -2,30 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameData : MonoBehaviour
+public class GameData: MonoBehaviour
 {
-    [SerializeField] private TextAsset recipesFile;
-    [SerializeField] private TextAsset ingredientsFile;
-    public static RecipeTest[] recipes;
-    public static Ingredient[] ingredients;
+    [SerializeField] private ItemDatabase itemDatabase;
+    [SerializeField] private RecipeDatabase recipeDatabase;
+    
+    private Dictionary<int, Item> itemDict;
+    private List<Item> itemList = new List<Item>();
+    private List<Recipe> recipeList = new List<Recipe>();
+
     private void Awake()
     {
-        LoadRecipeData();
-        LoadIngredientData();
+        DontDestroyOnLoad(this);
     }
 
-    private RecipeTest[] LoadRecipeData()
+    private void Start()
     {
-        RecipesData r = JsonUtility.FromJson<RecipesData>(recipesFile.text);
-        recipes = r.recipes;
-        return r.recipes;
+        itemDict = new Dictionary<int, Item>();
+        itemList = itemDatabase.allItems;
+        recipeList = recipeDatabase.allRecipes;
+        StartCoroutine(PopulateItemDatabase());
     }
 
-    private Ingredient[] LoadIngredientData()
+    private IEnumerator PopulateItemDatabase()
     {
-        IngredientsData i = JsonUtility.FromJson<IngredientsData>(ingredientsFile.text);
-        ingredients = i.ingredients;
-        return i.ingredients;
+        foreach(Item i in itemDatabase.allItems)
+        {
+            try
+            {
+                itemDict.Add(i.itemId, i);
+            }
+            catch
+            {
+                Debug.Log("Unable to add item: " + i.name);
+            }
+            yield return null;
+        }
     }
-    
+
+    public Item GetItemById(int id)
+    {
+        return itemDict[id];
+    }
+
+    public List<Item> GetItemList()
+    {
+        return itemList;
+    }
+
+    public List<Recipe> GetRecipeList()
+    {
+        return recipeList;
+    }
+
+    public Dictionary<int, Item> GetItemDict()
+    {
+        return itemDict;
+    }
+
 }

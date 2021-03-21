@@ -88,7 +88,7 @@ public class MapGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isGenerated && false)
+        if (Input.GetKeyDown(KeyCode.Space) && false)
         {
             isGenerated = true;
             StartCoroutine(GenerateMap());
