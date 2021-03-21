@@ -41,6 +41,11 @@ public class CookingStation : MonoBehaviour
     public DungeonPlayerController dungeonController;
     public Restaurant_MinimalPlayerController restaurantController;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip cookingSound;
+    public AudioClip dingSound;
+
     // Helper function to disable both movement and restaurant-related animations
     public void DisableMovementOfPlayer() {
         dungeonController.DisableMovement();
@@ -67,16 +72,7 @@ public class CookingStation : MonoBehaviour
         // To update the fill of progress icon when player is cooking 
         if (isCooking)
         {
-            if (progressIcon.activeSelf == false)
-            {
-                progressIcon.SetActive(true);     // Show the icon only if cooking
-                inputTooltip.SetActive(false);
-                DisableMovementOfPlayer(); // Disable movement of player
-            }
-            else
-            {
-                FillUpBar(); // Start filling up the bar once it is active
-            }
+            FillUpBar(); // Start filling up the bar once it is active
             dungeonController.Face(stationLocation.position); // Face the station when cooking
         }
 
@@ -84,7 +80,7 @@ public class CookingStation : MonoBehaviour
         if (!isCooking && Keybinds.WasTriggered(Keybind.Interact) && PlayerWithinRange())
         {
             uiController.ShowCookingPanel();
-            Debug.Log("why inventory NO SHOW UP on first F");
+            //Debug.Log("why inventory NO SHOW UP on first F");
             DisableMovementOfPlayer(); // Disable movement of player when menu is open
         }
     }
@@ -99,15 +95,7 @@ public class CookingStation : MonoBehaviour
         }
         else
         {
-            
-            //cookingNow = false;
-            progressIcon.SetActive(false);      // Hide timer once progress = 100%
-            inputTooltip.SetActive(true);
-            currentAmount = 0;                  // Reset fill value for next cooking
-            isCooking = false;                  // Reset value since not cooking anymore
-            ServeDish();                        // Spawn food at next available location
-            recipeActivator.enabled = true;     // Reset collider so player can click again to open recipe menu
-            EnableMovementOfPlayer();           // Reenable player movement
+            FinishCooking();
         }
 
         progressBarTransform.GetComponent<Image>().fillAmount = currentAmount / 100;
@@ -131,11 +119,32 @@ public class CookingStation : MonoBehaviour
 
     public void Cook(string dishName)
     {
-        if (PlayerWithinRange()) {
-            isCooking = true;
-            dishToCook = dishName;
-        }
+        if (!PlayerWithinRange()) return;
+
+        isCooking = true;
+        dishToCook = dishName;
+        progressIcon.SetActive(true);
+        inputTooltip.SetActive(false);
+        DisableMovementOfPlayer();
+
+        audioSource.clip = cookingSound;
+        audioSource.time = 3;
+        audioSource.Play();
     }
+
+    private void FinishCooking()
+    {
+        progressIcon.SetActive(false);      // Hide timer once progress = 100%
+        inputTooltip.SetActive(true);
+        currentAmount = 0;                  // Reset fill value for next cooking
+        isCooking = false;                  // Reset value since not cooking anymore
+        ServeDish();                        // Spawn food at next available location
+        recipeActivator.enabled = true;     // Reset collider so player can click again to open recipe menu
+        EnableMovementOfPlayer();           // Reenable player movement
+  
+        audioSource.clip = dingSound;
+        audioSource.Play();
+   }
 
     // To spawn the dish at the counter once timer is up
     public void ServeDish()
