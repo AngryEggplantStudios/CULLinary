@@ -17,6 +17,8 @@ public class Restaurant_CustomerController : MonoBehaviour
 
     private int idx = 0;
     private bool alrReceivedFood = false;
+    
+    public AudioSource kachingSound;
 
     private void Start()
     {
@@ -66,6 +68,7 @@ public class Restaurant_CustomerController : MonoBehaviour
         }
 
         moneyText.SetActive(true); // add anims to money text?
+        kachingSound.Play();
 
         StartCoroutine(TimeToLeave());
     }
