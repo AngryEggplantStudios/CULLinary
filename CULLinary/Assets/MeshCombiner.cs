@@ -130,7 +130,7 @@ public class MeshCombiner : MonoBehaviour
         {
             var savePath = "Assets/" + gameObject.name + ".asset";
             Debug.Log("Saved Mesh to:" + savePath);
-            AssetDatabase.CreateAsset(mf.mesh, savePath);
+            //AssetDatabase.CreateAsset(mf.mesh, savePath);
         }
     }
 
