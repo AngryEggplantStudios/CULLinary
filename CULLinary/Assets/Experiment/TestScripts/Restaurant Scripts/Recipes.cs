@@ -29,12 +29,18 @@ public class RecipeTest
     }
 }
 
-public class Recipes
+public static class Recipes
 {
-    public RecipeTest[] recipes = new RecipeTest[]{
-        new RecipeTest("Fried Eggplant", 0, new int[]{0, 2, 3}),
-        new RecipeTest("Golden Fried Eggplant", 1, new int[]{1, 2, 3}),
-        new RecipeTest("Pizza", 2, new int[]{2, 3, 4, 5, 6}),
-        new RecipeTest("Burrito", 3, new int[]{4, 7, 8, 9, 10})
+    // public RecipeTest[] recipes = new RecipeTest[]{
+    //     new RecipeTest("Fried Eggplant", 0, new int[]{0, 2, 3}),
+    //     new RecipeTest("Golden Fried Eggplant", 1, new int[]{1, 2, 3}),
+    //     new RecipeTest("Pizza", 2, new int[]{2, 3, 4, 5, 6}),
+    //     new RecipeTest("Burrito", 3, new int[]{4, 7, 8, 9, 10})
+    // };
+    public static RecipeTest[] recipes = new RecipeTest[]{
+        new RecipeTest("Fried Eggplant", 0, new int[]{4, 4, 4}),
+        new RecipeTest("Golden Fried Eggplant", 1, new int[]{6, 6, 6}),
+        new RecipeTest("Pizza", 2, new int[]{4, 11, 12}),
+        new RecipeTest("Burrito", 3, new int[]{11, 12, 12})
     };
 }
