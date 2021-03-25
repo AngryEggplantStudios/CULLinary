@@ -7,6 +7,7 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
     private Animator animator;
     private DungeonPlayerController dungeonPlayerController;
     private CharacterController controller;
+    private GameObject player;
 
     [SerializeField] private GameObject playerBody;
     
@@ -17,6 +18,7 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
     {
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Awake()
@@ -34,6 +36,13 @@ public class DungeonPlayerLocomotion : DungeonPlayerAction {
             animator.SetFloat("Speed", animValue, 0.1f, Time.deltaTime);
             if (isMoving)
             {
+                if (controller.collisionFlags != CollisionFlags.Below && controller.collisionFlags != CollisionFlags.None)
+                {
+                    if (player.transform.position.y > 0.01)
+                    {
+                        direction = new Vector3(direction.x, -0.30f, direction.z);
+                    }
+                }
                 controller.Move(direction.normalized * speed * Time.deltaTime);
             }
         }
