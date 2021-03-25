@@ -3648,18 +3648,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 182388393}
-        m_TargetAssemblyTypeName: UIRecipeBook, Assembly-CSharp
-        m_MethodName: ToggleVisiblity
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &182388393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4228,6 +4216,7 @@ MonoBehaviour:
   cookingStation: {fileID: 221291665}
   uiController: {fileID: 1870195482}
   inventory: {fileID: 182388387}
+  recipeBook: {fileID: 0}
 --- !u!114 &221291665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24626,10 +24615,11 @@ MonoBehaviour:
   menuFourthButton: {fileID: 83089465}
   menuCloseButton: {fileID: 1393372344}
   moneyText: {fileID: 6421019}
-  InventoryPanel: {fileID: 833706171}
-  MenuPanel: {fileID: 1698611253}
-  CounterNotifPanel: {fileID: 701198546}
+  menuPanel: {fileID: 1698611253}
+  counterNotifPanel: {fileID: 701198546}
   closeNotifButton: {fileID: 1545650390}
+  inventoryPanel: {fileID: 182388387}
+  recipeBookPanel: {fileID: 182388393}
   upKey: w
   downKey: s
 --- !u!4 &1870195483
