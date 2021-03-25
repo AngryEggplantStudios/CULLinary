@@ -32,12 +32,20 @@ public class InventoryUI : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.I))
+		if (Keybinds.WasTriggered(Keybind.OpenInventory))
 		{
 			ToggleVisiblity();
 		}
 	}
 
+    // Sets the inventory to be visible or invisible
+	public void SetActive(bool isActive)
+	{
+		isShowing = isActive;
+		inventoryUI.SetActive(isActive);
+	}
+
+    // Toggle the inventory to be visible or not
 	public void ToggleVisiblity()
 	{
 		isShowing = !isShowing;
@@ -107,9 +115,14 @@ public class InventoryUI : MonoBehaviour
 
 		// Checks whether we can remove the items
 		foreach (KeyValuePair<int, int> pair in itemsToRemoveMap) {
+			if (!itemsInInventory.ContainsKey(pair.Key)) {
+				// do not have that ingredient at all
+				return false;
+			}
 			int numberRequired = pair.Value;
 			int numberInInventory = itemsInInventory[pair.Key].Item1;
 			if (numberInInventory < numberRequired) {
+				// have less than the number required
 				return false;
 			}
 		}
