@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CookingProgressbar : MonoBehaviour
 {
     public GameObject progressIcon;
+    public GameObject inputTooltip;
     public Transform progressBarTransform;
     public CookingStation cookingStation;
 
@@ -29,7 +30,9 @@ public class CookingProgressbar : MonoBehaviour
             if (progressIcon.activeSelf == false) 
             {
                 progressIcon.SetActive(true); // Show the icon only if cooking
-            } else
+                inputTooltip.SetActive(false);
+            }
+            else
             {
                 FillUpBar(); // Start filling up the bar once it is active
             }            
@@ -48,6 +51,7 @@ public class CookingProgressbar : MonoBehaviour
             // set the timer to false once it reaches 100?
             cookingNow = false;
             progressIcon.SetActive(false);
+            inputTooltip.SetActive(true);
             currentAmount = 0; // Reset value for next cooking
             cookingStation.isCooking = false;
             cookingStation.ServeDish(); // Spawn food at next available location

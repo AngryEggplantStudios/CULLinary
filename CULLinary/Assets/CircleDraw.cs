@@ -25,7 +25,7 @@ public class CircleDraw : MonoBehaviour
     {
         float x;
         float y;
-        float z;
+        //float z;
 
         float angle = 20f;
 

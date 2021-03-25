@@ -8,6 +8,8 @@ public class RecipeSelector : MonoBehaviour
 {
     public CookingStation cookingStation;
     public UIController uiController;
+    public InventoryUI inventory;
+    public UIRecipeBook recipeBook;
 
     // Closes the UI panel 
     public void SelectCloseButton()
@@ -34,22 +36,37 @@ public class RecipeSelector : MonoBehaviour
     // or maybe just pre-make them and save them as prefabs, then spawn them dynamically? --> KIV first
     public void SelectEggplant()
     {
-        StartCooking("eggplant");
+        if (inventory.RemoveIdsFromInventory(Recipes.recipes[0].getIngredients())) {
+            StartCooking("eggplant");
+        } else {
+            uiController.ShowNotEnoughIngredientsNotifPanel();
+        }
     }
 
     public void SelectGoldEggplant()
-    {
-        StartCooking("goldeggplant");       
+    {   
+        if (inventory.RemoveIdsFromInventory(Recipes.recipes[1].getIngredients())) {
+            StartCooking("goldeggplant");     
+        } else {
+            uiController.ShowNotEnoughIngredientsNotifPanel();
+        }
     }
 
     public void SelectPizza()
     {
-        StartCooking("pizza");       
+        if (inventory.RemoveIdsFromInventory(Recipes.recipes[2].getIngredients())) {
+            StartCooking("pizza");       
+        } else {
+            uiController.ShowNotEnoughIngredientsNotifPanel();
+        }
     }
 
     public void SelectBurrito()
     {
-        StartCooking("burrito");
+        if (inventory.RemoveIdsFromInventory(Recipes.recipes[3].getIngredients())) {
+            StartCooking("burrito");
+        } else {
+            uiController.ShowNotEnoughIngredientsNotifPanel();
+        }
     }
-
 }

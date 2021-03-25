@@ -189,10 +189,10 @@ public class EnemyScript : MonoBehaviour
 
                 }
 
-                if (Vector3.Distance(transform.position, player.position) > stopChase)
+                if (Vector3.Distance(transform.position, player.position) > stopChase + 0.1f)
                 {
                     // Too far, stop chasing
-                    state = State.GoingBackToStart;
+                     state = State.GoingBackToStart;
                 }
                 break;
             case State.AttackTarget:

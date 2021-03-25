@@ -127,32 +127,6 @@ Transform:
   m_Father: {fileID: 7323049196757144900}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1711529485167061224
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4277395108541255142}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5999999, y: 0.02000011, z: 0.20000003}
-  m_Center: {x: 0.00000007361174, y: 0.009999971, z: 0.00000014930964}
---- !u!114 &3615148946789557241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4277395108541255142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df0f47a435bae66bc8b85446c6642afd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 20
 --- !u!1 &1096907900932699202
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,10 +692,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e898fc7bc3fb720f1987999783fdaa09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOver: {fileID: 0}
   walkSpeed: 5
   runSpeed: 8
   turnSpeed: 10
-  cam: {fileID: 4007418486469922164}
+  invertKeys: 0
+  canRun: 1
+  gameOverBool: 0
 --- !u!114 &4007418486084460502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -770,6 +747,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reticle: {fileID: 2800000, guid: 735a953bcaefa3b47adf5776fbd1996f, type: 3}
   playerBody: {fileID: 4277395108179624529}
+  gameOver: {fileID: 0}
+  cooldownAnimator: {fileID: 0}
   audioSource: {fileID: 1096907900932699200}
   attackSound: {fileID: 8300000, guid: 02cef16b0cd5ed443ad059ac457f9d91, type: 3}
 --- !u!114 &4007418486084460499
@@ -881,6 +860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b07be82e8d1ed948b4a24fb0cff22b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverUI: {fileID: 0}
   maxHealth: 150
   hpBarUI: {fileID: 0}
   invincibilityDurationSeconds: 1.5
@@ -1022,7 +1002,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4277395108179624529}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1030,7 +1010,33 @@ Transform:
   - {fileID: 8953007352247408797}
   m_Father: {fileID: 4007418486084460491}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!65 &1711529485167061224
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4277395108541255142}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5999999, y: 0.02000011, z: 0.20000003}
+  m_Center: {x: 0.00000007361174, y: 0.009999971, z: 0.00000014930964}
+--- !u!114 &3615148946789557241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4277395108541255142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df0f47a435bae66bc8b85446c6642afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
 --- !u!1 &4561265556712069992
 GameObject:
   m_ObjectHideFlags: 0

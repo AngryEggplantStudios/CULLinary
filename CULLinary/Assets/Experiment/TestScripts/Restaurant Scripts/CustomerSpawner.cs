@@ -11,6 +11,8 @@ public class CustomerSpawner : MonoBehaviour
 
     public int currCustNum;
     bool alrSpawn = false;
+    
+    public AudioSource customerEnterSound;
 
     // Start is called before the first frame update
     void Start()
@@ -59,12 +61,14 @@ public class CustomerSpawner : MonoBehaviour
             int randomSeatIdx = Random.Range(0, Seats.Length);
             bool canSit = GetRandomAvailableSeat(randomSeatIdx);
 
-            if (canSit)  // Can add audio here when customer is instantiated?
+            if (canSit)
             {
                 Transform seatLocation = Seats[randomSeatIdx];
                 GameObject customer = Instantiate(customerPrefabs[randomID], seatLocation.position, Quaternion.identity);
                 customer.transform.SetParent(seatLocation);
                 foundSeat = true;
+
+                customerEnterSound.Play();
             }
         }
 
