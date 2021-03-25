@@ -9,6 +9,7 @@ public class RecipeSelector : MonoBehaviour
     public CookingStation cookingStation;
     public UIController uiController;
     public InventoryUI inventory;
+    public UIRecipeBook recipeBook;
 
     // Closes the UI panel 
     public void SelectCloseButton()

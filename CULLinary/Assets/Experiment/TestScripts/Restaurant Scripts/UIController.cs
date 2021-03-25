@@ -22,10 +22,11 @@ public class UIController : MonoBehaviour
 
     [Header("UI Elements")]
     public GameObject moneyText;
-    public GameObject InventoryPanel;
-    public GameObject MenuPanel;
-    public GameObject CounterNotifPanel;
+    public GameObject menuPanel;
+    public GameObject counterNotifPanel;
     public GameObject closeNotifButton;
+    public InventoryUI inventoryPanel;
+    public UIRecipeBook recipeBookPanel;
 
     private PlayerManager playerManager;
 
@@ -91,8 +92,9 @@ public class UIController : MonoBehaviour
     // For Inventory Panel and Menu Panel (Called by CookingStation)
     public void ShowCookingPanel()
     {
-        InventoryPanel.SetActive(true);
-        MenuPanel.SetActive(true);
+        inventoryPanel.SetActive(true);
+        menuPanel.SetActive(true);
+        recipeBookPanel.SetActive(true);
 
         currButtonIdx = 1;
         FindNextSelectedKey();
@@ -100,16 +102,17 @@ public class UIController : MonoBehaviour
 
     public void CloseCookingPanel()
     {
-        InventoryPanel.SetActive(false);
-        MenuPanel.SetActive(false);
+        inventoryPanel.SetActive(false);
+        menuPanel.SetActive(false);
+        recipeBookPanel.SetActive(false);
     }
 
     // NOTIF: "Not enough counter space"
     public void ShowCounterNotifPanel()
     {
-        InventoryPanel.SetActive(false);
-        MenuPanel.SetActive(false);
-        CounterNotifPanel.SetActive(true);
+        inventoryPanel.SetActive(false);
+        menuPanel.SetActive(false);
+        counterNotifPanel.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(null); // clear selected object
         EventSystem.current.SetSelectedGameObject(closeNotifButton); //set a new selected object
@@ -117,7 +120,7 @@ public class UIController : MonoBehaviour
 
     public void CloseCounterNotifPanel()
     {
-        CounterNotifPanel.SetActive(false);
+        counterNotifPanel.SetActive(false);
         cookingStation.EnableMovementOfPlayer(); // Enable player movement so they can serve food when receive notif that counter has no space
     }
 

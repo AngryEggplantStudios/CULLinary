@@ -32,12 +32,20 @@ public class InventoryUI : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.I))
+		if (Keybinds.WasTriggered(Keybind.OpenInventory))
 		{
 			ToggleVisiblity();
 		}
 	}
 
+    // Sets the inventory to be visible or invisible
+	public void SetActive(bool isActive)
+	{
+		isShowing = isActive;
+		inventoryUI.SetActive(isActive);
+	}
+
+    // Toggle the inventory to be visible or not
 	public void ToggleVisiblity()
 	{
 		isShowing = !isShowing;
