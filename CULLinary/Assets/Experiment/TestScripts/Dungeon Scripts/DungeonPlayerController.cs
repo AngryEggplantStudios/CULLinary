@@ -5,7 +5,6 @@ using UnityEngine;
 public class DungeonPlayerController : DungeonPlayerAction
 {
     [SerializeField] private GameObject gameOver;
-
     public delegate void PlayerMoveDelegate(Vector3 direction, float speed, float animValue, bool isMoving);
     public delegate void PlayerRotateDelegate(Vector3 direction, float speed);
     public delegate void PlayerRotateToLocationDelegate(Vector3 worldPosition, float speed);
@@ -75,7 +74,6 @@ public class DungeonPlayerController : DungeonPlayerAction
             normalizedDirection = direction.normalized * directionMultiplier;
             float targetAngle = Mathf.Atan2(normalizedDirection.x, normalizedDirection.z) * Mathf.Rad2Deg;
             moveDirection = Quaternion.Euler(0.0f, targetAngle, 0.0f) * Vector3.forward;
-
             bool isRangeInvoked = dungeonPlayerRange ? dungeonPlayerRange.GetIsInvoking() : false;
             bool isMeleeInvoked = dungeonPlayerMelee ? dungeonPlayerMelee.GetIsInvoking() : false;
             if (!isRangeInvoked && !isMeleeInvoked)
