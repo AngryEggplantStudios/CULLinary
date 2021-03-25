@@ -38,6 +38,8 @@ public class RecipeSelector : MonoBehaviour
     {
         if (inventory.RemoveIdsFromInventory(Recipes.recipes[0].getIngredients())) {
             StartCooking("eggplant");
+        } else {
+            uiController.ShowNotEnoughIngredientsNotifPanel();
         }
     }
 
@@ -45,6 +47,8 @@ public class RecipeSelector : MonoBehaviour
     {   
         if (inventory.RemoveIdsFromInventory(Recipes.recipes[1].getIngredients())) {
             StartCooking("goldeggplant");     
+        } else {
+            uiController.ShowNotEnoughIngredientsNotifPanel();
         }
     }
 
@@ -52,6 +56,8 @@ public class RecipeSelector : MonoBehaviour
     {
         if (inventory.RemoveIdsFromInventory(Recipes.recipes[2].getIngredients())) {
             StartCooking("pizza");       
+        } else {
+            uiController.ShowNotEnoughIngredientsNotifPanel();
         }
     }
 
@@ -59,6 +65,8 @@ public class RecipeSelector : MonoBehaviour
     {
         if (inventory.RemoveIdsFromInventory(Recipes.recipes[3].getIngredients())) {
             StartCooking("burrito");
+        } else {
+            uiController.ShowNotEnoughIngredientsNotifPanel();
         }
     }
 }

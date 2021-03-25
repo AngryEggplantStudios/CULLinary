@@ -24,6 +24,7 @@ public class UIController : MonoBehaviour
     public GameObject moneyText;
     public GameObject menuPanel;
     public GameObject counterNotifPanel;
+    public GameObject notEnoughIngredientsNotifPanel;
     public GameObject closeNotifButton;
     public InventoryUI inventoryPanel;
     public UIRecipeBook recipeBookPanel;
@@ -122,6 +123,17 @@ public class UIController : MonoBehaviour
     {
         counterNotifPanel.SetActive(false);
         cookingStation.EnableMovementOfPlayer(); // Enable player movement so they can serve food when receive notif that counter has no space
+    }
+
+    // NOTIF: "Not enough ingredients"
+    public void ShowNotEnoughIngredientsNotifPanel()
+    {
+        notEnoughIngredientsNotifPanel.SetActive(true);
+    }
+
+    public void CloseNotEnoughIngredientsNotifPanel()
+    {
+        notEnoughIngredientsNotifPanel.SetActive(false);
     }
 
     // To update the Amount Earned at top left hand corner
