@@ -248,10 +248,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8008916349616235639}
-  - component: {fileID: 4627115344405024548}
   - component: {fileID: 8860882748979874407}
   - component: {fileID: 5702811443908732498}
   - component: {fileID: 6860521342657593539}
+  - component: {fileID: 925024386242055258}
   m_Layer: 0
   m_Name: enemy_potato
   m_TagString: Untagged
@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 7236917708904857293}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 1411236017546622185}
   - {fileID: 7485506057978364527}
@@ -276,20 +276,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4627115344405024548
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7236917708904857293}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 0.7413946
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.3706973, z: 0}
 --- !u!95 &8860882748979874407
 Animator:
   serializedVersion: 3
@@ -358,6 +344,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &925024386242055258
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7236917708904857293}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.45563367
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &8104184998799858630
 GameObject:
   m_ObjectHideFlags: 0
