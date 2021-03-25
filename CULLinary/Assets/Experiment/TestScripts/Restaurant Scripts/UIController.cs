@@ -28,6 +28,7 @@ public class UIController : MonoBehaviour
     public GameObject closeNotifButton;
     public InventoryUI inventoryPanel;
     public UIRecipeBook recipeBookPanel;
+    public GameObject ing_closeButton;
 
     private PlayerManager playerManager;
 
@@ -129,11 +130,16 @@ public class UIController : MonoBehaviour
     public void ShowNotEnoughIngredientsNotifPanel()
     {
         notEnoughIngredientsNotifPanel.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null); // clear selected object
+        EventSystem.current.SetSelectedGameObject(ing_closeButton); //set a new selected object
     }
 
     public void CloseNotEnoughIngredientsNotifPanel()
     {
         notEnoughIngredientsNotifPanel.SetActive(false);
+
+        FindNextSelectedKey();
     }
 
     // To update the Amount Earned at top left hand corner
