@@ -69,8 +69,6 @@ public class ConnectionPoint : MonoBehaviour
             ConnectionPoint chosenPoint = connectionPoints[0];
 
             CheckCollision validatorNewRoom = chosenPoint.GetValidatorRef().GetComponent<CheckCollision>();
-            //validatorNewRoom.SetIsNotCollided();
-            //Debug.Log(validatorNewRoom.GetIsCollided());
 
             yield return StartCoroutine(PositionRoom(chosenPoint));
             validatorNewRoom.TurnOnCollider();
