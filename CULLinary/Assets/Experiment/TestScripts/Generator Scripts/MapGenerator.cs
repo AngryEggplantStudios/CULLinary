@@ -62,6 +62,7 @@ public class MapGenerator : MonoBehaviour
                 yield return null;
                 yield return StartCoroutine(currentPoint.GenerateRoom());
             }
+
             isGeneratingRooms = false;
             isBuildingNavMesh = true;
             yield return new WaitForSeconds(0.5f);
@@ -84,6 +85,7 @@ public class MapGenerator : MonoBehaviour
             parent.GetComponent<NavMeshSurface>().BuildNavMesh();
             isBuildingNavMesh = false;
         }
+        
         isGenerated = true;
     }
 

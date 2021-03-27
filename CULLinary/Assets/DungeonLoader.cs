@@ -10,8 +10,11 @@ public class DungeonLoader : MonoBehaviour
     [SerializeField] private float delayStartTime = 1f;
     [SerializeField] private Text textToChange;
 
+    public static bool isDoneLoading = false;
+
     private void Awake()
     {
+        isDoneLoading = false;
         foreach(GameObject g in objectsToHide)
         {
             g.SetActive(false);
@@ -45,6 +48,7 @@ public class DungeonLoader : MonoBehaviour
         {
             g.SetActive(true);
         }
+        isDoneLoading = true;
         yield return null;
         Destroy(parentReference);
     }
