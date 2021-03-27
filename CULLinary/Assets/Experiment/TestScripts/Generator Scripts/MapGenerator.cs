@@ -9,24 +9,40 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField] private bool limitByRooms;
     [SerializeField] private int roomLimit;
+
     private static GameObject parent;
     private static int roomCounter = 0;
     private static List<GameObject> generatedRooms = new List<GameObject>();
     
     private static Queue<ConnectionPoint> connectionPoints = new Queue<ConnectionPoint>();
-    private bool isGenerated = false;
-    
-    [SerializeField] private GameObject player;
 
-    //need to reinitialize the static components on loadscene.
+    /*
+    For Loading Screen usage
+    */
+    public static bool isGenerated = false;
+    public static float roomProgress = 0f;
+    public static bool isGeneratingRooms = true;
+    public static bool isBuildingNavMesh = false;
+    public static MapGenerator current;
+
+    private void Awake()
+    {
+        current = this;
+    }
+
     private void Start()
     {
         parent = new GameObject();
         parent.AddComponent<NavMeshSurface>();
-        roomCounter = 0;
         generatedRooms = new List<GameObject>();
         connectionPoints = new Queue<ConnectionPoint>();
-        isGenerated = true;
+
+        roomCounter = 0;
+        roomProgress = 0f;
+        isGeneratingRooms = true;
+        isBuildingNavMesh = false;
+        isGenerated = false;
+
         StartCoroutine(GenerateMap());
     }
 
@@ -46,21 +62,31 @@ public class MapGenerator : MonoBehaviour
                 yield return null;
                 yield return StartCoroutine(currentPoint.GenerateRoom());
             }
+
+            isGeneratingRooms = false;
+            isBuildingNavMesh = true;
+            yield return new WaitForSeconds(0.5f);
             if (roomCounter == roomLimit)
             {
                 parent.GetComponent<NavMeshSurface>().BuildNavMesh();
-                Debug.Log("Building Navmesh");
             }
+            isBuildingNavMesh = false;
         }
         else {
-            Debug.Log("Else Added!");
             while (connectionPoints.Count > 0)
             {
                 ConnectionPoint currentPoint = connectionPoints.Dequeue();
                 yield return null;
                 yield return StartCoroutine(currentPoint.GenerateRoom());
             }
+            isGeneratingRooms = false;
+            isBuildingNavMesh = true;
+            yield return new WaitForSeconds(0.5f);
+            parent.GetComponent<NavMeshSurface>().BuildNavMesh();
+            isBuildingNavMesh = false;
         }
+        
+        isGenerated = true;
     }
 
     public static void AddConnectionPoints(ConnectionPoint[] points)
@@ -71,12 +97,12 @@ public class MapGenerator : MonoBehaviour
             {
                 connectionPoints.Enqueue(c);
             }
-            
         }
     }
 
     public static void AddGeneratedRoom(GameObject room)
     {
+        roomProgress += 1f / current.roomLimit;
         generatedRooms.Add(room);
         room.transform.parent = parent.transform;
     }
@@ -84,16 +110,6 @@ public class MapGenerator : MonoBehaviour
     public static void AddRoomCounter()
     {
         roomCounter++;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && false)
-        {
-            isGenerated = true;
-            StartCoroutine(GenerateMap());
-        }
-
     }
 
 }

@@ -24,7 +24,7 @@ public class DungeonSpawn : MonoBehaviour
     [Tooltip("Maximum number of enemies that can be spawned using this spawner")]
     [SerializeField] private int spawnCap; //It will not spawn more than this amount in total
     [Tooltip("Initial Delay")]
-    [SerializeField] private int initialDelay = 0;
+    [SerializeField] private int initialDelay = 10;
     private bool delayFlag = false;
 
     private SpawnState state;

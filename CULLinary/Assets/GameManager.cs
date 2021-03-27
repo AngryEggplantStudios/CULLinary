@@ -12,13 +12,13 @@ public class GameManager : MonoBehaviour
 
     public void RestartButton()
     {
-        SceneManager.LoadScene("TestProcedural");
+        SceneManager.LoadScene(2);
         gameObject.SetActive(false);
     }
 
     public void MainMenuButton()
     {
-        SceneManager.LoadScene("Main Menu");
+        SceneManager.LoadScene(0);
         gameObject.SetActive(false);
     }
 }
