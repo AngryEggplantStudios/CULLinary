@@ -1,12 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 using UnityEditor;
+using UnityEngine;
 
 public class MeshCombiner : MonoBehaviour
 {
     [SerializeField] public bool onAwake;
     [SerializeField] public bool addCollider;
+
+    [SerializeField] private bool generateAsset;
 
     private void Awake()
     {
@@ -126,9 +128,9 @@ public class MeshCombiner : MonoBehaviour
         yield return null;
 
         var mf = gameObject.GetComponent<MeshFilter>();
-        if (mf)
+        if (mf && generateAsset)
         {
-            var savePath = "Assets/" + gameObject.name + ".asset";
+            var savePath = "Assets/Mesh/" + gameObject.name + DateTime.Now.ToString("yyyyMMddHHmmss") + ".asset";
             Debug.Log("Saved Mesh to:" + savePath);
             AssetDatabase.CreateAsset(mf.mesh, savePath);
         }
