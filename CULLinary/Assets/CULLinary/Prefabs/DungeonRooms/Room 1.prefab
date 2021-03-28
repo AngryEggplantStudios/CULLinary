@@ -70,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onAwake: 1
   addCollider: 1
+  generateAsset: 0
 --- !u!1 &1215406050773447174
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,11 +305,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConnected: 0
   spawnRooms:
-  - corridor: {fileID: 1215406050773447174, guid: ed925a97a9a7d854485a3d0507dbe5ca, type: 3}
-    cumProb: 1
-  deadend: {fileID: 6419952101685905516, guid: d9f1de3c985fc107e810fe7bcb87c310, type: 3}
-  parentRef: {fileID: 1215406050773447174}
-  validatorRef: {fileID: 4223191785215462175}
+  - {fileID: 1215406050773447174, guid: ed925a97a9a7d854485a3d0507dbe5ca, type: 3}
+  deadend: {fileID: 6468633025616031617, guid: b1a2080fd6b0e1e41bd3cbe649ff263d, type: 3}
   bias: 5
 --- !u!1 &7453326188930848974
 GameObject:
@@ -369,11 +367,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConnected: 0
   spawnRooms:
-  - corridor: {fileID: 1215406050773447174, guid: ed925a97a9a7d854485a3d0507dbe5ca, type: 3}
-    cumProb: 1
-  deadend: {fileID: 6419952101685905516, guid: d9f1de3c985fc107e810fe7bcb87c310, type: 3}
-  parentRef: {fileID: 1215406050773447174}
-  validatorRef: {fileID: 4223191785215462175}
+  - {fileID: 1215406050773447174, guid: ed925a97a9a7d854485a3d0507dbe5ca, type: 3}
+  deadend: {fileID: 6468633025616031617, guid: b1a2080fd6b0e1e41bd3cbe649ff263d, type: 3}
   bias: 5
 --- !u!1 &7490578598647195809
 GameObject:
@@ -434,11 +429,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConnected: 0
   spawnRooms:
-  - corridor: {fileID: 1215406050773447174, guid: ed925a97a9a7d854485a3d0507dbe5ca, type: 3}
-    cumProb: 1
-  deadend: {fileID: 6419952101685905516, guid: d9f1de3c985fc107e810fe7bcb87c310, type: 3}
-  parentRef: {fileID: 1215406050773447174}
-  validatorRef: {fileID: 4223191785215462175}
+  - {fileID: 1215406050773447174, guid: ed925a97a9a7d854485a3d0507dbe5ca, type: 3}
+  deadend: {fileID: 6468633025616031617, guid: b1a2080fd6b0e1e41bd3cbe649ff263d, type: 3}
   bias: 5
 --- !u!1 &8276682046167425372
 GameObject:
@@ -499,11 +491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isConnected: 0
   spawnRooms:
-  - corridor: {fileID: 1215406050773447174, guid: ed925a97a9a7d854485a3d0507dbe5ca, type: 3}
-    cumProb: 1
-  deadend: {fileID: 6419952101685905516, guid: d9f1de3c985fc107e810fe7bcb87c310, type: 3}
-  parentRef: {fileID: 1215406050773447174}
-  validatorRef: {fileID: 4223191785215462175}
+  - {fileID: 1215406050773447174, guid: ed925a97a9a7d854485a3d0507dbe5ca, type: 3}
+  deadend: {fileID: 6468633025616031617, guid: b1a2080fd6b0e1e41bd3cbe649ff263d, type: 3}
   bias: 5
 --- !u!1 &8360438506402029255
 GameObject:
@@ -593,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onAwake: 1
   addCollider: 0
+  generateAsset: 0
 --- !u!1 &8510562501129765784
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onAwake: 0
   addCollider: 0
+  generateAsset: 0
 --- !u!1 &8833535987451173246
 GameObject:
   m_ObjectHideFlags: 0
