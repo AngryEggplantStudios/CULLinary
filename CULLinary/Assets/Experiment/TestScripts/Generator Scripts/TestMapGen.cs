@@ -96,21 +96,3 @@ public class TestMapGen : MonoBehaviour
     }
     
 }
-
-/*
-List<TestConnection> deadendList = new List<TestConnection>();
-foreach (GameObject o in generatedRooms)
-{
-    TestConnection[] tc = o.GetComponentsInChildren<TestConnection>();
-    foreach (TestConnection deadend in tc)
-    {
-        if (!deadend.GetIsConnected())
-        {
-            deadendList.Add(deadend);
-        }
-    }
-    yield return null;
-}
-Debug.Log(testConnections.Count);
-Debug.Log(deadendList.Count);
-*/
