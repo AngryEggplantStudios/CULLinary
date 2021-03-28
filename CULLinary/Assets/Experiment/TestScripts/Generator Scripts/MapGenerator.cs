@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class MapGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject startingRoom;
-    [SerializeField] private int roomLimit;
+    public GameObject startingRoom;
+    public GameObject[] fillerRooms;
+    public GameObject[] spawnRooms;
+    public GameObject deadend;
+    public int roomLimit;
+    public float fillerRatio = 0.66f;
 
     private static GameObject parent;
     private static int roomCounter = 0;
+    private static List<GameObject> roomPool = new List<GameObject>();
     private static List<GameObject> generatedRooms = new List<GameObject>();
     
     private static Queue<ConnectionPoint> ConnectionPoints = new Queue<ConnectionPoint>();
@@ -21,19 +28,44 @@ public class MapGenerator : MonoBehaviour
     public static float roomProgress = 0f;
     public static bool isGeneratingRooms = true;
     public static bool isBuildingNavMesh = false;
-    public static MapGenerator current;
+
+    // Singleton
+    private static MapGenerator _instance;
+    public static MapGenerator Instance { get { return _instance; } }
 
     private void Awake()
     {
-        current = this;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        } 
+        else 
+        {
+            _instance = this;
+        }
     }
 
     private void Start()
     {
         parent = new GameObject();
         parent.AddComponent<NavMeshSurface>();
-        generatedRooms = new List<GameObject>();
-        ConnectionPoints = new Queue<ConnectionPoint>();
+
+        // Generate pools of rooms
+        List<GameObject> fillerRoomPool = new List<GameObject>();
+        for (int i = 0; i < fillerRatio * roomLimit; i++)
+        {
+            fillerRoomPool.Add(fillerRooms[i % fillerRooms.Length]);
+        }
+        Shuffle(fillerRoomPool);
+
+        List<GameObject> spawnRoomPool = new List<GameObject>();
+        int numOfDuplicates = (int)((1.0f - fillerRatio) * roomLimit / spawnRooms.Length) + 1;
+        for (int i = 0; i < (1 - fillerRatio) * roomLimit; i++)
+        {
+            spawnRoomPool.Add(spawnRooms[i / numOfDuplicates]);
+        }
+
+        roomPool = MergeShuffle(fillerRoomPool, spawnRoomPool).ToList();
 
         roomCounter = 0;
         roomProgress = 0f;
@@ -46,29 +78,33 @@ public class MapGenerator : MonoBehaviour
 
     private IEnumerator GenerateMap()
     {
-        ConnectionPoint[] startingPoints = startingRoom.GetComponentsInChildren<ConnectionPoint>();
-        //Enqueues all the starting points' connection points
-        foreach (ConnectionPoint c in startingPoints)
-        {
-            ConnectionPoints.Enqueue(c);
-        }
+        //Add starting room's connection points
+        AddConnectionPoints(startingRoom.GetComponentsInChildren<ConnectionPoint>());
         yield return null;
-        //While we haven't exceed the room limit, let's try to generate the room for each connection point
-        while (ConnectionPoints.Count > 0 && roomCounter < roomLimit )
+
+        //While we haven't exceed the room limit,
+        //let's try to generate the room for each connection point,
+        //starting from the center
+        while (ConnectionPoints.Count > 0 && roomPool.Count > 0 )
         {
             ConnectionPoint currentPoint = ConnectionPoints.Dequeue();
             yield return null;
-            yield return StartCoroutine(currentPoint.GenerateRoom());
+            
+            GameObject roomToGenerate = RemoveAndReturnFirst(roomPool);
+            yield return StartCoroutine(currentPoint.GenerateRoom(roomToGenerate));
         }
+
         //For all the connection points left, let us generate the deadend
-        foreach (ConnectionPoint t in ConnectionPoints)
+        foreach (ConnectionPoint currentPoint in ConnectionPoints)
         {
             yield return null;
-            yield return StartCoroutine(t.GenerateDeadend());
+            yield return StartCoroutine(currentPoint.GenerateRoom(deadend, true));
         }
+        
         isGeneratingRooms = false;
         isBuildingNavMesh = true;
         yield return new WaitForSeconds(0.05f);
+
         //Let us build the navmesh now for the AI
         parent.GetComponent<NavMeshSurface>().BuildNavMesh();
         yield return new WaitForSeconds(0.05f);
@@ -89,12 +125,64 @@ public class MapGenerator : MonoBehaviour
 
     public static void AddGeneratedRoom(GameObject room)
     {
-        roomProgress += 1f / current.roomLimit;
+        roomProgress += 1f / _instance.roomLimit;
         roomCounter++;
         generatedRooms.Add(room);
         room.transform.parent = parent.transform;
     }
     
+    // Shuffle algos for randomising rooms
+    static System.Random rng = new System.Random();
+
+    static void Shuffle<T>(IList<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+
+    static IEnumerable<T> MergeShuffle<T>(IEnumerable<T> lista, IEnumerable<T> listb)
+    {
+        int total = lista.Count() + listb.Count();
+        var indexes = Enumerable.Range(0, total-1)
+                                .OrderBy(_=>rng.NextDouble())
+                                .Take(lista.Count())
+                                .OrderBy(x=>x)
+                                .ToList();
+
+        var first = lista.GetEnumerator();
+        var second = listb.GetEnumerator();
+
+        for (int i = 0; i < total; i++)
+            if (indexes.Contains(i))
+            {
+                first.MoveNext();
+                yield return first.Current;
+            }
+            else
+            {
+                second.MoveNext();
+                yield return second.Current;
+            }
+    }
+
+    static T RemoveAndReturnFirst<T>(List<T> list)
+    {
+        if (list == null || list.Count == 0)
+        {
+            return default(T);
+        }
+
+        T currentFirst = list[0];
+        list.RemoveAt(0);
+        return currentFirst;
+    }
 }
 
 /*

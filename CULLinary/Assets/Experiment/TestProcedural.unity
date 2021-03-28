@@ -2194,7 +2194,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingRoom: {fileID: 1111444280}
-  roomLimit: 50
+  fillerRooms:
+  - {fileID: 1215406050773447174, guid: 6c068d8a157eb434b85d8bce93915a45, type: 3}
+  - {fileID: 1215406050773447174, guid: 74a925b80d0d76e429960fe66199317f, type: 3}
+  - {fileID: 1215406050773447174, guid: 9ef774fff7528b842a316d32f3e8252b, type: 3}
+  - {fileID: 1215406050773447174, guid: 1ad057a509ac1a441a2b0d2e45bfbf23, type: 3}
+  spawnRooms:
+  - {fileID: 558829253782312496, guid: 096ec3c83b2ec00488fbf5774120cb4a, type: 3}
+  - {fileID: 5169383324355871603, guid: fba9bbf07a501304eb86ff6c80c5fce7, type: 3}
+  - {fileID: 1215406050773447174, guid: 8fb86643b2b887943831e2bbfe2d05ea, type: 3}
+  - {fileID: 1215406050773447174, guid: 56b98f8b6b4489845bf0db9181da83b2, type: 3}
+  - {fileID: 1215406050773447174, guid: 980cebce2fa98564390577b217f5d290, type: 3}
+  - {fileID: 1215406050773447174, guid: f949e1fa9cfdbe2429848ccd70d23b81, type: 3}
+  - {fileID: 1215406050773447174, guid: fcd6c0d7711245c428c5c687740a1e38, type: 3}
+  deadend: {fileID: 6468633025616031617, guid: b1a2080fd6b0e1e41bd3cbe649ff263d, type: 3}
+  roomLimit: 100
+  fillerRatio: 0.5
 --- !u!4 &1567416259
 Transform:
   m_ObjectHideFlags: 0
