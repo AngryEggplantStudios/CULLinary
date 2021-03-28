@@ -133,7 +133,9 @@ public class MeshCombiner : MonoBehaviour
         var mf = gameObject.GetComponent<MeshFilter>();
         if (mf && generateAsset)
         {
-            var savePath = "Assets/Mesh/" + gameObject.name + DateTime.Now.ToString("yyyyMMddHHmmss") + ".asset";
+            string parentName = gameObject.transform.parent.parent.name;
+            string parentIndex = parentName[parentName.Length - 1].ToString();
+            var savePath = "Assets/CULLinary/Prefabs/DungeonRooms/Meshes/" + parentIndex + "_" + gameObject.name + ".asset";
             Debug.Log("Saved Mesh to:" + savePath);
             AssetDatabase.CreateAsset(mf.mesh, savePath);
         }

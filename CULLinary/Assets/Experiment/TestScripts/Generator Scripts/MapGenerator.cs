@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
     public GameObject[] spawnRooms;
     public GameObject deadend;
     public int roomLimit;
-    public float fillerRatio = 0.66f;
+    public float fillerRatio = 0.5f;
 
     private static GameObject parent;
     private static int roomCounter = 0;
@@ -90,8 +90,7 @@ public class MapGenerator : MonoBehaviour
             ConnectionPoint currentPoint = ConnectionPoints.Dequeue();
             yield return null;
             
-            GameObject roomToGenerate = RemoveAndReturnFirst(roomPool);
-            yield return StartCoroutine(currentPoint.GenerateRoom(roomToGenerate));
+            yield return StartCoroutine(currentPoint.GenerateRoom(roomPool[0]));
         }
 
         //For all the connection points left, let us generate the deadend
@@ -125,8 +124,9 @@ public class MapGenerator : MonoBehaviour
 
     public static void AddGeneratedRoom(GameObject room)
     {
-        roomProgress += 1f / _instance.roomLimit;
+        roomPool.RemoveAt(0);
         roomCounter++;
+        roomProgress = roomCounter / (float)_instance.roomLimit;
         generatedRooms.Add(room);
         room.transform.parent = parent.transform;
     }
