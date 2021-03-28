@@ -72,7 +72,6 @@ public class TestMapGen : MonoBehaviour
         //Let us build the navmesh now for the AI
         parent.GetComponent<NavMeshSurface>().BuildNavMesh();
         yield return new WaitForSeconds(0.05f);
-        //Cleaning up operations
         isBuildingNavMesh = false;
         isGenerated = true;
     }
@@ -95,6 +94,7 @@ public class TestMapGen : MonoBehaviour
         generatedRooms.Add(room);
         room.transform.parent = parent.transform;
     }
+    
 }
 
 /*

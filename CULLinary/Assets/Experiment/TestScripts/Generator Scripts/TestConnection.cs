@@ -23,7 +23,6 @@ public class TestConnection : MonoBehaviour
         TestConnection chosenPoint = TestConnections[0];
         validatorNewRoom.TurnOnCollider();
         yield return new WaitForSeconds(0.05f);
-
         if (validatorNewRoom.GetIsCollided())
         {
             Destroy(generatedRoom);
@@ -56,6 +55,14 @@ public class TestConnection : MonoBehaviour
         else
         {
             this.SetConnected();
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Validator"))
+        {
+            isConnected = true;
         }
     }
 
