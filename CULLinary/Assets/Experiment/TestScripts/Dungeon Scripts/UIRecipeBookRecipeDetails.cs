@@ -15,17 +15,17 @@ public class UIRecipeBookRecipeDetails : MonoBehaviour
     // index that corresponds to the item ID
     public Sprite[] itemSprites;
 
-    private string name;
+    private string recipeName;
     private int recipeId;
     private int[] ingredientIds;
 
     public void SetRecipe(RecipeTest rec)
     {
         this.ingredientIds = rec.getIngredients();
-        this.name = rec.getName();
+        this.recipeName = rec.getName();
         this.recipeId = rec.getId();
         
-        text.text = name;
+        text.text = recipeName;
 		foreach (int id in ingredientIds) {
             GameObject itemRepresentation = Instantiate(imagePrefab,
                                                         new Vector3(0, 0, 0),

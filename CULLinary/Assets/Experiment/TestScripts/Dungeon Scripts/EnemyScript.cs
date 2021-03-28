@@ -85,15 +85,17 @@ public class EnemyScript : MonoBehaviour
     private void Start()
     {
         startingPosition = transform.position;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         GameObject attackRadius = gameObject.transform.Find("AttackRadius").gameObject;
         refScript = attackRadius.GetComponent <EnemyAttack>();
-        cam = player.GetComponentInChildren<Camera>();
         animator = GetComponentInChildren<Animator>();
         timer = wanderTimer;
         goingBackToStartTimer = 0;
         SetupFlash();
         SetupLoot();
+
+        // Make sure player exists (finished loading) before running these
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        cam = player.GetComponentInChildren<Camera>();
         SetupHpBar();
     }
 

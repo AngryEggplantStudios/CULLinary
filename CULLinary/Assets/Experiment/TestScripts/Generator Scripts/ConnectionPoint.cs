@@ -6,47 +6,26 @@ using UnityEditor;
 public class ConnectionPoint : MonoBehaviour
 {
     [SerializeField] private bool isConnected = false;
-    [SerializeField] private GameObject[] spawnRooms;
-    [SerializeField] private GameObject deadend;
     [SerializeField] private float bias; //How far from the centre should the connection point spawn the next room?
 
-    public IEnumerator GenerateRoom()
+    public IEnumerator GenerateRoom(GameObject roomToGenerate, bool isDeadEnd = false)
     {
-        int generatedProb = Random.Range(0, spawnRooms.Length);
-        GameObject roomToGenerate = spawnRooms[generatedProb];
         Quaternion rotation = Quaternion.LookRotation(this.transform.forward);
         Vector3 position = GenerateRelativeVector(rotation.eulerAngles.y, bias);
         GameObject generatedRoom = Instantiate(roomToGenerate, position, rotation);
         yield return null;
-        ConnectionPoint[] ConnectionPoints = generatedRoom.GetComponentsInChildren<ConnectionPoint>();
-        CheckCollision validatorNewRoom = generatedRoom.GetComponentInChildren<CheckCollision>();
-        ConnectionPoint chosenPoint = ConnectionPoints[0];
-        validatorNewRoom.TurnOnCollider();
-        yield return new WaitForSeconds(0.05f);
-        if (validatorNewRoom.GetIsCollided())
-        {
-            Destroy(generatedRoom);
-            yield return null;
-        }
-        else
-        {
-            MapGenerator.AddGeneratedRoom(generatedRoom);
-            this.SetConnected();
-            chosenPoint.SetConnected();
-            MapGenerator.AddConnectionPoints(ConnectionPoints);
-        }
-    }
 
-    public IEnumerator GenerateDeadend()
-    {
-        GameObject roomToGenerate = deadend;
-        Quaternion rotation = Quaternion.LookRotation(this.transform.forward);
-        Vector3 position = GenerateRelativeVector(rotation.eulerAngles.y, bias);
-        GameObject generatedRoom = Instantiate(roomToGenerate, position, rotation);
-        yield return null;
+        ConnectionPoint[] connectionPoints = null;
+        ConnectionPoint chosenPoint = null;
+        if (!isDeadEnd)
+        {
+            connectionPoints = generatedRoom.GetComponentsInChildren<ConnectionPoint>();
+            chosenPoint = connectionPoints[0];
+        }
         CheckCollision validatorNewRoom = generatedRoom.GetComponentInChildren<CheckCollision>();
         validatorNewRoom.TurnOnCollider();
         yield return new WaitForSeconds(0.05f);
+
         if (validatorNewRoom.GetIsCollided())
         {
             Destroy(generatedRoom);
@@ -55,6 +34,12 @@ public class ConnectionPoint : MonoBehaviour
         else
         {
             this.SetConnected();
+            if (!isDeadEnd)
+            {
+                MapGenerator.AddGeneratedRoom(generatedRoom);
+                chosenPoint.SetConnected();
+                MapGenerator.AddConnectionPoints(connectionPoints);
+            }
         }
     }
 
@@ -134,8 +119,8 @@ public class ConnectionPoint : MonoBehaviour
             return triedSpawning;
         }
     }
-    [SerializeField] private SpawnRoom[] spawnRooms;
-    [SerializeField] private GameObject deadend;
+    [SerializeField] private SpawnRoom[] MapGenerator.spawnRooms;
+    [SerializeField] private GameObject mg.deadend;
     [SerializeField] private GameObject parentRef;
     [SerializeField] private GameObject validatorRef;
     [SerializeField] private float bias;
@@ -145,8 +130,8 @@ public class ConnectionPoint : MonoBehaviour
     public IEnumerator GenerateRoom()
     {
         float generatedProb = Random.Range(0f, 1f);
-        GameObject roomToGenerate = deadend;
-        foreach (SpawnRoom sr in spawnRooms)
+        GameObject roomToGenerate = mg.deadend;
+        foreach (SpawnRoom sr in MapGenerator.spawnRooms)
         {
             if (generatedProb <= sr.GetCumProb() && !spawnList.Contains(sr))
             {
@@ -157,7 +142,7 @@ public class ConnectionPoint : MonoBehaviour
         }
         yield return null;
 
-        if (roomToGenerate == deadend)
+        if (roomToGenerate == mg.deadend)
         {
             GameObject generatedRoom = Instantiate(roomToGenerate, transform.position, Quaternion.identity);
             yield return null;
