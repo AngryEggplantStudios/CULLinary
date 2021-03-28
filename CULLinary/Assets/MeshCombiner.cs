@@ -112,7 +112,10 @@ public class MeshCombiner : MonoBehaviour
 
         foreach (MeshFilter meshFilter in meshFilters)
         {
-            DestroyImmediate(meshFilter.gameObject);
+            if (meshFilter)
+            {
+                DestroyImmediate(meshFilter.gameObject);
+            }
         }
         if (addCollider)
         {
