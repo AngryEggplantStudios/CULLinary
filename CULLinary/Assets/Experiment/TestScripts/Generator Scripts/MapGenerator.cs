@@ -116,6 +116,13 @@ public class MapGenerator : MonoBehaviour
         parent.GetComponent<NavMeshSurface>().BuildNavMesh();
         yield return new WaitForSeconds(0.05f);
         isBuildingNavMesh = false;
+
+        //reactivate Deco
+        foreach (GameObject room in generatedRooms)
+        {
+            room.transform.Find("Environment").Find("Deco").gameObject.SetActive(true);
+        }
+
         isGenerated = true;
     }
 

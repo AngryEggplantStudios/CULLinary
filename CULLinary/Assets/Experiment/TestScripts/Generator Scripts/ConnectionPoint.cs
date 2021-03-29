@@ -36,6 +36,9 @@ public class ConnectionPoint : MonoBehaviour
             this.SetConnected();
             if (!isDeadEnd)
             {
+                //deactivate Deco before generating NavMesh
+                generatedRoom.transform.Find("Environment").Find("Deco").gameObject.SetActive(false);
+
                 MapGenerator.AddGeneratedRoom(generatedRoom);
                 chosenPoint.SetConnected();
                 MapGenerator.AddConnectionPoints(connectionPoints);
