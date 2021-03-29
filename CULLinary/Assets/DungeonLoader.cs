@@ -32,7 +32,11 @@ public class DungeonLoader : MonoBehaviour
         }
         else if (MapGenerator.isBuildingNavMesh)
         {
-            textToChange.text = "Building NavMesh...";
+            textToChange.text = "Building the NavMesh...";
+        }
+        else if (MapGenerator.isGeneratingDeadends)
+        {
+            textToChange.text = "Generating Deadends...";
         }
         else
         {
