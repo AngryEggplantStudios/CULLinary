@@ -16,16 +16,17 @@ public class MapGenerator : MonoBehaviour
 
     private static GameObject parent;
     private static int roomCounter = 0;
-    private static List<GameObject> roomPool = new List<GameObject>();
-    private static List<GameObject> generatedRooms = new List<GameObject>();
+    private static List<GameObject> roomPool;
+    private static List<GameObject> generatedRooms;
     
-    private static Queue<ConnectionPoint> ConnectionPoints = new Queue<ConnectionPoint>();
+    private static Queue<ConnectionPoint> ConnectionPoints;
 
     /*
     For Loading Screen usage
     */
     public static bool isGenerated = false;
     public static float roomProgress = 0f;
+    public static bool isGeneratingDeadends = false;
     public static bool isGeneratingRooms = true;
     public static bool isBuildingNavMesh = false;
 
@@ -43,6 +44,9 @@ public class MapGenerator : MonoBehaviour
         {
             _instance = this;
         }
+        generatedRooms = new List<GameObject>();
+        ConnectionPoints = new Queue<ConnectionPoint>();
+        roomPool = new List<GameObject>();
     }
 
     private void Start()
@@ -72,6 +76,7 @@ public class MapGenerator : MonoBehaviour
         isGeneratingRooms = true;
         isBuildingNavMesh = false;
         isGenerated = false;
+        isGeneratingDeadends = false;
 
         StartCoroutine(GenerateMap());
     }
@@ -93,6 +98,9 @@ public class MapGenerator : MonoBehaviour
             yield return StartCoroutine(currentPoint.GenerateRoom(roomPool[0]));
         }
 
+        isGeneratingRooms = false;
+        isGeneratingDeadends = true;
+
         //For all the connection points left, let us generate the deadend
         foreach (ConnectionPoint currentPoint in ConnectionPoints)
         {
@@ -100,7 +108,7 @@ public class MapGenerator : MonoBehaviour
             yield return StartCoroutine(currentPoint.GenerateRoom(deadend, true));
         }
         
-        isGeneratingRooms = false;
+        isGeneratingDeadends = false;
         isBuildingNavMesh = true;
         yield return new WaitForSeconds(0.05f);
 
