@@ -6,6 +6,9 @@ public class GameDataLoader : MonoBehaviour
 {
     private void Start()
     {
-        PlayerManager.instance.LoadData();
+        if (PlayerManager.instance)
+        {
+            PlayerManager.instance.LoadData();
+        }
     }
 }
