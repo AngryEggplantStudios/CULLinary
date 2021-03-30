@@ -27,6 +27,8 @@ public class DialogueLoader : MonoBehaviour
     private Dialogue currentDialogue;
     private Dialogue nextDialogue;
 
+    private Restaurant_CustomerController currentCustomer;
+
     private void DisplayNextAndCloseMePanel()
     {
         mePanel.SetActive(false);
@@ -35,6 +37,7 @@ public class DialogueLoader : MonoBehaviour
             RunCurrentDialogue();
         } else {
             movementController.EnableMovementOfPlayer();
+            StartCoroutine(currentCustomer.TimeToLeave());
         }
     }
 
@@ -46,6 +49,7 @@ public class DialogueLoader : MonoBehaviour
             RunCurrentDialogue();
         } else {
             movementController.EnableMovementOfPlayer();
+            StartCoroutine(currentCustomer.TimeToLeave());
         }
     }
     
@@ -103,12 +107,9 @@ public class DialogueLoader : MonoBehaviour
             choiceOnClick.SelectThisChoice += () =>
             {
                 choicePanel.SetActive(false);
-                if (!currentDialogue.isLast) {
-                    currentDialogue = choiceDialogue.choices[currentI];
-                    RunCurrentDialogue();
-                } else {
-                    movementController.EnableMovementOfPlayer();
-                }
+                // Assume choice box is never last
+                currentDialogue = choiceDialogue.choices[currentI];
+                RunCurrentDialogue();
             };
         }
         choicePanel.SetActive(true);
@@ -137,8 +138,10 @@ public class DialogueLoader : MonoBehaviour
     }
 
     // Loads and runs the dialogue tree provided
-    public void LoadAndRun(Dialogue dialogue)
+    // Takes in a Customer that will be leaving after the dialogue is done
+    public void LoadAndRun(Dialogue dialogue, Restaurant_CustomerController customerToLeave)
     {
+        currentCustomer = customerToLeave;
         LoadDialogue(dialogue);
         RunCurrentDialogue();
     }
