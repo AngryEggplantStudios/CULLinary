@@ -30,13 +30,14 @@ public class ClownController : MonoBehaviour
     private bool coroutineRangedRunning = false;
     private bool openingMouth = true;
     private bool idleCooldownRunning = false;
+    private bool coroutineMeleeRunning = false;
 
     private enum State
     {
         Roaming,
         Idle,
         RangedAttack,
-        ChaseTarget,
+        MeleeAttack,
         AttackTarget,
         ShootingTarget,
         GoingBackToStart,
@@ -44,12 +45,13 @@ public class ClownController : MonoBehaviour
 
     void Start()
     {
-        state = State.Roaming;
+        state = State.RangedAttack;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         originalY = transform.position.y;
         jawOriginalY = lowerJaw.localPosition.y;
         originalPosition = gameObject.transform.position;
         localPosition = lowerJaw.localPosition;
+        //final position of the mouth when fully open
         localFinalPosition = new Vector3(localPosition.x, -0.045f, localPosition.z);
         rangedAttackScript = gameObject.transform.GetComponentInChildren<BossRangedAttack>();
     }
@@ -123,6 +125,44 @@ public class ClownController : MonoBehaviour
                         jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
                         lowerJaw.localPosition.z);
                 break;
+            case State.MeleeAttack:
+                if (distanceToPlayer > lookingDistance)
+                {
+                    slowlyLookAt(player);
+                }
+
+                if (distanceToPlayer > stoppingDistance)
+                {
+                    moveForward();
+                    leftFoot.meleeAttackEnd();
+                    rightFoot.meleeAttackEnd();
+                }
+
+                if (!coroutineMeleeRunning)
+                {
+                    StartCoroutine("meleeCoroutine");
+                }
+                if (distanceToPlayer < meleeRange)
+                {
+                    leftFoot.meleeAttackStart();
+                    rightFoot.meleeAttackStart();
+                    stepOn(player);
+                } else
+                {
+                    leftFoot.meleeAttackEnd();
+                    rightFoot.meleeAttackEnd();
+                }
+
+                // Bob head and jaw for demostration
+                transform.position = new Vector3(
+                        transform.position.x,
+                        originalY + Mathf.Sin(Time.fixedTime * Mathf.PI * 1) * 0.2f,
+                        transform.position.z);
+                lowerJaw.localPosition = new Vector3(
+                        lowerJaw.localPosition.x,
+                        jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
+                        lowerJaw.localPosition.z);
+                break;
         }
         if (elapsedFrames != interpolationFramesCount)
         {
@@ -133,9 +173,10 @@ public class ClownController : MonoBehaviour
     IEnumerator idleCooldownCoroutine()
     {
         idleCooldownRunning = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(4);
         idleCooldownRunning = false;
         state = State.RangedAttack;
+        //state = State.MeleeAttack;
         elapsedFrames = 0;
         openingMouth = true;
     }
@@ -156,6 +197,15 @@ public class ClownController : MonoBehaviour
         state = State.Idle;
         openingMouth = false;
     }
+
+    IEnumerator meleeCoroutine()
+    {
+        coroutineMeleeRunning = true;
+        yield return new WaitForSeconds(5f);
+        coroutineMeleeRunning = false;
+        state = State.Idle;
+    }
+
 
     void slowlyLookAt(Transform targetPlayer)
     {

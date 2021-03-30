@@ -877,6 +877,8 @@ GameObject:
   m_Component:
   - component: {fileID: 320986391}
   - component: {fileID: 320986392}
+  - component: {fileID: 320986393}
+  - component: {fileID: 320986394}
   m_Layer: 0
   m_Name: ColissionBox1
   m_TagString: Untagged
@@ -949,6 +951,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!135 &320986393
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320986390}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7500002
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &320986394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320986390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96af85660608d2e42b26228ff511524f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 10
 --- !u!1 &422476457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,6 +1486,7 @@ MonoBehaviour:
   stepHeight: 1
   footOffset: {x: 0, y: 0.3, z: 0}
   collision: {fileID: 320986390}
+  stompDamage: 0
   oldPosition: {x: 0, y: 0, z: 0}
   currentPosition: {x: 0, y: 0, z: 0}
   newPosition: {x: 0, y: 0, z: 0}
@@ -1822,6 +1851,7 @@ MonoBehaviour:
   stepHeight: 1
   footOffset: {x: 0, y: 0.3, z: 0}
   collision: {fileID: 1330660985}
+  stompDamage: 10
   oldPosition: {x: 0, y: 0, z: 0}
   currentPosition: {x: 0, y: 0, z: 0}
   newPosition: {x: 0, y: 0, z: 0}
@@ -1840,6 +1870,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1330660987}
   - component: {fileID: 1330660986}
+  - component: {fileID: 1330660988}
+  - component: {fileID: 1330660989}
   m_Layer: 0
   m_Name: ColissionBox
   m_TagString: Untagged
@@ -1912,6 +1944,32 @@ Transform:
   m_Father: {fileID: 431902543}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!135 &1330660988
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330660985}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7500002
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1330660989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330660985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96af85660608d2e42b26228ff511524f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 10
 --- !u!1001 &1477022393
 PrefabInstance:
   m_ObjectHideFlags: 0

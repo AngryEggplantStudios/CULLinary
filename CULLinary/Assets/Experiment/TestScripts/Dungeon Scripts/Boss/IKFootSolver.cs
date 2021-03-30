@@ -12,12 +12,13 @@ public class IKFootSolver : MonoBehaviour
     [SerializeField] float stepHeight = 1;
     [SerializeField] Vector3 footOffset = default;
     [SerializeField] GameObject collision;
-
+    [SerializeField] private float stompDamage;
     float footSpacing;
     public Vector3 oldPosition, currentPosition, newPosition;
     Vector3 oldNormal, currentNormal, newNormal;
     float lerp;
-    private SpriteRenderer attackSprite;
+    private bool isAttacking;
+    private BossMeleeAttack meleeAttackScript;
 
     private void Start()
     {
@@ -25,7 +26,8 @@ public class IKFootSolver : MonoBehaviour
         currentPosition = newPosition = oldPosition = transform.position;
         currentNormal = newNormal = oldNormal = -transform.up;
         lerp = 1;
-        attackSprite = collision.GetComponent<SpriteRenderer>();
+        isAttacking = false;
+        meleeAttackScript = gameObject.transform.parent.gameObject.transform.GetComponentInChildren<BossMeleeAttack>();
 
     }
 
@@ -43,14 +45,20 @@ public class IKFootSolver : MonoBehaviour
                 int direction = body.InverseTransformPoint(info.point).z > body.InverseTransformPoint(newPosition).z ? 1 : -1;
                 SetTarget(info.point + (body.forward * stepLength * direction) + footOffset,
                         info.normal);
-                Debug.Log("Moving");
             }
         }
 
         if (IsMoving())
         {
-            attackSprite.enabled = true;
-            collision.transform.position = new Vector3(newPosition.x, 0.03f, newPosition.z);
+            if (lerp > 0.5 && isAttacking)
+            {
+                if (lerp > 0.9)
+                {
+                    meleeAttackScript.enableCollider(true);
+                }
+                meleeAttackScript.enableSprite(true);
+            }
+            collision.transform.position = new Vector3(newPosition.x, 0.05f, newPosition.z);
             Vector3 tempPosition = Vector3.Lerp(oldPosition, newPosition, lerp);
             tempPosition.y += Mathf.Sin(lerp * Mathf.PI) * stepHeight;
 
@@ -60,7 +68,9 @@ public class IKFootSolver : MonoBehaviour
         }
         if (!IsMoving())
         {
-            attackSprite.enabled = false;
+            meleeAttackScript.enableCollider(false);
+            meleeAttackScript.enableSprite(false);
+            isAttacking = false;
         }
     }
 
@@ -71,6 +81,15 @@ public class IKFootSolver : MonoBehaviour
         oldNormal = currentNormal;
         newPosition = pos;
         newNormal = normal;
+    }
+    public void meleeAttackStart()
+    {
+        isAttacking = true;
+    }
+
+    public void meleeAttackEnd()
+    {
+        isAttacking = false;
     }
 
     private void OnDrawGizmos()
@@ -84,4 +103,5 @@ public class IKFootSolver : MonoBehaviour
     {
         return lerp < 1;
     }
+
 }

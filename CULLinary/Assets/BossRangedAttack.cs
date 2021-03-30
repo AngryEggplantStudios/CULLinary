@@ -15,8 +15,8 @@ public class BossRangedAttack : EnemyAttack
     private List<LineRenderer> listOfRenderers;
     private List<Vector3> firePositions;
     private const float LINE_HEIGHT_FROM_GROUND = 0.1f;
-    private int rayCount = 5;
-
+    private int rayCount = 13;
+    private int offsetRay = 0;
     private void Awake()
     {
         canDealDamage = false;
@@ -36,19 +36,7 @@ public class BossRangedAttack : EnemyAttack
             lRend.enabled = false;
             listOfRenderers.Add(lRend);
         }
-    }
-    private Vector3 GetVectorFromAngle(float angle)
-    {
-        float angleRad = angle * (Mathf.PI / 180f);
-        return new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
-    }
-    private float GetAngleFromVectorFloat(Vector3 dir)
-    {
-        dir = dir.normalized;
-        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        if (n < 0) n += 360;
-
-        return n;
+        activateStage1();
     }
 
     private void throwCorn(Vector3 sourcePosition, Vector3 targetPosition)
@@ -57,13 +45,31 @@ public class BossRangedAttack : EnemyAttack
         cornTransform.GetComponent<EnemyProjectile>().Setup(sourcePosition, targetPosition);
     }
 
+    public void activateStage1()
+    {
+        rayCount = 3;
+        offsetRay = 1;
+    }
+
+    public void activateStage2()
+    {
+        rayCount = 5;
+        offsetRay = 2;
+    }
+
+    public void activateStage3()
+    {
+        fov = 150;
+        rayCount = 13;
+        offsetRay = 6;
+    }
     private void Update()
     {
         if (projectAttack)
         {
             Vector3 playerDirection = (player.transform.position - transform.position).normalized;
             float angleIncrease = fov / rayCount;
-            float angle = angleIncrease * 2 * -1;
+            float angle = angleIncrease * offsetRay * -1;
             int layerMask = 1 << 8;
             Vector3 finalDirection;
             firePositions = new List<Vector3>();
