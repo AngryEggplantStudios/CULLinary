@@ -11,8 +11,9 @@ public class IKFootSolver : MonoBehaviour
     [SerializeField] float stepLength = 4;
     [SerializeField] float stepHeight = 1;
     [SerializeField] Vector3 footOffset = default;
+
     float footSpacing;
-    Vector3 oldPosition, currentPosition, newPosition;
+    public Vector3 oldPosition, currentPosition, newPosition;
     Vector3 oldNormal, currentNormal, newNormal;
     float lerp;
 
@@ -29,22 +30,19 @@ public class IKFootSolver : MonoBehaviour
         transform.position = currentPosition;
         transform.up = -currentNormal;
 
-        Ray ray = new Ray(body.position - (body.right * footSpacing), Vector3.down);
+        Ray ray = new Ray(body.position + (body.right * footSpacing), Vector3.down);
 
-        Debug.DrawRay(body.position - (body.right * footSpacing), Vector3.down*100, Color.red);
-        
         if (Physics.Raycast(ray, out RaycastHit info, 100, 1 << LayerMask.NameToLayer("Ground")))
         {
-            if (Vector3.Distance(newPosition, info.point) > stepDistance && !otherFoot.IsMoving() && lerp >= 1)
+            if (Vector3.Distance(newPosition, info.point) > stepDistance && !otherFoot.IsMoving() && !IsMoving())
             {
-                lerp = 0;
                 int direction = body.InverseTransformPoint(info.point).z > body.InverseTransformPoint(newPosition).z ? 1 : -1;
-                newPosition = info.point + (body.forward * stepLength * direction) + footOffset;
-                newNormal = info.normal;
+                SetTarget(info.point + (body.forward * stepLength * direction) + footOffset,
+                        info.normal);
             }
         }
 
-        if (lerp < 1)
+        if (IsMoving())
         {
             Vector3 tempPosition = Vector3.Lerp(oldPosition, newPosition, lerp);
             tempPosition.y += Mathf.Sin(lerp * Mathf.PI) * stepHeight;
@@ -53,15 +51,20 @@ public class IKFootSolver : MonoBehaviour
             currentNormal = Vector3.Lerp(oldNormal, newNormal, lerp);
             lerp += Time.deltaTime * speed;
         }
-        else
-        {
-            oldPosition = newPosition;
-            oldNormal = newNormal;
-        }
+    }
+
+    public void SetTarget(Vector3 pos, Vector3 normal)
+    {
+        lerp = 0;
+        oldPosition = currentPosition;
+        oldNormal = currentNormal;
+        newPosition = pos;
+        newNormal = normal;
     }
 
     private void OnDrawGizmos()
     {
+        Debug.DrawRay(body.position + (body.right * footSpacing), Vector3.down * 100, Color.red);
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(newPosition, 0.1f);
     }
