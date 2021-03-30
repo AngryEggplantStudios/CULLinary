@@ -11,11 +11,13 @@ public class IKFootSolver : MonoBehaviour
     [SerializeField] float stepLength = 4;
     [SerializeField] float stepHeight = 1;
     [SerializeField] Vector3 footOffset = default;
+    [SerializeField] GameObject collision;
 
     float footSpacing;
     public Vector3 oldPosition, currentPosition, newPosition;
     Vector3 oldNormal, currentNormal, newNormal;
     float lerp;
+    private SpriteRenderer attackSprite;
 
     private void Start()
     {
@@ -23,6 +25,8 @@ public class IKFootSolver : MonoBehaviour
         currentPosition = newPosition = oldPosition = transform.position;
         currentNormal = newNormal = oldNormal = -transform.up;
         lerp = 1;
+        attackSprite = collision.GetComponent<SpriteRenderer>();
+
     }
 
     void Update()
@@ -39,17 +43,24 @@ public class IKFootSolver : MonoBehaviour
                 int direction = body.InverseTransformPoint(info.point).z > body.InverseTransformPoint(newPosition).z ? 1 : -1;
                 SetTarget(info.point + (body.forward * stepLength * direction) + footOffset,
                         info.normal);
+                Debug.Log("Moving");
             }
         }
 
         if (IsMoving())
         {
+            attackSprite.enabled = true;
+            collision.transform.position = new Vector3(newPosition.x, 0.03f, newPosition.z);
             Vector3 tempPosition = Vector3.Lerp(oldPosition, newPosition, lerp);
             tempPosition.y += Mathf.Sin(lerp * Mathf.PI) * stepHeight;
 
             currentPosition = tempPosition;
             currentNormal = Vector3.Lerp(oldNormal, newNormal, lerp);
             lerp += Time.deltaTime * speed;
+        }
+        if (!IsMoving())
+        {
+            attackSprite.enabled = false;
         }
     }
 

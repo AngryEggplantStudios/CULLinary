@@ -5,11 +5,10 @@ using UnityEngine;
 public class BossRangedAttack : EnemyAttack
 {
     [SerializeField] private Transform throwObject;
-    private SphereCollider attackCollider;
     private DungeonPlayerHealth healthScript;
     private bool canDealDamage;
     private Transform player;
-    private bool projectAttack = true;
+    private bool projectAttack = false;
     private float startingAngle;
     private float fov = 90f;
     private float viewDistance = 5f;
@@ -20,7 +19,6 @@ public class BossRangedAttack : EnemyAttack
 
     private void Awake()
     {
-        attackCollider = gameObject.GetComponent<SphereCollider>();
         canDealDamage = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
@@ -35,6 +33,7 @@ public class BossRangedAttack : EnemyAttack
             LineRenderer lRend = gameObjectChild.AddComponent<LineRenderer>();
             lRend.positionCount = 2;
             lRend.SetWidth(0.01f, 0.02f);
+            lRend.enabled = false;
             listOfRenderers.Add(lRend);
         }
     }
@@ -125,6 +124,9 @@ public class BossRangedAttack : EnemyAttack
         {
             listOfRenderers[i].enabled = true;
         }
+    }
+    public void attackPlayerStartFlashing()
+    {
         StartCoroutine("prepareToFire");
     }
 
@@ -143,7 +145,6 @@ public class BossRangedAttack : EnemyAttack
     public override void attackPlayerEnd()
     {
         //Destroy(selectionCircleActual.gameObject);
-        attackCollider.enabled = false;
         canDealDamage = false;
         for (int i =  0; i < listOfRenderers.Count; i++)
         {
@@ -151,41 +152,6 @@ public class BossRangedAttack : EnemyAttack
         }
         StopCoroutine("prepareToFire");
 
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (canDealDamage)
-        {
-
-            if (healthScript != null)
-            {
-                bool hitSuccess = healthScript.HandleHit(attackDamage);
-                if (hitSuccess)
-                {
-                    healthScript.KnockbackPlayer(transform.position);
-                }
-            }
-        }
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        DungeonPlayerHealth target = other.GetComponent<DungeonPlayerHealth>();
-        if (target != null)
-        {
-            healthScript = target;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        DungeonPlayerHealth target = other.GetComponent<DungeonPlayerHealth>();
-        if (target != null)
-        {
-            healthScript = null;
-        }
     }
 
 }

@@ -19,46 +19,161 @@ public class ClownController : MonoBehaviour
     float originalY;
     float jawOriginalY;
 
+    private State state;
+    private bool canMelee;
+    private Vector3 originalPosition;
+    private Vector3 localPosition;
+    private Vector3 localFinalPosition;
+    public int interpolationFramesCount = 120; // Number of frames to completely interpolate between the 2 positions
+    int elapsedFrames = 0;
+    private BossRangedAttack rangedAttackScript;
+    private bool coroutineRangedRunning = false;
+    private bool openingMouth = true;
+    private bool idleCooldownRunning = false;
+
+    private enum State
+    {
+        Roaming,
+        Idle,
+        RangedAttack,
+        ChaseTarget,
+        AttackTarget,
+        ShootingTarget,
+        GoingBackToStart,
+    }
+
     void Start()
     {
+        state = State.Roaming;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         originalY = transform.position.y;
         jawOriginalY = lowerJaw.localPosition.y;
+        originalPosition = gameObject.transform.position;
+        localPosition = lowerJaw.localPosition;
+        localFinalPosition = new Vector3(localPosition.x, -0.045f, localPosition.z);
+        rangedAttackScript = gameObject.transform.GetComponentInChildren<BossRangedAttack>();
     }
 
     void Update()
     {
+        float interpolationRatio = (float)elapsedFrames / interpolationFramesCount;
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        
-        if (distanceToPlayer > lookingDistance){
-            slowlyLookAt(player);
-        }
+        switch (state)
+        {
+            default:
+            case State.Idle:
+                if (!openingMouth)
+                {
+                    lowerJaw.localPosition = Vector3.Lerp(localFinalPosition, localPosition, interpolationRatio);
+                } else
+                {
+                    lowerJaw.localPosition = new Vector3(
+                        lowerJaw.localPosition.x,
+                        jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
+                        lowerJaw.localPosition.z);
+                }
+                if (!idleCooldownRunning)
+                {
+                    StartCoroutine("idleCooldownCoroutine");
+                }
+                transform.position = new Vector3(
+                        transform.position.x,
+                        originalY + Mathf.Sin(Time.fixedTime * Mathf.PI * 1) * 0.2f,
+                        transform.position.z);
+                break;
+            case State.RangedAttack:
+                if (distanceToPlayer > 0.2f)
+                {
+                    quicklyLookAt(player);
+                }
+                if (openingMouth)
+                {
+                    lowerJaw.localPosition = Vector3.Lerp(localPosition, localFinalPosition, interpolationRatio);
+                } 
+                if (!coroutineRangedRunning)
+                {
+                    StartCoroutine("rangedCoroutine");
+                }
+                break;
+            case State.Roaming:
+                if (distanceToPlayer > lookingDistance)
+                {
+                    slowlyLookAt(player);
+                }
 
-        if (distanceToPlayer > stoppingDistance){
-            moveForward();
-        }
+                if (distanceToPlayer > stoppingDistance)
+                {
+                    moveForward();
+                }
 
-        if (distanceToPlayer < meleeRange){
-            stepOn(player);
-        }
 
-        // Bob head and jaw for demostration
-        transform.position = new Vector3(
-                transform.position.x,
-                originalY + Mathf.Sin(Time.fixedTime * Mathf.PI * 1) * 0.2f,
-                transform.position.z);
-        lowerJaw.localPosition = new Vector3(
-                lowerJaw.localPosition.x,
-                jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
-                lowerJaw.localPosition.z);
+                if (distanceToPlayer < meleeRange)
+                {
+                    stepOn(player);
+
+                }
+
+                // Bob head and jaw for demostration
+                transform.position = new Vector3(
+                        transform.position.x,
+                        originalY + Mathf.Sin(Time.fixedTime * Mathf.PI * 1) * 0.2f,
+                        transform.position.z);
+                lowerJaw.localPosition = new Vector3(
+                        lowerJaw.localPosition.x,
+                        jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
+                        lowerJaw.localPosition.z);
+                break;
+        }
+        if (elapsedFrames != interpolationFramesCount)
+        {
+            elapsedFrames = (elapsedFrames + 1);
+        }
     }
 
-    void slowlyLookAt(Transform target)
+    IEnumerator idleCooldownCoroutine()
     {
+        idleCooldownRunning = true;
+        yield return new WaitForSeconds(2);
+        idleCooldownRunning = false;
+        state = State.RangedAttack;
+        elapsedFrames = 0;
+        openingMouth = true;
+    }
+
+    IEnumerator rangedCoroutine()
+    {
+        coroutineRangedRunning = true;
+        // suspend execution for 5 seconds
+        rangedAttackScript.attackPlayerStart();
+        yield return new WaitForSeconds(2f);
+        rangedAttackScript.attackPlayerStartFlashing();
+        yield return new WaitForSeconds(1f);
+        rangedAttackScript.attackPlayerDealDamage();
+        yield return new WaitForSeconds(0.5f);
+        rangedAttackScript.attackPlayerEnd();
+        elapsedFrames = 0;
+        coroutineRangedRunning = false;
+        state = State.Idle;
+        openingMouth = false;
+    }
+
+    void slowlyLookAt(Transform targetPlayer)
+    {
+        Vector3 target = targetPlayer.position;
         transform.rotation = Quaternion.Lerp(
             transform.rotation,
-            Quaternion.Euler(Quaternion.LookRotation(target.position - transform.position).eulerAngles),
+            Quaternion.Euler(Quaternion.LookRotation(target - transform.position).eulerAngles),
             Time.deltaTime * turningSpeed);
+    }
+
+    void quicklyLookAt(Transform targetPlayer)
+    {
+        Vector3 target = targetPlayer.position;
+        target.y = transform.position.y;
+        transform.rotation = Quaternion.Lerp(
+            transform.rotation,
+            Quaternion.Euler(Quaternion.LookRotation(target - transform.position).eulerAngles),
+            Time.deltaTime * turningSpeed * 5);
     }
 
     void moveForward()
