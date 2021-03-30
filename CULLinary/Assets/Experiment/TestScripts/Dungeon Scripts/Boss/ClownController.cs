@@ -25,10 +25,6 @@ public class ClownController : MonoBehaviour
     private Image hpBarFull;
     private float health;
     private Camera cam;
-
-
-
-
     Transform player;
     float originalY;
     float jawOriginalY;
@@ -40,10 +36,14 @@ public class ClownController : MonoBehaviour
     public int interpolationFramesCount = 120; // Number of frames to completely interpolate between the 2 positions
     int elapsedFrames = 0;
     private BossRangedAttack rangedAttackScript;
+    private BossSpawnAttack spawnAttackScript;
+
+    //booleans to check if coroutine is running
     private bool coroutineRangedRunning = false;
     private bool openingMouth = true;
     private bool idleCooldownRunning = false;
     private bool coroutineMeleeRunning = false;
+    private bool coroutineSpawnRunning = false;
 
     private enum State
     {
@@ -51,14 +51,12 @@ public class ClownController : MonoBehaviour
         Idle,
         RangedAttack,
         MeleeAttack,
-        AttackTarget,
-        ShootingTarget,
-        GoingBackToStart,
+        SpawnAttack
     }
 
     void Start()
     {
-        state = State.MeleeAttack;
+        state = State.Idle;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         cam = player.GetComponentInChildren<Camera>();
         originalY = transform.position.y;
@@ -67,6 +65,7 @@ public class ClownController : MonoBehaviour
         //final position of the mouth when fully open
         localFinalPosition = new Vector3(localPosition.x, -0.045f, localPosition.z);
         rangedAttackScript = gameObject.transform.GetComponentInChildren<BossRangedAttack>();
+        spawnAttackScript = gameObject.transform.GetComponent<BossSpawnAttack>();
         health = maxHealth;
         SetupHpBar();
     }
@@ -208,6 +207,13 @@ public class ClownController : MonoBehaviour
                         jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
                         lowerJaw.localPosition.z);
                 break;
+            case State.SpawnAttack:
+                if (!coroutineSpawnRunning)
+                {
+                    StartCoroutine("spawnCoroutine");
+                }
+                break;
+
         }
         if (elapsedFrames != interpolationFramesCount)
         {
@@ -266,6 +272,14 @@ public class ClownController : MonoBehaviour
         state = State.Idle;
     }
 
+    IEnumerator spawnCoroutine()
+    {
+        coroutineSpawnRunning = true;
+        spawnAttackScript.spawnMobs();
+        yield return new WaitForSeconds(5f);
+        coroutineSpawnRunning = false;
+        state = State.Idle;
+    }
 
     void slowlyLookAt(Transform targetPlayer)
     {
