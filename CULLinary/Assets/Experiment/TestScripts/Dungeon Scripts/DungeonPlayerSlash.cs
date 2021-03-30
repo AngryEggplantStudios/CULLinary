@@ -11,7 +11,18 @@ public class DungeonPlayerSlash : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] attackSounds;
 
+    // Perform raycasting to rotate the player
+    public DungeonRaycaster raycastLayer;
+    public GameObject playerToRotate;
+    public DungeonPlayerLocomotion rotationLocomotion;
+    public float rotateSpeed = 0.5f;
+
+    // Constants
+    private const float MAX_DIST_CAM_TO_GROUND = 100f;
+    private const float MELEE_ANIMATION_TIME_SECONDS = 0.10f;
+
     private Collider weaponCollider;
+    private Vector3 rotateToFaceDirection;
     
     private void Awake()
     {
@@ -21,9 +32,28 @@ public class DungeonPlayerSlash : MonoBehaviour
         animator = GetComponent<Animator>();
         weaponCollider.enabled = false;
     }
+    
+    private IEnumerator RotatePlayer() 
+    {
+        for (float i = 0.0f;
+             i < MELEE_ANIMATION_TIME_SECONDS;
+             i = i + Time.deltaTime * rotateSpeed) 
+        {
+            rotationLocomotion.Rotate(rotateToFaceDirection, rotateSpeed);
+            yield return null;
+        }
+    }
 
     private void Slash()
     {
+        RaycastHit hit;
+        if (raycastLayer.RaycastMouse(out hit, MAX_DIST_CAM_TO_GROUND)) {
+            rotateToFaceDirection =
+                new Vector3(hit.point.x - playerToRotate.transform.position.x,
+                            0.0f,
+                            hit.point.z - playerToRotate.transform.position.z);
+            StartCoroutine("RotatePlayer");
+        }
         animator.SetBool("isMelee", true);
     }
 
