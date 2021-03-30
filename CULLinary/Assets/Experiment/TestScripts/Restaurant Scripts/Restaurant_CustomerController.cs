@@ -17,6 +17,7 @@ public class Restaurant_CustomerController : MonoBehaviour
 
     private int idx = 0;
     private bool alrReceivedFood = false;
+    private bool canBeSpokenTo = true;
     
     public AudioSource kachingSound;
 
@@ -38,6 +39,19 @@ public class Restaurant_CustomerController : MonoBehaviour
         {
             ReceiveFood();
         }
+    }
+
+    // Check to see if already received the food
+    public bool HasReceivedFood() {
+        return alrReceivedFood;
+    }
+
+    public bool HasDialogue() {
+        return canBeSpokenTo;
+    }
+
+    public void SetToNoDialogue() {
+        canBeSpokenTo = false;
     }
 
     // Play the eating anim for a fixed duration
