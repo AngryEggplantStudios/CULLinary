@@ -10,6 +10,9 @@ public class DungeonPlayerAim : MonoBehaviour
     private Animator animator;
     private DungeonPlayerRange dungeonPlayerRange;
 
+    // Perform raycasting for the throwing knife
+    public DungeonRaycaster raycastLayer;
+
     //Projectile Class
     public delegate void PlayerProjectileDelegate(Vector3 sourcePosition, Vector3 targetPosition);
     public event PlayerProjectileDelegate OnPlayerShoot;
@@ -62,8 +65,7 @@ public class DungeonPlayerAim : MonoBehaviour
             //Draw line from player to mouse
             lineRenderer.positionCount = 2;
             RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, MAX_DIST_CAM_TO_GROUND, 1 << LayerMask.NameToLayer("Ground")))
+            if (raycastLayer.RaycastMouse(out hit, MAX_DIST_CAM_TO_GROUND))
             {
                 this.lookVector = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 this.sourcePosition = new Vector3(transform.position.x, LINE_HEIGHT_FROM_GROUND, transform.position.z);
