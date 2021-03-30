@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class EnemyScript : MonoBehaviour
+public class EnemyScript : Enemy
 {
     public NavMeshAgent agent;
 
@@ -270,7 +270,7 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    public void HandleHit(float damage)
+    public override void HandleHit(float damage)
     {
         this.health -= damage;
         hpBarFull.fillAmount = health/maxHealth;

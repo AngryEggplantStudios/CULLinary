@@ -26,6 +26,7 @@ public class BossScript : MonoBehaviour
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private float collideDamage;
 
+
     [SerializeField] private GameObject hpBar_prefab;
     private GameObject hpBar;
     private Image hpBarFull;

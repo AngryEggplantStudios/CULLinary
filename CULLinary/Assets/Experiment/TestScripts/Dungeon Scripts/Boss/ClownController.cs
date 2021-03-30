@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class ClownController : MonoBehaviour
 {
@@ -14,14 +16,25 @@ public class ClownController : MonoBehaviour
     [SerializeField] Transform lowerJaw;
     [SerializeField] IKFootSolver leftFoot;
     [SerializeField] IKFootSolver rightFoot;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private GameObject hpBar_prefab;
+    [SerializeField] private GameObject damageCounter_prefab;
+    [SerializeField] private GameObject enemyAlert_prefab;
+
+    private GameObject hpBar;
+    private Image hpBarFull;
+    private float health;
+    private Camera cam;
+
+
+
 
     Transform player;
     float originalY;
     float jawOriginalY;
+    private List<GameObject> uiList = new List<GameObject>();
 
     private State state;
-    private bool canMelee;
-    private Vector3 originalPosition;
     private Vector3 localPosition;
     private Vector3 localFinalPosition;
     public int interpolationFramesCount = 120; // Number of frames to completely interpolate between the 2 positions
@@ -45,16 +58,48 @@ public class ClownController : MonoBehaviour
 
     void Start()
     {
-        state = State.RangedAttack;
+        state = State.MeleeAttack;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        cam = player.GetComponentInChildren<Camera>();
         originalY = transform.position.y;
         jawOriginalY = lowerJaw.localPosition.y;
-        originalPosition = gameObject.transform.position;
         localPosition = lowerJaw.localPosition;
         //final position of the mouth when fully open
         localFinalPosition = new Vector3(localPosition.x, -0.045f, localPosition.z);
         rangedAttackScript = gameObject.transform.GetComponentInChildren<BossRangedAttack>();
+        health = maxHealth;
+        SetupHpBar();
     }
+
+    private void SetupHpBar()
+    {
+        hpBar = Instantiate(hpBar_prefab);
+        hpBarFull = hpBar.transform.Find("hpBar_full").gameObject.GetComponent<Image>();
+        SetupUI(hpBar);
+    }
+
+    private void SetupUI(GameObject ui)
+    {
+        ui.transform.SetParent(GameObject.FindObjectOfType<InventoryUI>().transform);
+        ui.transform.position = cam.WorldToScreenPoint(transform.position);
+        uiList.Add(ui);
+    }
+
+    private void SpawnDamageCounter(float damage)
+    {
+        GameObject damageCounter = Instantiate(damageCounter_prefab);
+        damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
+        SetupUI(damageCounter);
+    }
+
+    public void HandleHit(float damage)
+    {
+        this.health -= damage;
+        hpBarFull.fillAmount = health / maxHealth;
+        SpawnDamageCounter(damage);
+
+    }
+
 
     void Update()
     {
@@ -168,6 +213,21 @@ public class ClownController : MonoBehaviour
         {
             elapsedFrames = (elapsedFrames + 1);
         }
+        Vector2 screenPos = cam.WorldToScreenPoint(transform.position);
+        if (screenPos != Vector2.zero)
+        {
+            foreach (GameObject ui in uiList)
+            {
+                if (ui != null)
+                {
+                    ui.transform.position = screenPos;
+                }
+                else
+                {
+                    uiList.Remove(null);
+                }
+            }
+        }
     }
 
     IEnumerator idleCooldownCoroutine()
@@ -175,8 +235,8 @@ public class ClownController : MonoBehaviour
         idleCooldownRunning = true;
         yield return new WaitForSeconds(4);
         idleCooldownRunning = false;
-        state = State.RangedAttack;
-        //state = State.MeleeAttack;
+        //state = State.RangedAttack;
+        state = State.MeleeAttack;
         elapsedFrames = 0;
         openingMouth = true;
     }
@@ -259,4 +319,6 @@ public class ClownController : MonoBehaviour
             rightFoot.SetTarget(info.point, info.normal);
         }
     }
+
+
 }

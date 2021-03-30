@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IKFootSolver : MonoBehaviour
+public class IKFootSolver : Enemy
 {
     [SerializeField] Transform body = default;
     [SerializeField] IKFootSolver otherFoot = default;
@@ -12,13 +12,13 @@ public class IKFootSolver : MonoBehaviour
     [SerializeField] float stepHeight = 1;
     [SerializeField] Vector3 footOffset = default;
     [SerializeField] GameObject collision;
-    [SerializeField] private float stompDamage;
     float footSpacing;
     public Vector3 oldPosition, currentPosition, newPosition;
     Vector3 oldNormal, currentNormal, newNormal;
     float lerp;
     private bool isAttacking;
     private BossMeleeAttack meleeAttackScript;
+    private ClownController parentController;
 
     private void Start()
     {
@@ -28,7 +28,7 @@ public class IKFootSolver : MonoBehaviour
         lerp = 1;
         isAttacking = false;
         meleeAttackScript = gameObject.transform.parent.gameObject.transform.GetComponentInChildren<BossMeleeAttack>();
-
+        parentController = gameObject.GetComponentInParent<ClownController>();
     }
 
     void Update()
@@ -103,5 +103,8 @@ public class IKFootSolver : MonoBehaviour
     {
         return lerp < 1;
     }
-
+    public override void HandleHit(float damage)
+    {
+        parentController.HandleHit(damage);
+    }
 }
