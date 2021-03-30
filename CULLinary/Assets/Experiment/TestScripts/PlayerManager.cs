@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     private int currentIndex; //Current index
     private string playerName; //Player name
     private int money; //Player amount
+    private int maxHealth;
 
     public static PlayerManager instance;
 
@@ -47,6 +48,11 @@ public class PlayerManager : MonoBehaviour
         return money;
     }
 
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
     public void SetCurrentIndex(int index)
     {
         this.currentIndex = index;
@@ -67,15 +73,26 @@ public class PlayerManager : MonoBehaviour
         this.itemList = items;
     }
 
+    public void SetMaxHealth(int h)
+    {
+        this.maxHealth = h;
+    }
+
     public void SaveData(List<Item> items)
     {
         SetItemList(items);
         string inventory = SerializeInventory();
-        PlayerData playerData = new PlayerData(inventory, stage, currentIndex, playerName, money);
+        PlayerData playerData = new PlayerData(inventory, stage, currentIndex, playerName, money, maxHealth);
         SaveSystem.SaveData(playerData);
     }
 
-    //Current fix until we can get the inventory to be the same object between scenes
+    public void SaveData()
+    {
+        string inventory = SerializeInventory();
+        PlayerData playerData = new PlayerData(inventory, stage, currentIndex, playerName, money, maxHealth);
+        SaveSystem.SaveData(playerData);
+    }
+
     public void LoadData()
     {
         PlayerData data = SaveSystem.LoadData();
@@ -85,11 +102,13 @@ public class PlayerManager : MonoBehaviour
             SetCurrentIndex(1);
             SetStage(1);
             SetMoney(0);
+            SetMaxHealth(150);
             return;
         }
         SetCurrentIndex(data.currentIndex);
         SetStage(data.stage);
         SetMoney(data.money);
+        SetMaxHealth(data.maxHealth);
         InventoryItemData[] inventory = JsonArrayParser.FromJson<InventoryItemData>(data.inventory);
         itemList.Clear();
         foreach (InventoryItemData item in inventory)
@@ -106,7 +125,10 @@ public class PlayerManager : MonoBehaviour
     {
         yield return null;
         InventoryUI inventoryUI = GameObject.FindObjectOfType<InventoryUI>();
-        inventoryUI.PopulateUI(itemList);
+        if (inventoryUI != null)
+        {
+            inventoryUI.PopulateUI(itemList);
+        }
     }
 
     public void InstantiateInventory()

@@ -8,6 +8,7 @@ public class PlayerData
     public int currentIndex; //references whether we are in the rest/dungeon
     public string playerName;
     public int money;
+    public int maxHealth;
 
     public PlayerData()
     {
@@ -16,15 +17,17 @@ public class PlayerData
         this.money = 0;
         this.currentIndex = 1; //Default goes to restaurant
         this.playerName = "John Doe";
+        this.maxHealth = 150;
     }
 
-    public PlayerData(string inventory, int stage, int currentIndex, string playerName, int money)
+    public PlayerData(string inventory, int stage, int currentIndex, string playerName, int money, int maxHealth)
     {
         this.inventory = inventory;
         this.stage = stage;
         this.currentIndex = currentIndex; //Default goes to restaurant
         this.playerName = playerName;
         this.money = money;
+        this.maxHealth = maxHealth;
     }
 
     public string ToJson()
