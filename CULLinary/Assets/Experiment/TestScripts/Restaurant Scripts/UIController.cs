@@ -87,8 +87,6 @@ public class UIController : MonoBehaviour
         }
         EventSystem.current.SetSelectedGameObject(null); // clear selected object
         EventSystem.current.SetSelectedGameObject(selectedButton); //set a new selected object
-
-        //Debug.Log("updated event system??");
     }
 
     // For Inventory Panel and Menu Panel (Called by CookingStation)
@@ -135,8 +133,8 @@ public class UIController : MonoBehaviour
     public void CloseNotEnoughIngredientsNotifPanel()
     {
         notEnoughIngredientsNotifPanel.SetActive(false);
-
-        FindNextSelectedKey();
+        
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     // To update the Amount Earned at top left hand corner
