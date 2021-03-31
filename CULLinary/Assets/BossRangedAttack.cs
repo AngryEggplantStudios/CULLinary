@@ -17,6 +17,7 @@ public class BossRangedAttack : EnemyAttack
     private const float LINE_HEIGHT_FROM_GROUND = 0.1f;
     private int rayCount = 13;
     private int offsetRay = 0;
+ 
     private void Awake()
     {
         canDealDamage = false;
@@ -110,7 +111,7 @@ public class BossRangedAttack : EnemyAttack
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
-            for (int i = 0; i < listOfRenderers.Count; i++)
+            for (int i = 0; i < rayCount; i++)
             {
                 listOfRenderers[i].enabled = !(listOfRenderers[i].enabled);
             }
@@ -126,7 +127,7 @@ public class BossRangedAttack : EnemyAttack
         //attackCollider.enabled = true;
         Debug.Log("Attack");
         projectAttack = true;
-        for (int i = 0; i < listOfRenderers.Count; i++)
+        for (int i = 0; i < rayCount; i++)
         {
             listOfRenderers[i].enabled = true;
         }

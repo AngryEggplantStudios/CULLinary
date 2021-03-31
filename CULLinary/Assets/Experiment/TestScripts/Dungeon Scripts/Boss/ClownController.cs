@@ -138,6 +138,18 @@ public class ClownController : MonoBehaviour
                 } 
                 if (!coroutineRangedRunning)
                 {
+                    if (health / maxHealth < 0.3f)
+                    {
+                        rangedAttackScript.activateStage3();
+                    }
+                    else if (health / maxHealth < 0.7f)
+                    {
+                        rangedAttackScript.activateStage2();
+                    }
+                    else
+                    {
+                        rangedAttackScript.activateStage1();
+                    }
                     StartCoroutine("rangedCoroutine");
                 }
                 break;
@@ -239,10 +251,25 @@ public class ClownController : MonoBehaviour
     IEnumerator idleCooldownCoroutine()
     {
         idleCooldownRunning = true;
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3);
         idleCooldownRunning = false;
-        //state = State.RangedAttack;
-        state = State.MeleeAttack;
+        int chooseAttack = Random.Range(1, 3);
+        Debug.Log(chooseAttack);
+        switch (chooseAttack)
+        {
+            default:
+            case 1:
+                state = State.MeleeAttack;
+                break;
+            case 2:
+                state = State.SpawnAttack;
+                break;
+            case 3:
+                state = State.RangedAttack;
+                break;
+        }
+        state = State.SpawnAttack;
+        //state = State.MeleeAttack;
         elapsedFrames = 0;
         openingMouth = true;
     }
