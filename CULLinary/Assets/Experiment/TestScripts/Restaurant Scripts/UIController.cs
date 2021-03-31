@@ -13,7 +13,14 @@ public class UIController : MonoBehaviour
     private int currButtonIdx = 0;
 
     // For selecting menu items using wasd
-    [Header("Recipe Menu Items")] // Progress Bar variables
+    [Header("Recipe Menu Items")]
+    private int eggplantNum = 0;
+    private int goldeggplantNum = 0;
+    private int cornNum = 0;
+    private int potatoNum = 0;
+
+    public GameObject inventoryParent;
+
     public GameObject menuFirstButton;
     public GameObject menuSecondButton;
     public GameObject menuThirdButton;
@@ -34,6 +41,7 @@ public class UIController : MonoBehaviour
 
     private PlayerManager playerManager;
 
+    [Header("Controls")]
     public string upKey;
     public string downKey;
 
@@ -96,6 +104,34 @@ public class UIController : MonoBehaviour
     {
         inventoryPanel.SetActive(true);
         menuPanel.SetActive(true);
+
+        // Check ingredient count and disable any menu buttons if not enough ingredients
+        eggplantNum = 0;
+        goldeggplantNum = 0;
+        cornNum = 0;
+        potatoNum = 0;
+
+        CheckInventory(); // update ingredient count
+
+        // Debug.Log("current ing count (ep/gep/c/p): " + eggplantNum + "; " + goldeggplantNum + "; " + cornNum + "; "+ potatoNum);
+
+        if (eggplantNum < 3)
+        {
+            menuFirstButton.GetComponent<Button>().interactable = false;
+        }
+        if (goldeggplantNum < 3)
+        {
+            menuSecondButton.GetComponent<Button>().interactable = false;
+        }
+        if ( !((eggplantNum >= 1) && (cornNum >= 1) && (potatoNum >= 1)) )
+        {
+            menuThirdButton.GetComponent<Button>().interactable = false;
+        }
+        if ( !((cornNum >= 2) && (potatoNum >= 1)) )
+        {
+            menuFourthButton.GetComponent<Button>().interactable = false;
+        }
+
         recipeBookPanel.SetActive(true);
     }
 
@@ -171,6 +207,41 @@ public class UIController : MonoBehaviour
         if (playerManager != null)
         {
             playerManager.SetMoney(totalAmt);
+        }
+    }
+
+    // Check inventory to see what food can be cooked
+    public void CheckInventory()
+    {
+        foreach (Transform child in inventoryParent.transform) // iterating thru inventory slots
+        {
+            GameObject itemButton = child.GetChild(0).gameObject; 
+            GameObject icon = itemButton.transform.GetChild(0).gameObject;
+
+            if (icon.GetComponent<Image>().isActiveAndEnabled == true) // only if there is an icon assigned
+            {
+                string foodName = icon.GetComponent<Image>().sprite.name;
+
+                switch (foodName)
+                {
+                    case "eggplant":
+                        eggplantNum++;
+                        break;
+                    case "golden_eggplant":
+                        goldeggplantNum++;
+                        break;
+                    case "corn":
+                        cornNum++;
+                        break;
+                    case "potato":
+                        potatoNum++;
+                        break;
+                    default: // Do nothing if nothing assigned
+                        break;
+                }
+            }   
+            
+           
         }
     }
 }
