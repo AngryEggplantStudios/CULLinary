@@ -58,6 +58,10 @@ public class EnemyScript : MonoBehaviour
 
     [SerializeField] private LootTuple[] lootTuples;
     [SerializeField] private float wanderRadius;
+    
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] stabSounds;
+
     private Vector3 startingPosition;
     private Vector3 roamPosition;
     private float timer;
@@ -276,6 +280,8 @@ public class EnemyScript : MonoBehaviour
         hpBarFull.fillAmount = health/maxHealth;
         StartCoroutine(FlashOnDamage());
         SpawnDamageCounter(damage);
+        audioSource.clip = stabSounds[Random.Range(0, stabSounds.Length)];
+        audioSource.Play();
 
         if (this.health <= 0)
         {
