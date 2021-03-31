@@ -9,7 +9,7 @@ public class BossSpawnAttack : MonoBehaviour
     [SerializeField] private BossSpawn[] spawnPoint1;
 
 
-    private int totalSpawnPoints = 1;
+    private int totalSpawnPoints = 3;
 
     public void spawnMobs()
     {
@@ -21,7 +21,7 @@ public class BossSpawnAttack : MonoBehaviour
         for (int i = 0; i < totalSpawnPoints; i++)
         {
             spawnPoint1[i].activateSpawn();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

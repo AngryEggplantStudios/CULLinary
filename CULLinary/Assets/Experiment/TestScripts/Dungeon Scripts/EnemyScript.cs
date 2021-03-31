@@ -97,7 +97,6 @@ public class EnemyScript : Enemy
         player = GameObject.FindGameObjectWithTag("Player").transform;
         cam = player.GetComponentInChildren<Camera>();
         SetupHpBar();
-        Debug.Log("Finish start");
     }
 
     private void SetupFlash()

@@ -12,7 +12,6 @@ public class ClownController : MonoBehaviour
     [Tooltip("Distance to stop rotating")]
     [SerializeField] float lookingDistance = 0.3f;
     [SerializeField] float meleeRange = 1;
-    public NavMeshAgent agent;
 
     [SerializeField] Transform lowerJaw;
     [SerializeField] IKFootSolver leftFoot;
@@ -30,6 +29,7 @@ public class ClownController : MonoBehaviour
     float originalY;
     float jawOriginalY;
     private List<GameObject> uiList = new List<GameObject>();
+    private float elapsed = 0.0f;
 
     private State state;
     private Vector3 localPosition;
@@ -57,7 +57,7 @@ public class ClownController : MonoBehaviour
 
     void Start()
     {
-        state = State.RangedAttack;
+        state = State.Idle;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         cam = player.GetComponentInChildren<Camera>();
         originalY = transform.position.y;
@@ -69,6 +69,7 @@ public class ClownController : MonoBehaviour
         spawnAttackScript = gameObject.transform.GetComponent<BossSpawnAttack>();
         health = maxHealth;
         SetupHpBar();
+        elapsed = 0.0f;
     }
 
     private void SetupHpBar()
@@ -105,6 +106,8 @@ public class ClownController : MonoBehaviour
     {
         float interpolationRatio = (float)elapsedFrames / interpolationFramesCount;
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        elapsed += Time.deltaTime;
+
         switch (state)
         {
             default:
@@ -260,10 +263,11 @@ public class ClownController : MonoBehaviour
     IEnumerator idleCooldownCoroutine()
     {
         idleCooldownRunning = true;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
+        SetupUI(Instantiate(enemyAlert_prefab));
+        yield return new WaitForSeconds(1);
         idleCooldownRunning = false;
         int chooseAttack = Random.Range(1, 4);
-        Debug.Log(chooseAttack);
         switch (chooseAttack)
         {
             default:
@@ -277,7 +281,6 @@ public class ClownController : MonoBehaviour
                 state = State.RangedAttack;
                 break;
         }
-        state = State.RangedAttack;
         elapsedFrames = 0;
         openingMouth = true;
     }
