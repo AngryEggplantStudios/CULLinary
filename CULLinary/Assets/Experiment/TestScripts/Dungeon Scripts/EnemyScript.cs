@@ -61,6 +61,7 @@ public class EnemyScript : MonoBehaviour
     
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] stabSounds;
+    [SerializeField] private AudioClip alertSound;
 
     private Vector3 startingPosition;
     private Vector3 roamPosition;
@@ -271,6 +272,8 @@ public class EnemyScript : MonoBehaviour
             state = State.ChaseTarget;
             
             SetupUI(Instantiate(enemyAlert_prefab));
+            audioSource.clip = alertSound;
+            audioSource.Play();
         }
     }
 
