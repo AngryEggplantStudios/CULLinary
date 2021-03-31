@@ -10,6 +10,8 @@ public class DungeonPlayerHealth : MonoBehaviour
     [SerializeField] private GameObject hpBarUI;
     [SerializeField] private float invincibilityDurationSeconds;
     [SerializeField] private GameObject model;
+    [SerializeField] private GameObject damageCounter_prefab;
+
     private GameObject hpBar;
     private Image hpBarFull;
     private Text hpText;
@@ -20,6 +22,7 @@ public class DungeonPlayerHealth : MonoBehaviour
     private Color[] originalColors;
     private Color onDamageColor = Color.white;
     DungeonPlayerLocomotion dpl;
+    private Camera cam;
 
     private float health;
 
@@ -39,6 +42,7 @@ public class DungeonPlayerHealth : MonoBehaviour
         }
         SetupFlash();
         dpl = this.gameObject.GetComponent<DungeonPlayerLocomotion>();
+        cam = transform.GetComponentInChildren<Camera>();
     }
 
     private void SetupFlash()
@@ -68,6 +72,7 @@ public class DungeonPlayerHealth : MonoBehaviour
         this.health -= damage;
         hpBarFull.fillAmount = health / maxHealth;
         hpText.text = health + "/" + maxHealth;
+        SpawnDamageCounter(damage);
 
         if (this.health <= 0)
         {
@@ -76,6 +81,14 @@ public class DungeonPlayerHealth : MonoBehaviour
         }
         StartCoroutine(BecomeTemporarilyInvincible());
         return true;
+    }
+
+    private void SpawnDamageCounter(float damage)
+    {
+        GameObject damageCounter = Instantiate(damageCounter_prefab);
+        damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
+        damageCounter.transform.SetParent(GameObject.FindObjectOfType<InventoryUI>().transform);
+        damageCounter.transform.position = cam.WorldToScreenPoint(transform.position);
     }
 
     public void KnockbackPlayer(Vector3 positionOfEnemy)
