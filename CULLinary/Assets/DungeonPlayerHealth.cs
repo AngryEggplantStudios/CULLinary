@@ -11,6 +11,7 @@ public class DungeonPlayerHealth : MonoBehaviour
     [SerializeField] private float invincibilityDurationSeconds;
     [SerializeField] private GameObject model;
     [SerializeField] private GameObject damageCounter_prefab;
+    [SerializeField] private AudioSource audioSource;
 
     private GameObject hpBar;
     private Image hpBarFull;
@@ -73,6 +74,7 @@ public class DungeonPlayerHealth : MonoBehaviour
         hpBarFull.fillAmount = health / maxHealth;
         hpText.text = health + "/" + maxHealth;
         SpawnDamageCounter(damage);
+        audioSource.Play();
 
         if (this.health <= 0)
         {
