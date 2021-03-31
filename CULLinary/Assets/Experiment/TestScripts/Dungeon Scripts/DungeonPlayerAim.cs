@@ -33,8 +33,9 @@ public class DungeonPlayerAim : MonoBehaviour
     private bool canShoot = true;
 
     //Audio
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSourceAttack;
     [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioSource audioSourceCdRefreshed;
 
     private void Start()
     {
@@ -92,8 +93,8 @@ public class DungeonPlayerAim : MonoBehaviour
         if (Input.GetMouseButtonUp(1) && targetFound && canShoot) {
             canShoot = false;
             OnPlayerShoot?.Invoke(sourcePosition, targetPosition);
-            audioSource.clip = attackSound;
-            audioSource.Play();
+            audioSourceAttack.clip = attackSound;
+            audioSourceAttack.Play();
             StartCoroutine(DelayFire());
         }
     }
@@ -103,6 +104,7 @@ public class DungeonPlayerAim : MonoBehaviour
         cooldownAnimator.SetTrigger("StartCooldown");
         yield return new WaitForSeconds(1.0f);
         canShoot = true;
+        audioSourceCdRefreshed.Play();
     }
 
     //Cleanup event to provoke
