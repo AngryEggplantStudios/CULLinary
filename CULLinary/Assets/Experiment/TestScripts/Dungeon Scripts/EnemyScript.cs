@@ -97,6 +97,7 @@ public class EnemyScript : Enemy
         player = GameObject.FindGameObjectWithTag("Player").transform;
         cam = player.GetComponentInChildren<Camera>();
         SetupHpBar();
+        Debug.Log("Finish start");
     }
 
     private void SetupFlash()
@@ -146,6 +147,7 @@ public class EnemyScript : Enemy
 
     private void Update()
     {
+        Debug.Log("In UPdate");
         Vector3 playerPositionWithoutYOffset = new Vector3(player.position.x, transform.position.y, player.position.z);
         float directionVector;
         switch (state)
