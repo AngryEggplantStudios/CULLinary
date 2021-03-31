@@ -147,7 +147,6 @@ public class EnemyScript : Enemy
 
     private void Update()
     {
-        Debug.Log("In UPdate");
         Vector3 playerPositionWithoutYOffset = new Vector3(player.position.x, transform.position.y, player.position.z);
         float directionVector;
         switch (state)
@@ -187,7 +186,8 @@ public class EnemyScript : Enemy
                     // Target within attack range
                     state = State.AttackTarget;
                     // Add new state to attack player
-                } else
+                }
+                else
                 {
                     agent.SetDestination(playerPositionWithoutYOffset);
 
@@ -196,7 +196,7 @@ public class EnemyScript : Enemy
                 if (Vector3.Distance(transform.position, player.position) > stopChase + 0.1f)
                 {
                     // Too far, stop chasing
-                     state = State.GoingBackToStart;
+                    state = State.GoingBackToStart;
                 }
                 break;
             case State.AttackTarget:

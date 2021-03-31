@@ -52,7 +52,8 @@ public class EnemyProjectile : MonoBehaviour
             Destroy(gameObject);
         }
         //To Handle 
-        if (other.gameObject.tag == "Blocker")
+        Debug.Log(other.gameObject.tag);
+        if (other.gameObject.tag == "Environment")
         {
             Destroy(gameObject);
         }

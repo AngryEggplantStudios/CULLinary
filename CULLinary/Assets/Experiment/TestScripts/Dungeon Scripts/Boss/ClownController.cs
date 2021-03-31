@@ -12,6 +12,7 @@ public class ClownController : MonoBehaviour
     [Tooltip("Distance to stop rotating")]
     [SerializeField] float lookingDistance = 0.3f;
     [SerializeField] float meleeRange = 1;
+    public NavMeshAgent agent;
 
     [SerializeField] Transform lowerJaw;
     [SerializeField] IKFootSolver leftFoot;
@@ -56,7 +57,7 @@ public class ClownController : MonoBehaviour
 
     void Start()
     {
-        state = State.Idle;
+        state = State.RangedAttack;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         cam = player.GetComponentInChildren<Camera>();
         originalY = transform.position.y;
@@ -224,6 +225,14 @@ public class ClownController : MonoBehaviour
                 {
                     StartCoroutine("spawnCoroutine");
                 }
+                lowerJaw.localPosition = new Vector3(
+                        lowerJaw.localPosition.x,
+                        jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
+                        lowerJaw.localPosition.z);
+                transform.position = new Vector3(
+                        transform.position.x,
+                        originalY + Mathf.Sin(Time.fixedTime * Mathf.PI * 1) * 0.2f,
+                        transform.position.z);
                 break;
 
         }
@@ -253,7 +262,7 @@ public class ClownController : MonoBehaviour
         idleCooldownRunning = true;
         yield return new WaitForSeconds(3);
         idleCooldownRunning = false;
-        int chooseAttack = Random.Range(1, 3);
+        int chooseAttack = Random.Range(1, 4);
         Debug.Log(chooseAttack);
         switch (chooseAttack)
         {
@@ -268,8 +277,7 @@ public class ClownController : MonoBehaviour
                 state = State.RangedAttack;
                 break;
         }
-        state = State.SpawnAttack;
-        //state = State.MeleeAttack;
+        state = State.RangedAttack;
         elapsedFrames = 0;
         openingMouth = true;
     }
@@ -303,7 +311,7 @@ public class ClownController : MonoBehaviour
     {
         coroutineSpawnRunning = true;
         spawnAttackScript.spawnMobs();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
         coroutineSpawnRunning = false;
         state = State.Idle;
     }
