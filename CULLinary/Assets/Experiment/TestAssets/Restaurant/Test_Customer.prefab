@@ -418,6 +418,7 @@ GameObject:
   - component: {fileID: 2352800523086081722}
   - component: {fileID: 2822748581313019771}
   - component: {fileID: 2822748581313019768}
+  - component: {fileID: 1108976249499163078}
   m_Layer: 0
   m_Name: Test_Customer
   m_TagString: Customer
@@ -477,6 +478,29 @@ CapsuleCollider:
   m_Height: 3.191642
   m_Direction: 1
   m_Center: {x: 0.0053173066, y: 1.6395359, z: 0}
+--- !u!114 &1108976249499163078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2822748581313019769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 268cd5959bd12d746b3c4919c2c53274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customer: {fileID: 2822748581313019769}
+  orderUI: {fileID: 2822748583092983917}
+  moneyText: {fileID: 2122641539036817843}
+  serveFoodLocation: {fileID: 2822748581135982251}
+  foodText: {fileID: 7892437226629295903}
+  dishNames:
+  - eggplant
+  - golden eggplant
+  - pizza
+  - burrito
+  kachingSound: {fileID: 5979231721867920178}
 --- !u!1 &2822748581432348630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1162,6 @@ GameObject:
   - component: {fileID: 2822748582653604099}
   - component: {fileID: 2822748582653604220}
   - component: {fileID: 2822748582653604221}
-  - component: {fileID: 2822748582653604098}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -1259,29 +1282,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2822748582653604098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2822748582653604096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 268cd5959bd12d746b3c4919c2c53274, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customer: {fileID: 2822748581313019769}
-  orderUI: {fileID: 2822748583092983917}
-  moneyText: {fileID: 2122641539036817843}
-  serveFoodLocation: {fileID: 2822748581135982251}
-  foodText: {fileID: 7892437226629295903}
-  dishNames:
-  - eggplant
-  - golden eggplant
-  - pizza
-  - burrito
-  kachingSound: {fileID: 5979231721867920178}
 --- !u!1 &2822748582687954668
 GameObject:
   m_ObjectHideFlags: 0
