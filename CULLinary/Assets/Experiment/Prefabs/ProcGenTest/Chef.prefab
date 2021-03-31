@@ -880,8 +880,9 @@ MonoBehaviour:
   gameOver: {fileID: 0}
   raycastLayer: {fileID: 0}
   cooldownAnimator: {fileID: 0}
-  audioSource: {fileID: 9100753358725591437}
+  audioSourceAttack: {fileID: 9100753358725591437}
   attackSound: {fileID: 8300000, guid: 02cef16b0cd5ed443ad059ac457f9d91, type: 3}
+  audioSourceCdRefreshed: {fileID: 4887177817116104381}
 --- !u!114 &4007418486084460499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1215,9 +1216,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -8296397853876076058, guid: 52b971ac47a1febcdb955854aff29ecb, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c428960cea4b61640aa76dccf5709a27, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
