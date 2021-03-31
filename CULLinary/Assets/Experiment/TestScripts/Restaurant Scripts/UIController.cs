@@ -21,11 +21,7 @@ public class UIController : MonoBehaviour
 
     public GameObject inventoryParent;
 
-    public GameObject menuFirstButton;
-    public GameObject menuSecondButton;
-    public GameObject menuThirdButton;
-    public GameObject menuFourthButton;
-    public GameObject menuCloseButton;
+    public GameObject[] recipeMenuButtons;
 
     [Header("UI Elements")]
     public GameObject moneyText;
@@ -36,8 +32,12 @@ public class UIController : MonoBehaviour
     public InventoryUI inventoryPanel;
     public UIRecipeBook recipeBookPanel;
     public GameObject ing_closeButton;
+
+    [Header("Confirm Leave Restaurant Notif")]
     public GameObject confirmLeaveNotifPanel;
     public GameObject confirmLeaveButton;
+    public GameObject[] leaveNotifButtons;
+    private int currIdx = 0;
 
     private PlayerManager playerManager;
 
@@ -59,18 +59,50 @@ public class UIController : MonoBehaviour
     {
         if (Input.GetKeyDown(upKey))
         {
-            currButtonIdx--;
-            if (currButtonIdx == 0)
-                currButtonIdx = 5; //loop back to the last option
-            FindNextSelectedKey();
+            if (menuPanel.activeSelf == true)
+                RecipePanelKeyUp();
+            if (confirmLeaveNotifPanel.activeSelf == true)
+                LeavePanelKeyUp();
         }
         if (Input.GetKeyDown(downKey))
         {
-            currButtonIdx++;
-            if (currButtonIdx == 6)
-                currButtonIdx = 1; //loop back to the first option
-            FindNextSelectedKey();
+            if (menuPanel.activeSelf == true)
+                RecipePanelKeyDown();
+            if (confirmLeaveNotifPanel.activeSelf == true)
+                LeavePanelKeyDown();
         }
+    }
+
+    void RecipePanelKeyUp()
+    {
+        currButtonIdx--;
+        if (currButtonIdx == -1)
+            currButtonIdx = 4; //loop back to the last option
+
+        while (recipeMenuButtons[currButtonIdx].GetComponent<Button>().interactable == false)
+        {
+            currButtonIdx--;
+            if (currButtonIdx == -1)
+                currButtonIdx = 4; //loop back to the last option
+        }
+
+        FindNextSelectedKey();
+    }
+
+    void RecipePanelKeyDown()
+    {
+        currButtonIdx++;
+        if (currButtonIdx == 5)
+            currButtonIdx = 0; //loop back to the first option
+
+        while (recipeMenuButtons[currButtonIdx].GetComponent<Button>().interactable == false)
+        {
+            currButtonIdx++;
+            if (currButtonIdx == 5)
+                currButtonIdx = 0; //loop back to the first option
+        }
+
+        FindNextSelectedKey();
     }
 
     void FindNextSelectedKey()
@@ -79,20 +111,20 @@ public class UIController : MonoBehaviour
 
         switch (currButtonIdx)
         {
+            case 0:
+                selectedButton = recipeMenuButtons[0];
+                break;
             case 1:
-                selectedButton = menuFirstButton;
+                selectedButton = recipeMenuButtons[1];
                 break;
             case 2:
-                selectedButton = menuSecondButton;
+                selectedButton = recipeMenuButtons[2];
                 break;
             case 3:
-                selectedButton = menuThirdButton;
+                selectedButton = recipeMenuButtons[3];
                 break;
             case 4:
-                selectedButton = menuFourthButton;
-                break;
-            case 5:
-                selectedButton = menuCloseButton;
+                selectedButton = recipeMenuButtons[4];
                 break;
         }
         EventSystem.current.SetSelectedGameObject(null); // clear selected object
@@ -117,19 +149,19 @@ public class UIController : MonoBehaviour
 
         if (eggplantNum < 3)
         {
-            menuFirstButton.GetComponent<Button>().interactable = false;
+            recipeMenuButtons[0].GetComponent<Button>().interactable = false;
         }
         if (goldeggplantNum < 3)
         {
-            menuSecondButton.GetComponent<Button>().interactable = false;
+            recipeMenuButtons[1].GetComponent<Button>().interactable = false;
         }
         if ( !((eggplantNum >= 1) && (cornNum >= 1) && (potatoNum >= 1)) )
         {
-            menuThirdButton.GetComponent<Button>().interactable = false;
+            recipeMenuButtons[2].GetComponent<Button>().interactable = false;
         }
         if ( !((cornNum >= 2) && (potatoNum >= 1)) )
         {
-            menuFourthButton.GetComponent<Button>().interactable = false;
+            recipeMenuButtons[3].GetComponent<Button>().interactable = false;
         }
 
         recipeBookPanel.SetActive(true);
@@ -178,12 +210,37 @@ public class UIController : MonoBehaviour
     // NOTIF: "Confirm leave restaurant" if counter has food
     public void ShowConfirmLeaveNotifPanel()
     {
+        cookingStation.DisableMovementOfPlayer();
         confirmLeaveNotifPanel.SetActive(true);
+
+        // Auto select cancel option when notif is first shown
+        EventSystem.current.SetSelectedGameObject(null); // clear selected object
+        EventSystem.current.SetSelectedGameObject(leaveNotifButtons[currIdx]); //set a new selected object
     }
 
     public void CloseConfirmLeaveNotifPanel()
     {
+        cookingStation.EnableMovementOfPlayer();
         confirmLeaveNotifPanel.SetActive(false);
+    }
+
+    void LeavePanelKeyUp()
+    {
+        currIdx--;
+        if (currIdx == -1)
+            currIdx = 1; //loop back to the last option
+
+        EventSystem.current.SetSelectedGameObject(null); // clear selected object
+        EventSystem.current.SetSelectedGameObject(leaveNotifButtons[currIdx]); //set a new selected object
+    }
+    void LeavePanelKeyDown()
+    {
+        currIdx++;
+        if (currIdx == 2)
+            currIdx = 0; //loop back to the first option
+
+        EventSystem.current.SetSelectedGameObject(null); // clear selected object
+        EventSystem.current.SetSelectedGameObject(leaveNotifButtons[currIdx]); //set a new selected object
     }
 
     // To update the Amount Earned at top left hand corner

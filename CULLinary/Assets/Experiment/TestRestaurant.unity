@@ -3541,6 +3541,8 @@ MonoBehaviour:
   hpBarUI: {fileID: 182388386}
   invincibilityDurationSeconds: 1.5
   model: {fileID: 1838677368}
+  damageCounter_prefab: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!114 &174383402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28024,11 +28026,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cookingStation: {fileID: 221291665}
   inventoryParent: {fileID: 1688255971}
-  menuFirstButton: {fileID: 932284745}
-  menuSecondButton: {fileID: 1166820564}
-  menuThirdButton: {fileID: 1190871304}
-  menuFourthButton: {fileID: 83089465}
-  menuCloseButton: {fileID: 1393372344}
+  recipeMenuButtons:
+  - {fileID: 932284745}
+  - {fileID: 1166820564}
+  - {fileID: 1190871304}
+  - {fileID: 83089465}
+  - {fileID: 1393372344}
   moneyText: {fileID: 6421019}
   menuPanel: {fileID: 1698611253}
   counterNotifPanel: {fileID: 701198546}
@@ -28039,6 +28042,9 @@ MonoBehaviour:
   ing_closeButton: {fileID: 1258670703}
   confirmLeaveNotifPanel: {fileID: 1571993174}
   confirmLeaveButton: {fileID: 571781801}
+  leaveNotifButtons:
+  - {fileID: 1298614688}
+  - {fileID: 571781801}
   upKey: w
   downKey: s
 --- !u!4 &1870195483
