@@ -29,6 +29,8 @@ public class UIController : MonoBehaviour
     public InventoryUI inventoryPanel;
     public UIRecipeBook recipeBookPanel;
     public GameObject ing_closeButton;
+    public GameObject confirmLeaveNotifPanel;
+    public GameObject confirmLeaveButton;
 
     private PlayerManager playerManager;
 
@@ -59,12 +61,12 @@ public class UIController : MonoBehaviour
             currButtonIdx++;
             if (currButtonIdx == 6)
                 currButtonIdx = 1; //loop back to the first option
-            FindNextSelectedKey();          
+            FindNextSelectedKey();
         }
     }
 
     void FindNextSelectedKey()
-    {     
+    {
         GameObject selectedButton = null;
 
         switch (currButtonIdx)
@@ -133,8 +135,19 @@ public class UIController : MonoBehaviour
     public void CloseNotEnoughIngredientsNotifPanel()
     {
         notEnoughIngredientsNotifPanel.SetActive(false);
-        
+
         EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    // NOTIF: "Confirm leave restaurant" if counter has food
+    public void ShowConfirmLeaveNotifPanel()
+    {
+        confirmLeaveNotifPanel.SetActive(true);
+    }
+
+    public void CloseConfirmLeaveNotifPanel()
+    {
+        confirmLeaveNotifPanel.SetActive(false);
     }
 
     // To update the Amount Earned at top left hand corner
