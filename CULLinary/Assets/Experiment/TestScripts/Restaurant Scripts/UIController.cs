@@ -97,9 +97,6 @@ public class UIController : MonoBehaviour
         inventoryPanel.SetActive(true);
         menuPanel.SetActive(true);
         recipeBookPanel.SetActive(true);
-
-        currButtonIdx = 1;
-        FindNextSelectedKey();
     }
 
     public void CloseCookingPanel()
