@@ -36,7 +36,10 @@ public class InventoryUI : MonoBehaviour
 		{
 			ToggleVisiblity();
 		}
-		inventoryCapacityText.text = itemList.Count + "/" + inventoryLimit;
+		if (inventoryCapacityText)
+		{
+			inventoryCapacityText.text = itemList.Count + "/" + inventoryLimit;
+		}
 	}
 
     // Sets the inventory to be visible or invisible
