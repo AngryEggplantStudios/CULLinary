@@ -47,6 +47,10 @@ public class IKFootSolver : Enemy
                         info.normal);
             }
         }
+        else
+        {
+            Debug.Log("No suitable stepping spot for " + transform.parent.name);
+        }
 
         if (IsMoving())
         {

@@ -10,6 +10,9 @@ public class DungeonPlayerAim : MonoBehaviour
     private Animator animator;
     private DungeonPlayerRange dungeonPlayerRange;
 
+    // Perform raycasting for the throwing knife
+    public DungeonRaycaster raycastLayer;
+
     //Projectile Class
     public delegate void PlayerProjectileDelegate(Vector3 sourcePosition, Vector3 targetPosition);
     public event PlayerProjectileDelegate OnPlayerShoot;
@@ -30,8 +33,9 @@ public class DungeonPlayerAim : MonoBehaviour
     private bool canShoot = true;
 
     //Audio
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSourceAttack;
     [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioSource audioSourceCdRefreshed;
 
     private void Start()
     {
@@ -62,8 +66,7 @@ public class DungeonPlayerAim : MonoBehaviour
             //Draw line from player to mouse
             lineRenderer.positionCount = 2;
             RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, MAX_DIST_CAM_TO_GROUND, 1 << LayerMask.NameToLayer("Ground")))
+            if (raycastLayer.RaycastMouse(out hit, MAX_DIST_CAM_TO_GROUND))
             {
                 this.lookVector = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 this.sourcePosition = new Vector3(transform.position.x, LINE_HEIGHT_FROM_GROUND, transform.position.z);
@@ -90,8 +93,8 @@ public class DungeonPlayerAim : MonoBehaviour
         if (Input.GetMouseButtonUp(1) && targetFound && canShoot) {
             canShoot = false;
             OnPlayerShoot?.Invoke(sourcePosition, targetPosition);
-            audioSource.clip = attackSound;
-            audioSource.Play();
+            audioSourceAttack.clip = attackSound;
+            audioSourceAttack.Play();
             StartCoroutine(DelayFire());
         }
     }
@@ -101,6 +104,7 @@ public class DungeonPlayerAim : MonoBehaviour
         cooldownAnimator.SetTrigger("StartCooldown");
         yield return new WaitForSeconds(1.0f);
         canShoot = true;
+        audioSourceCdRefreshed.Play();
     }
 
     //Cleanup event to provoke

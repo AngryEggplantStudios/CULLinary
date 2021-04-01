@@ -11,6 +11,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private bool isThereLoader;
     [SerializeField] private int levelToRestart;
 
+    [SerializeField] private GameObject mainPauseButtons;
+    [SerializeField] private GameObject optionButtons;
+ 
     // Update is called once per frame
     private void Update()
     {
@@ -29,9 +32,31 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        mainPauseButtons.SetActive(true);
+        optionButtons.SetActive(false);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isGamePaused = false;
+
+        Scene currScene = SceneManager.GetActiveScene();
+        if (currScene.name == "TestRestaurant")
+        {
+            CookingStation cookingStation = GameObject.Find("Recipe Controller").GetComponent<CookingStation>();
+            if (cookingStation.isCooking == true)
+                cookingStation.DisableMovementOfPlayer();
+        }
+    }
+
+    public void Options()
+    {
+        optionButtons.SetActive(true);
+        mainPauseButtons.SetActive(false);
+    }
+
+    public void Back()
+    {
+        optionButtons.SetActive(false);
+        mainPauseButtons.SetActive(true);
     }
 
     public void Pause()

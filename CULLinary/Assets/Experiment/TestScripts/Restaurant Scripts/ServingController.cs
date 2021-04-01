@@ -13,6 +13,12 @@ public class ServingController : MonoBehaviour
     public GameObject[] foodPrefabs;
     public Transform foodLocation;
 
+    // For triggering dialogue after Customer is served
+    public DialogueLoader dialogueLoader;
+    // CookingStation to disable movement while talking
+    // Will be renabled once dialogue is closed, by DialogueLoader
+    public CookingStation movementController;
+
     public bool holdingItem = false;
     public float interactRange = 7.0f;
 
@@ -87,6 +93,21 @@ public class ServingController : MonoBehaviour
                 }
                 CollectFood(foodId, foodLocation.position);
                 Destroy(closestFoodItem); // comment this out if want unlimited servings of the dish after cooking
+            } else {
+                // Try interacting with closest Customer
+                GameObject closestCustomer = FindClosestWithTag("Customer");
+                // Serve the customer if carrying food
+                if (closestCustomer)
+                {
+                    Restaurant_CustomerController customerController =
+                        closestCustomer.GetComponent<Restaurant_CustomerController>();
+                    // Only serve food to Customers not already eating
+                    if (customerController.HasReceivedFood() && customerController.HasDialogue()) {
+                        movementController.DisableMovementOfPlayer();
+                        dialogueLoader.LoadAndRun(DialogueDatabase.GetRandomDialogue(), customerController);
+                        customerController.SetToNoDialogue();
+                    }
+                }
             }
         }
         else if (holdingItem && Keybinds.WasTriggered(Keybind.Trash))
@@ -99,8 +120,12 @@ public class ServingController : MonoBehaviour
             // Serve the customer if carrying food
             if (closestCustomer)
             {
-                Debug.Log("Serving Customer!");
-                ServeFood(closestCustomer, currentHeldFood);
+                Restaurant_CustomerController customerController =
+                    closestCustomer.GetComponent<Restaurant_CustomerController>();
+                // Only serve food to Customers not already eating
+                if (!customerController.HasReceivedFood()) {
+                    ServeFood(closestCustomer, currentHeldFood);
+                }
             }
         }
     }

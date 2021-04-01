@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class MainMenu : MonoBehaviour
 {
@@ -12,8 +13,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject character;
     [SerializeField] private Image foreground;
     [SerializeField] private PlayerManager playerManager;
-    [SerializeField] private GameObject loadGameButtonNoData;
-    [SerializeField] private GameObject loadGameButtonData;
+    [SerializeField] private GameObject optionsMenu;
+    [SerializeField] private GameObject mainButtonsMenu;
+    [SerializeField] private GameObject loadGameButton;
     
     private Animator animator;
 
@@ -28,10 +30,16 @@ public class MainMenu : MonoBehaviour
         animator = character.GetComponentInChildren<Animator>();
         foreground.color = Color.clear;
         foreground.enabled = false;
-        if (FileManager.CheckFile("saveFile.clown"))
+        if (!FileManager.CheckFile("saveFile.clown"))
         {
-            loadGameButtonData.SetActive(true);
-            loadGameButtonNoData.SetActive(false);
+            Button loadButton = loadGameButton.GetComponent<Button>();
+            loadButton.interactable = false;
+            ColorBlock cb = loadButton.colors;
+            cb.normalColor = Color.gray;
+            loadButton.colors = cb;
+        }
+        else
+        {
             hasSavedData = true;
         }
     }
@@ -56,7 +64,6 @@ public class MainMenu : MonoBehaviour
             PlayerData newPlayerData = new PlayerData();
             SaveSystem.SaveData(newPlayerData);
             playerManager.LoadData();
-            //playerManager.InstantiateInventory();
             SceneManager.LoadScene(1); //Restaurant
              //Need to be changed to go to the loading screen in the future
         });
@@ -67,7 +74,6 @@ public class MainMenu : MonoBehaviour
         Select();
         FadeToBlack(() => {
             playerManager.LoadData();
-            //playerManager.InstantiateInventory();
             SceneManager.LoadScene(playerManager.GetCurrentIndex());
              //Need to be changed to go to the loading screen in the future
         });
@@ -76,6 +82,15 @@ public class MainMenu : MonoBehaviour
     public void Options()
     {
         Select();
+        optionsMenu.SetActive(true);
+        mainButtonsMenu.SetActive(false);
+    }
+
+    public void Back()
+    {
+        Select();
+        mainButtonsMenu.SetActive(true);
+        optionsMenu.SetActive(false);
     }
 
     public void Exit()

@@ -99,31 +99,29 @@ public class MapGenerator : MonoBehaviour
         }
 
         isGeneratingRooms = false;
-        isGeneratingDeadends = true;
-
-        //For all the connection points left, let us generate the deadend
-        foreach (ConnectionPoint currentPoint in ConnectionPoints)
-        {
-            yield return null;
-            yield return StartCoroutine(currentPoint.GenerateRoom(deadend, true));
-        }
-        
-        isGeneratingDeadends = false;
-        isBuildingNavMesh = true;
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.03f);
 
         //Let us build the navmesh now for the AI
+        isBuildingNavMesh = true;
         parent.GetComponent<NavMeshSurface>().BuildNavMesh();
-        yield return new WaitForSeconds(0.05f);
-        isBuildingNavMesh = false;
-
+        yield return new WaitForSeconds(0.03f);
         //reactivate Deco
         foreach (GameObject room in generatedRooms)
         {
             room.transform.Find("Environment").Find("Deco").gameObject.SetActive(true);
         }
+        isBuildingNavMesh = false;
 
         isGenerated = true;
+
+        //For all the connection points left, let us generate the deadend
+        //isGeneratingDeadends = true;
+        foreach (ConnectionPoint currentPoint in ConnectionPoints)
+        {
+            yield return null;
+            yield return StartCoroutine(currentPoint.GenerateRoom(deadend, true));
+        }
+        //isGeneratingDeadends = false;
     }
 
     public static void AddConnectionPoints(ConnectionPoint[] points)

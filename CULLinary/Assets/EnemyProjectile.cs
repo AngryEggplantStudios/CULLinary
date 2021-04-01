@@ -10,7 +10,7 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField] private float damage;
     [SerializeField] private float heightFromGround;
 
-    private float spinSpeed = -1500;
+    private float spinSpeed = 500;
 
     public void Setup(Vector3 sourcePosition, Vector3 targetPosition)
     {
@@ -23,7 +23,7 @@ public class EnemyProjectile : MonoBehaviour
     private float CalculateAngle(Vector3 v)
     {
         v = v.normalized;
-        float n = Mathf.Atan2(v.x, v.z) * Mathf.Rad2Deg;
+        float n = Mathf.Atan2(v.x, v.z) * Mathf.Rad2Deg + 90;
         if (n < 0)
         {
             n += 360;

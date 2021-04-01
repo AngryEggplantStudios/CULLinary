@@ -11,12 +11,17 @@ public class Restaurant_CustomerController : MonoBehaviour
     public GameObject moneyText;
     public GameObject serveFoodLocation;
     public Text foodText;
+    public Image dishImg;
 
     [SerializeField]
     public string[] dishNames;
 
+    [SerializeField]
+    public Sprite[] dishImages;
+
     private int idx = 0;
     private bool alrReceivedFood = false;
+    private bool canBeSpokenTo = true;
     
     public AudioSource kachingSound;
 
@@ -29,6 +34,7 @@ public class Restaurant_CustomerController : MonoBehaviour
 
         idx = Random.Range(0, dishNames.Length); // set the idx here, it was 0 by default
         foodText.text = dishNames[idx];
+        dishImg.sprite = dishImages[idx];
         orderUI.SetActive(true);
     }
 
@@ -38,6 +44,19 @@ public class Restaurant_CustomerController : MonoBehaviour
         {
             ReceiveFood();
         }
+    }
+
+    // Check to see if already received the food
+    public bool HasReceivedFood() {
+        return alrReceivedFood;
+    }
+
+    public bool HasDialogue() {
+        return canBeSpokenTo;
+    }
+
+    public void SetToNoDialogue() {
+        canBeSpokenTo = false;
     }
 
     // Play the eating anim for a fixed duration
@@ -70,33 +89,48 @@ public class Restaurant_CustomerController : MonoBehaviour
         moneyText.SetActive(true); // add anims to money text?
         kachingSound.Play();
 
+        StartCoroutine(FadeMoneyText());
         StartCoroutine(TimeToLeave());
     }
 
-    IEnumerator TimeToLeave()
+    public IEnumerator FadeMoneyText()
     {
         yield return new WaitForSeconds(2);
-
         moneyText.SetActive(false);
+    }
 
+    // This can be interrupted if Customer is spoken to
+    public IEnumerator TimeToLeave()
+    {
+        if (canBeSpokenTo) {
+            for (float time = 0.0f; time < 4.0f; time = time + Time.deltaTime) {
+                if (!canBeSpokenTo) {
+                    // Customer is being spoken to, don't destroy yet
+                    yield break;
+                }
+                yield return null;
+            }
+        } else {
+            yield return new WaitForSeconds(2);
+        }
         Leave();
     }
 
     // Destroy the customer once they are done eating
     void Leave()
     {
-        // Debug.Log("customer leaving now");
-        Animator animator = gameObject.GetComponent<Animator>();
-        animator.SetBool("SitDown", false); //wanted customer to play stand up anim b4 leaving but this one doesn't work :')
-
-        StartCoroutine(DestroyCustomer());
+        // // Debug.Log("customer leaving now");
+        // Animator animator = gameObject.GetComponent<Animator>();
+        // animator.SetBool("SitDown", false); //wanted customer to play stand up anim b4 leaving but this one doesn't work :')
+        // StartCoroutine(DestroyCustomer());
+        DestroyCustomer();
     } 
 
-    IEnumerator DestroyCustomer()
+    void DestroyCustomer()
     {
         CustomerSpawner customerSpawner = GameObject.Find("Customer Spawner").GetComponent<CustomerSpawner>();
         
-        yield return new WaitForSeconds(2);
+        // yield return new WaitForSeconds(2);
 
         customerSpawner.currCustNum--; // -1 from total no. of curr cust because this customer left
         Destroy(customer); 
