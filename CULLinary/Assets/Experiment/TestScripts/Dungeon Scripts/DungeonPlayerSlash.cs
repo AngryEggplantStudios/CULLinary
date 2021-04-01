@@ -47,14 +47,30 @@ public class DungeonPlayerSlash : MonoBehaviour
     private void Slash()
     {
         RaycastHit hit;
-        if (raycastLayer.RaycastMouse(out hit, MAX_DIST_CAM_TO_GROUND)) {
+        bool hitGround;
+
+        if (raycastLayer)
+        {
+            hitGround = raycastLayer.RaycastMouse(out hit, MAX_DIST_CAM_TO_GROUND);
+        }
+        else
+        {
+            Ray ray =Camera.main.ScreenPointToRay(Input.mousePosition);
+            hitGround = Physics.Raycast(ray, out hit, MAX_DIST_CAM_TO_GROUND, LayerMask.NameToLayer("Ground"));
+        }
+
+        if (hitGround) {
             rotateToFaceDirection =
                 new Vector3(hit.point.x - playerToRotate.transform.position.x,
                             0.0f,
                             hit.point.z - playerToRotate.transform.position.z);
             StartCoroutine("RotatePlayer");
+            animator.SetBool("isMelee", true);
         }
-        animator.SetBool("isMelee", true);
+        else
+        {
+            Debug.Log("Not clicking on Ground during Melee Attack");
+        }
     }
 
     private void OnDestroy()
