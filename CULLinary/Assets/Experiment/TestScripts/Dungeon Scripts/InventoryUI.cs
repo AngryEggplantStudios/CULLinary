@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class InventoryUI : MonoBehaviour
 {
 	[SerializeField] private GameObject inventoryUI;  // The entire UI
 	[SerializeField] private Transform inventoryPanel;   // The parent object of all the items
+	[SerializeField] private Text inventoryCapacityText;
 	private bool isShowing = false;
 
 	private DungeonPlayerInventory inventory;
@@ -34,6 +36,7 @@ public class InventoryUI : MonoBehaviour
 		{
 			ToggleVisiblity();
 		}
+		inventoryCapacityText.text = itemList.Count + "/" + inventoryLimit;
 	}
 
     // Sets the inventory to be visible or invisible
