@@ -7,6 +7,7 @@ public class LocateCamera : MonoBehaviour
     public Transform currentPlayerTransform;
     public float scale = 1.0f;
     public float minCameraDistance = 1.0f;
+    public float maxCameraDistance = 10.0f;
 
     Vector3 initialPlayerLocation;
     Vector3 initialCameraLocation;
@@ -26,7 +27,7 @@ public class LocateCamera : MonoBehaviour
             Vector3 playerToCamera = initialCameraLocation - initialPlayerLocation;
             float distance = playerToCamera.magnitude;
             float zoomChange = -Input.mouseScrollDelta.y * scale;
-            if (distance + zoomChange > minCameraDistance) {
+            if ((distance + zoomChange > minCameraDistance) && (distance + zoomChange < maxCameraDistance)) {
                 playerToCamera = playerToCamera * (distance + zoomChange) / distance;
                 initialCameraLocation = initialPlayerLocation + playerToCamera;
             }

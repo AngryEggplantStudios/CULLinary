@@ -11,9 +11,13 @@ public class Restaurant_CustomerController : MonoBehaviour
     public GameObject moneyText;
     public GameObject serveFoodLocation;
     public Text foodText;
+    public Image dishImg;
 
     [SerializeField]
     public string[] dishNames;
+
+    [SerializeField]
+    public Sprite[] dishImages;
 
     private int idx = 0;
     private bool alrReceivedFood = false;
@@ -30,6 +34,7 @@ public class Restaurant_CustomerController : MonoBehaviour
 
         idx = Random.Range(0, dishNames.Length); // set the idx here, it was 0 by default
         foodText.text = dishNames[idx];
+        dishImg.sprite = dishImages[idx];
         orderUI.SetActive(true);
     }
 
