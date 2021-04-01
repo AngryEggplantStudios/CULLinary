@@ -65,9 +65,21 @@ public class DungeonPlayerAim : MonoBehaviour
 
             //Draw line from player to mouse
             lineRenderer.positionCount = 2;
+            
             RaycastHit hit;
-            if (raycastLayer.RaycastMouse(out hit, MAX_DIST_CAM_TO_GROUND))
+            bool hitGround;
+
+            if (raycastLayer)
             {
+                hitGround = raycastLayer.RaycastMouse(out hit, MAX_DIST_CAM_TO_GROUND);
+            }
+            else
+            {
+                Ray ray =Camera.main.ScreenPointToRay(Input.mousePosition);
+                hitGround = Physics.Raycast(ray, out hit, MAX_DIST_CAM_TO_GROUND, LayerMask.NameToLayer("Ground"));
+            }
+
+            if (hitGround) {
                 this.lookVector = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 this.sourcePosition = new Vector3(transform.position.x, LINE_HEIGHT_FROM_GROUND, transform.position.z);
                 this.targetPosition = new Vector3(hit.point.x, LINE_HEIGHT_FROM_GROUND, hit.point.z);
@@ -79,6 +91,7 @@ public class DungeonPlayerAim : MonoBehaviour
             }
             else
             {
+                Debug.Log("Not clicking on Ground during Ranged Attack");
                 targetFound = false;
             }
         }
