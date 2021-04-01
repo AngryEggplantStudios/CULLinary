@@ -10,7 +10,8 @@ public class MapGeneratorNew : MonoBehaviour
     public GameObject startingRoom;
     public GameObject[] fillerRooms;
     public GameObject[] spawnRooms;
-    public GameObject deadend;
+    public GameObject deadendEdge;
+    public GameObject deadendCorner;
     public int mapSize;
     public float fillerRatio = 0.5f;
 
@@ -105,16 +106,36 @@ public class MapGeneratorNew : MonoBehaviour
         isGenerated = true;
 
         // Generate deadends
-        for (int x = -mapSize - 1; x <= mapSize + 1; x++)
+        for (int i = 0; i < 4; i++)
         {
-            for (int y = -mapSize - 1; y <= mapSize + 1; y++)
+            for (int j = -mapSize - 1; j <= mapSize; j++)
             {
-                if ((x == -mapSize - 1) || (x == mapSize + 1) || (y == -mapSize - 1) ||( y == mapSize + 1))
+                switch (i)
                 {
-                    Instantiate(deadend,
-                            new Vector3(x * 11, 0, y * 11), 
-                            new Quaternion(0, 0, 0, 0),
-                            parent.transform);
+                    case 0:
+                        Instantiate(j == (-mapSize - 1) ? deadendCorner : deadendEdge,
+                                new Vector3(j * 11, 0, (mapSize + 1) * 11), 
+                                Quaternion.Euler(0, 0, 0),
+                                parent.transform);
+                        break;
+                    case 1:
+                        Instantiate(j == (-mapSize - 1) ? deadendCorner : deadendEdge,
+                                new Vector3((mapSize + 1) * 11, 0, -j * 11), 
+                                Quaternion.Euler(0, 90, 0),
+                                parent.transform);
+                        break;
+                    case 2:
+                        Instantiate(j == (-mapSize - 1) ? deadendCorner : deadendEdge,
+                                new Vector3(-j * 11, 0, -(mapSize + 1) * 11), 
+                                Quaternion.Euler(0, 180, 0),
+                                parent.transform);
+                        break;
+                    case 3:
+                        Instantiate(j == (-mapSize - 1) ? deadendCorner : deadendEdge,
+                                new Vector3(-(mapSize + 1) * 11, 0, j * 11),  
+                                Quaternion.Euler(0, 270, 0),
+                                parent.transform);
+                        break;
                 }
             }
         }
