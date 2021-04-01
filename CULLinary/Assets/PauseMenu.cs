@@ -37,6 +37,14 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isGamePaused = false;
+
+        Scene currScene = SceneManager.GetActiveScene();
+        if (currScene.name == "TestRestaurant")
+        {
+            CookingStation cookingStation = GameObject.Find("Recipe Controller").GetComponent<CookingStation>();
+            if (cookingStation.isCooking == true)
+                cookingStation.DisableMovementOfPlayer();
+        }
     }
 
     public void Options()
