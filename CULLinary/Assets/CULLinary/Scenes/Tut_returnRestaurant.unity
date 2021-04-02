@@ -859,7 +859,7 @@ GameObject:
   - component: {fileID: 61687752}
   - component: {fileID: 61687751}
   m_Layer: 0
-  m_Name: 3 - No ingredients!
+  m_Name: 3 - Talk To Customers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -879,11 +879,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instruction:
     sentences:
-    - Try clicking any of the dishes in the menu panel on the right to cook! ....
-      wait you can't cook?
-    - Oh, the inventory panel on the left shows that you have no ingredients to start
-      cooking.
-    - Head over to the portal to gather some ingredients!
+    - 'You can also talk with customers after serving them!
+
+      [Press ''F'' to
+      talk to customer]'
 --- !u!4 &61687752
 Transform:
   m_ObjectHideFlags: 0
@@ -6966,7 +6965,7 @@ GameObject:
   - component: {fileID: 372810805}
   - component: {fileID: 372810806}
   m_Layer: 0
-  m_Name: 2 - Try Cooking
+  m_Name: 2 - Serve Customers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7000,10 +6999,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instruction:
     sentences:
-    - Sounds like your first customer arrived!
-    - Looks like they have placed an order - head over to the kitchen and try cooking
-      what they ordered.
-    - '[Walk to the kitchen & press F]'
+    - Food will be placed on the counter once it's done
+    - 'Go near the dish to pick it up
+
+      [Press ''F'' to pick up/serve the dish]'
 --- !u!1001 &375406348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8188,7 +8187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &481948549
 Transform:
   m_ObjectHideFlags: 0
@@ -22253,11 +22252,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instruction:
     sentences:
-    - 'Welcome to your restaurant! '
-    - 'Why don''t you take a look around?
-
-      [WASD to move around / Scroll to
-      adjust view]'
+    - Now that we have enough ingredients, we can try cooking a dish!
+    - Head over to the kitchen and click on the eggplant dish to start cooking it
 --- !u!1 &1510947446
 GameObject:
   m_ObjectHideFlags: 0
@@ -24870,7 +24866,7 @@ GameObject:
   - component: {fileID: 1674238426}
   - component: {fileID: 1674238427}
   m_Layer: 0
-  m_Name: Tutorial Controller [before cull]
+  m_Name: Tutorial Controller [after cull]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24890,6 +24886,7 @@ Transform:
   - {fileID: 1504978986}
   - {fileID: 372810805}
   - {fileID: 61687752}
+  - {fileID: 1891424973}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24902,17 +24899,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674238425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 457463782ed063e4c9e5d247bd1fae43, type: 3}
+  m_Script: {fileID: 11500000, guid: fadef99a2175ad74ea08ee38e51f4e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   instructionTriggers:
   - {fileID: 1504978985}
   - {fileID: 372810804}
   - {fileID: 61687750}
+  - {fileID: 1891424972}
+  SpawnFoodLocation: {fileID: 931329935}
+  TutorialManager: {fileID: 1685847925}
   PossibleSeats: {fileID: 805168319}
-  CustomerSpawner: {fileID: 481948548}
-  UIController: {fileID: 1870195482}
-  MenuPanel: {fileID: 1698611253}
+  textAnimator: {fileID: 245899825}
 --- !u!1001 &1674921783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27758,6 +27756,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8d99f543ef2655a4fa94d74f802bea97, type: 3}
   m_PrefabInstance: {fileID: 1880926651}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1891424972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1891424973}
+  - component: {fileID: 1891424974}
+  m_Layer: 0
+  m_Name: 4 - Complete Training
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1891424973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891424972}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.6392, y: -1.5837054, z: -0.5673995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1674238426}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1891424974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891424972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0696ef37d73761547944500a295b946f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instruction:
+    sentences:
+    - Great! You are now equipped with all the skills you need
+    - Note that you earn more money when you serve a dish correctly, and vice versa
+    - Are you ready to save your town and make it great again?
 --- !u!224 &1895215407 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8073090765205594129, guid: 12b96d0f469ad9c47abe9fb62a346dc5, type: 3}

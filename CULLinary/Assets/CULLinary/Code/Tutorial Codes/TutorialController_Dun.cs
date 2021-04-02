@@ -98,8 +98,6 @@ public class TutorialController_Dun : MonoBehaviour
     {
         yield return new WaitForSeconds(2); // Allow players to try out move before next sentence shows
 
-        Debug.Log("go to the next instruction now!!!");
-
         TutorialManager.DisplayNextSentence();
     }
 
