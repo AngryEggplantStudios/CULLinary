@@ -125,7 +125,10 @@ public class MapGeneratorNew : MonoBehaviour
             x += dx;
             y += dy;
         }
-
+        foreach (GameObject room in generatedRooms)
+        {
+            room.transform.Find("Environment").Find("Deco").gameObject.SetActive(false);
+        }
         isGeneratingRooms = false;
         isBuildingNavMesh = true;
         yield return new WaitForSeconds(0.03f);
