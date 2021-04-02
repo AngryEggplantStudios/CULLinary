@@ -20,6 +20,12 @@ public class TutorialManager : MonoBehaviour
         sentences = new Queue<string>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return)) // Show next sentence if player presses Enter key
+            DisplayNextSentence();
+    }
+
     public void StartInstruction(Instruction instruction)
     {
         animator.SetBool("isOpen", true);
@@ -38,7 +44,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
-            EndInstructions();
+            EndInstructions(); // make this a coroutine instead? so auto close once reach the last sentence?
             return;
         }
                

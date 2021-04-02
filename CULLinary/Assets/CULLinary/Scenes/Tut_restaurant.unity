@@ -848,6 +848,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dcfd6e51fff4e284d9dc6053aa05c4c3, type: 3}
   m_PrefabInstance: {fileID: 59311488}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &61687750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 61687752}
+  - component: {fileID: 61687751}
+  m_Layer: 0
+  m_Name: 3 - No ingredients!
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &61687751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61687750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0696ef37d73761547944500a295b946f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instruction:
+    sentences:
+    - Try clicking any of the dishes in the menu panel on the right to cook! ....
+      wait you can't cook?
+    - Oh, the inventory panel on the left shows that you have no ingredients to start
+      cooking.
+    - Head over to the portal to gather some ingredients!
+--- !u!4 &61687752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61687750}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.6392, y: -1.5837054, z: -0.5673995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1674238426}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &67385316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4800,10 +4850,10 @@ RectTransform:
   m_Father: {fileID: 2132578530}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015258789, y: -393.3473}
-  m_SizeDelta: {x: 1990, y: 160.249}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -2.532, y: 191.832}
+  m_SizeDelta: {x: 1027.212, y: 250.608}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &245899823
 MonoBehaviour:
@@ -6984,6 +7034,55 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8073090765205594129, guid: 12b96d0f469ad9c47abe9fb62a346dc5, type: 3}
   m_PrefabInstance: {fileID: 1047152956}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &372810804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 372810805}
+  - component: {fileID: 372810806}
+  m_Layer: 0
+  m_Name: 2 - Try Cooking
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &372810805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372810804}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.6392, y: -1.5837054, z: -0.5673995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1674238426}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &372810806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372810804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0696ef37d73761547944500a295b946f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instruction:
+    sentences:
+    - Sounds like your first customer arrived!
+    - Looks like they have placed an order - head over to the kitchen and try cooking
+      what they ordered.
+    - '[Walk to the kitchen & press F]'
 --- !u!1001 &375406348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8005,10 +8104,10 @@ RectTransform:
   m_Father: {fileID: 245899822}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 180.337}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 457.1571, y: -125.3}
+  m_SizeDelta: {x: 848.886, y: 250.61}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &463943391
 MonoBehaviour:
@@ -9193,8 +9292,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -81.72296, y: 0}
-  m_SizeDelta: {x: 109.344, y: 100}
+  m_AnchoredPosition: {x: -83, y: 0}
+  m_SizeDelta: {x: 125.22, y: 101.703}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &526765933
 MonoBehaviour:
@@ -22340,6 +22439,56 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8073090765205594129, guid: 12b96d0f469ad9c47abe9fb62a346dc5, type: 3}
   m_PrefabInstance: {fileID: 1085723727}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1504978985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1504978986}
+  - component: {fileID: 1504978987}
+  m_Layer: 0
+  m_Name: 1 - Welcome
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1504978986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504978985}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.6392, y: -1.5837054, z: -0.5673995}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1674238426}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1504978987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504978985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0696ef37d73761547944500a295b946f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instruction:
+    sentences:
+    - 'Welcome to your restaurant! '
+    - 'Why don''t you take a look around?
+
+      [WASD to move around / Scroll to
+      adjust view]'
 --- !u!1 &1510947446
 GameObject:
   m_ObjectHideFlags: 0
@@ -24950,8 +25099,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1674238426}
+  - component: {fileID: 1674238427}
   m_Layer: 0
-  m_Name: Tutorial Controller
+  m_Name: Tutorial Controller [before cull]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24967,10 +25117,33 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1504978986}
+  - {fileID: 372810805}
+  - {fileID: 61687752}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1674238427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674238425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 457463782ed063e4c9e5d247bd1fae43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instructionTriggers:
+  - {fileID: 1504978985}
+  - {fileID: 372810804}
+  - {fileID: 61687750}
+  PossibleSeats: {fileID: 805168319}
+  CustomerSpawner: {fileID: 481948548}
+  UIController: {fileID: 1870195482}
+  MenuPanel: {fileID: 1698611253}
 --- !u!1001 &1674921783
 PrefabInstance:
   m_ObjectHideFlags: 0

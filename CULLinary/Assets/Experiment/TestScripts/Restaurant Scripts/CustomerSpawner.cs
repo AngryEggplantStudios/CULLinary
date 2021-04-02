@@ -74,7 +74,7 @@ public class CustomerSpawner : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        alrSpawn = false; //rest bool value so can spawn the next customer
+        alrSpawn = false; //reset bool value so can spawn the next customer
     }
 
     public bool GetRandomAvailableSeat(int seatIdx)
