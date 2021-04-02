@@ -3,27 +3,17 @@ public class SaveGameDataSystem : MonoBehaviour
 {
     private PlayerManager playerManager;
     [SerializeField] private InventoryUI inventoryUI;
-
-    private bool FindPlayerManager()
+    private void Start()
     {
-        playerManager = FindObjectOfType<PlayerManager>();
-        if (playerManager != null)
-        {
-            return true;
-        }
-        else
-        {
-            Debug.Log("Cannot find player manager");
-            return false;
-        }
+        playerManager = PlayerManager.instance;
     }
 
     public void SaveGameData(int index)
     {
-        if (FindPlayerManager() && inventoryUI != null)
+        if (inventoryUI != null && playerManager != null)
         {
-            playerManager.SetCurrentIndex(index);
-            playerManager.SaveData(inventoryUI.GetItemList());
+            PlayerManager.playerData.SetCurrentIndex(index);
+            PlayerManager.SaveData(inventoryUI.GetItemList());
         }
     }
 }
