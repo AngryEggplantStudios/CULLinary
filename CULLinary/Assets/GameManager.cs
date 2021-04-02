@@ -12,7 +12,16 @@ public class GameManager : MonoBehaviour
 
     public void RestartButton()
     {
-        SceneManager.LoadScene(2);
+        Scene currScene = SceneManager.GetActiveScene();
+        if (currScene.name == "Tut_dungeon")
+        {
+            SceneManager.LoadScene(4);
+        }
+        else // Reload normal dungeon scene
+        {
+            SceneManager.LoadScene(2);
+        }
+
         gameObject.SetActive(false);
     }
 

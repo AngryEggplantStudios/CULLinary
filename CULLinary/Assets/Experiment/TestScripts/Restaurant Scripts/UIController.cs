@@ -164,14 +164,14 @@ public class UIController : MonoBehaviour
             recipeMenuButtons[3].GetComponent<Button>().interactable = false;
         }
 
-        recipeBookPanel.SetActive(true);
+        //recipeBookPanel.SetActive(true); // hide recipe book in restuarant scene for now
     }
 
     public void CloseCookingPanel()
     {
         inventoryPanel.SetActive(false);
         menuPanel.SetActive(false);
-        recipeBookPanel.SetActive(false);
+        //recipeBookPanel.SetActive(false);
     }
 
     // NOTIF: "Not enough counter space"
