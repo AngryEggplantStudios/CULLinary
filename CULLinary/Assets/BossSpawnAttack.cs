@@ -10,18 +10,28 @@ public class BossSpawnAttack : MonoBehaviour
 
 
     private int totalSpawnPoints = 3;
-
+    private int currSpawnPoint = 0;
+    private bool stage2On = false;
     public void spawnMobs()
     {
-        StartCoroutine("spawnCoroutine");
+        if (stage2On)
+        {
+            for (int i = 0; i < totalSpawnPoints; i++)
+            {
+                spawnPoint1[i].activateSpawn();
+            }
+        } else
+        {
+            spawnPoint1[currSpawnPoint].activateSpawn();
+            currSpawnPoint = (currSpawnPoint + 1) % 3;
+        }
+
     }
 
-    private IEnumerator spawnCoroutine()
+    public void activateStage2()
     {
-        for (int i = 0; i < totalSpawnPoints; i++)
-        {
-            spawnPoint1[i].activateSpawn();
-            yield return new WaitForSeconds(0.1f);
-        }
+        stage2On = true;
     }
+
+
 }

@@ -145,6 +145,7 @@ public class ClownController : MonoBehaviour
                     if (health / maxHealth < 0.3f)
                     {
                         rangedAttackScript.activateStage3();
+                        spawnAttackScript.activateStage2();
                     }
                     else if (health / maxHealth < 0.7f)
                     {
@@ -314,7 +315,7 @@ public class ClownController : MonoBehaviour
     {
         coroutineSpawnRunning = true;
         spawnAttackScript.spawnMobs();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         coroutineSpawnRunning = false;
         state = State.Idle;
     }

@@ -16,16 +16,14 @@ public class BossSpawn : MonoBehaviour
     public void activateSpawn()
     {
         int enemyNum = Random.Range(minEnemy, maxEnemy + 1);
-            instantiateEnemy();
-       
-
+        instantiateEnemy();
     }
 
     private void instantiateEnemy()
     {
         float distX = Random.Range(-distRange, distRange);
         float distZ = Random.Range(-distRange, distRange);
-        Vector3 enemyTransform = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Vector3 enemyTransform = new Vector3(transform.position.x + distX, transform.position.y, transform.position.z + distZ);
         Instantiate(enemyToSpawn, enemyTransform, Quaternion.identity);
     }
 

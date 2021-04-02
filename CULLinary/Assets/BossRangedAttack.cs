@@ -11,7 +11,7 @@ public class BossRangedAttack : EnemyAttack
     private bool projectAttack = false;
     private float startingAngle;
     private float fov = 90f;
-    private float viewDistance = 5f;
+    private float viewDistance = 8f;
     private List<LineRenderer> listOfRenderers;
     private List<Vector3> firePositions;
     private const float LINE_HEIGHT_FROM_GROUND = 0.1f;
@@ -125,7 +125,6 @@ public class BossRangedAttack : EnemyAttack
         //this.selectionCircleActual.transform.SetParent(this.transform, false);
         //this.selectionCircleActual.transform.eulerAngles = new Vector3(90, 0, 0);
         //attackCollider.enabled = true;
-        Debug.Log("Attack");
         projectAttack = true;
         for (int i = 0; i < rayCount; i++)
         {
