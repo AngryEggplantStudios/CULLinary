@@ -63,8 +63,8 @@ public class MainMenu : MonoBehaviour
         FadeToBlack(() => {
             PlayerData newPlayerData = new PlayerData();
             SaveSystem.SaveData(newPlayerData);
-            PlayerManager.LoadData();
-            SceneManager.LoadScene(1); //Restaurant
+            playerManager.LoadData();
+            SceneManager.LoadScene(3); //Restaurant -1
              //Need to be changed to go to the loading screen in the future
         });
     }
@@ -73,8 +73,8 @@ public class MainMenu : MonoBehaviour
     {
         Select();
         FadeToBlack(() => {
-            PlayerManager.LoadData();
-            SceneManager.LoadScene(PlayerManager.playerData.GetCurrentIndex());
+            playerManager.LoadData();
+            SceneManager.LoadScene(playerManager.GetCurrentIndex());
              //Need to be changed to go to the loading screen in the future
         });
     }
