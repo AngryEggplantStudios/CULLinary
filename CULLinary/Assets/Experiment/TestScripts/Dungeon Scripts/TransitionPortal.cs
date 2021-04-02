@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class TransitionPortal : MonoBehaviour
 {
-    [SerializeField] private int sceneIndex;
+    [SerializeField] private SceneIndexes sceneIndex;
     [SerializeField] private SaveGameDataSystem saveGameDataSystem;
     [SerializeField] private bool enableGameSave;
     
@@ -47,7 +47,7 @@ public class TransitionPortal : MonoBehaviour
                     Debug.Log("Player can transit");
                     if (enableGameSave)
                     {
-                        saveGameDataSystem.SaveGameData(sceneIndex);
+                        saveGameDataSystem.SaveGameData((int)sceneIndex);
                     }
                     LoadScene();
                 }                   
@@ -57,7 +57,7 @@ public class TransitionPortal : MonoBehaviour
                 Debug.Log("Player can transit");
                 if (enableGameSave)
                 {
-                    saveGameDataSystem.SaveGameData(sceneIndex);
+                    saveGameDataSystem.SaveGameData((int)sceneIndex);
                 }
                 LoadScene();
             }
@@ -74,7 +74,8 @@ public class TransitionPortal : MonoBehaviour
 
     private void LoadScene()
     {
-        SceneManager.LoadScene(sceneIndex);
+        Debug.Log((int)sceneIndex);
+        SceneManager.LoadScene((int)sceneIndex);
     }
 
     private void OnTriggerStay(Collider collider)
@@ -98,7 +99,7 @@ public class TransitionPortal : MonoBehaviour
         Debug.Log("Player can transit");
         if (enableGameSave)
         {
-            saveGameDataSystem.SaveGameData(sceneIndex);
+            saveGameDataSystem.SaveGameData((int)sceneIndex);
         }
         LoadScene();
     }

@@ -15,11 +15,6 @@ public class PlayerManager : MonoBehaviour
         instance = this;
     }
 
-    public static PlayerData GetPlayerData()
-    {
-        return playerData;
-    }
-
     public static void SaveData(List<Item> items)
     {
         itemList = items;
@@ -57,7 +52,10 @@ public class PlayerManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         InventoryUI inventoryUI = GameObject.FindObjectOfType<InventoryUI>();
-        inventoryUI.PopulateUI(itemList);
+        if (inventoryUI != null)
+        {
+            inventoryUI.PopulateUI(itemList);
+        }
     }
 
     private static string SerializeInventory(List<Item> itemList)
