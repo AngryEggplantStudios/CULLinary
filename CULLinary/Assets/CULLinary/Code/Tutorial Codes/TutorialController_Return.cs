@@ -68,6 +68,7 @@ public class TutorialController_Return : MonoBehaviour
         {
             if (firstCustSeat.transform.childCount == 0) // our first customer left
             {
+                Debug.Log("First customer is gone");
                 instructionTriggers[3].GetComponent<InstructionTrigger>().TriggerInstruction();
                 firstCustLeft = true;
             }    
