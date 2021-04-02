@@ -5,15 +5,8 @@ using System;
 
 public class PlayerManager : MonoBehaviour
 {
-
-    [SerializeField] private GameData gameData;
-    [SerializeField] private GameObject inventoryUI;
-    private List<Item> itemList = new List<Item>(); //Inventory
-    private int stage; //Current Stage
-    private int currentIndex; //Current index
-    private string playerName; //Player name
-    private int money; //Player amount
-
+    private static List<Item> itemList = new List<Item>(); //Inventory
+    public static PlayerData playerData;
     public static PlayerManager instance;
 
     private void Awake()
@@ -22,99 +15,53 @@ public class PlayerManager : MonoBehaviour
         instance = this;
     }
 
-    public List<Item> GetItemList()
+    public static PlayerData GetPlayerData()
     {
-        return itemList;
+        return playerData;
     }
 
-    public int GetStage()
+    public static void SaveData(List<Item> items)
     {
-        return stage;
-    }
-
-    public int GetCurrentIndex()
-    {
-        return currentIndex;
-    }
-
-    public string GetPlayerName()
-    {
-        return playerName;
-    }
-
-    public int GetMoney()
-    {
-        return money;
-    }
-
-    public void SetCurrentIndex(int index)
-    {
-        this.currentIndex = index;
-    }
-
-    public void SetStage(int stage)
-    {
-        this.stage = stage;
-    }
-
-    public void SetMoney(int amt)
-    {
-        this.money = amt;
-    }
-
-    public void SetItemList(List<Item> items)
-    {
-        this.itemList = items;
-    }
-
-    public void SaveData(List<Item> items)
-    {
-        SetItemList(items);
-        string inventory = SerializeInventory();
-        PlayerData playerData = new PlayerData(inventory, stage, currentIndex, playerName, money);
+        itemList = items;
+        playerData.SetInventoryString(SerializeInventory(itemList));
         SaveSystem.SaveData(playerData);
     }
 
-    //Current fix until we can get the inventory to be the same object between scenes
-    public void LoadData()
+    public static void SaveData()
     {
-        PlayerData data = SaveSystem.LoadData();
-        if (data == null)
+        playerData.SetInventoryString(SerializeInventory(itemList));
+        SaveSystem.SaveData(playerData);
+    }
+
+    public static void LoadData()
+    {
+        playerData = SaveSystem.LoadData();
+        if (playerData == null)
         {
-            Debug.Log("Data cannot be found. Setting game data to default.");
-            SetCurrentIndex(1);
-            SetStage(1);
-            SetMoney(0);
+            playerData = new PlayerData();
             return;
         }
-        SetCurrentIndex(data.currentIndex);
-        SetStage(data.stage);
-        SetMoney(data.money);
-        InventoryItemData[] inventory = JsonArrayParser.FromJson<InventoryItemData>(data.inventory);
+        InventoryItemData[] inventory = JsonArrayParser.FromJson<InventoryItemData>(playerData.GetInventoryString());
         itemList.Clear();
         foreach (InventoryItemData item in inventory)
         {
             for (int i=0; i < item.count; i++)
             {
-                itemList.Add(gameData.GetItemById(item.id));
+                Debug.Log(item.id);
+                itemList.Add(GameData.GetItemById(item.id));
             }
         }
-        StartCoroutine(PopulateUI());
+        instance.StartCoroutine(PopulateUI());
+        
     }
-
-    private IEnumerator PopulateUI()
+    private static IEnumerator PopulateUI()
     {
-        yield return null;
+        yield return new WaitForSeconds(0.5f);
         InventoryUI inventoryUI = GameObject.FindObjectOfType<InventoryUI>();
         inventoryUI.PopulateUI(itemList);
     }
 
-    public void InstantiateInventory()
-    {
-        Instantiate(inventoryUI);
-    }
-
-    private string SerializeInventory()
+    private static string SerializeInventory(List<Item> itemList)
     {
         Dictionary<int, int> inventory = new Dictionary<int, int>();
         

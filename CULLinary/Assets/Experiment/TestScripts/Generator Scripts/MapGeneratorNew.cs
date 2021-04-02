@@ -26,8 +26,10 @@ public class MapGeneratorNew : MonoBehaviour
     public static bool isGenerated = false;
     public static float roomProgress = 0f;
     public static bool isGeneratingRooms = true;
-    public static bool isBuildingNavMesh = true;
+    public static bool isBuildingNavMesh = false;
+    public static bool isLoadingGame = false;
 
+    
     // Singleton
     private static MapGeneratorNew _instance;
     public static MapGeneratorNew Instance { get { return _instance; } }
@@ -43,20 +45,30 @@ public class MapGeneratorNew : MonoBehaviour
             _instance = this;
         }
     }
+    
 
     private void Start()
     {
         parent = new GameObject("Dungeon");
         parent.AddComponent<NavMeshSurface>();
-
-
         StartCoroutine(GenerateMap());
     }
 
     private IEnumerator GenerateMap()
     {
+        if (PlayerManager.instance != null)
+        {
+            PlayerManager.LoadData();
+        }
+
+        generatedRooms.Clear();
+        roomProgress = 0f;
+        isGenerated = false;
+        isGeneratingRooms = true;
+        isBuildingNavMesh = false;
+
         int mapLength = (mapSize * 2 + 1);
-        int roomLimit = mapLength * mapLength - 1;
+        roomLimit = mapLength * mapLength - 1;
 
         // Generate pools of rooms
         List<GameObject> fillerRoomPool = new List<GameObject>();
@@ -77,6 +89,7 @@ public class MapGeneratorNew : MonoBehaviour
         GentlyShuffle(roomPool, 10);
 
         // Spiral out from the center and spawn rooms
+        /*
         Spiral(mapLength, mapLength, (x, y, i) => {
             if (x == 0 && y == 0) return;
 
@@ -89,10 +102,33 @@ public class MapGeneratorNew : MonoBehaviour
             roomProgress += 1f / roomLimit;
             generatedRooms.Add(generatedRoom);
         });
+        */
+
+        //Spiral out from the center and spawn rooms
+        int x,y,dx,dy;
+        x = y = dx =0;
+        dy = -1;
+        int t = Math.Max(mapLength,mapLength);
+        int maxI = t*t;
+        for(int i =0; i < maxI; i++){
+            if ((-mapLength/2 <= x) && (x <= mapLength/2) && (-mapLength/2 <= y) && (y <= mapLength/2)){
+                if (x != 0 || y != 0)
+                {
+                    yield return StartCoroutine(GenerateRoom(x, y, i));
+                } 
+            }
+            if( (x == y) || ((x < 0) && (x == -y)) || ((x > 0) && (x == 1-y))){
+                t = dx;
+                dx = -dy;
+                dy = t;
+            }
+            x += dx;
+            y += dy;
+        }
 
         isGeneratingRooms = false;
+        isBuildingNavMesh = true;
         yield return new WaitForSeconds(0.03f);
-
         //Let us build the navmesh now for the AI
         parent.GetComponent<NavMeshSurface>().BuildNavMesh();
         yield return new WaitForSeconds(0.03f);
@@ -101,15 +137,16 @@ public class MapGeneratorNew : MonoBehaviour
         {
             room.transform.Find("Environment").Find("Deco").gameObject.SetActive(true);
         }
+        yield return new WaitForSeconds(0.03f);
         isBuildingNavMesh = false;
-
-        isGenerated = true;
-
+        isLoadingGame = true;
+        
         // Generate deadends
         for (int i = 0; i < 4; i++)
         {
             for (int j = -mapSize - 1; j <= mapSize; j++)
             {
+                yield return null;
                 switch (i)
                 {
                     case 0:
@@ -139,6 +176,8 @@ public class MapGeneratorNew : MonoBehaviour
                 }
             }
         }
+        isLoadingGame = false;
+        isGenerated = true;
     }
     
     // Shuffle algos for randomising rooms
@@ -225,5 +264,18 @@ public class MapGeneratorNew : MonoBehaviour
             x += dx;
             y += dy;
         }
+    }
+
+    private IEnumerator GenerateRoom(int x, int y, int i)
+    {
+        GameObject generatedRoom = Instantiate(
+                roomPool[i-1],
+                new Vector3(x * 11, 0, y * 11), 
+                Quaternion.Euler(0, rng.Next(4) * 90, 0),
+                parent.transform);
+
+        yield return null;
+        roomProgress += 1f / roomLimit;
+        generatedRooms.Add(generatedRoom);
     }
 }

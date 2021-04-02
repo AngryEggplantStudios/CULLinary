@@ -7,12 +7,15 @@ public class GameData: MonoBehaviour
     [SerializeField] private ItemDatabase itemDatabase;
     [SerializeField] private RecipeDatabase recipeDatabase;
     
-    private Dictionary<int, Item> itemDict;
-    private List<Item> itemList = new List<Item>();
-    private List<Recipe> recipeList = new List<Recipe>();
+    private static Dictionary<int, Item> itemDict;
+    private static List<Item> itemList = new List<Item>();
+    private static List<Recipe> recipeList = new List<Recipe>();
+
+    public static GameData instance;
 
     private void Awake()
     {
+        instance = this;
         DontDestroyOnLoad(this);
     }
 
@@ -40,22 +43,22 @@ public class GameData: MonoBehaviour
         }
     }
 
-    public Item GetItemById(int id)
+    public static Item GetItemById(int id)
     {
         return itemDict[id];
     }
 
-    public List<Item> GetItemList()
+    public static List<Item> GetItemList()
     {
         return itemList;
     }
 
-    public List<Recipe> GetRecipeList()
+    public static List<Recipe> GetRecipeList()
     {
         return recipeList;
     }
 
-    public Dictionary<int, Item> GetItemDict()
+    public static Dictionary<int, Item> GetItemDict()
     {
         return itemDict;
     }
