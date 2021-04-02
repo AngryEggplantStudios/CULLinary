@@ -10,6 +10,7 @@ public class TooltipSystem : MonoBehaviour
     public void Awake()
     {
         current = this;
+        Hide();
     }
 
     public static void Show(string content, string header="")
