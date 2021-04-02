@@ -138,7 +138,9 @@ public class MeshCombiner : MonoBehaviour
             var savePath = "Assets/CULLinary/Prefabs/DungeonRooms/Meshes/" + parentIndex + "_" + gameObject.name + ".asset";
             //var savePath = "Assets/CULLinary/Prefabs/DungeonRooms/Meshes/Deadend Edge.asset";
             Debug.Log("Saved Mesh to:" + savePath);
-            AssetDatabase.CreateAsset(mf.mesh, savePath);
+            
+            // Comment out this line if building
+            //AssetDatabase.CreateAsset(mf.mesh, savePath);
         }
     }
 

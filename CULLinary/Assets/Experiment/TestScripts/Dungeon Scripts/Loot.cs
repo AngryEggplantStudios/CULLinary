@@ -41,7 +41,9 @@ public class Loot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PickUp();
-        InventoryUI.instance.AddItem(this.GetItem());
+        if (InventoryUI.instance.AddItem(this.GetItem()))
+        {
+            PickUp();
+        }
     }
 }
