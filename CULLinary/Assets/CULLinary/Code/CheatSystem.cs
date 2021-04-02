@@ -62,7 +62,7 @@ public class CheatSystem : MonoBehaviour
     private void AddMoneyToSaveFile(int amount)
     {
         PlayerData data = SaveSystem.LoadData();
-        data.money += amount;
+        data.SetMoney(data.GetMoney() + amount);
         SaveSystem.SaveData(data);
     }
 

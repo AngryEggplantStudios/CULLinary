@@ -30,6 +30,68 @@ public class PlayerData
         this.maxHealth = maxHealth;
     }
 
+    public string GetInventoryString()
+    {
+        return this.inventory;
+    }
+
+    public int GetStage()
+    {
+        return this.stage;
+    }
+
+    public int GetCurrentIndex()
+    {
+        return this.currentIndex;
+    }
+
+    public string GetPlayerName()
+    {
+        return this.playerName;
+    }
+
+    public int GetMoney()
+    {
+        return this.money;
+    }
+
+    public int GetMaxHealth()
+    {
+        return this.maxHealth;
+    }
+
+    public void SetInventoryString(string inventory)
+    {
+        this.inventory = inventory;
+    }
+
+    public void SetStage(int stage)
+    {
+        this.stage = stage;
+    }
+
+    public void SetCurrentIndex(int currentIndex)
+    {
+        this.currentIndex = currentIndex;
+    }
+
+    public void SetPlayerName(string playerName)
+    {
+        this.playerName = playerName;
+    }
+
+    public void SetMoney(int money)
+    {
+        this.money = money;
+    }
+
+    public void SetMaxHealth(int maxHealth)
+    {
+        this.maxHealth = maxHealth;
+    }
+
+
+
     public string ToJson()
     {
         return JsonUtility.ToJson(this);

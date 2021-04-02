@@ -5,29 +5,13 @@ using UnityEngine.UI;
 
 public class DungeonLoader : MonoBehaviour
 {
-    [SerializeField] private GameObject[] objectsToHide;
-    [SerializeField] private GameObject parentReference;
-    [SerializeField] private float delayStartTime = 1f;
+    [SerializeField] private GameObject[] objectsToSetActive;
     [SerializeField] private Text textToChange;
-    [SerializeField] private MapGeneratorNew mapGen;
 
     public static bool isDoneLoading = false;
 
-    private void Awake()
-    {
-        isDoneLoading = false;
-        foreach(GameObject g in objectsToHide)
-        {
-            g.SetActive(false);
-        }
-    }
     private void Update()
     {
-        if (MapGeneratorNew.isGenerated)
-        {
-            StartCoroutine(DelayStart());
-        }
-
         if (MapGeneratorNew.isGeneratingRooms)
         {
             textToChange.text = "Generating Rooms..." + Mathf.RoundToInt(MapGeneratorNew.roomProgress * 100).ToString() + "%";
@@ -36,26 +20,18 @@ public class DungeonLoader : MonoBehaviour
         {
             textToChange.text = "Building the NavMesh...";
         }
-        /* else if (MapGeneratorNew.isGeneratingDeadends)
-        {
-            textToChange.text = "Generating Deadends...";
-        } */
-        else
+        else if (MapGeneratorNew.isLoadingGame)
         {
             textToChange.text = "Loading Game...";
         }
-        
-    }
-
-    private IEnumerator DelayStart()
-    {
-        yield return new WaitForSeconds(delayStartTime);
-        foreach(GameObject g in objectsToHide)
+        else
         {
-            g.SetActive(true);
+            isDoneLoading = true;
+            foreach (GameObject g in objectsToSetActive)
+            {
+                g.SetActive(true);
+            }
+            Destroy(gameObject);
         }
-        isDoneLoading = true;
-        yield return null;
-        Destroy(parentReference);
     }
 }

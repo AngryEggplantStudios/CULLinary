@@ -21,7 +21,7 @@ public class ShopMenu : MonoBehaviour
     {
         //Debug.Log(playerManager.GetMaxHealth());
         Debug.Log("Saving file");
-        playerManager.SaveData();
+        PlayerManager.SaveData();
         Debug.Log("Loading Dungeon...");
         SceneManager.LoadScene(2);
     }
@@ -37,7 +37,7 @@ public class ShopMenu : MonoBehaviour
     public void ConfirmPurchase()
     {
         DeselectItem();
-        playerManager.SetMaxHealth(playerManager.GetMaxHealth() + currentItem.healthBonus);
+        PlayerManager.playerData.SetMaxHealth(PlayerManager.playerData.GetMaxHealth() + currentItem.healthBonus);
     }
 
     public void DeselectItem()

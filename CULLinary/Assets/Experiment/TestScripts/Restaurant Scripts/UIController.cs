@@ -50,7 +50,7 @@ public class UIController : MonoBehaviour
         playerManager = PlayerManager.instance;
         if (playerManager != null)
         {
-            totalAmt = playerManager.GetMoney();
+            totalAmt = PlayerManager.playerData.GetMoney();
             moneyText.GetComponent<Text>().text = "Amount earned: $" + totalAmt.ToString();
         }
     }
@@ -260,11 +260,7 @@ public class UIController : MonoBehaviour
 
     private void AddToGameData()
     {
-        
-        if (playerManager != null)
-        {
-            playerManager.SetMoney(totalAmt);
-        }
+        PlayerManager.playerData.SetMoney(totalAmt);
     }
 
     // Check inventory to see what food can be cooked
