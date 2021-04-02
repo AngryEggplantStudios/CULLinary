@@ -10,6 +10,8 @@ public class TutorialController : MonoBehaviour
     public UIController UIController;
     public GameObject MenuPanel;
 
+    public Collider portalCollider;
+
     bool firstCustArrived = false;
     bool playerMoved = false;
     bool triedCooking = false;
@@ -52,12 +54,18 @@ public class TutorialController : MonoBehaviour
         {
             instructionTriggers[2].GetComponent<InstructionTrigger>().TriggerInstruction();
             triedCooking = true;
+            CanTeleport();
         }
     }
 
     public void FirstCustomerArrivedMsg()
     {
         instructionTriggers[1].GetComponent<InstructionTrigger>().TriggerInstruction();
+    }
+
+    public void CanTeleport()
+    {
+        portalCollider.isTrigger = true;
     }
 
 }

@@ -25549,6 +25549,7 @@ MonoBehaviour:
   CustomerSpawner: {fileID: 481948548}
   UIController: {fileID: 1870195482}
   MenuPanel: {fileID: 1698611253}
+  portalCollider: {fileID: 1895778810}
 --- !u!1001 &1674921783
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28312,6 +28313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cookingStation: {fileID: 221291665}
+  dungeonController: {fileID: 0}
   confirmLeaveNotifPanel: {fileID: 1767211559}
   confirmLeaveButton: {fileID: 1301416685}
   leaveNotifButtons:
@@ -28561,6 +28563,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.62770313
       objectReference: {fileID: 0}
+    - target: {fileID: 2062472786286145478, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2062472786286145479, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -28652,6 +28658,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61befb87fd661f527809ff309b18ed16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1895778810 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2062472786286145478, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
+  m_PrefabInstance: {fileID: 1895778806}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1907195695
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class TutorialController_Dun : MonoBehaviour
     public GameObject Enemies;
     public GameObject inventoryPanel;
     public GameObject recipePanel;
+    public Collider portalCollider;
 
     bool playerMoved = false;
     bool triedAttacking = false;
@@ -69,6 +70,7 @@ public class TutorialController_Dun : MonoBehaviour
                 killedAll = true;
                 Debug.Log("Killed all eggplants!");
                 instructionTriggers[2].GetComponent<InstructionTrigger>().TriggerInstruction();
+                CanTeleport();
             }
         }
 
@@ -107,6 +109,11 @@ public class TutorialController_Dun : MonoBehaviour
 
         inventoryPanel.SetActive(false);
         recipePanel.SetActive(false);
+    }
+
+    public void CanTeleport()
+    {
+        portalCollider.isTrigger = true;
     }
 
 }

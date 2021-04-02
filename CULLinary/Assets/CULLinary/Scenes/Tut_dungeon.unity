@@ -1007,7 +1007,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 199.99995}
+  m_AnchoredPosition: {x: 0, y: 199.99997}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &718584729
@@ -1092,6 +1092,7 @@ MonoBehaviour:
   Enemies: {fileID: 865066570}
   inventoryPanel: {fileID: 1811565996}
   recipePanel: {fileID: 1947442329}
+  portalCollider: {fileID: 1440714590}
 --- !u!4 &761928009
 Transform:
   m_ObjectHideFlags: 0
@@ -1814,7 +1815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4007418486084460491, guid: d9a0d39611c4dec87a14e053dbf31dfc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.25
+      value: 0.015
       objectReference: {fileID: 0}
     - target: {fileID: 4007418486084460491, guid: d9a0d39611c4dec87a14e053dbf31dfc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2231,6 +2232,10 @@ PrefabInstance:
       propertyPath: saveGameDataSystem
       value: 
       objectReference: {fileID: 1440714589}
+    - target: {fileID: 2062472786286145478, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2062472786286145479, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2312,6 +2317,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 1768417584}
+--- !u!65 &1440714590 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2062472786286145478, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
+  m_PrefabInstance: {fileID: 1440714586}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1452987064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3844,8 +3854,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 789547414}
   m_HandleRect: {fileID: 789547413}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.4999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
