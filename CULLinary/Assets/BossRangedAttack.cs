@@ -33,7 +33,8 @@ public class BossRangedAttack : EnemyAttack
             gameObjectChild.transform.parent = gameObject.transform;
             LineRenderer lRend = gameObjectChild.AddComponent<LineRenderer>();
             lRend.positionCount = 2;
-            lRend.SetWidth(0.01f, 0.02f);
+            lRend.startWidth = 0.01f;
+            lRend.endWidth = 0.02f;
             lRend.enabled = false;
             listOfRenderers.Add(lRend);
         }
