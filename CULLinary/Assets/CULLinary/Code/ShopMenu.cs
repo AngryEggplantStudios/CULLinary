@@ -17,6 +17,8 @@ public class ShopMenu : MonoBehaviour
     [SerializeField] private Text selectedItemDesc;
     [SerializeField] private Button yesButton;
     [SerializeField] private Image spriteImage;
+
+    [SerializeField] private CurrentStats currentStats;
     private Vitamin currentVitaminSelected;
 
     private void Start()
@@ -78,5 +80,6 @@ public class ShopMenu : MonoBehaviour
     private void UpdateUI()
     {
         moneyText.text = "Money: $" + PlayerManager.playerData.GetMoney();
+        currentStats.UpdateUI();
     }
 }
