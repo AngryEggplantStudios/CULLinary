@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenuUI;
 
     [SerializeField] private bool isThereLoader;
-    [SerializeField] private int levelToRestart;
+    [SerializeField] private SceneIndexes levelToRestart;
 
     [SerializeField] private GameObject mainPauseButtons;
     [SerializeField] private GameObject optionButtons;
@@ -69,14 +69,14 @@ public class PauseMenu : MonoBehaviour
     public void RestartLevel()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(levelToRestart);
+        SceneManager.LoadScene((int)levelToRestart);
         pauseMenuUI.SetActive(false);
     }
 
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene((int)SceneIndexes.MAINMENU);
         pauseMenuUI.SetActive(false);
     }
 

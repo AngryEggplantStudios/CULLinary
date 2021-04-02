@@ -13,21 +13,20 @@ public class GameManager : MonoBehaviour
     public void RestartButton()
     {
         Scene currScene = SceneManager.GetActiveScene();
-        if (currScene.name == "Tut_dungeon")
+        if (currScene.buildIndex == (int)SceneIndexes.TUT_DUNGEON)
         {
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene((int)SceneIndexes.TUT_RETURN);
         }
-        else // Reload normal dungeon scene
+        else
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene((int)SceneIndexes.DUNGEON);
         }
-
         gameObject.SetActive(false);
     }
 
     public void MainMenuButton()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene((int)SceneIndexes.MAINMENU);
         gameObject.SetActive(false);
     }
 }

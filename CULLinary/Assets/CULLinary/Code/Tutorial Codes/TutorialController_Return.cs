@@ -76,7 +76,7 @@ public class TutorialController_Return : MonoBehaviour
         
         if ((firstCustLeft == true) && (textAnimator.GetBool("isOpen") == false)) // once instruction textbox goes away
         {
-            SceneManager.LoadScene(1); // or 2 - let them start from dungeon?
+            SceneManager.LoadScene((int)SceneIndexes.REST); // or 2 - let them start from dungeon?
         }
     }
 
