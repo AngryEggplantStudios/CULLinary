@@ -31,7 +31,14 @@ public class DungeonPlayerHealth : MonoBehaviour
     void Start()
     {
         isInvincible = false;
-        health = maxHealth;
+        if (PlayerManager.playerData == null)
+        {
+            health = 150;
+        } else
+        {
+            health = PlayerManager.playerData.GetMaxHealth();
+        }
+        maxHealth = health;
         hpBar = hpBarUI;
         hpBarFull = hpBar.transform.Find("HpBar")?.gameObject.GetComponent<Image>();
         hpText = hpBar.transform.Find("HpText")?.gameObject.GetComponent<Text>();
@@ -57,13 +64,6 @@ public class DungeonPlayerHealth : MonoBehaviour
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     //bool value is for if successfully hit the player, so can knockback.
     public bool HandleHit(float damage)

@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        EnemyScript target = collider.GetComponent<EnemyScript>();
+        Enemy target = collider.GetComponent<Enemy>();
         if (target != null)
         {
             target.HandleHit(damage);
