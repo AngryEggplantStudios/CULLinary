@@ -47,7 +47,6 @@ public class PlayerManager : MonoBehaviour
         {
             for (int i=0; i < item.count; i++)
             {
-                Debug.Log(item.id);
                 itemList.Add(GameData.GetItemById(item.id));
             }
         }

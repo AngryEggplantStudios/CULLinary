@@ -16,10 +16,6 @@ public class CheatSystem : MonoBehaviour
         KeyCode.T
     };
     private int sequenceIndex;
-    private void Awake()
-    {
-        Object.DontDestroyOnLoad(this);
-    }
     private void Update()
     {
         if (Input.GetKeyDown(sequence[sequenceIndex]))
