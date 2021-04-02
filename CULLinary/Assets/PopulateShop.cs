@@ -48,4 +48,13 @@ public class PopulateShop : MonoBehaviour
        }
    }
 
+   private void OnDestroy()
+   {
+       foreach(GameObject slot in vitaminSlots)
+       {
+           Button btn = slot.GetComponent<Button>();
+           btn.onClick.RemoveAllListeners();
+       }
+   }
+
 }

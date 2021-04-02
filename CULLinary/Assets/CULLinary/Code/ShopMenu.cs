@@ -68,6 +68,7 @@ public class ShopMenu : MonoBehaviour
         DeselectItem();
         PlayerManager.playerData.SetMaxHealth(PlayerManager.playerData.GetMaxHealth() + currentVitaminSelected.healthBonus);
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
+        yesButton.onClick.RemoveAllListeners();
         UpdateUI();
     }
 

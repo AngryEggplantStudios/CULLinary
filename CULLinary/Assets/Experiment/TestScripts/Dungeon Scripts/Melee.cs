@@ -7,7 +7,7 @@ public class Melee : MonoBehaviour
     [SerializeField] private float damage;
     private void OnTriggerEnter(Collider collider)
     {
-        EnemyScript target = collider.GetComponent<EnemyScript>();
+        Enemy target = collider.GetComponent<Enemy>();
         if (target != null)
         {
             target.HandleHit(damage);

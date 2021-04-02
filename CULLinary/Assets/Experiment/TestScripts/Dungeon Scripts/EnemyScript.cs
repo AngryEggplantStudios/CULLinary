@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class EnemyScript : MonoBehaviour
+public class EnemyScript : Enemy
 {
     public NavMeshAgent agent;
 
@@ -192,7 +192,8 @@ public class EnemyScript : MonoBehaviour
                     // Target within attack range
                     state = State.AttackTarget;
                     // Add new state to attack player
-                } else
+                }
+                else
                 {
                     agent.SetDestination(playerPositionWithoutYOffset);
 
@@ -201,7 +202,7 @@ public class EnemyScript : MonoBehaviour
                 if (Vector3.Distance(transform.position, player.position) > stopChase + 0.1f)
                 {
                     // Too far, stop chasing
-                     state = State.GoingBackToStart;
+                    state = State.GoingBackToStart;
                 }
                 break;
             case State.AttackTarget:
@@ -279,7 +280,7 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
-    public void HandleHit(float damage)
+    public override void HandleHit(float damage)
     {
         this.health -= damage;
         hpBarFull.fillAmount = health/maxHealth;
