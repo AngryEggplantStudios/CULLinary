@@ -58,6 +58,13 @@ public class EnemyScript : MonoBehaviour
 
     [SerializeField] private LootTuple[] lootTuples;
     [SerializeField] private float wanderRadius;
+    
+    [SerializeField] private AudioSource audioSourceDamage;
+    [SerializeField] private AudioClip[] stabSounds;
+    [SerializeField] private AudioSource audioSourceAttack;
+    [SerializeField] private AudioClip alertSound;
+    [SerializeField] private AudioClip attackSound;
+
     private Vector3 startingPosition;
     private Vector3 roamPosition;
     private float timer;
@@ -267,6 +274,8 @@ public class EnemyScript : MonoBehaviour
             state = State.ChaseTarget;
             
             SetupUI(Instantiate(enemyAlert_prefab));
+            audioSourceAttack.clip = alertSound;
+            audioSourceAttack.Play();
         }
     }
 
@@ -276,6 +285,8 @@ public class EnemyScript : MonoBehaviour
         hpBarFull.fillAmount = health/maxHealth;
         StartCoroutine(FlashOnDamage());
         SpawnDamageCounter(damage);
+        audioSourceDamage.clip = stabSounds[Random.Range(0, stabSounds.Length)];
+        audioSourceDamage.Play();
 
         if (this.health <= 0)
         {
@@ -346,6 +357,8 @@ public class EnemyScript : MonoBehaviour
     public void attackPlayerDealDamage()
     {
         refScript.attackPlayerDealDamage();
+        audioSourceAttack.clip = attackSound;
+        audioSourceAttack.Play();
     }
 
 
