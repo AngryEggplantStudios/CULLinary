@@ -9,25 +9,37 @@ public class PlayerData
     public string playerName;
     public int money;
     public int maxHealth;
+    public int rangeDamage;
+    public int meleeDamage;
+    public bool doubleFire;
+    public bool[] weaponsBought;
 
     public PlayerData()
     {
         this.inventory = "";
         this.stage = 0;
         this.money = 0;
-        this.currentIndex = 1; //Default goes to restaurant
+        this.currentIndex = (int)SceneIndexes.TUT_REST;
         this.playerName = "John Doe";
         this.maxHealth = 150;
+        this.rangeDamage = 20;
+        this.meleeDamage = 20;
+        this.doubleFire = false;
+        this.weaponsBought = new bool[50]; //Should probably rewrite the representation if time permits
+        for (int i = 0; i < this.weaponsBought.Length; i++)
+        {
+            this.weaponsBought[i] = false;
+        }
     }
 
-    public PlayerData(string inventory, int stage, int currentIndex, string playerName, int money, int maxHealth)
+    public bool GetIfWeaponBoughtById(int id)
     {
-        this.inventory = inventory;
-        this.stage = stage;
-        this.currentIndex = currentIndex; //Default goes to restaurant
-        this.playerName = playerName;
-        this.money = money;
-        this.maxHealth = maxHealth;
+        return this.weaponsBought[id];
+    }
+
+    public bool GetDoubleFire()
+    {
+        return this.doubleFire;
     }
 
     public string GetInventoryString()
@@ -60,6 +72,36 @@ public class PlayerData
         return this.maxHealth;
     }
 
+    public int GetRangeDamage()
+    {
+        return this.rangeDamage;
+    }
+    
+    public int GetMeleeDamage()
+    {
+        return this.meleeDamage;
+    }
+
+    public void SetWeaponBoughtById(int id, bool flag=true)
+    {
+        this.weaponsBought[id] = flag;
+    }
+
+    public void SetDoubleFire(bool flag)
+    {
+        this.doubleFire = flag;
+    }
+
+    public void SetMeleeDamage(int dmg)
+    {
+        this.meleeDamage = dmg;
+    }
+
+    public void SetRangeDamage(int dmg)
+    {
+        this.rangeDamage = dmg;
+    }
+
     public void SetInventoryString(string inventory)
     {
         this.inventory = inventory;
@@ -89,8 +131,6 @@ public class PlayerData
     {
         this.maxHealth = maxHealth;
     }
-
-
 
     public string ToJson()
     {

@@ -827,6 +827,85 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2fdf803e9ce11734ab3411cb9d68ee01, type: 3}
   m_PrefabInstance: {fileID: 121022825}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &129753573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129753574}
+  - component: {fileID: 129753576}
+  - component: {fileID: 129753575}
+  m_Layer: 0
+  m_Name: Status
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &129753574
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129753573}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1897862206}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -90}
+  m_SizeDelta: {x: 841.7734, y: 75.8425}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &129753575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129753573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: bb857a1ad56155d4d85a49d7bcf21419, type: 3}
+    m_FontSize: 25
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Input your cheat above!
+--- !u!222 &129753576
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129753573}
+  m_CullTransparentMesh: 1
 --- !u!1001 &135798223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1810,6 +1889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cheatScreen: {fileID: 1062965439}
   cheatInput: {fileID: 1335592403}
+  successUI: {fileID: 129753575}
 --- !u!4 &472404391
 Transform:
   m_ObjectHideFlags: 0
@@ -2843,8 +2923,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 107.1}
-  m_SizeDelta: {x: 800, y: 300}
+  m_AnchoredPosition: {x: 0, y: 234.70296}
+  m_SizeDelta: {x: 841.7734, y: 432.2822}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &661527964
 MonoBehaviour:
@@ -2868,7 +2948,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: bb857a1ad56155d4d85a49d7bcf21419, type: 3}
-    m_FontSize: 19
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -2879,13 +2959,20 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Hey! You unlocked the secret cheat input.
+  m_Text: 'Hey! You unlocked the secret cheat input. There are also other secret
+    cheats not shown hehe. Have fun figuring them out!
+
 
     Cheats available:
 
-
     makemeelonmusk
     - Adds $10,000,000 to your current save file
+
+    reset - Reset current save
+    file to default values
+
+    makemegoboss - Head to boss battle room with current
+    save file
 
     exit - To return to game'
 --- !u!222 &661527965
@@ -6457,8 +6544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04971ba25130b5088677ba931f41d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameData: {fileID: 111922405}
-  inventoryUI: {fileID: 5032623596477997078, guid: 5ada28b4a64f023a9b960a8b99f441d0, type: 3}
 --- !u!4 &1350732276
 Transform:
   m_ObjectHideFlags: 0
@@ -7541,6 +7626,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 661527963}
+  - {fileID: 129753574}
   m_Father: {fileID: 1062965440}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

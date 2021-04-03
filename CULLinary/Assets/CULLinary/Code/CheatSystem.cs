@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CheatSystem : MonoBehaviour
 {
     [SerializeField] private GameObject cheatScreen;
     [SerializeField] private InputField cheatInput;
+    [SerializeField] private Text successUI;
     private bool isCheatScreenActivated = false;
     private KeyCode[] sequence = new KeyCode[]{
         KeyCode.C,
@@ -43,7 +45,23 @@ public class CheatSystem : MonoBehaviour
                     break;
                 case "makemeelonmusk":
                     AddMoneyToSaveFile(10000000);
+                    ChangeSuccessStatus("Oh my you are rich daddy~");
                     cheatInput.text = "";
+                    break;
+                case "makemepoor": //to delete, for testing
+                    SetMoneyOnSaveFile(1000);
+                    ChangeSuccessStatus("Time to get a job");
+                    cheatInput.text = "";
+                    break;
+                case "makemegoboss": //Go boss room
+                    cheatInput.text = "";
+                    ChangeSuccessStatus("Are you ready to rumble? Starting in 5 seconds...");
+                    StartCoroutine(GoBossRoom());
+                    break;
+                case "reset":
+                    cheatInput.text = "";
+                    ChangeSuccessStatus("Resetting save file to default");
+                    ResetSaveFile();
                     break;
             }
         }
@@ -53,6 +71,32 @@ public class CheatSystem : MonoBehaviour
     {
         cheatScreen.SetActive(false);
         isCheatScreenActivated = false;
+    }
+
+    private void ChangeSuccessStatus(string str)
+    {
+        successUI.text = str;
+    }
+
+    private IEnumerator GoBossRoom()
+    {
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene((int)SceneIndexes.BOSS);
+    }
+
+
+    private void SetMoneyOnSaveFile(int amount)
+    {
+        PlayerData data = SaveSystem.LoadData();
+        data.SetMoney(amount);
+        SaveSystem.SaveData(data);
+    }
+
+    private void ResetSaveFile()
+    {
+        PlayerData data = new PlayerData();
+        data.SetCurrentIndex((int)SceneIndexes.REST);
+        SaveSystem.SaveData(data);
     }
 
     private void AddMoneyToSaveFile(int amount)

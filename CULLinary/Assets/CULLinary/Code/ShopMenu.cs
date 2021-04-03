@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class ShopMenu : MonoBehaviour
 {
+    [Header("Setting up UI")]
     [SerializeField] private GameObject secondaryCanvas;
     [SerializeField] private GameObject confirmPopup;
     [SerializeField] private GameObject noMoneyPopup;
+    [Header("Calculations")]
     [SerializeField] private Text moneyText;
     [SerializeField] private Text currentText;
     [SerializeField] private Text itemCostText;
@@ -18,12 +20,20 @@ public class ShopMenu : MonoBehaviour
     [SerializeField] private Button yesButton;
     [SerializeField] private Image spriteImage;
 
+    [Header("UI to update")]
     [SerializeField] private CurrentStats currentStats;
+    [SerializeField] private GameObject vitaminPanel;
+    [SerializeField] private GameObject weaponPanel;
     private Vitamin currentVitaminSelected;
+    private Weapon currentWeaponSelected;
+    private PopulateShop populateShop;
+    private int currentPanelSelected = 0; //0=VITAMIN, 1=WEAPON, 2=KEYITEMS
 
     private void Start()
     {
-        UpdateUI();
+        populateShop = GetComponentInChildren<PopulateShop>();
+        moneyText.text = "Money: $" + PlayerManager.playerData.GetMoney();
+        currentStats.UpdateUI();
     }
     public void LoadDungeon()
     {
@@ -32,10 +42,38 @@ public class ShopMenu : MonoBehaviour
         SceneManager.LoadScene((int)SceneIndexes.DUNGEON);
     }
 
+    public void SetAllPanelsActive()
+    {
+        vitaminPanel.SetActive(true);
+        weaponPanel.SetActive(true);
+    }
+
+    public void SelectVitaminPanel()
+    {
+        currentPanelSelected = 0;   
+        vitaminPanel.SetActive(true);
+        weaponPanel.SetActive(false);
+    }
+
+    public void SelectWeaponPanel()
+    {
+        currentPanelSelected = 1;
+        vitaminPanel.SetActive(false);
+        weaponPanel.SetActive(true);
+    }
+
     public void SelectNoMoney()
     {
         secondaryCanvas.SetActive(true);
         noMoneyPopup.SetActive(true);
+        noMoneyPopup.GetComponentInChildren<Text>().text = "You do not have enough money for this!";
+    }
+
+    public void SelectAlreadyBought()
+    {
+        secondaryCanvas.SetActive(true);
+        noMoneyPopup.SetActive(true);
+        noMoneyPopup.GetComponentInChildren<Text>().text = "You already bought this!";
     }
 
     public void BackToShop()
@@ -61,15 +99,33 @@ public class ShopMenu : MonoBehaviour
         SelectItem(itemAsset.price, itemAsset.name, itemAsset.description, itemAsset.GetSprite());
         currentVitaminSelected = itemAsset;
         yesButton.onClick.AddListener(() => { ConfirmPurchase(itemAsset); });
+    }
 
+    public void SelectItem(Weapon itemAsset)
+    {
+        SelectItem(itemAsset.price, itemAsset.name, itemAsset.description, itemAsset.GetSprite());
+        currentWeaponSelected = itemAsset;
+        yesButton.onClick.AddListener(() => { ConfirmPurchase(itemAsset); });
+    }
+
+    public void ConfirmPurchase(Weapon itemAsset)
+    {
+        PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
+        PlayerManager.playerData.SetDoubleFire(itemAsset.GetDoubleFire());
+        PlayerManager.playerData.SetWeaponBoughtById(itemAsset.GetID(), true);
+        yesButton.onClick.RemoveAllListeners();
+        DeselectItem();
+        UpdateUI();
     }
 
     public void ConfirmPurchase(Vitamin itemAsset)
     {
-        DeselectItem();
         PlayerManager.playerData.SetMaxHealth(PlayerManager.playerData.GetMaxHealth() + currentVitaminSelected.healthBonus);
+        PlayerManager.playerData.SetRangeDamage(PlayerManager.playerData.GetRangeDamage() + currentVitaminSelected.rangeAttackBonus);
+        PlayerManager.playerData.SetMeleeDamage(PlayerManager.playerData.GetMeleeDamage() + currentVitaminSelected.meleeAttackBonus);
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
         yesButton.onClick.RemoveAllListeners();
+        DeselectItem();
         UpdateUI();
     }
 
@@ -77,11 +133,14 @@ public class ShopMenu : MonoBehaviour
     {
         secondaryCanvas.SetActive(false);
         confirmPopup.SetActive(false);
+        currentVitaminSelected = null;
+        currentWeaponSelected = null;
     }
 
     private void UpdateUI()
     {
         moneyText.text = "Money: $" + PlayerManager.playerData.GetMoney();
         currentStats.UpdateUI();
+        StartCoroutine(populateShop.UpdateUI(currentPanelSelected));
     }
 }
