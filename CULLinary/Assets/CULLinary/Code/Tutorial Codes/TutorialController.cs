@@ -46,11 +46,12 @@ public class TutorialController : MonoBehaviour
                 {
                     FirstCustomerArrivedMsg();
                     firstCustArrived = true;
+                    // enable cooking to work
                 }
             }   
         }
 
-        if ((MenuPanel.activeSelf == true) && (triedCooking == false))
+        if ((MenuPanel.activeSelf == true) && (triedCooking == false) && (firstCustArrived == true)) // only trigger once first customer arrives(?)
         {
             instructionTriggers[2].GetComponent<InstructionTrigger>().TriggerInstruction();
             triedCooking = true;
