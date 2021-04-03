@@ -61,13 +61,14 @@ public class ShopMenu : MonoBehaviour
         SelectItem(itemAsset.price, itemAsset.name, itemAsset.description, itemAsset.GetSprite());
         currentVitaminSelected = itemAsset;
         yesButton.onClick.AddListener(() => { ConfirmPurchase(itemAsset); });
-
     }
 
     public void ConfirmPurchase(Vitamin itemAsset)
     {
         DeselectItem();
         PlayerManager.playerData.SetMaxHealth(PlayerManager.playerData.GetMaxHealth() + currentVitaminSelected.healthBonus);
+        PlayerManager.playerData.SetRangeDamage(PlayerManager.playerData.GetRangeDamage() + currentVitaminSelected.rangeAttackBonus);
+        PlayerManager.playerData.SetMeleeDamage(PlayerManager.playerData.GetMeleeDamage() + currentVitaminSelected.meleeAttackBonus);
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
         yesButton.onClick.RemoveAllListeners();
         UpdateUI();

@@ -7,13 +7,13 @@ public class Projectile : MonoBehaviour
     private Vector3 projDir;
 
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float damage;
     [SerializeField] private float heightFromGround;
 
     private float spinSpeed = -1500;
-
-    public void Setup(Vector3 sourcePosition, Vector3 targetPosition)
-    {        
+    private int damage;
+    public void Setup(Vector3 sourcePosition, Vector3 targetPosition, int damage=20)
+    {
+        this.damage = damage;
         this.projDir = (targetPosition - sourcePosition).normalized;
         transform.position += new Vector3(0, heightFromGround, 0);
         transform.eulerAngles = new Vector3(0, CalculateAngle(projDir), 90);
