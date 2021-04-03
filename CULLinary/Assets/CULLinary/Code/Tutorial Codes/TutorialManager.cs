@@ -46,7 +46,8 @@ public class TutorialManager : MonoBehaviour
         {
             // EndInstructions(); // make this a coroutine instead? so auto close once reach the last sentence?
             // StartCoroutine(WaitBeforeClosing());
-            
+            animator.SetBool("CanGoNext", false);
+
             if (stillTyping == true)
             {
                 StopAllCoroutines();
@@ -88,6 +89,8 @@ public class TutorialManager : MonoBehaviour
             yield return null;
         }
         stillTyping = false;
+        animator.SetBool("CanGoNext", true);
+        Debug.Log("Yo I set the bool to go next");
     }
 
     IEnumerator WaitAWhile(float delay)
@@ -95,6 +98,9 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         stillTyping = false;
+        //animator.SetBool("CanGoNext", true);
+        //Debug.Log("Yo I set the bool to go next");
+        // where to put animator.SetBool("CanGoNext", false);??
     }
 
     IEnumerator WaitBeforeClosing() 
