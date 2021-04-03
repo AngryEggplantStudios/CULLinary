@@ -53,6 +53,9 @@ public class TutorialController_Return : MonoBehaviour
             }
         }
 
+        // FORGOT THIS CASE: CUSTOMER MAY NOT SERVE FIRST CUSTOMER!!
+        // counted as serve the food once the food is destroyed from the chef's hands
+        // how to determine when served customer has left....
         if (firstCustArrived == false)
         {
             foreach (Transform seat in PossibleSeats.transform)
@@ -64,20 +67,30 @@ public class TutorialController_Return : MonoBehaviour
                 }
             }
         }
+        /*
+        // ONly triggered last convo if you serve the first customer
         if ((firstCustArrived == true) && (firstCustLeft == false))
         {
             if (firstCustSeat.transform.childCount == 0) // our first customer left
             {
-                Debug.Log("First customer is gone");
+                Debug.Log("First customer at " + firstCustSeat + " is gone");
                 instructionTriggers[3].GetComponent<InstructionTrigger>().TriggerInstruction();
                 firstCustLeft = true;
             }    
         }
+        */
         
         if ((firstCustLeft == true) && (textAnimator.GetBool("isOpen") == false)) // once instruction textbox goes away
         {
-            SceneManager.LoadScene((int)SceneIndexes.REST); // or 2 - let them start from dungeon?
+            SceneManager.LoadScene((int)SceneIndexes.REST); // or let them start from dungeon?
         }
+        
+    }
+
+    public void ShowLeaveTutorialMsg()
+    {
+        instructionTriggers[3].GetComponent<InstructionTrigger>().TriggerInstruction();
+        firstCustLeft = true; // mark that first cust has left, final msg shld be showing alr
     }
 
     IEnumerator AdvanceInstructions()

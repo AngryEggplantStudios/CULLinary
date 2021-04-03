@@ -25313,6 +25313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1674238426}
   - component: {fileID: 1674238427}
+  - component: {fileID: 1674238428}
   m_Layer: 0
   m_Name: Tutorial Controller [after cull]
   m_TagString: Untagged
@@ -25359,6 +25360,36 @@ MonoBehaviour:
   TutorialManager: {fileID: 1685847925}
   PossibleSeats: {fileID: 805168319}
   textAnimator: {fileID: 245899825}
+--- !u!114 &1674238428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674238425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b87f303fe42904c8a85d06996b1451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PossibleSeats:
+  - {fileID: 1289117874}
+  - {fileID: 1448330235}
+  - {fileID: 925884047}
+  - {fileID: 2144384788}
+  - {fileID: 1413535006}
+  - {fileID: 1586088190}
+  - {fileID: 1838528718}
+  - {fileID: 97643412}
+  - {fileID: 214057615}
+  - {fileID: 556620183}
+  - {fileID: 1630822418}
+  - {fileID: 1836785234}
+  - {fileID: 730363808}
+  - {fileID: 1478725986}
+  - {fileID: 89306461}
+  - {fileID: 1677803518}
+  returnController: {fileID: 1674238427}
 --- !u!1001 &1674921783
 PrefabInstance:
   m_ObjectHideFlags: 0
