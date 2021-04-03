@@ -178,7 +178,7 @@ public class CookingStation : MonoBehaviour
         dishToCook = ""; // Reset dishToCook value
     }
 
-    bool PlayerWithinRange()
+    public bool PlayerWithinRange()
     {
         return Vector3.Distance(playerController.transform.position,
                                 stationLocation.position) <= minimumDistance;

@@ -64,20 +64,26 @@ public class TutorialController_Return : MonoBehaviour
                 }
             }
         }
-        if ((firstCustArrived == true) && (firstCustLeft == false))
-        {
-            if (firstCustSeat.transform.childCount == 0) // our first customer left
-            {
-                Debug.Log("First customer is gone");
-                instructionTriggers[3].GetComponent<InstructionTrigger>().TriggerInstruction();
-                firstCustLeft = true;
-            }    
-        }
         
         if ((firstCustLeft == true) && (textAnimator.GetBool("isOpen") == false)) // once instruction textbox goes away
         {
-            SceneManager.LoadScene((int)SceneIndexes.REST); // or 2 - let them start from dungeon?
+            StartCoroutine(LoadGameScene());
         }
+        
+    }
+
+    // Will be called by Return_CustCounter.cs when it tracks that one customer already left 
+    public void ShowLeaveTutorialMsg()
+    {
+        instructionTriggers[3].GetComponent<InstructionTrigger>().TriggerInstruction();
+        firstCustLeft = true; // mark that first cust has left, final msg shld be showing alr
+    }
+
+    IEnumerator LoadGameScene()
+    {
+        yield return new WaitForSeconds(2); // Have some time for player to process everything before loading the game scene
+
+        SceneManager.LoadScene((int)SceneIndexes.REST); // or let them start from dungeon?
     }
 
     IEnumerator AdvanceInstructions()

@@ -50,14 +50,14 @@ public class SkipTutorial : MonoBehaviour
 
     public void ShowConfirmLeaveNotifPanel()
     {
-        if (currSceneIdx != 4) // tutorial restaurant scenes
-        {
-            cookingStation.DisableMovementOfPlayer();
-            confirmLeaveNotifPanel.SetActive(true);
-        }
-        else // tutorial dungeon scene
+        if (currSceneIdx == (int)SceneIndexes.TUT_DUNGEON) // tutorial dungeon scenes 
         {
             dungeonController.DisableMovement();
+            confirmLeaveNotifPanel.SetActive(true);  
+        }
+        else // tutorial restaurant scene
+        {
+            cookingStation.DisableMovementOfPlayer();
             confirmLeaveNotifPanel.SetActive(true);
         }
 
@@ -68,14 +68,14 @@ public class SkipTutorial : MonoBehaviour
 
     public void CloseConfirmLeaveNotifPanel()
     {
-        if (currSceneIdx != 4) // tutorial restaurant scenes
-        {
-            cookingStation.EnableMovementOfPlayer();
-            confirmLeaveNotifPanel.SetActive(false);
-        }
-        else // tutorial dungeon scene
+        if (currSceneIdx == (int)SceneIndexes.TUT_DUNGEON) // tutorial dungeon scenes
         {
             dungeonController.EnableMovement();
+            confirmLeaveNotifPanel.SetActive(false);
+        }
+        else // tutorial restaurant scene
+        {         
+            cookingStation.EnableMovementOfPlayer();
             confirmLeaveNotifPanel.SetActive(false);
         }        
         

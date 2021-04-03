@@ -44,21 +44,37 @@ public class TutorialManager : MonoBehaviour
     {
         if (sentences.Count == 0)
         {
-            EndInstructions(); // make this a coroutine instead? so auto close once reach the last sentence?
+            // EndInstructions(); // make this a coroutine instead? so auto close once reach the last sentence?
+            // StartCoroutine(WaitBeforeClosing());
+            animator.SetBool("CanGoNext", false);
+
+            if (stillTyping == true)
+            {
+                StopAllCoroutines();
+                instructionsText.text = currSentence;
+                StartCoroutine(WaitBeforeClosing());
+            } else
+            {
+                EndInstructions();
+            }
+            
+
             return;
         }
-               
-        
+
         if (stillTyping == true) // show the complete sentence before moving on
         {
             StopAllCoroutines();
             instructionsText.text = currSentence;
-            stillTyping = false;
+            StartCoroutine(WaitAWhile(0.5f)); // Short delay before showing the next sentence
+            // stillTyping = false;
         } else
         {
             string sentence = sentences.Dequeue();
             StartCoroutine(TypeSentence(sentence));
-        }        
+        }
+
+        
     }
 
     IEnumerator TypeSentence(string sentence)
@@ -73,6 +89,26 @@ public class TutorialManager : MonoBehaviour
             yield return null;
         }
         stillTyping = false;
+        animator.SetBool("CanGoNext", true);
+        Debug.Log("Yo I set the bool to go next");
+    }
+
+    IEnumerator WaitAWhile(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        stillTyping = false;
+        //animator.SetBool("CanGoNext", true);
+        //Debug.Log("Yo I set the bool to go next");
+        // where to put animator.SetBool("CanGoNext", false);??
+    }
+
+    IEnumerator WaitBeforeClosing() 
+    {
+        yield return new WaitForSeconds(1.0f);
+        stillTyping = false;
+
+        EndInstructions();
     }
 
     void EndInstructions()
