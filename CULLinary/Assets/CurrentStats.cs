@@ -7,6 +7,7 @@ public class CurrentStats : MonoBehaviour
 {
     [SerializeField] private Text healthValue;
     [SerializeField] private Text rangeValue;
+    [SerializeField] private Text meleeValue;
 
     private void Start()
     {
@@ -17,5 +18,6 @@ public class CurrentStats : MonoBehaviour
     {
         healthValue.text = PlayerManager.playerData.GetMaxHealth().ToString();
         rangeValue.text = PlayerManager.playerData.GetRangeDamage().ToString();
+        meleeValue.text = PlayerManager.playerData.GetMeleeDamage().ToString();
     }
 }

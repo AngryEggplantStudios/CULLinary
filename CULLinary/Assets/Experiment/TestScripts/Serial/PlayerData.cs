@@ -10,16 +10,18 @@ public class PlayerData
     public int money;
     public int maxHealth;
     public int rangeDamage;
+    public int meleeDamage;
 
     public PlayerData()
     {
         this.inventory = "";
         this.stage = 0;
         this.money = 0;
-        this.currentIndex = 1; //Default goes to restaurant
+        this.currentIndex = (int)SceneIndexes.TUT_REST;
         this.playerName = "John Doe";
         this.maxHealth = 150;
         this.rangeDamage = 20;
+        this.meleeDamage = 20;
     }
 
     public string GetInventoryString()
@@ -55,6 +57,16 @@ public class PlayerData
     public int GetRangeDamage()
     {
         return this.rangeDamage;
+    }
+    
+    public int GetMeleeDamage()
+    {
+        return this.meleeDamage;
+    }
+
+    public void SetMeleeDamage(int dmg)
+    {
+        this.meleeDamage = dmg;
     }
 
     public void SetRangeDamage(int dmg)
