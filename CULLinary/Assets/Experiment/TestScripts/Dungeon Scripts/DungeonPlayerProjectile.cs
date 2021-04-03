@@ -22,12 +22,27 @@ public class DungeonPlayerProjectile : MonoBehaviour
 
     private void ThrowKnife(Vector3 sourcePosition, Vector3 targetPosition)
     {
-        Transform knifeTransform = Instantiate(throwingKnife, sourcePosition, Quaternion.identity);
-        knifeTransform.GetComponent<Projectile>().Setup(sourcePosition, targetPosition, damage);
+        StartCoroutine(Throw(sourcePosition, targetPosition));
+        //Transform knifeTransform = Instantiate(throwingKnife, sourcePosition, Quaternion.identity);
+        //knifeTransform.GetComponent<Projectile>().Setup(sourcePosition, targetPosition, damage);
     }
 
     private void OnDestroy()
     {
         dungeonPlayerAim.OnPlayerShoot -= ThrowKnife;
     }
+
+    private IEnumerator Throw(Vector3 sourcePosition, Vector3 targetPosition)
+    {
+        yield return null;
+        Transform knifeTransform = Instantiate(throwingKnife, sourcePosition, Quaternion.identity);
+        knifeTransform.GetComponent<Projectile>().Setup(sourcePosition, targetPosition, damage);
+        if (PlayerManager.playerData != null && PlayerManager.playerData.GetDoubleFire())
+        {
+            yield return new WaitForSeconds(0.3f);
+            Transform knifeTransform2 = Instantiate(throwingKnife, sourcePosition, Quaternion.identity);
+            knifeTransform2.GetComponent<Projectile>().Setup(sourcePosition, targetPosition, damage);
+        }
+    }
+
 }
