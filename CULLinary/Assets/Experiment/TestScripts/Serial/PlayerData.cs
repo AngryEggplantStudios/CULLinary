@@ -11,6 +11,8 @@ public class PlayerData
     public int maxHealth;
     public int rangeDamage;
     public int meleeDamage;
+    public bool doubleFire;
+    public bool[] weaponsBought;
 
     public PlayerData()
     {
@@ -22,6 +24,22 @@ public class PlayerData
         this.maxHealth = 150;
         this.rangeDamage = 20;
         this.meleeDamage = 20;
+        this.doubleFire = false;
+        this.weaponsBought = new bool[50]; //Should probably rewrite the representation if time permits
+        for (int i = 0; i < this.weaponsBought.Length; i++)
+        {
+            this.weaponsBought[i] = false;
+        }
+    }
+
+    public bool GetIfWeaponBoughtById(int id)
+    {
+        return this.weaponsBought[id];
+    }
+
+    public bool GetDoubleFire()
+    {
+        return this.doubleFire;
     }
 
     public string GetInventoryString()
@@ -62,6 +80,16 @@ public class PlayerData
     public int GetMeleeDamage()
     {
         return this.meleeDamage;
+    }
+
+    public void SetWeaponBoughtById(int id, bool flag=true)
+    {
+        this.weaponsBought[id] = flag;
+    }
+
+    public void SetDoubleFire(bool flag)
+    {
+        this.doubleFire = flag;
     }
 
     public void SetMeleeDamage(int dmg)

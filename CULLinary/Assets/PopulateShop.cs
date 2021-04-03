@@ -7,22 +7,78 @@ public class PopulateShop : MonoBehaviour
 {
    [SerializeField] private GameObject[] vitaminSlots;
    [SerializeField] private VitaminDatabase vitaminDatabase;
+   [SerializeField] private GameObject[] weaponSlots;
+   [SerializeField] private WeaponDatabase weaponDatabase;
    [SerializeField] private ShopMenu shopMenu;
 
    public static bool isPopulated = false;
    private List<Vitamin> vitaminList = new List<Vitamin>();
+   private List<Weapon> weaponList = new List<Weapon>();
 
    private void Start()
    {
-       isPopulated = false;
-       vitaminList = vitaminDatabase.allVitamins;
-       StartCoroutine(Populate());
+        isPopulated = false;
+        vitaminList = vitaminDatabase.allVitamins;
+        weaponList = weaponDatabase.allWeapons;
+        StartCoroutine(Populate());
    }
 
    private IEnumerator Populate()
    {
-       yield return StartCoroutine(PopulateVitaminPanel());
-       isPopulated = true;
+        yield return StartCoroutine(PopulateVitaminPanel());
+        yield return StartCoroutine(PopulateWeaponPanel());
+        shopMenu.SelectVitaminPanel();
+        isPopulated = true;
+   }
+
+   public IEnumerator UpdateUI(int currentPanelSelected)
+   {
+        shopMenu.SetAllPanelsActive();
+        yield return StartCoroutine(PopulateVitaminPanel());
+        yield return StartCoroutine(PopulateWeaponPanel());
+        switch (currentPanelSelected)
+        {
+            case 0:
+                shopMenu.SelectVitaminPanel();
+                break;
+            case 1:
+                shopMenu.SelectWeaponPanel();
+                break;
+        }
+   }
+
+   private IEnumerator PopulateWeaponPanel()
+   {
+       int count = 0;
+       foreach (Weapon w in weaponList)
+       {
+            yield return null;
+            GameObject slot = weaponSlots[count];
+            Button btn = slot.GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+            SetupSlot(w, slot, btn);
+            yield return null;
+
+            if (PlayerManager.playerData.GetIfWeaponBoughtById(w.GetID())) //Should combine with the below else if statement and make the button uninteractable
+            {
+                btn.onClick.AddListener(() => { shopMenu.SelectAlreadyBought(); });
+            }
+            else if (PlayerManager.playerData.GetMoney() < w.GetPrice())
+            {
+                btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
+            }
+            else 
+            {
+                btn.onClick.AddListener(() => { shopMenu.SelectItem(w); });
+            }
+            count++;
+       }
+        //Cleanup
+       for (int i=count; i < weaponSlots.Length; i++)
+       {
+            GameObject slot = weaponSlots[i];
+            slot.SetActive(false);
+       }
    }
 
    private IEnumerator PopulateVitaminPanel()
@@ -30,35 +86,40 @@ public class PopulateShop : MonoBehaviour
        int count = 0;
        foreach (Vitamin v in vitaminList)
        {
-           yield return null;
-           GameObject slot = vitaminSlots[count];
-           Button btn = slot.GetComponent<Button>();
-           Text[] slotInfo = slot.GetComponentsInChildren<Text>();
-           TooltipTrigger tooltipTrigger = slot.GetComponent<TooltipTrigger>();
-           yield return null;
-           slotInfo[0].text = v.GetPrice().ToString();
-           slotInfo[1].text = v.GetName();
-           tooltipTrigger.SetContent(v.GetDescription());
-           tooltipTrigger.SetHeader(v.GetName());
-           Image[] image = slot.GetComponentsInChildren<Image>();
-           image[1].sprite = v.GetSprite();
-           yield return null;
-           if (PlayerManager.playerData.GetMoney() < v.GetPrice())
-           {
-               btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
-           }
-           else 
-           {
+            yield return null;
+            GameObject slot = vitaminSlots[count];
+            Button btn = slot.GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+            SetupSlot(v, slot, btn);
+            yield return null;
+            if (PlayerManager.playerData.GetMoney() < v.GetPrice())
+            {
+                btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
+            }
+            else
+            {
                 btn.onClick.AddListener(() => { shopMenu.SelectItem(v); });
-           }
-           count++;
+            }
+            count++;
        }
        //Cleanup
        for (int i=count; i < vitaminSlots.Length; i++)
        {
-           GameObject slot = vitaminSlots[i];
-           slot.SetActive(false);
+            GameObject slot = vitaminSlots[i];
+            slot.SetActive(false);
        }
+   }
+
+   private void SetupSlot(ShopItem item, GameObject slot, Button btn)
+   {
+        Text[] slotInfo = slot.GetComponentsInChildren<Text>();
+        TooltipTrigger tooltipTrigger = slot.GetComponent<TooltipTrigger>();
+        slotInfo[0].text = item.GetPrice().ToString();
+        slotInfo[1].text = item.GetName();
+        tooltipTrigger.SetContent(item.GetDescription());
+        tooltipTrigger.SetHeader(item.GetName());
+        Image[] image = slot.GetComponentsInChildren<Image>();
+        image[1].sprite = item.GetSprite();
    }
 
    private void OnDestroy()
