@@ -36,11 +36,10 @@ public class TutorialController_Dun : MonoBehaviour
     {
         if (triedAttacking == false)
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) // Show next sentence if player presses mouse keys
+            if (Input.GetMouseButtonDown(1)) // Show next sentence if player presses right mouse keys // Input.GetMouseButtonDown(0) ||
             {
                 StartCoroutine(AdvanceInstructions());
                 triedAttacking = true;
-                // Debug.Log("Player attacked");
             }               
         }
 
@@ -50,7 +49,6 @@ public class TutorialController_Dun : MonoBehaviour
             {
                 StartCoroutine(AdvanceInstructions());
                 playerMoved = true;
-                // Debug.Log("Player moved");
             }
         }
 

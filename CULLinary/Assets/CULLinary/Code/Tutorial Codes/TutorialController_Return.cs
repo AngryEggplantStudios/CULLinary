@@ -67,7 +67,7 @@ public class TutorialController_Return : MonoBehaviour
         
         if ((firstCustLeft == true) && (textAnimator.GetBool("isOpen") == false)) // once instruction textbox goes away
         {
-            SceneManager.LoadScene((int)SceneIndexes.REST); // or let them start from dungeon?
+            StartCoroutine(LoadGameScene());
         }
         
     }
@@ -77,6 +77,13 @@ public class TutorialController_Return : MonoBehaviour
     {
         instructionTriggers[3].GetComponent<InstructionTrigger>().TriggerInstruction();
         firstCustLeft = true; // mark that first cust has left, final msg shld be showing alr
+    }
+
+    IEnumerator LoadGameScene()
+    {
+        yield return new WaitForSeconds(2); // Have some time for player to process everything before loading the game scene
+
+        SceneManager.LoadScene((int)SceneIndexes.REST); // or let them start from dungeon?
     }
 
     IEnumerator AdvanceInstructions()
