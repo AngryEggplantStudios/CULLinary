@@ -9,6 +9,7 @@ public class PlayerData
     public string playerName;
     public int money;
     public int maxHealth;
+    public int rangeDamage;
 
     public PlayerData()
     {
@@ -18,16 +19,7 @@ public class PlayerData
         this.currentIndex = 1; //Default goes to restaurant
         this.playerName = "John Doe";
         this.maxHealth = 150;
-    }
-
-    public PlayerData(string inventory, int stage, int currentIndex, string playerName, int money, int maxHealth)
-    {
-        this.inventory = inventory;
-        this.stage = stage;
-        this.currentIndex = currentIndex; //Default goes to restaurant
-        this.playerName = playerName;
-        this.money = money;
-        this.maxHealth = maxHealth;
+        this.rangeDamage = 20;
     }
 
     public string GetInventoryString()
@@ -60,6 +52,16 @@ public class PlayerData
         return this.maxHealth;
     }
 
+    public int GetRangeDamage()
+    {
+        return this.rangeDamage;
+    }
+
+    public void SetRangeDamage(int dmg)
+    {
+        this.rangeDamage = dmg;
+    }
+
     public void SetInventoryString(string inventory)
     {
         this.inventory = inventory;
@@ -89,8 +91,6 @@ public class PlayerData
     {
         this.maxHealth = maxHealth;
     }
-
-
 
     public string ToJson()
     {

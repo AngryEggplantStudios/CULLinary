@@ -14,8 +14,15 @@ public class PopulateShop : MonoBehaviour
 
    private void Start()
    {
+       isPopulated = false;
        vitaminList = vitaminDatabase.allVitamins;
-       StartCoroutine(PopulateVitaminPanel());
+       StartCoroutine(Populate());
+   }
+
+   private IEnumerator Populate()
+   {
+       yield return StartCoroutine(PopulateVitaminPanel());
+       isPopulated = true;
    }
 
    private IEnumerator PopulateVitaminPanel()
@@ -45,6 +52,12 @@ public class PopulateShop : MonoBehaviour
                 btn.onClick.AddListener(() => { shopMenu.SelectItem(v); });
            }
            count++;
+       }
+       //Cleanup
+       for (int i=count; i < vitaminSlots.Length; i++)
+       {
+           GameObject slot = vitaminSlots[i];
+           slot.SetActive(false);
        }
    }
 

@@ -31,13 +31,7 @@ public class DungeonPlayerHealth : MonoBehaviour
     void Start()
     {
         isInvincible = false;
-        if (PlayerManager.playerData == null)
-        {
-            health = 150;
-        } else
-        {
-            health = PlayerManager.playerData.GetMaxHealth();
-        }
+        health = PlayerManager.playerData == null ? 150 : PlayerManager.playerData.GetMaxHealth();
         maxHealth = health;
         hpBar = hpBarUI;
         hpBarFull = hpBar.transform.Find("HpBar")?.gameObject.GetComponent<Image>();
