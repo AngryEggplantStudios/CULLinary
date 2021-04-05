@@ -10,6 +10,7 @@ public class MapGeneratorNew : MonoBehaviour
     public GameObject startingRoom;
     public GameObject[] fillerRooms;
     public GameObject[] spawnRooms;
+    public GameObject specialClownRoom;
     public GameObject deadendEdge;
     public GameObject deadendCorner;
     public int mapSize;
@@ -60,6 +61,8 @@ public class MapGeneratorNew : MonoBehaviour
         {
             PlayerManager.LoadData();
         }
+
+        Debug.Log(PlayerManager.playerData.GetIfKeyItemBoughtById(0));
 
         generatedRooms.Clear();
         roomProgress = 0f;
