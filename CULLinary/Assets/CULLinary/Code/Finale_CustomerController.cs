@@ -15,7 +15,6 @@ public class Finale_CustomerController : MonoBehaviour
         animator.SetBool("SitDown", true);
         Debug.Log("animator is: " + animator.ToString());
 
-        
     }
 
     
