@@ -10,11 +10,16 @@ public class TutorialController_Return : MonoBehaviour
     public TutorialManager TutorialManager;
     public GameObject PossibleSeats;
     public Animator textAnimator;
+    public GameObject customerTextUI;
+    public DialogueLoader dialogueLoader;
+    public Restaurant_CustomerController customerController;
 
     bool cookedDish = false;
     bool pickedUpDish = false;
     bool firstCustArrived = false;
     bool firstCustLeft = false;
+    bool talkedAbtClown = false;
+    bool metClown = false;
 
     GameObject firstCustSeat = null;
 
@@ -67,7 +72,20 @@ public class TutorialController_Return : MonoBehaviour
         
         if ((firstCustLeft == true) && (textAnimator.GetBool("isOpen") == false)) // once instruction textbox goes away
         {
+            //StartCoroutine(LoadGameScene()); // Previously used to immediately load next scene
+
+            // Replace by triggering the dialogue, then transition to initial clown boss scene
+            // DialogueDatabase.GetDialogue(15);
+            dialogueLoader.LoadAndRun(DialogueDatabase.GetDialogue(15), customerController);
+            
+            StartCoroutine("BringUpClown");
+        }
+
+        if ( (talkedAbtClown == true) && (customerController.canBeSpokenTo == false) && (metClown == false) ) // after customer finishes talking
+        {
+            Debug.Log("Meet Donald McRonald in 2.5 seconds");
             StartCoroutine(LoadGameScene());
+            metClown = true;
         }
         
     }
@@ -79,11 +97,21 @@ public class TutorialController_Return : MonoBehaviour
         firstCustLeft = true; // mark that first cust has left, final msg shld be showing alr
     }
 
+    IEnumerator BringUpClown()
+    {
+        yield return new WaitForSeconds(2);
+
+        talkedAbtClown = true;
+        customerController.SetToNoDialogue();
+    }
+
     IEnumerator LoadGameScene()
     {
-        yield return new WaitForSeconds(2); // Have some time for player to process everything before loading the game scene
+        yield return new WaitForSeconds(2.5f); // Have some time for player to process everything before loading the game scene
 
-        SceneManager.LoadScene((int)SceneIndexes.REST); // or let them start from dungeon?
+        // OPTIONAL: Add shaking effect to camera??
+
+        SceneManager.LoadScene((int)SceneIndexes.BOSS); // CHANGE TO INITIAL BOSS SCENE HERE
     }
 
     IEnumerator AdvanceInstructions()
