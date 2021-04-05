@@ -9,17 +9,21 @@ public class PopulateShop : MonoBehaviour
    [SerializeField] private VitaminDatabase vitaminDatabase;
    [SerializeField] private GameObject[] weaponSlots;
    [SerializeField] private WeaponDatabase weaponDatabase;
+   [SerializeField] private GameObject[] keyItemSlots;
+   [SerializeField] private KeyItemDatabase KeyItemDatabase;
    [SerializeField] private ShopMenu shopMenu;
 
    public static bool isPopulated = false;
    private List<Vitamin> vitaminList = new List<Vitamin>();
    private List<Weapon> weaponList = new List<Weapon>();
+   private List<KeyItem> keyItemList = new List<KeyItem>();
 
    private void Start()
    {
         isPopulated = false;
         vitaminList = vitaminDatabase.allVitamins;
         weaponList = weaponDatabase.allWeapons;
+        keyItemList = KeyItemDatabase.allKeyItems;
         StartCoroutine(Populate());
    }
 
@@ -27,6 +31,7 @@ public class PopulateShop : MonoBehaviour
    {
         yield return StartCoroutine(PopulateVitaminPanel());
         yield return StartCoroutine(PopulateWeaponPanel());
+        yield return StartCoroutine(PopulateKeyItemPanel());
         shopMenu.SelectVitaminPanel();
         isPopulated = true;
    }
@@ -36,6 +41,7 @@ public class PopulateShop : MonoBehaviour
         shopMenu.SetAllPanelsActive();
         yield return StartCoroutine(PopulateVitaminPanel());
         yield return StartCoroutine(PopulateWeaponPanel());
+        yield return StartCoroutine(PopulateKeyItemPanel());
         switch (currentPanelSelected)
         {
             case 0:
@@ -44,7 +50,46 @@ public class PopulateShop : MonoBehaviour
             case 1:
                 shopMenu.SelectWeaponPanel();
                 break;
+            case 2:
+                shopMenu.SelectKeyItemPanel();
+                break;
         }
+   }
+
+   private IEnumerator PopulateKeyItemPanel()
+   {
+       int count = 0;
+       yield return null;
+       foreach (KeyItem k in keyItemList)
+       {
+            yield return null;
+            GameObject slot = keyItemSlots[count];
+            Button btn = slot.GetComponent<Button>();
+            btn.onClick.RemoveAllListeners();
+            SetupSlot(k, slot, btn);
+            yield return null;
+            
+            if (PlayerManager.playerData.GetIfKeyItemBoughtById(k.GetID())) //Should combine with the below else if statement and make the button uninteractable
+            {
+                btn.onClick.AddListener(() => { shopMenu.SelectAlreadyBought(); });
+            }
+            else if (PlayerManager.playerData.GetMoney() < k.GetPrice())
+            {
+                btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
+            }
+            else 
+            {
+                btn.onClick.AddListener(() => { shopMenu.SelectItem(k); });
+            }
+            
+            count++;
+       }
+        //Cleanup
+       for (int i=count; i < keyItemSlots.Length; i++)
+       {
+            GameObject slot = keyItemSlots[i];
+            slot.SetActive(false);
+       }
    }
 
    private IEnumerator PopulateWeaponPanel()
