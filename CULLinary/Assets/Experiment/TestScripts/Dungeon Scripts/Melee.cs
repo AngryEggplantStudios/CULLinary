@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Melee : MonoBehaviour
 {
-    [SerializeField] private float damage;
     private void OnTriggerEnter(Collider collider)
     {
+        int damage = PlayerManager.playerData == null ? 20 : PlayerManager.playerData.GetMeleeDamage();
         Enemy target = collider.GetComponent<Enemy>();
         if (target != null)
         {

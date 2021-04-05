@@ -41,8 +41,10 @@ public class Loot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (InventoryUI.instance.AddItem(this.GetItem()))
+        // Debug.Log("loot colliding with: " + other.tag);
+        if ((other.CompareTag("Player") || other.CompareTag("MeleeWeapon"))) 
         {
+            InventoryUI.instance.AddItem(this.GetItem());
             PickUp();
         }
     }

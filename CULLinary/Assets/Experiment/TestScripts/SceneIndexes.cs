@@ -5,7 +5,10 @@ public enum SceneIndexes
 {
   MAINMENU = 0,
   REST = 1,
-  DUNGEON = 2,
-  SHOP = 3,
-  BOSS = 4,
+  SHOP = 2,
+  DUNGEON = 3,
+  TUT_REST = 4,
+  TUT_DUNGEON = 5,
+  TUT_RETURN = 6,
+  BOSS = 7
 }
