@@ -140,7 +140,7 @@ public class MeshCombiner : MonoBehaviour
             Debug.Log("Saved Mesh to:" + savePath);
             
             // Comment out this line if building
-            //AssetDatabase.CreateAsset(mf.mesh, savePath);
+            AssetDatabase.CreateAsset(mf.mesh, savePath);
         }
     }
 

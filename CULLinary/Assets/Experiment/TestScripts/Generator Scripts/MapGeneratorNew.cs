@@ -10,6 +10,7 @@ public class MapGeneratorNew : MonoBehaviour
     public GameObject startingRoom;
     public GameObject[] fillerRooms;
     public GameObject[] spawnRooms;
+    public GameObject specialClownRoom;
     public GameObject deadendEdge;
     public GameObject deadendCorner;
     public int mapSize;
@@ -83,6 +84,11 @@ public class MapGeneratorNew : MonoBehaviour
         for (int i = 0; i < (1 - fillerRatio) * roomLimit; i++)
         {
             spawnRoomPool.Add(spawnRooms[i / numOfDuplicates]);
+        }
+
+        if (PlayerManager.playerData != null && specialClownRoom != null && PlayerManager.playerData.GetIfKeyItemBoughtById(0))
+        {
+            spawnRoomPool[UnityEngine.Random.Range(Mathf.RoundToInt(spawnRoomPool.Count * 0.75f), spawnRoomPool.Count)] = specialClownRoom; //It will only appear in the last 25% of rooms
         }
 
         roomPool = MergeShuffle(fillerRoomPool, spawnRoomPool).ToList();

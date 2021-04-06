@@ -31,8 +31,9 @@ public class DungeonPlayerHealth : MonoBehaviour
     void Start()
     {
         isInvincible = false;
-        health = PlayerManager.playerData == null ? 150 : PlayerManager.playerData.GetMaxHealth();
-        maxHealth = health;
+        health = PlayerManager.playerData == null ? 100 : PlayerManager.playerData.GetCurrentHealth();
+        PlayerManager.currHealth = health;
+        maxHealth = PlayerManager.playerData == null ? 100: PlayerManager.playerData.GetMaxHealth();
         hpBar = hpBarUI;
         hpBarFull = hpBar.transform.Find("HpBar")?.gameObject.GetComponent<Image>();
         hpText = hpBar.transform.Find("HpText")?.gameObject.GetComponent<Text>();
@@ -45,6 +46,11 @@ public class DungeonPlayerHealth : MonoBehaviour
         SetupFlash();
         dpl = this.gameObject.GetComponent<DungeonPlayerLocomotion>();
         cam = transform.GetComponentInChildren<Camera>();
+    }
+
+    public float GetHealth()
+    {
+        return this.health;
     }
 
     private void SetupFlash()
@@ -65,6 +71,7 @@ public class DungeonPlayerHealth : MonoBehaviour
         if (isInvincible) return false;
 
         this.health -= damage;
+        PlayerManager.currHealth = health;
         hpBarFull.fillAmount = health / maxHealth;
         hpText.text = health + "/" + maxHealth;
         SpawnDamageCounter(damage);

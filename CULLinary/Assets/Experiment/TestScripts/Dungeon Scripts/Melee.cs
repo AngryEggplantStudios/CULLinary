@@ -7,6 +7,10 @@ public class Melee : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         int damage = PlayerManager.playerData == null ? 20 : PlayerManager.playerData.GetMeleeDamage();
+        if (PlayerManager.playerData != null && Random.Range(0, 100) < PlayerManager.playerData.critRate)
+        {
+            damage *= 2;
+        }
         Enemy target = collider.GetComponent<Enemy>();
         if (target != null)
         {

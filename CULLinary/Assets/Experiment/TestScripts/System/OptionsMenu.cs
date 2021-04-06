@@ -25,13 +25,25 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetSFXVolume(float volume)
     {
-        audioMixer.SetFloat("SFX_Vol", volume);
-        PlayerPrefs.SetFloat("SFX_Vol", volume);
+        try {
+            audioMixer.SetFloat("SFX_Vol", volume);
+            PlayerPrefs.SetFloat("SFX_Vol", volume);
+        }
+        catch
+        {
+            Debug.Log("Unable to set SFX");
+        }
     }
 
     public void SetBGVolume(float volume)
     {
-        audioMixer.SetFloat("BG_Vol", volume);
-        PlayerPrefs.SetFloat("BG_Vol", volume);
+        try {
+            audioMixer.SetFloat("BG_Vol", volume);
+            PlayerPrefs.SetFloat("BG_Vol", volume);
+        }
+        catch
+        {
+            Debug.Log("Unable to set BG");
+        }
     }
 }
