@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62bce6057d17ecf48aac2df97bc685ac, type: 3}
-  m_Name: WeaponDatabase
+  m_Script: {fileID: 11500000, guid: 91604f5365a5c47418a8c9b220086957, type: 3}
+  m_Name: ClownDetector
   m_EditorClassIdentifier: 
-  allWeapons:
-  - {fileID: 11400000, guid: 6d51117875d93624981b3bb84456a104, type: 2}
-  - {fileID: 11400000, guid: e522e3a43bd29832984e6fd64ca55ab3, type: 2}
+  name: Clown Detector
+  icon: {fileID: 0}
+  description: Detects clowns in the area with 99.9% accuracy
+  price: 500
+  keyItemId: 0
+  isClownDetector: 1
