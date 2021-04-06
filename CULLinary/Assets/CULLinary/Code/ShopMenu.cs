@@ -34,7 +34,10 @@ public class ShopMenu : MonoBehaviour
     private void Start()
     {
         populateShop = GetComponentInChildren<PopulateShop>();
-        moneyText.text = "Money: $" + PlayerManager.playerData.GetMoney();
+        if (PlayerManager.playerData != null)
+        {
+            moneyText.text = "Money: $" + PlayerManager.playerData.GetMoney();
+        }
         currentStats.UpdateUI();
     }
     public void LoadDungeon()
