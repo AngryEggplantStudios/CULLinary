@@ -293,7 +293,6 @@ public class ClownController : MonoBehaviour
                 state = State.RangedAttack;
                 break;
         }
-        state = State.SpawnAttack;
         elapsedFrames = 0;
         openingMouth = true;
     }

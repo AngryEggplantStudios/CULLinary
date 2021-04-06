@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnBurger : MonoBehaviour
 {
@@ -29,5 +30,9 @@ public class SpawnBurger : MonoBehaviour
         //Load Louise's Screen
         fadingScreen.SetActive(true);
         fadingScreen.GetComponent<Animator>().SetTrigger("isFadingOut");
+        yield return new WaitForSeconds(1.0f);
+        //PlayerManager.playerData.SetCurrentIndex((int)SceneIndexes.BOSS);
+        //PlayerManager.SaveData();
+        SceneManager.LoadScene((int)SceneIndexes.FINALE);
     }
 }
