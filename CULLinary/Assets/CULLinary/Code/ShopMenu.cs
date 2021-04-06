@@ -140,6 +140,7 @@ public class ShopMenu : MonoBehaviour
     public void ConfirmPurchase(Weapon itemAsset)
     {
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
+        PlayerManager.playerData.SetCritRate(itemAsset.critRate);
         PlayerManager.playerData.SetWeaponBoughtById(itemAsset.GetID(), true);
         yesButton.onClick.RemoveAllListeners();
         DeselectItem();

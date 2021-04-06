@@ -14,6 +14,10 @@ public class Projectile : MonoBehaviour
     public void Setup(Vector3 sourcePosition, Vector3 targetPosition, int damage=20)
     {
         this.damage = damage;
+        if (Random.Range(0, 100) < PlayerManager.playerData.critRate)
+        {
+            this.damage *= 2;
+        }
         this.projDir = (targetPosition - sourcePosition).normalized;
         transform.position += new Vector3(0, heightFromGround, 0);
         transform.eulerAngles = new Vector3(0, CalculateAngle(projDir), 90);

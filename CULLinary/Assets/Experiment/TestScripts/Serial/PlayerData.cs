@@ -26,7 +26,7 @@ public class PlayerData
         this.rangeDamage = 20;
         this.meleeDamage = 20;
         this.critRate = 0f;
-        this.weaponsBought = new bool[50]; //Should probably rewrite the representation if time permits
+        this.weaponsBought = new bool[50];
         this.keyItemsBought = new bool[50];
         for (int i = 0; i < this.weaponsBought.Length; i++)
         {
@@ -92,7 +92,7 @@ public class PlayerData
 
     public void SetCritRate(float cr)
     {
-        this.critRate = cr;
+        this.critRate = Mathf.Max(this.critRate, cr);
     }
 
     public void SetKeyItemBoughtById(int id, bool flag=true)
