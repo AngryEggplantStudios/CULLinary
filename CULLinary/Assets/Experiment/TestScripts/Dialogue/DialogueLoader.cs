@@ -52,7 +52,6 @@ public class DialogueLoader : MonoBehaviour
     {
         theyPanel.SetActive(false);
         if (!currentDialogue.isLast) {
-            Debug.Log("Uh not last");
             currentDialogue = nextDialogue;
             RunCurrentDialogue();
         } else {
@@ -73,6 +72,9 @@ public class DialogueLoader : MonoBehaviour
         theySelector.DisplayNextDialogue += DisplayNextAndCloseTheyPanel;
 
         DialogueDatabase.GenerateDialogues();
+
+        // For debug purposes
+        // LoadAndRunDebug(21);
     }
 
     private void RunMeDialogue(PlainDialogue meDialogue)
@@ -154,6 +156,14 @@ public class DialogueLoader : MonoBehaviour
     {
         currentCustomer = customerToLeave;
         LoadDialogue(dialogue);
+        RunCurrentDialogue();
+    }
+
+    // For debugging, dialogue index refers to index
+    // rawDialoguesWithWeights in DialogueDatabase
+    public void LoadAndRunDebug(int dialogueIndex)
+    {
+        LoadDialogue(DialogueDatabase.GetDialogue(dialogueIndex));
         RunCurrentDialogue();
     }
 
