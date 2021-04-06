@@ -142,8 +142,10 @@ public class CookingStation : MonoBehaviour
         recipeActivator.enabled = true;     // Reset collider so player can click again to open recipe menu
         EnableMovementOfPlayer();           // Reenable player movement
   
+        audioSource.Stop();
+        audioSource.time = 0f;
         audioSource.clip = dingSound;
-        audioSource.Play();
+        audioSource.Play(); //For some reason this produces an error
    }
 
     // To spawn the dish at the counter once timer is up
