@@ -7,20 +7,9 @@ public class Vitamin : ShopItem
 {
 	public int vitaminId;
 	public int healthBonus;
+	public int healthHeal;
 	public int meleeAttackBonus;
 	public int rangeAttackBonus;
-	public int GetHealthBonus()
-	{
-		return this.healthBonus;
-	}
-	public int GetRangeAttackBonus()
-	{
-		return this.rangeAttackBonus;
-	}
-	public int GetMeleeAttackBonus()
-	{
-		return this.meleeAttackBonus;
-	}
 	public int GetID()
 	{
 		return this.vitaminId;

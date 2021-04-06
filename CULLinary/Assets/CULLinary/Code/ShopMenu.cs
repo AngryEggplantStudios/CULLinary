@@ -140,7 +140,6 @@ public class ShopMenu : MonoBehaviour
     public void ConfirmPurchase(Weapon itemAsset)
     {
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
-        PlayerManager.playerData.SetDoubleFire(itemAsset.GetDoubleFire());
         PlayerManager.playerData.SetWeaponBoughtById(itemAsset.GetID(), true);
         yesButton.onClick.RemoveAllListeners();
         DeselectItem();
@@ -152,6 +151,7 @@ public class ShopMenu : MonoBehaviour
         PlayerManager.playerData.SetMaxHealth(PlayerManager.playerData.GetMaxHealth() + currentVitaminSelected.healthBonus);
         PlayerManager.playerData.SetRangeDamage(PlayerManager.playerData.GetRangeDamage() + currentVitaminSelected.rangeAttackBonus);
         PlayerManager.playerData.SetMeleeDamage(PlayerManager.playerData.GetMeleeDamage() + currentVitaminSelected.meleeAttackBonus);
+        PlayerManager.playerData.SetCurrentHealth(PlayerManager.playerData.GetCurrentHealth() + currentVitaminSelected.healthHeal);
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
         yesButton.onClick.RemoveAllListeners();
         DeselectItem();

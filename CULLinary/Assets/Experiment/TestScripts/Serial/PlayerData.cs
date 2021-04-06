@@ -11,7 +11,7 @@ public class PlayerData
     public int currentHealth;
     public int rangeDamage;
     public int meleeDamage;
-    public bool doubleFire;
+    public float critRate;
     public bool[] weaponsBought;
     public bool[] keyItemsBought;
 
@@ -25,7 +25,7 @@ public class PlayerData
         this.currentHealth = 100;
         this.rangeDamage = 20;
         this.meleeDamage = 20;
-        this.doubleFire = false;
+        this.critRate = 0f;
         this.weaponsBought = new bool[50]; //Should probably rewrite the representation if time permits
         this.keyItemsBought = new bool[50];
         for (int i = 0; i < this.weaponsBought.Length; i++)
@@ -33,6 +33,11 @@ public class PlayerData
             this.weaponsBought[i] = false;
             this.keyItemsBought[i] = false;
         }
+    }
+
+    public float GetCritRate()
+    {
+        return this.critRate;
     }
 
     public bool GetIfKeyItemBoughtById(int id)
@@ -43,11 +48,6 @@ public class PlayerData
     public bool GetIfWeaponBoughtById(int id)
     {
         return this.weaponsBought[id];
-    }
-
-    public bool GetDoubleFire()
-    {
-        return this.doubleFire;
     }
 
     public string GetInventoryString()
@@ -90,6 +90,11 @@ public class PlayerData
         return this.meleeDamage;
     }
 
+    public void SetCritRate(float cr)
+    {
+        this.critRate = cr;
+    }
+
     public void SetKeyItemBoughtById(int id, bool flag=true)
     {
         this.keyItemsBought[id] = flag;
@@ -98,11 +103,6 @@ public class PlayerData
     public void SetWeaponBoughtById(int id, bool flag=true)
     {
         this.weaponsBought[id] = flag;
-    }
-
-    public void SetDoubleFire(bool flag)
-    {
-        this.doubleFire = flag;
     }
 
     public void SetMeleeDamage(int dmg)
@@ -142,7 +142,7 @@ public class PlayerData
 
     public void SetCurrentHealth(int currentHealth)
     {
-        this.currentHealth = Mathf.Max(100, currentHealth);
+        this.currentHealth = Mathf.Min(Mathf.Max(100, currentHealth),this.maxHealth); //Clamp
     }
 
     public string ToJson()
