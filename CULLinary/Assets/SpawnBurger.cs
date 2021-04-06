@@ -26,6 +26,7 @@ public class SpawnBurger : MonoBehaviour
             Instantiate(burgerToSpawn, locationToSpawn, Quaternion.Euler(0, 90, 0));
             totalTime += Time.deltaTime;
         }
+        //Load Louise's Screen
         fadingScreen.SetActive(true);
         fadingScreen.GetComponent<Animator>().SetTrigger("isFadingOut");
     }
