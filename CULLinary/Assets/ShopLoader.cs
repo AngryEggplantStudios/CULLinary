@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ShopLoader : MonoBehaviour
 {
-    [SerializeField] private Text text;
     private void Update()
     {
         if (PopulateShop.isPopulated)
