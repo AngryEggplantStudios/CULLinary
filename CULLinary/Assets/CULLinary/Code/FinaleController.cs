@@ -33,7 +33,7 @@ public class FinaleController : MonoBehaviour
                 movementController.DisableMovementOfPlayer();
                 Dialogue clownerDialogue = DialogueParser.Parse(
                     "{[R]1}Hey chef, thanks for the happy meal-" +
-                    "{[R]1}Knowing the monsters are gone definitely puts a smile to our faces :)" +
+                    "{[R]1}Knowing the monsters are gone really puts a smile to our faces :)" +
                     "{[R]1}Thank you for restoring peace to the town!");
                 dialogueLoader.LoadAndRun(clownerDialogue, customerController);
                 dialogueLoader.SetDialogueEndCallback(() => {
@@ -57,6 +57,8 @@ public class FinaleController : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         rollingCreditsAnimator.SetBool("LetsRoll", true); // Roll da credits
+        
+        yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(GoBackMenu()); // initially GoBackRestaurant() but i think loading back to main menu makes more sense??
     }
