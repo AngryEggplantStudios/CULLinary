@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class RestLoader : MonoBehaviour
 {
-    [SerializeField] private Text text;
     private void Update()
     {
-        text.text = "Loading Restaurant...";
         StartCoroutine(ShowAutosave());
     }
 

@@ -17,6 +17,8 @@ public class CurrentStats : MonoBehaviour
 
     public void UpdateUI()
     {
+        if (PlayerManager.playerData == null) return;
+
         healthValue.text = PlayerManager.playerData.currentHealth + "/" + PlayerManager.playerData.GetMaxHealth();
         rangeValue.text = PlayerManager.playerData.GetRangeDamage() + " dmg";
         meleeValue.text = PlayerManager.playerData.GetMeleeDamage() + " dmg";
