@@ -49,7 +49,6 @@ public class Projectile : MonoBehaviour
         {
             target.HandleHit(damage);
             Destroy(gameObject);
-            Debug.Log("Hit!");
         }
     }
 

@@ -16,7 +16,7 @@ public class Rotator : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        transform.Rotate(new Vector3(0, 45, 0) * Time.deltaTime);
-        transform.position = new Vector3(transform.position.x, transform.position.y - Time.deltaTime, transform.position.z);
+        transform.Rotate(new Vector3(0, 45, 0) * Time.deltaTime * 2);
+        transform.position = new Vector3(transform.position.x, transform.position.y - (2 * Time.deltaTime), transform.position.z);
     }
 }

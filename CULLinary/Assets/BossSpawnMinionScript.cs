@@ -233,7 +233,7 @@ public class BossSpawnMinionScript : Enemy
         SetupUI(damageCounter);
     }
 
-    private void Die()
+    public void Die()
     {
         DropLoot();
         Destroy(hpBar);

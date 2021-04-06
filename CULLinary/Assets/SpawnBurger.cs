@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnBurger : MonoBehaviour
 {
     [SerializeField] public GameObject burgerToSpawn;
+    [SerializeField] public GameObject fadingScreen;
 
     // Start is called before the first frame update
     public void callRainBurger()
@@ -16,13 +17,16 @@ public class SpawnBurger : MonoBehaviour
 
     private IEnumerator rainBurgers()
     {
-        while (true)
+        float totalTime = 0;
+        while (totalTime < 2.0f)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
             Vector2 positionToSpawn = Random.insideUnitCircle * 15;
             Vector3 locationToSpawn = new Vector3(positionToSpawn.x, transform.position.y, positionToSpawn.y);
             Instantiate(burgerToSpawn, locationToSpawn, Quaternion.Euler(0, 90, 0));
+            totalTime += Time.deltaTime;
         }
-
+        fadingScreen.SetActive(true);
+        fadingScreen.GetComponent<Animator>().SetTrigger("isFadingOut");
     }
 }

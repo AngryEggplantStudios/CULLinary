@@ -33,5 +33,11 @@ public class BossSpawnAttack : MonoBehaviour
         stage2On = true;
     }
 
-
+    public void destroySpawnPoints()
+    {
+        for (int i = 0; i < totalSpawnPoints; i++)
+        {
+            spawnPoint1[i].destroyAllSpawns();
+        }
+    }
 }

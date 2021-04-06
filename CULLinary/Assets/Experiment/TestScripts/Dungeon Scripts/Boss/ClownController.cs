@@ -102,7 +102,11 @@ public class ClownController : MonoBehaviour
 
         if (this.health <= 0)
         {
+            //die
+            spawnAttackScript.destroySpawnPoints();
             endingBurgers.GetComponent<SpawnBurger>().callRainBurger();
+            Destroy(hpBar);
+            Destroy(gameObject);
         }
     }
 
@@ -289,6 +293,7 @@ public class ClownController : MonoBehaviour
                 state = State.RangedAttack;
                 break;
         }
+        state = State.SpawnAttack;
         elapsedFrames = 0;
         openingMouth = true;
     }
