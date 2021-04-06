@@ -10,11 +10,18 @@ public class TutorialController_Return : MonoBehaviour
     public TutorialManager TutorialManager;
     public GameObject PossibleSeats;
     public Animator textAnimator;
+    public GameObject customerTextUI;
+    public GameObject clownerCust;
+    public DialogueLoader dialogueLoader;
+    public Restaurant_CustomerController customerController;
+    // CookingStation to disable movement when speaking to ClownerCust
+    public CookingStation movementController;
 
     bool cookedDish = false;
     bool pickedUpDish = false;
     bool firstCustArrived = false;
     bool firstCustLeft = false;
+    bool spawnedClownerCust = false;
 
     GameObject firstCustSeat = null;
 
@@ -65,11 +72,16 @@ public class TutorialController_Return : MonoBehaviour
             }
         }
         
-        if ((firstCustLeft == true) && (textAnimator.GetBool("isOpen") == false)) // once instruction textbox goes away
+        if (!spawnedClownerCust && (firstCustLeft == true) && (textAnimator.GetBool("isOpen") == false)) // once instruction textbox goes away
         {
-            StartCoroutine(LoadGameScene());
-        }
-        
+            //StartCoroutine(LoadGameScene()); // Previously used to immediately load next scene
+
+            // Replace by triggering the dialogue, then transition to initial clown boss scene
+            // DialogueDatabase.GetDialogue(15);
+            spawnedClownerCust = true;
+            Debug.Log("spawn clowner");
+            StartCoroutine("SpawnClownerCust");
+        }        
     }
 
     // Will be called by Return_CustCounter.cs when it tracks that one customer already left 
@@ -79,11 +91,35 @@ public class TutorialController_Return : MonoBehaviour
         firstCustLeft = true; // mark that first cust has left, final msg shld be showing alr
     }
 
+    IEnumerator SpawnClownerCust()
+    {
+        yield return new WaitForSeconds(2);
+
+        clownerCust.SetActive(true);
+        TutFindPlayer findPlayerAi = clownerCust.GetComponent<TutFindPlayer>();
+
+        if (findPlayerAi) {
+            findPlayerAi.SetReachedPlayerCallback(() => {
+                movementController.DisableMovementOfPlayer();
+                Dialogue clownerDialogue = DialogueParser.Parse(
+                    "{[R]1}Rumour has it that the one behind this chaos is a clown-" +
+                    "{[R]1}Wait... What's that sound?");
+                dialogueLoader.LoadAndRun(clownerDialogue, customerController);
+                dialogueLoader.SetDialogueEndCallback(() => {
+                    Debug.Log("Meet Donald McRonald in 2.5 seconds");
+                    StartCoroutine(LoadGameScene());
+                });
+            });
+        }
+    }
+
     IEnumerator LoadGameScene()
     {
-        yield return new WaitForSeconds(2); // Have some time for player to process everything before loading the game scene
+        yield return new WaitForSeconds(2.5f); // Have some time for player to process everything before loading the game scene
 
-        SceneManager.LoadScene((int)SceneIndexes.REST); // or let them start from dungeon?
+        // OPTIONAL: Add shaking effect to camera??
+
+        SceneManager.LoadScene((int)SceneIndexes.BOSS); // CHANGE TO INITIAL BOSS SCENE HERE
     }
 
     IEnumerator AdvanceInstructions()

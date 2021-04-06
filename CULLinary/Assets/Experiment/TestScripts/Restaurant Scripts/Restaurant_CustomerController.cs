@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Restaurant_CustomerController : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class Restaurant_CustomerController : MonoBehaviour
 
     private int idx = 0;
     private bool alrReceivedFood = false;
-    private bool canBeSpokenTo = true;
+    public bool canBeSpokenTo = true;
     
     public AudioSource kachingSound;
 
@@ -32,7 +33,15 @@ public class Restaurant_CustomerController : MonoBehaviour
         animator.SetBool("SitDown", true);
         Debug.Log("animator is: " + animator.ToString());
 
-        idx = Random.Range(0, dishNames.Length); // set the idx here, it was 0 by default
+        Scene currScene = SceneManager.GetActiveScene();
+        if (currScene.buildIndex == (int)SceneIndexes.TUT_RETURN)
+        {
+            idx = 0; // always order eggplant in return_tut_restaurant scene
+        } else
+        {
+            idx = Random.Range(0, dishNames.Length); // set the idx here, it was 0 by default
+        }
+        
         foodText.text = dishNames[idx];
         dishImg.sprite = dishImages[idx];
         orderUI.SetActive(true);
