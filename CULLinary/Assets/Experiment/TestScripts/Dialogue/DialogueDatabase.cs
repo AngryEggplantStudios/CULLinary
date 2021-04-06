@@ -37,7 +37,6 @@ public static class DialogueDatabase
         ("{[L]0}How are you doing?{[R]1}Okay, I guess.{[R]1}Other than that dream I had where I was stuck in a maze.{2}[C,What happened?]<{[R]1}There were chemical spills...{[R]1}I was being chased by some horrifying ghost thing... *shudder*>[C,Sorry to hear that.]<{[L]0}I'm sorry to hear that.{[R]1}Yeah, I had to control my heartbeat and catch glowing orbs to get out...>", 1),
         ("{[R]1}Hi! Random question, have you been stuck in a laboratory?{2}[C,Can't say I have.]<{[R]1}If you do, bringing a drone might be helpful!>[C,Yes.]<{[R]1}If you get stuck again, you should look for some letters!{[R]1}The owner of the lab may have left his password lying around...>", 1),
         ("{[R]1}I once had a dream where everything was white.{[R]1}I had to find colour pools to restore the colour with my paint gun!", 1),
-        ("{[R]1}Rumour has it that the one behind this chaos is a clown- Wait... What's that sound?", 0) // Rigged for tutorial (0 as in 0 weight?)
     };
 
     private static (Dialogue, double)[] dialoguesWithCumulativeChance = null;

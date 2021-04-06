@@ -11,15 +11,17 @@ public class TutorialController_Return : MonoBehaviour
     public GameObject PossibleSeats;
     public Animator textAnimator;
     public GameObject customerTextUI;
+    public GameObject clownerCust;
     public DialogueLoader dialogueLoader;
     public Restaurant_CustomerController customerController;
+    // CookingStation to disable movement when speaking to ClownerCust
+    public CookingStation movementController;
 
     bool cookedDish = false;
     bool pickedUpDish = false;
     bool firstCustArrived = false;
     bool firstCustLeft = false;
-    bool talkedAbtClown = false;
-    bool metClown = false;
+    bool spawnedClownerCust = false;
 
     GameObject firstCustSeat = null;
 
@@ -70,24 +72,16 @@ public class TutorialController_Return : MonoBehaviour
             }
         }
         
-        if ((firstCustLeft == true) && (textAnimator.GetBool("isOpen") == false)) // once instruction textbox goes away
+        if (!spawnedClownerCust && (firstCustLeft == true) && (textAnimator.GetBool("isOpen") == false)) // once instruction textbox goes away
         {
             //StartCoroutine(LoadGameScene()); // Previously used to immediately load next scene
 
             // Replace by triggering the dialogue, then transition to initial clown boss scene
             // DialogueDatabase.GetDialogue(15);
-            dialogueLoader.LoadAndRun(DialogueDatabase.GetDialogue(15), customerController);
-            
-            StartCoroutine("BringUpClown");
-        }
-
-        if ( (talkedAbtClown == true) && (customerController.canBeSpokenTo == false) && (metClown == false) ) // after customer finishes talking
-        {
-            Debug.Log("Meet Donald McRonald in 2.5 seconds");
-            StartCoroutine(LoadGameScene());
-            metClown = true;
-        }
-        
+            spawnedClownerCust = true;
+            Debug.Log("spawn clowner");
+            StartCoroutine("SpawnClownerCust");
+        }        
     }
 
     // Will be called by Return_CustCounter.cs when it tracks that one customer already left 
@@ -97,12 +91,26 @@ public class TutorialController_Return : MonoBehaviour
         firstCustLeft = true; // mark that first cust has left, final msg shld be showing alr
     }
 
-    IEnumerator BringUpClown()
+    IEnumerator SpawnClownerCust()
     {
         yield return new WaitForSeconds(2);
 
-        talkedAbtClown = true;
-        customerController.SetToNoDialogue();
+        clownerCust.SetActive(true);
+        TutFindPlayer findPlayerAi = clownerCust.GetComponent<TutFindPlayer>();
+
+        if (findPlayerAi) {
+            findPlayerAi.SetReachedPlayerCallback(() => {
+                movementController.DisableMovementOfPlayer();
+                Dialogue clownerDialogue = DialogueParser.Parse(
+                    "{[R]1}Rumour has it that the one behind this chaos is a clown-" +
+                    "{[R]1}Wait... What's that sound?");
+                dialogueLoader.LoadAndRun(clownerDialogue, customerController);
+                dialogueLoader.SetDialogueEndCallback(() => {
+                    Debug.Log("Meet Donald McRonald in 2.5 seconds");
+                    StartCoroutine(LoadGameScene());
+                });
+            });
+        }
     }
 
     IEnumerator LoadGameScene()
