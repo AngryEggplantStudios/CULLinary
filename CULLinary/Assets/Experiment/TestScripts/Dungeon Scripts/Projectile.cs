@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
     public void Setup(Vector3 sourcePosition, Vector3 targetPosition, int damage=20)
     {
         this.damage = damage;
-        if (Random.Range(0, 100) < PlayerManager.playerData.critRate)
+        if (PlayerManager.playerData != null && Random.Range(0, 100) < PlayerManager.playerData.critRate)
         {
             this.damage *= 2;
         }

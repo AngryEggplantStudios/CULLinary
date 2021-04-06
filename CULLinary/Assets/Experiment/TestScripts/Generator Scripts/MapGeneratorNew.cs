@@ -86,7 +86,7 @@ public class MapGeneratorNew : MonoBehaviour
             spawnRoomPool.Add(spawnRooms[i / numOfDuplicates]);
         }
 
-        if (specialClownRoom != null && PlayerManager.playerData.GetIfKeyItemBoughtById(0))
+        if (PlayerManager.playerData != null && specialClownRoom != null && PlayerManager.playerData.GetIfKeyItemBoughtById(0))
         {
             spawnRoomPool[UnityEngine.Random.Range(Mathf.RoundToInt(spawnRoomPool.Count * 0.75f), spawnRoomPool.Count)] = specialClownRoom; //It will only appear in the last 25% of rooms
         }
