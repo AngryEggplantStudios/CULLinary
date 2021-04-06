@@ -4,11 +4,11 @@ using UnityEngine;
 public class PlayerData
 {
     public string inventory;
-    public int stage; //references the game progress in terms of stage
     public int currentIndex; //references whether we are in the rest/dungeon
     public string playerName;
     public int money;
     public int maxHealth;
+    public int currentHealth;
     public int rangeDamage;
     public int meleeDamage;
     public bool doubleFire;
@@ -18,11 +18,11 @@ public class PlayerData
     public PlayerData()
     {
         this.inventory = "";
-        this.stage = 0;
         this.money = 0;
         this.currentIndex = (int)SceneIndexes.TUT_REST;
         this.playerName = "John Doe";
-        this.maxHealth = 150;
+        this.maxHealth = 100;
+        this.currentHealth = 100;
         this.rangeDamage = 20;
         this.meleeDamage = 20;
         this.doubleFire = false;
@@ -55,11 +55,6 @@ public class PlayerData
         return this.inventory;
     }
 
-    public int GetStage()
-    {
-        return this.stage;
-    }
-
     public int GetCurrentIndex()
     {
         return this.currentIndex;
@@ -78,6 +73,11 @@ public class PlayerData
     public int GetMaxHealth()
     {
         return this.maxHealth;
+    }
+
+    public int GetCurrentHealth()
+    {
+        return this.currentHealth;
     }
 
     public int GetRangeDamage()
@@ -120,11 +120,6 @@ public class PlayerData
         this.inventory = inventory;
     }
 
-    public void SetStage(int stage)
-    {
-        this.stage = stage;
-    }
-
     public void SetCurrentIndex(int currentIndex)
     {
         this.currentIndex = currentIndex;
@@ -143,6 +138,11 @@ public class PlayerData
     public void SetMaxHealth(int maxHealth)
     {
         this.maxHealth = maxHealth;
+    }
+
+    public void SetCurrentHealth(int currentHealth)
+    {
+        this.currentHealth = Mathf.Max(100, currentHealth);
     }
 
     public string ToJson()

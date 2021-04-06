@@ -17,6 +17,7 @@ public class SaveGameDataSystem : MonoBehaviour
         if (inventoryUI != null && playerManager != null)
         {
             PlayerManager.playerData.SetCurrentIndex(index);
+            PlayerManager.playerData.SetCurrentHealth((int)PlayerManager.currHealth);
             PlayerManager.SaveData(inventoryUI.GetItemList());
         }
     }

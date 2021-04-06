@@ -9,6 +9,8 @@ public class PlayerManager : MonoBehaviour
     public static PlayerData playerData;
     public static PlayerManager instance;
 
+    public static float currHealth;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
