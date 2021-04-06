@@ -16,7 +16,7 @@ public class ShopLoader : MonoBehaviour
 
     private IEnumerator Delay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
 
