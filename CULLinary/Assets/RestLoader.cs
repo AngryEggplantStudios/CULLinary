@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopLoader : MonoBehaviour
+public class RestLoader : MonoBehaviour
 {
     [SerializeField] private Text text;
     private void Update()
     {
-        if (PopulateShop.isPopulated)
-        {
-            StartCoroutine(Delay());
-        }
+        text.text = "Loading Restaurant...";
+        StartCoroutine(ShowAutosave());
     }
 
-    private IEnumerator Delay()
+    private IEnumerator ShowAutosave()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 
