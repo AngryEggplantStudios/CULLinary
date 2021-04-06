@@ -59,6 +59,10 @@ public class PopulateShop : MonoBehaviour
 
    private IEnumerator PopulateKeyItemPanel()
    {
+       foreach (Transform child in keyItemGrid)
+       {
+           Destroy(child.gameObject);
+       }
        foreach (KeyItem k in keyItemList)
        {
             yield return null;
@@ -85,8 +89,12 @@ public class PopulateShop : MonoBehaviour
 
    private IEnumerator PopulateWeaponPanel()
    {
-       foreach (Weapon w in weaponList)
-       {
+        foreach (Transform child in weaponGrid)
+        {
+           Destroy(child.gameObject);
+        }
+        foreach (Weapon w in weaponList)
+        {
             yield return null;
             GameObject slot = Instantiate(shopButton_prefab, weaponGrid);
             Button btn = slot.GetComponent<Button>();
@@ -106,11 +114,15 @@ public class PopulateShop : MonoBehaviour
             {
                 btn.onClick.AddListener(() => { shopMenu.SelectItem(w); });
             }
-       }
-   }
+        }
+    }
 
    private IEnumerator PopulateVitaminPanel()
    {
+        foreach (Transform child in vitaminGrid)
+       {
+           Destroy(child.gameObject);
+       }
        foreach (Vitamin v in vitaminList)
        {
             yield return null;
