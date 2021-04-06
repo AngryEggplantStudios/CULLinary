@@ -132,7 +132,9 @@ public class Restaurant_CustomerController : MonoBehaviour
         // Animator animator = gameObject.GetComponent<Animator>();
         // animator.SetBool("SitDown", false); //wanted customer to play stand up anim b4 leaving but this one doesn't work :')
         // StartCoroutine(DestroyCustomer());
-        DestroyCustomer();
+        Scene currScene = SceneManager.GetActiveScene();
+        if (currScene.buildIndex != (int)SceneIndexes.FINALE)
+            DestroyCustomer();
     } 
 
     void DestroyCustomer()
