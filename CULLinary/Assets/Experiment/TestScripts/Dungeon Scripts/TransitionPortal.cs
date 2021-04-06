@@ -44,7 +44,6 @@ public class TransitionPortal : MonoBehaviour
                     uiController.ShowConfirmLeaveNotifPanel();
                 } else
                 {
-                    Debug.Log("Player can transit");
                     if (enableGameSave)
                     {
                         saveGameDataSystem.SaveGameData((int)sceneIndex);
@@ -54,7 +53,6 @@ public class TransitionPortal : MonoBehaviour
             }
             else // in dungeon
             {
-                Debug.Log("Player can transit");
                 if (enableGameSave)
                 {
                     saveGameDataSystem.SaveGameData((int)sceneIndex);
@@ -74,7 +72,6 @@ public class TransitionPortal : MonoBehaviour
 
     private void LoadScene()
     {
-        Debug.Log((int)sceneIndex);
         SceneManager.LoadScene((int)sceneIndex);
     }
 

@@ -62,8 +62,6 @@ public class MapGeneratorNew : MonoBehaviour
             PlayerManager.LoadData();
         }
 
-        Debug.Log(PlayerManager.playerData.GetIfKeyItemBoughtById(0));
-
         generatedRooms.Clear();
         roomProgress = 0f;
         isGenerated = false;
@@ -86,6 +84,11 @@ public class MapGeneratorNew : MonoBehaviour
         for (int i = 0; i < (1 - fillerRatio) * roomLimit; i++)
         {
             spawnRoomPool.Add(spawnRooms[i / numOfDuplicates]);
+        }
+
+        if (specialClownRoom != null && PlayerManager.playerData.GetIfKeyItemBoughtById(0))
+        {
+            spawnRoomPool[UnityEngine.Random.Range(Mathf.RoundToInt(spawnRoomPool.Count * 0.75f), spawnRoomPool.Count)] = specialClownRoom; //It will only appear in the last 25% of rooms
         }
 
         roomPool = MergeShuffle(fillerRoomPool, spawnRoomPool).ToList();

@@ -10,6 +10,10 @@ public class SaveGameDataSystem : MonoBehaviour
 
     public void SaveGameData(int index)
     {
+        if (inventoryUI == null)
+        {
+            inventoryUI = GameObject.FindObjectOfType<InventoryUI>();
+        }
         if (inventoryUI != null && playerManager != null)
         {
             PlayerManager.playerData.SetCurrentIndex(index);
