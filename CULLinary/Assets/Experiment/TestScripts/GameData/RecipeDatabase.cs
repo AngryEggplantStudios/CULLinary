@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName="New Recipe Database", menuName="Restaurant/RecipeDatabase")]
-public class RecipeDatabase : ScriptableObject
+[CreateAssetMenu(fileName="New KeyItem Database", menuName="Shop/KeyItemDatabase")]
+public class KeyItemDatabase : ScriptableObject
 {
-    public List<Recipe> allRecipes;
+    public List<KeyItem> allKeyItems;
 }

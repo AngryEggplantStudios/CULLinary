@@ -13,6 +13,7 @@ public class PlayerData
     public int meleeDamage;
     public bool doubleFire;
     public bool[] weaponsBought;
+    public bool[] keyItemsBought;
 
     public PlayerData()
     {
@@ -26,10 +27,17 @@ public class PlayerData
         this.meleeDamage = 20;
         this.doubleFire = false;
         this.weaponsBought = new bool[50]; //Should probably rewrite the representation if time permits
+        this.keyItemsBought = new bool[50];
         for (int i = 0; i < this.weaponsBought.Length; i++)
         {
             this.weaponsBought[i] = false;
+            this.keyItemsBought[i] = false;
         }
+    }
+
+    public bool GetIfKeyItemBoughtById(int id)
+    {
+        return this.keyItemsBought[id];
     }
 
     public bool GetIfWeaponBoughtById(int id)
@@ -80,6 +88,11 @@ public class PlayerData
     public int GetMeleeDamage()
     {
         return this.meleeDamage;
+    }
+
+    public void SetKeyItemBoughtById(int id, bool flag=true)
+    {
+        this.keyItemsBought[id] = flag;
     }
 
     public void SetWeaponBoughtById(int id, bool flag=true)
