@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopLoader : MonoBehaviour
+public class RestLoader : MonoBehaviour
 {
     [SerializeField] private Text text;
     private void Update()
     {
-        if (PopulateShop.isPopulated)
-        {
-            text.text = "Autosaving in progress...";
-            StartCoroutine(ShowAutosave());
-        }
+        text.text = "Autosaving in progress...";
+        StartCoroutine(ShowAutosave());
     }
 
     private IEnumerator ShowAutosave()

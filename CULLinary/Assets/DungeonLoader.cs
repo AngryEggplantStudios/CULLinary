@@ -22,7 +22,7 @@ public class DungeonLoader : MonoBehaviour
         }
         else if (MapGeneratorNew.isLoadingGame)
         {
-            textToChange.text = "Loading Game...";
+            textToChange.text = "Autosaving in Progress...";
         }
         else
         {
