@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopLoader : MonoBehaviour
 {
@@ -8,8 +9,14 @@ public class ShopLoader : MonoBehaviour
     {
         if (PopulateShop.isPopulated)
         {
-            Destroy(gameObject);
+            StartCoroutine(Delay());
         }
+    }
+
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 
 }

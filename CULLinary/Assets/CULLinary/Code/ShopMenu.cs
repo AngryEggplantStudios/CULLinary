@@ -24,15 +24,20 @@ public class ShopMenu : MonoBehaviour
     [SerializeField] private CurrentStats currentStats;
     [SerializeField] private GameObject vitaminPanel;
     [SerializeField] private GameObject weaponPanel;
+    [SerializeField] private GameObject keyItemPanel;
     private Vitamin currentVitaminSelected;
     private Weapon currentWeaponSelected;
+    private KeyItem currentKeyItemSelected;
     private PopulateShop populateShop;
     private int currentPanelSelected = 0; //0=VITAMIN, 1=WEAPON, 2=KEYITEMS
 
     private void Start()
     {
         populateShop = GetComponentInChildren<PopulateShop>();
-        moneyText.text = "Money: $" + PlayerManager.playerData.GetMoney();
+        if (PlayerManager.playerData != null)
+        {
+            moneyText.text = "Money: $" + PlayerManager.playerData.GetMoney();
+        }
         currentStats.UpdateUI();
     }
     public void LoadDungeon()
@@ -46,6 +51,7 @@ public class ShopMenu : MonoBehaviour
     {
         vitaminPanel.SetActive(true);
         weaponPanel.SetActive(true);
+        keyItemPanel.SetActive(true);
     }
 
     public void SelectVitaminPanel()
@@ -53,6 +59,7 @@ public class ShopMenu : MonoBehaviour
         currentPanelSelected = 0;   
         vitaminPanel.SetActive(true);
         weaponPanel.SetActive(false);
+        keyItemPanel.SetActive(false);
     }
 
     public void SelectWeaponPanel()
@@ -60,6 +67,15 @@ public class ShopMenu : MonoBehaviour
         currentPanelSelected = 1;
         vitaminPanel.SetActive(false);
         weaponPanel.SetActive(true);
+        keyItemPanel.SetActive(false);
+    }
+
+    public void SelectKeyItemPanel()
+    {
+        currentPanelSelected = 2;
+        vitaminPanel.SetActive(false);
+        weaponPanel.SetActive(false);
+        keyItemPanel.SetActive(true);
     }
 
     public void SelectNoMoney()
@@ -101,6 +117,13 @@ public class ShopMenu : MonoBehaviour
         yesButton.onClick.AddListener(() => { ConfirmPurchase(itemAsset); });
     }
 
+    public void SelectItem(KeyItem itemAsset)
+    {
+        SelectItem(itemAsset.price, itemAsset.name, itemAsset.description, itemAsset.GetSprite());
+        currentKeyItemSelected = itemAsset;
+        yesButton.onClick.AddListener(() => { ConfirmPurchase(itemAsset); });
+    }
+
     public void SelectItem(Weapon itemAsset)
     {
         SelectItem(itemAsset.price, itemAsset.name, itemAsset.description, itemAsset.GetSprite());
@@ -108,10 +131,19 @@ public class ShopMenu : MonoBehaviour
         yesButton.onClick.AddListener(() => { ConfirmPurchase(itemAsset); });
     }
 
+    public void ConfirmPurchase(KeyItem itemAsset)
+    {
+        PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
+        PlayerManager.playerData.SetKeyItemBoughtById(itemAsset.GetID(), true);
+        yesButton.onClick.RemoveAllListeners();
+        DeselectItem();
+        UpdateUI();
+    }
+
     public void ConfirmPurchase(Weapon itemAsset)
     {
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
-        PlayerManager.playerData.SetDoubleFire(itemAsset.GetDoubleFire());
+        PlayerManager.playerData.SetCritRate(itemAsset.critRate);
         PlayerManager.playerData.SetWeaponBoughtById(itemAsset.GetID(), true);
         yesButton.onClick.RemoveAllListeners();
         DeselectItem();
@@ -123,6 +155,7 @@ public class ShopMenu : MonoBehaviour
         PlayerManager.playerData.SetMaxHealth(PlayerManager.playerData.GetMaxHealth() + currentVitaminSelected.healthBonus);
         PlayerManager.playerData.SetRangeDamage(PlayerManager.playerData.GetRangeDamage() + currentVitaminSelected.rangeAttackBonus);
         PlayerManager.playerData.SetMeleeDamage(PlayerManager.playerData.GetMeleeDamage() + currentVitaminSelected.meleeAttackBonus);
+        PlayerManager.playerData.SetCurrentHealth(PlayerManager.playerData.GetCurrentHealth() + currentVitaminSelected.healthHeal);
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
         yesButton.onClick.RemoveAllListeners();
         DeselectItem();

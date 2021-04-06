@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,9 @@ public class DialogueLoader : MonoBehaviour
 
     private Dialogue currentDialogue;
     private Dialogue nextDialogue;
+    // Delegate to be run after dialogue ends
+    private static readonly Action defaultDialogueAction = () => {};
+    private Action endDialogueAction = defaultDialogueAction;
 
     private Restaurant_CustomerController currentCustomer;
 
@@ -38,6 +42,9 @@ public class DialogueLoader : MonoBehaviour
         } else {
             movementController.EnableMovementOfPlayer();
             StartCoroutine(currentCustomer.TimeToLeave());
+            // Invoke the ending action
+            endDialogueAction.Invoke();
+            endDialogueAction = defaultDialogueAction;
         }
     }
 
@@ -50,6 +57,9 @@ public class DialogueLoader : MonoBehaviour
         } else {
             movementController.EnableMovementOfPlayer();
             StartCoroutine(currentCustomer.TimeToLeave());
+            // Invoke the ending action
+            endDialogueAction.Invoke();
+            endDialogueAction = defaultDialogueAction;
         }
     }
     
@@ -62,6 +72,9 @@ public class DialogueLoader : MonoBehaviour
         theySelector.DisplayNextDialogue += DisplayNextAndCloseTheyPanel;
 
         DialogueDatabase.GenerateDialogues();
+
+        // For debug purposes
+        // LoadAndRunDebug(21);
     }
 
     private void RunMeDialogue(PlainDialogue meDialogue)
@@ -144,5 +157,20 @@ public class DialogueLoader : MonoBehaviour
         currentCustomer = customerToLeave;
         LoadDialogue(dialogue);
         RunCurrentDialogue();
+    }
+
+    // For debugging, dialogue index refers to index
+    // rawDialoguesWithWeights in DialogueDatabase
+    public void LoadAndRunDebug(int dialogueIndex)
+    {
+        LoadDialogue(DialogueDatabase.GetDialogue(dialogueIndex));
+        RunCurrentDialogue();
+    }
+
+    // Sets the ending callback for the next dialogue.
+    // This callback will be unset after the next time it is triggered.
+    public void SetDialogueEndCallback(Action a)
+    {
+        endDialogueAction = a;
     }
 }
