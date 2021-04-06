@@ -37,7 +37,7 @@ public class DungeonPlayerProjectile : MonoBehaviour
         yield return null;
         Transform knifeTransform = Instantiate(throwingKnife, sourcePosition, Quaternion.identity);
         knifeTransform.GetComponent<Projectile>().Setup(sourcePosition, targetPosition, damage);
-        if (PlayerManager.playerData != null && PlayerManager.playerData.GetDoubleFire())
+        if (PlayerManager.playerData != null && PlayerManager.playerData.GetIfWeaponBoughtById(0))
         {
             yield return new WaitForSeconds(0.3f);
             Transform knifeTransform2 = Instantiate(throwingKnife, sourcePosition, Quaternion.identity);

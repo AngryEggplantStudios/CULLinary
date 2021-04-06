@@ -6,13 +6,9 @@ using UnityEngine;
 public class Weapon : ShopItem
 {
     public int weaponId;
-    public bool doubleFire;
+    public float critRate;
     public int GetID()
     {
         return this.weaponId;
-    }
-    public bool GetDoubleFire()
-    {
-        return this.doubleFire;
     }
 }

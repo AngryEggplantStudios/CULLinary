@@ -33,7 +33,7 @@ AnimatorStateTransition:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name: InstructionBox_Open -> InstructionBox_Close
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: isOpen
@@ -58,7 +58,7 @@ AnimatorStateTransition:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name: InstructionBox_Close -> InstructionBox_Open
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: isOpen
@@ -119,13 +119,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: CanGoNext
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -172,7 +172,7 @@ AnimatorStateTransition:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name: InstructionBox_Open -> FlashingNext
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: CanGoNext
@@ -197,7 +197,7 @@ AnimatorStateTransition:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
+  m_Name: FlashingNext -> InstructionBox_Open
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: CanGoNext

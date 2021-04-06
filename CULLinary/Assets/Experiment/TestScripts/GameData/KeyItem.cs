@@ -6,7 +6,6 @@ using UnityEngine;
 public class KeyItem : ShopItem
 {
     public int keyItemId;
-    
     public int GetID()
     {
         return this.keyItemId;
