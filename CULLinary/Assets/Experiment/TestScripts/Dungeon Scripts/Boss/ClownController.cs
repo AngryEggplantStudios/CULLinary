@@ -20,6 +20,7 @@ public class ClownController : MonoBehaviour
     [SerializeField] private GameObject hpBar_prefab;
     [SerializeField] private GameObject damageCounter_prefab;
     [SerializeField] private GameObject enemyAlert_prefab;
+    [SerializeField] private GameObject endingBurgers;
 
     private GameObject hpBar;
     private Image hpBarFull;
@@ -99,6 +100,10 @@ public class ClownController : MonoBehaviour
         hpBarFull.fillAmount = health / maxHealth;
         SpawnDamageCounter(damage);
 
+        if (this.health <= 0)
+        {
+            endingBurgers.GetComponent<SpawnBurger>().callRainBurger();
+        }
     }
 
 
@@ -268,17 +273,19 @@ public class ClownController : MonoBehaviour
         SetupUI(Instantiate(enemyAlert_prefab));
         yield return new WaitForSeconds(1);
         idleCooldownRunning = false;
-        int chooseAttack = Random.Range(1, 4);
+        int chooseAttack = Random.Range(1, 6);
         switch (chooseAttack)
         {
             default:
             case 1:
+            case 2:
                 state = State.MeleeAttack;
                 break;
-            case 2:
+            case 3:
                 state = State.SpawnAttack;
                 break;
-            case 3:
+            case 4:
+            case 5:
                 state = State.RangedAttack;
                 break;
         }
