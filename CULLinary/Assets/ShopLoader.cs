@@ -10,12 +10,11 @@ public class ShopLoader : MonoBehaviour
     {
         if (PopulateShop.isPopulated)
         {
-            text.text = "Autosaving in progress...";
-            StartCoroutine(ShowAutosave());
+            StartCoroutine(Delay());
         }
     }
 
-    private IEnumerator ShowAutosave()
+    private IEnumerator Delay()
     {
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);

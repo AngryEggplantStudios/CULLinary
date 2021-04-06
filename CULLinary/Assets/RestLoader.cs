@@ -8,13 +8,13 @@ public class RestLoader : MonoBehaviour
     [SerializeField] private Text text;
     private void Update()
     {
-        text.text = "Autosaving in progress...";
+        text.text = "Loading Restaurant...";
         StartCoroutine(ShowAutosave());
     }
 
     private IEnumerator ShowAutosave()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
 
