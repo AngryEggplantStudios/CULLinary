@@ -4,27 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class EnemyScript : Enemy
+public class BossSpawnMinionScript : Enemy
 {
     public NavMeshAgent agent;
 
     private enum State
     {
-        Roaming,
-        Idle,
         ChaseTarget,
         AttackTarget,
         ShootingTarget,
-        GoingBackToStart,
     }
 
     [SerializeField] private float maxHealth;
-    [SerializeField] private float distanceTriggered;
-    [SerializeField] private float stopChase;
-    [SerializeField] private float wanderTimer;
-    [SerializeField] private float idleTimer;
     [SerializeField] private float timeBetweenAttacks;
-    [SerializeField] private float collideDamage;
 
     [SerializeField] private GameObject hpBar_prefab;
     private GameObject hpBar;
@@ -34,7 +26,8 @@ public class EnemyScript : Enemy
     [SerializeField] private GameObject enemyAlert_prefab;
     private List<GameObject> uiList = new List<GameObject>();
 
-    [System.Serializable] private class LootTuple
+    [System.Serializable]
+    private class LootTuple
     {
         [SerializeField] private GameObject loot;
         [SerializeField] private int ratio;
@@ -58,17 +51,13 @@ public class EnemyScript : Enemy
 
     [SerializeField] private LootTuple[] lootTuples;
     [SerializeField] private float wanderRadius;
-    
+
     [SerializeField] private AudioSource audioSourceDamage;
     [SerializeField] private AudioClip[] stabSounds;
     [SerializeField] private AudioSource audioSourceAttack;
     [SerializeField] private AudioClip alertSound;
     [SerializeField] private AudioClip attackSound;
 
-    private Vector3 startingPosition;
-    private Vector3 roamPosition;
-    private float timer;
-    private float goingBackToStartTimer;
     private float dist;
     private float health;
     private Animator animator;
@@ -85,18 +74,15 @@ public class EnemyScript : Enemy
 
     private void Awake()
     {
-        state = State.Idle;
+        state = State.ChaseTarget;
         health = maxHealth;
     }
 
     private void Start()
     {
-        startingPosition = transform.position;
         GameObject attackRadius = gameObject.transform.Find("AttackRadius").gameObject;
-        refScript = attackRadius.GetComponent <EnemyAttack>();
+        refScript = attackRadius.GetComponent<EnemyAttack>();
         animator = GetComponentInChildren<Animator>();
-        timer = wanderTimer;
-        goingBackToStartTimer = 0;
         SetupFlash();
         SetupLoot();
 
@@ -104,13 +90,17 @@ public class EnemyScript : Enemy
         player = GameObject.FindGameObjectWithTag("Player").transform;
         cam = player.GetComponentInChildren<Camera>();
         SetupHpBar();
+        SetupUI(Instantiate(enemyAlert_prefab));
+        audioSourceAttack.clip = alertSound;
+        audioSourceAttack.Play();
     }
 
     private void SetupFlash()
     {
         rend = GetComponentInChildren<Renderer>();
         originalColors = new Color[rend.materials.Length];
-        for (int i = 0; i < rend.materials.Length; i++) {
+        for (int i = 0; i < rend.materials.Length; i++)
+        {
             originalColors[i] = rend.materials[i].color;
         }
     }
@@ -158,31 +148,6 @@ public class EnemyScript : Enemy
         switch (state)
         {
             default:
-            case State.Idle:
-                animator.SetBool("isMoving", false);
-                timer += Time.deltaTime;
-                FindTarget();
-                if (timer >= idleTimer)
-                {
-                    Vector3 newPos = RandomNavSphere(startingPosition, wanderRadius, -1);
-                    agent.SetDestination(newPos);
-                    timer = 0;
-                    state = State.Roaming;
-                    roamPosition = newPos;
-                }
-                break;
-            case State.Roaming:
-                animator.SetBool("isMoving", true);
-                timer += Time.deltaTime;
-                FindTarget();
-                Vector3 distanceToFinalPosition = transform.position - roamPosition;
-                //without this the eggplant wandering will be buggy as it may be within the Navmesh Obstacles itself
-                if (timer >= wanderTimer || distanceToFinalPosition.magnitude < 0.5f)
-                {
-                    timer = 0;
-                    state = State.Idle;
-                }
-                break;
             case State.ChaseTarget:
                 animator.SetBool("isMoving", true);
                 directionVector = Vector3.Distance(transform.position, playerPositionWithoutYOffset);
@@ -197,12 +162,6 @@ public class EnemyScript : Enemy
                 {
                     agent.SetDestination(playerPositionWithoutYOffset);
 
-                }
-
-                if (Vector3.Distance(transform.position, player.position) > stopChase + 0.1f)
-                {
-                    // Too far, stop chasing
-                    state = State.GoingBackToStart;
                 }
                 break;
             case State.AttackTarget:
@@ -223,20 +182,6 @@ public class EnemyScript : Enemy
                 }
 
                 break;
-            case State.GoingBackToStart:
-                goingBackToStartTimer += Time.deltaTime;
-                animator.SetBool("isMoving", true);
-                float reachedPositionDistance = 1.0f;
-                transform.LookAt(startingPosition);
-                agent.SetDestination(startingPosition);
-                if (Vector3.Distance(transform.position, startingPosition) <= reachedPositionDistance || goingBackToStartTimer > 4.0f)
-                {
-                    // Reached Start Position
-                    animator.SetBool("isMoving", false);
-                    state = State.Idle;
-                    goingBackToStartTimer = 0;
-                }
-                break;
         }
 
         // Set UI to current position
@@ -256,7 +201,7 @@ public class EnemyScript : Enemy
             }
         }
 
-        
+
     }
 
     private IEnumerator DelayFire()
@@ -265,24 +210,11 @@ public class EnemyScript : Enemy
         canAttack = true;
     }
 
-    private void FindTarget()
-    {
-        dist = Vector3.Distance(player.position, transform.position);
-        if (dist <= distanceTriggered)
-        {
-            timer = 0;
-            state = State.ChaseTarget;
-            
-            SetupUI(Instantiate(enemyAlert_prefab));
-            audioSourceAttack.clip = alertSound;
-            audioSourceAttack.Play();
-        }
-    }
 
     public override void HandleHit(float damage)
     {
         this.health -= damage;
-        hpBarFull.fillAmount = health/maxHealth;
+        hpBarFull.fillAmount = health / maxHealth;
         StartCoroutine(FlashOnDamage());
         SpawnDamageCounter(damage);
         audioSourceDamage.clip = stabSounds[Random.Range(0, stabSounds.Length)];
@@ -301,7 +233,7 @@ public class EnemyScript : Enemy
         SetupUI(damageCounter);
     }
 
-    private void Die()
+    public void Die()
     {
         DropLoot();
         Destroy(hpBar);
@@ -310,7 +242,8 @@ public class EnemyScript : Enemy
 
     private IEnumerator FlashOnDamage()
     {
-        for (var i = 0; i < rend.materials.Length; i++) {
+        for (var i = 0; i < rend.materials.Length; i++)
+        {
             rend.materials[i].color = onDamageColor;
         }
 
@@ -321,7 +254,8 @@ public class EnemyScript : Enemy
             yield return null;
         }
 
-        for (var i = 0; i < rend.materials.Length; i++) {
+        for (var i = 0; i < rend.materials.Length; i++)
+        {
             rend.materials[i].color = originalColors[i];
         }
     }
@@ -331,23 +265,6 @@ public class EnemyScript : Enemy
         Instantiate(lootDropped, transform.position, Quaternion.identity);
     }
 
-    private Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
-    {
-        Vector2 randPos = Random.insideUnitCircle * dist;
-        Vector3 randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);
-        while ((randDirection - origin).magnitude < 5.0f)
-        {
-            randPos = Random.insideUnitCircle * dist;
-            randDirection = new Vector3(randPos.x, transform.position.y, randPos.y);
-        }
-        randDirection += origin;
-
-        NavMeshHit navHit;
-
-        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
-
-        return navHit.position;
-    }
     public void attackPlayerStart()
     {
         canMoveDuringAttack = false;

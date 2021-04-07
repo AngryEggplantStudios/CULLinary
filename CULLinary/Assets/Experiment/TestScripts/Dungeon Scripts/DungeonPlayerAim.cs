@@ -42,8 +42,8 @@ public class DungeonPlayerAim : MonoBehaviour
         canShoot = true;
         animator = GetComponent<Animator>();
         lineRenderer = GetComponent<LineRenderer>();
-        
-        cursorHotspot = new Vector2(reticle.width/2, reticle.height/2);
+
+        cursorHotspot = new Vector2(reticle.width / 2, reticle.height / 2);
         lineRenderer.positionCount = 0;
     }
     private void Awake()
@@ -137,6 +137,12 @@ public class DungeonPlayerAim : MonoBehaviour
         dungeonPlayerRange.OnPlayerAim -= Aim;
         dungeonPlayerRange.OnPlayerStop -= StopAim;
     }
+    public void disableMovement()
+    {
+        dungeonPlayerRange.OnPlayerAim -= Aim;
+        dungeonPlayerRange.OnPlayerStop -= StopAim;
+    }
+    
 
 
 

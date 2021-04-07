@@ -45,7 +45,7 @@ public class SkipTutorial : MonoBehaviour
     // NOTIF: Leave scene if player confirms skip tutorial
     public void LeaveTutorial()
     {
-        SceneManager.LoadScene((int)SceneIndexes.REST); // Load the real restaurant scene
+        SceneManager.LoadScene((int)SceneIndexes.TUT_BOSS); // Load the real restaurant scene
     }
 
     public void ShowConfirmLeaveNotifPanel()

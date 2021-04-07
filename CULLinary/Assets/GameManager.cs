@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene((int)SceneIndexes.TUT_RETURN);
         }
+        else if (currScene.buildIndex == (int)SceneIndexes.TUT_BOSS)
+        {
+            SceneManager.LoadScene((int)SceneIndexes.DUNGEON);
+        }
         else
         {
             SceneManager.LoadScene((int)SceneIndexes.DUNGEON);

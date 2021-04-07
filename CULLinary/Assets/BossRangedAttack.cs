@@ -49,14 +49,14 @@ public class BossRangedAttack : EnemyAttack
 
     public void activateStage1()
     {
-        rayCount = 3;
-        offsetRay = 1;
+        rayCount = 5;
+        offsetRay = 2;
     }
 
     public void activateStage2()
     {
-        rayCount = 5;
-        offsetRay = 2;
+        rayCount = 9;
+        offsetRay = 4;
     }
 
     public void activateStage3()
