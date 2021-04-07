@@ -7,9 +7,11 @@ public class minimap : MonoBehaviour
     [SerializeField] Camera minimapCamera;
     [SerializeField] Transform navArrow;
     [SerializeField] Transform portalIcon;
-    [SerializeField] Transform portal;
+    [SerializeField] Transform clownIcon;
 
     Transform playerBody;
+    Transform portal;
+    Transform clown;
     float width;
     float height;
 
@@ -23,23 +25,38 @@ public class minimap : MonoBehaviour
         RectTransform rt = GetComponent<RectTransform>();
         width = rt.sizeDelta.x;
         height = rt.sizeDelta.y;
+
+        GameObject temp;
+        if (temp = GameObject.Find("DungeonPortal")) portal = temp.transform;
+        if (temp = GameObject.Find("ClownPortal")) clown = temp.transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
         navArrow.eulerAngles = new Vector3(0, 0, -playerBody.eulerAngles.y);
-        Vector3 portalScreenPos = minimapCamera.WorldToScreenPoint(portal.position);
-        Vector3 portalLocalPos = new Vector3(
-                portalScreenPos.x - width/2, 
-                portalScreenPos.y - height/2, 
+        SetIconPos(portalIcon, portal);
+        SetIconPos(clownIcon, clown);
+    }
+
+    void SetIconPos(Transform icon, Transform target) {
+        if (target == null)
+        {
+            icon.gameObject.SetActive(false);
+            return;
+        }
+
+        icon.gameObject.SetActive(true);
+        Vector3 screenPos = minimapCamera.WorldToScreenPoint(target.position);
+        Vector3 localPos = new Vector3(
+                screenPos.x - width/2, 
+                screenPos.y - height/2, 
                 0);
         
-        if (portalLocalPos.magnitude > width/2)
+        if (localPos.magnitude > width/2)
         {
-            portalLocalPos = portalLocalPos.normalized * width/2;
+            localPos = localPos.normalized * width/2;
         }
         
-        portalIcon.GetComponent<RectTransform>().anchoredPosition = portalLocalPos;
+        icon.GetComponent<RectTransform>().anchoredPosition = localPos;
     }
 }
