@@ -40,7 +40,10 @@ public class DialogueLoader : MonoBehaviour
             currentDialogue = nextDialogue;
             RunCurrentDialogue();
         } else {
-            movementController.EnableMovementOfPlayer();
+            if (movementController != null)
+            {
+                movementController.EnableMovementOfPlayer();
+            }
             StartCoroutine(currentCustomer.TimeToLeave());
             // Invoke the ending action
             endDialogueAction.Invoke();
@@ -155,6 +158,12 @@ public class DialogueLoader : MonoBehaviour
     public void LoadAndRun(Dialogue dialogue, Restaurant_CustomerController customerToLeave)
     {
         currentCustomer = customerToLeave;
+        LoadDialogue(dialogue);
+        RunCurrentDialogue();
+    }
+
+    public void LoadAndRunWithoutCustomer(Dialogue dialogue)
+    {
         LoadDialogue(dialogue);
         RunCurrentDialogue();
     }

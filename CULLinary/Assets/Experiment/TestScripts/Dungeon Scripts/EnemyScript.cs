@@ -268,7 +268,6 @@ public class EnemyScript : Enemy
     private void FindTarget()
     {
         dist = Vector3.Distance(player.position, transform.position);
-
         if (dist <= distanceTriggered)
         {
             timer = 0;
