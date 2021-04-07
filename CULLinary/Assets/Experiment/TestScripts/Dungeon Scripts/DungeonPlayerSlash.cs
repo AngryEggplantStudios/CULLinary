@@ -78,6 +78,11 @@ public class DungeonPlayerSlash : MonoBehaviour
         dungeonPlayerAttack.OnPlayerMelee -= Slash;
     }
 
+    public void disableMovement()
+    {
+        dungeonPlayerAttack.OnPlayerMelee -= Slash;
+    }
+
     public void AttackStart()
     {
         weaponCollider.enabled = true;

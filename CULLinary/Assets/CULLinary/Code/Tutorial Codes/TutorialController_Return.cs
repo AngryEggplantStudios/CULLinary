@@ -119,7 +119,7 @@ public class TutorialController_Return : MonoBehaviour
 
         // OPTIONAL: Add shaking effect to camera??
 
-        SceneManager.LoadScene((int)SceneIndexes.BOSS); // CHANGE TO INITIAL BOSS SCENE HERE
+        SceneManager.LoadScene((int)SceneIndexes.TUT_BOSS); // CHANGE TO INITIAL BOSS SCENE HERE
     }
 
     IEnumerator AdvanceInstructions()

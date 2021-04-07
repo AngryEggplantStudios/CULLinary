@@ -11,5 +11,6 @@ public enum SceneIndexes
   TUT_DUNGEON = 5,
   TUT_RETURN = 6,
   BOSS = 7,
-  FINALE = 8
+  FINALE = 8,
+  TUT_BOSS = 9
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class ClownController : MonoBehaviour
+public class TutBossScript : MonoBehaviour
 {
     [SerializeField] float movementSpeed = 2;
     [SerializeField] float turningSpeed = 100; // deg/s
@@ -37,40 +37,28 @@ public class ClownController : MonoBehaviour
     private Vector3 localFinalPosition;
     public int interpolationFramesCount = 120; // Number of frames to completely interpolate between the 2 positions
     int elapsedFrames = 0;
-    private BossRangedAttack rangedAttackScript;
-    private BossSpawnAttack spawnAttackScript;
 
     //booleans to check if coroutine is running
-    private bool coroutineRangedRunning = false;
     private bool openingMouth = true;
     private bool idleCooldownRunning = false;
     private bool coroutineMeleeRunning = false;
-    private bool coroutineSpawnRunning = false;
 
     private enum State
     {
-        Roaming,
         Idle,
-        RangedAttack,
         MeleeAttack,
-        SpawnAttack
     }
 
     void Start()
     {
-        state = State.Idle;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         cam = player.GetComponentInChildren<Camera>();
         originalY = transform.position.y;
         jawOriginalY = lowerJaw.localPosition.y;
-        localPosition = lowerJaw.localPosition;
-        //final position of the mouth when fully open
-        localFinalPosition = new Vector3(localPosition.x, -0.045f, localPosition.z);
-        rangedAttackScript = gameObject.transform.GetComponentInChildren<BossRangedAttack>();
-        spawnAttackScript = gameObject.transform.GetComponent<BossSpawnAttack>();
         health = maxHealth;
         SetupHpBar();
         elapsed = 0.0f;
+        state = State.Idle;
     }
 
     private void SetupHpBar()
@@ -87,29 +75,6 @@ public class ClownController : MonoBehaviour
         uiList.Add(ui);
     }
 
-    private void SpawnDamageCounter(float damage)
-    {
-        GameObject damageCounter = Instantiate(damageCounter_prefab);
-        damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
-        SetupUI(damageCounter);
-    }
-
-    public void HandleHit(float damage)
-    {
-        this.health -= damage;
-        hpBarFull.fillAmount = health / maxHealth;
-        SpawnDamageCounter(damage);
-
-        if (this.health <= 0)
-        {
-            //die
-            spawnAttackScript.destroySpawnPoints();
-            endingBurgers.GetComponent<SpawnBurger>().callRainBurger();
-            Destroy(hpBar);
-            Destroy(gameObject);
-        }
-    }
-
 
     void Update()
     {
@@ -124,7 +89,8 @@ public class ClownController : MonoBehaviour
                 if (!openingMouth)
                 {
                     lowerJaw.localPosition = Vector3.Lerp(localFinalPosition, localPosition, interpolationRatio);
-                } else
+                }
+                else
                 {
                     lowerJaw.localPosition = new Vector3(
                         lowerJaw.localPosition.x,
@@ -139,61 +105,6 @@ public class ClownController : MonoBehaviour
                         transform.position.x,
                         originalY + Mathf.Sin(Time.fixedTime * Mathf.PI * 1) * 0.2f,
                         transform.position.z);
-                break;
-            case State.RangedAttack:
-                if (distanceToPlayer > 0.2f)
-                {
-                    quicklyLookAt(player);
-                }
-                if (openingMouth)
-                {
-                    lowerJaw.localPosition = Vector3.Lerp(localPosition, localFinalPosition, interpolationRatio);
-                } 
-                if (!coroutineRangedRunning)
-                {
-                    if (health / maxHealth < 0.3f)
-                    {
-                        rangedAttackScript.activateStage3();
-                        spawnAttackScript.activateStage2();
-                    }
-                    else if (health / maxHealth < 0.7f)
-                    {
-                        rangedAttackScript.activateStage2();
-                    }
-                    else
-                    {
-                        rangedAttackScript.activateStage1();
-                    }
-                    StartCoroutine("rangedCoroutine");
-                }
-                break;
-            case State.Roaming:
-                if (distanceToPlayer > lookingDistance)
-                {
-                    slowlyLookAt(player);
-                }
-
-                if (distanceToPlayer > stoppingDistance)
-                {
-                    moveForward();
-                }
-
-
-                if (distanceToPlayer < meleeRange)
-                {
-                    stepOn(player);
-
-                }
-
-                // Bob head and jaw for demostration
-                transform.position = new Vector3(
-                        transform.position.x,
-                        originalY + Mathf.Sin(Time.fixedTime * Mathf.PI * 1) * 0.2f,
-                        transform.position.z);
-                lowerJaw.localPosition = new Vector3(
-                        lowerJaw.localPosition.x,
-                        jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
-                        lowerJaw.localPosition.z);
                 break;
             case State.MeleeAttack:
                 if (distanceToPlayer > lookingDistance)
@@ -217,7 +128,8 @@ public class ClownController : MonoBehaviour
                     leftFoot.meleeAttackStart();
                     rightFoot.meleeAttackStart();
                     stepOn(player);
-                } else
+                }
+                else
                 {
                     leftFoot.meleeAttackEnd();
                     rightFoot.meleeAttackEnd();
@@ -233,21 +145,6 @@ public class ClownController : MonoBehaviour
                         jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
                         lowerJaw.localPosition.z);
                 break;
-            case State.SpawnAttack:
-                if (!coroutineSpawnRunning)
-                {
-                    StartCoroutine("spawnCoroutine");
-                }
-                lowerJaw.localPosition = new Vector3(
-                        lowerJaw.localPosition.x,
-                        jawOriginalY - Mathf.Abs(Mathf.Sin(Time.fixedTime * Mathf.PI * 2) * 0.01f),
-                        lowerJaw.localPosition.z);
-                transform.position = new Vector3(
-                        transform.position.x,
-                        originalY + Mathf.Sin(Time.fixedTime * Mathf.PI * 1) * 0.2f,
-                        transform.position.z);
-                break;
-
         }
         if (elapsedFrames != interpolationFramesCount)
         {
@@ -273,45 +170,13 @@ public class ClownController : MonoBehaviour
     IEnumerator idleCooldownCoroutine()
     {
         idleCooldownRunning = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         SetupUI(Instantiate(enemyAlert_prefab));
         yield return new WaitForSeconds(1);
         idleCooldownRunning = false;
-        int chooseAttack = Random.Range(1, 6);
-        switch (chooseAttack)
-        {
-            default:
-            case 1:
-            case 2:
-                state = State.MeleeAttack;
-                break;
-            case 3:
-                state = State.SpawnAttack;
-                break;
-            case 4:
-            case 5:
-                state = State.RangedAttack;
-                break;
-        }
+        state = State.MeleeAttack;
         elapsedFrames = 0;
         openingMouth = true;
-    }
-
-    IEnumerator rangedCoroutine()
-    {
-        coroutineRangedRunning = true;
-        // suspend execution for 5 seconds
-        rangedAttackScript.attackPlayerStart();
-        yield return new WaitForSeconds(2f);
-        rangedAttackScript.attackPlayerStartFlashing();
-        yield return new WaitForSeconds(1f);
-        rangedAttackScript.attackPlayerDealDamage();
-        yield return new WaitForSeconds(0.5f);
-        rangedAttackScript.attackPlayerEnd();
-        elapsedFrames = 0;
-        coroutineRangedRunning = false;
-        state = State.Idle;
-        openingMouth = false;
     }
 
     IEnumerator meleeCoroutine()
@@ -322,14 +187,6 @@ public class ClownController : MonoBehaviour
         state = State.Idle;
     }
 
-    IEnumerator spawnCoroutine()
-    {
-        coroutineSpawnRunning = true;
-        spawnAttackScript.spawnMobs();
-        yield return new WaitForSeconds(0.5f);
-        coroutineSpawnRunning = false;
-        state = State.Idle;
-    }
 
     void slowlyLookAt(Transform targetPlayer)
     {
@@ -338,16 +195,6 @@ public class ClownController : MonoBehaviour
             transform.rotation,
             Quaternion.Euler(Quaternion.LookRotation(target - transform.position).eulerAngles),
             Time.deltaTime * turningSpeed);
-    }
-
-    void quicklyLookAt(Transform targetPlayer)
-    {
-        Vector3 target = targetPlayer.position;
-        target.y = transform.position.y;
-        transform.rotation = Quaternion.Lerp(
-            transform.rotation,
-            Quaternion.Euler(Quaternion.LookRotation(target - transform.position).eulerAngles),
-            Time.deltaTime * turningSpeed * 5);
     }
 
     void moveForward()
@@ -372,7 +219,7 @@ public class ClownController : MonoBehaviour
             Debug.Log("stepOn() target " + target.position + " is not above the ground");
             return;
         }
-        
+
         // Find closer foot and step
         if (Vector3.Distance(leftFoot.currentPosition, info.point) < Vector3.Distance(rightFoot.currentPosition, info.point))
         {

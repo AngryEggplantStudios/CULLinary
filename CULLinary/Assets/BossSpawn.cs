@@ -24,8 +24,18 @@ public class BossSpawn : MonoBehaviour
         float distX = Random.Range(-distRange, distRange);
         float distZ = Random.Range(-distRange, distRange);
         Vector3 enemyTransform = new Vector3(transform.position.x + distX, transform.position.y, transform.position.z + distZ);
-        Instantiate(enemyToSpawn, enemyTransform, Quaternion.identity);
+        GameObject mobSpawned = Instantiate(enemyToSpawn, enemyTransform, Quaternion.identity);
+        mobSpawned.transform.SetParent(gameObject.transform);
     }
-
+    
+    public void destroyAllSpawns()
+    {
+        int children = transform.childCount;
+        for (int i = 0; i < children; i++)
+        {
+            BossSpawnMinionScript minion = transform.GetChild(i).GetComponent<BossSpawnMinionScript>();
+            minion.Die();
+        }
+    }
 
 }

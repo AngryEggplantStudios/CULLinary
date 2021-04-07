@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424702732764fdc47a2be0b5eceeb726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 40
+  attackDamage: 60
   selectionCirclePrefab: {fileID: 166266, guid: d3c876a629f651649b791d233e3969c0, type: 3}
   selectionCircleActual: {fileID: 0}
 --- !u!136 &4855316972259699349
@@ -402,6 +402,38 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &876969051553462803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4757314950517091208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ef49d253dbc504d8715fbe0788c96d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: -972620333246954085}
+  maxHealth: 150
+  timeBetweenAttacks: 4
+  hpBar_prefab: {fileID: 1085209639500972291, guid: 4614e0511cb49b14ebf0c58217d9d222, type: 3}
+  damageCounter_prefab: {fileID: 1085209639500972291, guid: 24f41dda89c7bd648bd2796ac669721e, type: 3}
+  enemyAlert_prefab: {fileID: 1085209639500972291, guid: 186234b88676f4b4f872f98d3ab0973c, type: 3}
+  lootTuples:
+  - loot: {fileID: 8663875604269662378, guid: 1a800744b8c18d675bddac5655c0d060, type: 3}
+    ratio: 1
+  wanderRadius: 3
+  audioSourceDamage: {fileID: 1733392403628728167}
+  stabSounds:
+  - {fileID: 8300000, guid: a45b2da923b66ba47ae8daf723c31c06, type: 3}
+  - {fileID: 8300000, guid: 0a212b4caa7d7be44b784854f3a4eecc, type: 3}
+  - {fileID: 8300000, guid: e0112cdc2521c8a40872086bc6994256, type: 3}
+  - {fileID: 8300000, guid: 753721637972729499255397c1a9d3a5, type: 3}
+  - {fileID: 8300000, guid: 20a1cfd81c3ef4b4288a2197d358d1a6, type: 3}
+  audioSourceAttack: {fileID: 9153945059483141866}
+  alertSound: {fileID: 8300000, guid: f887160af86d3844b80236fc380ba79d, type: 3}
+  attackSound: {fileID: 8300000, guid: b27e425790eebc643bf37744875e751c, type: 3}
 --- !u!1001 &7713049471025670940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -531,7 +563,7 @@ PrefabInstance:
       objectReference: {fileID: 1085209639500972291, guid: 186234b88676f4b4f872f98d3ab0973c, type: 3}
     - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: timeBetweenAttacks
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: damageCounter_prefab
@@ -671,7 +703,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2958619889201709204, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_Name
-      value: EnemyEggplant
+      value: BossEggplant
       objectReference: {fileID: 0}
     - target: {fileID: 6010416644262534009, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -695,6 +727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -7396052864322631920, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
+    - {fileID: 855091137911957056, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 11e3c0cd3439cbf938e32d8573b54ff5, type: 3}
 --- !u!1 &4757314950517091208 stripped
 GameObject:
