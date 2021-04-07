@@ -1021,9 +1021,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5409118571310886131, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
+      propertyPath: clown
+      value: 
+      objectReference: {fileID: 8805338494128874865, guid: 8459d2b71e87cd74fba82d4ab5d6fea1, type: 3}
+    - target: {fileID: 5409118571310886131, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
       propertyPath: portal
       value: 
       objectReference: {fileID: 1760164928}
+    - target: {fileID: 5409118571310886131, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
+      propertyPath: clownIcon
+      value: 
+      objectReference: {fileID: 238125070}
     - target: {fileID: 5409118571310886131, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
       propertyPath: minimapCamera
       value: 
@@ -1157,6 +1165,11 @@ PrefabInstance:
 --- !u!95 &238125069 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3226728902621674052, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
+  m_PrefabInstance: {fileID: 238125068}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &238125070 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1665783162234617383, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
   m_PrefabInstance: {fileID: 238125068}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &305004323 stripped
@@ -2084,7 +2097,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2062472786286145476, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
       propertyPath: m_Name
-      value: TestPortal
+      value: DungeonPortal
       objectReference: {fileID: 0}
     - target: {fileID: 2062472786286145477, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
       propertyPath: enableGameSave
