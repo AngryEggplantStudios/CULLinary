@@ -65,14 +65,14 @@ public class FinaleController : MonoBehaviour
 
     IEnumerator GoBackRestaurant()
     {
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(27);
 
         SceneManager.LoadScene((int)SceneIndexes.REST); // Load restaurant scene 
     }
 
     IEnumerator GoBackMenu()
     {
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(27);
 
         SceneManager.LoadScene((int)SceneIndexes.MAINMENU); // Load restaurant scene 
     }
