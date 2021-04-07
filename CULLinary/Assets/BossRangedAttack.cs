@@ -5,13 +5,14 @@ using UnityEngine;
 public class BossRangedAttack : EnemyAttack
 {
     [SerializeField] private Transform throwObject;
+    [SerializeField] private Material lineMaterial;
     private DungeonPlayerHealth healthScript;
     private bool canDealDamage;
     private Transform player;
     private bool projectAttack = false;
     private float startingAngle;
     private float fov = 90f;
-    private float viewDistance = 8f;
+    private float viewDistance = 50f;
     private List<LineRenderer> listOfRenderers;
     private List<Vector3> firePositions;
     private const float LINE_HEIGHT_FROM_GROUND = 0.1f;
@@ -36,6 +37,8 @@ public class BossRangedAttack : EnemyAttack
             lRend.startWidth = 0.01f;
             lRend.endWidth = 0.02f;
             lRend.enabled = false;
+            lRend.material = lineMaterial;
+            lRend.SetColors(Color.red, Color.clear);
             listOfRenderers.Add(lRend);
         }
         activateStage1();
@@ -72,7 +75,7 @@ public class BossRangedAttack : EnemyAttack
             Vector3 playerDirection = (player.transform.position - transform.position).normalized;
             float angleIncrease = fov / rayCount;
             float angle = angleIncrease * offsetRay * -1;
-            int layerMask = 1 << 8;
+            int layerMask = LayerMask.GetMask("Environment");
             Vector3 finalDirection;
             firePositions = new List<Vector3>();
             for (int i = 0; i < rayCount; i++)
@@ -84,7 +87,7 @@ public class BossRangedAttack : EnemyAttack
                 Vector3 sourcePosition;
                 Vector3 targetPosition;
                 sourcePosition = new Vector3(transform.position.x, LINE_HEIGHT_FROM_GROUND, transform.position.z);
-                if (Physics.Raycast(sourcePosition, finalDirection, out hit, viewDistance, layerMask))
+                if (Physics.Raycast(sourcePosition, finalDirection, out hit, viewDistance))
                 {
                     LineRenderer lRend = listOfRenderers[i];
                     targetPosition = new Vector3(hit.point.x, LINE_HEIGHT_FROM_GROUND, hit.point.z);

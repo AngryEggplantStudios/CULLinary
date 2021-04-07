@@ -56,7 +56,7 @@ public class TutBossScript : MonoBehaviour
         originalY = transform.position.y;
         jawOriginalY = lowerJaw.localPosition.y;
         health = maxHealth;
-        SetupHpBar();
+        //SetupHpBar();
         elapsed = 0.0f;
         state = State.Idle;
     }
