@@ -353,6 +353,13 @@ public class ClownController : MonoBehaviour
     void moveForward()
     {
         transform.position += transform.forward * movementSpeed * Time.deltaTime;
+
+        // HARDEDCODED BOUNDS so clown does not exceed arena
+        transform.position = new Vector3(
+                Mathf.Clamp(transform.position.x, -8.9f, 8.9f),
+                transform.position.y,
+                Mathf.Clamp(transform.position.z, -8.9f, 8.9f)
+        );
     }
 
     // both feet must be on the ground
