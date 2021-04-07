@@ -32,7 +32,6 @@ public class DungeonPlayerAim : MonoBehaviour
     private bool targetFound = false;
     private bool canShoot = true;
 
-    private bool disableRightClick = false;
     //Audio
     [SerializeField] private AudioSource audioSourceAttack;
     [SerializeField] private AudioClip attackSound;
