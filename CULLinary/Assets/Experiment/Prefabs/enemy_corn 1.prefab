@@ -60,6 +60,11 @@ MonoBehaviour:
   - loot: {fileID: 3121572915000677017, guid: 627d29ef9f4fb2244b594a011a8f81ae, type: 3}
     ratio: 1
   wanderRadius: 2
+  audioSourceDamage: {fileID: 0}
+  stabSounds: []
+  audioSourceAttack: {fileID: 0}
+  alertSound: {fileID: 0}
+  attackSound: {fileID: 0}
 --- !u!195 &-422948422211317915
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -191,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e674f9f5156ff4a875c5323b1e6ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 40
+  attackDamage: 20
   throwObject: {fileID: 2389722980963067923, guid: 56af9d8bd80e684468fdc7f5e4a9a3e1, type: 3}
 --- !u!1001 &1991450026164884741
 PrefabInstance:
@@ -414,7 +419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7982d92d1633fff469b59284459a7f6d, type: 3}
       propertyPath: m_Name
-      value: enemy_corn
+      value: enemy_corn 1
       objectReference: {fileID: 0}
     - target: {fileID: 1018146935002280147, guid: 7982d92d1633fff469b59284459a7f6d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
