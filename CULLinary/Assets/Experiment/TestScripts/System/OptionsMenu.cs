@@ -18,8 +18,8 @@ public class OptionsMenu : MonoBehaviour
         {
             if (isFirstTime)
             {
-                audioMixer.SetFloat("SFX_Vol", 0f);
-                PlayerPrefs.SetFloat("SFX_Vol", 0f);
+                SetSFXVolume(0f);
+                SetBGVolume(0f);
                 sfxSlider.value = 0f;
                 bgSlider.value = 0f;
             }
