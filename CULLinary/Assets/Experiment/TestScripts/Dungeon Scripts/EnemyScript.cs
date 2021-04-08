@@ -303,6 +303,10 @@ public class EnemyScript : Enemy
 
     private void Die()
     {
+        if (PlayerManager.instance != null)
+        {
+            PlayerManager.noOfMobsCulled++;
+        }
         DropLoot();
         Destroy(hpBar);
         Destroy(gameObject);

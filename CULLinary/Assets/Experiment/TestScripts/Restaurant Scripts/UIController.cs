@@ -260,6 +260,7 @@ public class UIController : MonoBehaviour
 
     private void AddToGameData()
     {
+        PlayerManager.noOfCustomersServed++;
         PlayerManager.playerData.SetMoney(totalAmt);
     }
 
