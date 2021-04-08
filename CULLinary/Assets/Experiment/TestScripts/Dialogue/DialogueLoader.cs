@@ -40,8 +40,13 @@ public class DialogueLoader : MonoBehaviour
             currentDialogue = nextDialogue;
             RunCurrentDialogue();
         } else {
-            if (movementController != null) movementController.EnableMovementOfPlayer();
-            if (currentCustomer != null) StartCoroutine(currentCustomer.TimeToLeave());
+            if (movementController != null) {
+                movementController.EnableMovementOfPlayer();
+            }
+            if (currentCustomer != null) {
+                StartCoroutine(currentCustomer.TimeToLeave());
+            }
+            
             // Invoke the ending action
             endDialogueAction.Invoke();
             endDialogueAction = defaultDialogueAction;
@@ -55,8 +60,13 @@ public class DialogueLoader : MonoBehaviour
             currentDialogue = nextDialogue;
             RunCurrentDialogue();
         } else {
-            movementController.EnableMovementOfPlayer();
-            StartCoroutine(currentCustomer.TimeToLeave());
+            if (movementController != null) {
+                movementController.EnableMovementOfPlayer();
+            }
+            if (currentCustomer != null) {
+                StartCoroutine(currentCustomer.TimeToLeave());
+            }
+
             // Invoke the ending action
             endDialogueAction.Invoke();
             endDialogueAction = defaultDialogueAction;
@@ -74,7 +84,7 @@ public class DialogueLoader : MonoBehaviour
         DialogueDatabase.GenerateDialogues();
 
         // For debug purposes
-        // LoadAndRunDebug(21);
+        // LoadAndRunWithoutCustomer(21);
     }
 
     private void RunMeDialogue(PlainDialogue meDialogue)

@@ -20,7 +20,9 @@ public class TutorialController_Return : MonoBehaviour
     public InventoryUI inventoryUI;
     public List<Item> startingItems;
 
-    public AudioMixer audio; // to fade sounds
+    public AudioMixer audio;          // to fade sounds
+    public LocateCamera cameraScript; // for shaking
+    public GameObject blackscreen;
 
     bool cookedDish = false;
     bool pickedUpDish = false;
@@ -29,6 +31,8 @@ public class TutorialController_Return : MonoBehaviour
     bool spawnedClownerCust = false;
 
     GameObject firstCustSeat = null;
+
+    private float shakeTime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -119,13 +123,26 @@ public class TutorialController_Return : MonoBehaviour
         }
     }
 
+    IEnumerator ShakeCamera(float duration)
+    {
+        while (shakeTime < duration) {
+            shakeTime = shakeTime + Time.deltaTime;
+            cameraScript.SetShake(shakeTime / duration * 0.5f);
+            yield return null;
+        }
+    }
+
     IEnumerator LoadGameScene()
     {
         float duration = 2.5f;
         StartCoroutine(AudioHelper.FadeAudio(audio, "Master_Vol", duration));
-        yield return new WaitForSeconds(duration); // Have some time for player to process everything before loading the game scene
+        // Add shaking effect to camera
+        StartCoroutine(ShakeCamera(duration));
+        blackscreen.SetActive(true);
+        Animator blackscreenAnimator = blackscreen.GetComponent<Animator>();
+        blackscreenAnimator.SetBool("TurnBlack", true); // Fade to black
 
-        // OPTIONAL: Add shaking effect to camera??
+        yield return new WaitForSeconds(duration); // Have some time for player to process everything before loading the game scene
 
         SceneManager.LoadScene((int)SceneIndexes.TUT_BOSS); // CHANGE TO INITIAL BOSS SCENE HERE
     }

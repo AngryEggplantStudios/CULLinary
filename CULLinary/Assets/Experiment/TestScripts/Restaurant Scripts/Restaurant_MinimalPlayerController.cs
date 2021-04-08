@@ -35,6 +35,8 @@ public class Restaurant_MinimalPlayerController : MonoBehaviour
         } else {
             animator.SetBool("isWalking", false);
         }
-        animator.SetBool("hasFood", servingController.holdingItem);
+        if (servingController) {
+            animator.SetBool("hasFood", servingController.holdingItem);
+        }
     }
 }

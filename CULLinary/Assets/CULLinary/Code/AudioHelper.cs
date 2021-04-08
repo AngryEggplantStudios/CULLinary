@@ -8,7 +8,6 @@ public static class AudioHelper {
     // https://gamedevbeginner.com/how-to-fade-audio-in-unity-i-tested-every-method-this-ones-the-best/
     public static IEnumerator FadeAudio(AudioMixer audioMixer, string channel, float duration)
     {
-        Debug.Log("Fade!");
         float rawVolume;
         audioMixer.GetFloat(channel, out rawVolume);
         float currentVolume = Mathf.Pow(10, rawVolume / 20);

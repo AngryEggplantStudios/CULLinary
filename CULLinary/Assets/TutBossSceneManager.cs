@@ -9,9 +9,25 @@ public class TutBossSceneManager : MonoBehaviour
     public DungeonPlayerSlash dungeonSlash;
     public DialogueLoader dialogueLoader;
 
+    [Tooltip("For save system")]
+    public SceneIndexes sceneIndex;
+    public SaveGameDataSystem saveGameDataSystem;
+    public bool enableGameSave;
+
+    private IEnumerator SaveGame()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (enableGameSave)
+        {
+            // save at Tut_Fainted
+            saveGameDataSystem.SaveGameData((int)sceneIndex);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(SaveGame());
         StartCoroutine("StartBoss");
         dungeonController.DisableMovement();
         //Hacky way of disabling dungeonAim LOL. For now:

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         }
         else if (currScene.buildIndex == (int)SceneIndexes.TUT_BOSS)
         {
-            SceneManager.LoadScene((int)SceneIndexes.DUNGEON);
+            SceneManager.LoadScene((int)SceneIndexes.TUT_FAINTED);
         }
         else
         {
