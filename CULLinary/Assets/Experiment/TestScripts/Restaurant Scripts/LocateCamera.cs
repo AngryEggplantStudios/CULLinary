@@ -12,6 +12,9 @@ public class LocateCamera : MonoBehaviour
     Vector3 initialPlayerLocation;
     Vector3 initialCameraLocation;
 
+    private bool isShaking = false;
+    private float shakeAmount = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,9 +36,25 @@ public class LocateCamera : MonoBehaviour
             }
         }
 
+        float xOffset = currentPlayerLocation.x - initialPlayerLocation.x;
+        float yOffset = 0.0f;
+        float zOffset = currentPlayerLocation.z - initialPlayerLocation.z;
+
+        if (isShaking) {
+            xOffset = xOffset + Random.Range(-shakeAmount / 2, shakeAmount / 2);
+            yOffset = 0.0f;
+            zOffset = zOffset + Random.Range(-shakeAmount / 2, shakeAmount / 2);
+        }
+
         transform.position = new Vector3(
-            initialCameraLocation.x + currentPlayerLocation.x - initialPlayerLocation.x,
-            initialCameraLocation.y,
-            initialCameraLocation.z + currentPlayerLocation.z - initialPlayerLocation.z);
+            initialCameraLocation.x + xOffset,
+            initialCameraLocation.y + yOffset,
+            initialCameraLocation.z + zOffset);
+    }
+
+    public void SetShake(float shakeAmt)
+    {
+        isShaking = true;
+        shakeAmount = shakeAmt;
     }
 }
