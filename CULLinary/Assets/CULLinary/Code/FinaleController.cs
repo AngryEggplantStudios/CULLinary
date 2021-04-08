@@ -17,7 +17,7 @@ public class FinaleController : MonoBehaviour
 
     public AudioMixer audio; // to fade sounds
 
-    private float creditsDuration = 27.0f;
+    private float creditsDuration = 30.0f;
 
     // Start is called before the first frame update
     void Start()
