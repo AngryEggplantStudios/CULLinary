@@ -33,6 +33,7 @@ public class PlayerManager : MonoBehaviour
     public static void LoadData()
     {
         playerData = SaveSystem.LoadData();
+        currHealth = playerData.currentHealth;
         if (playerData == null)
         {
             playerData = new PlayerData();
