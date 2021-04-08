@@ -10,16 +10,32 @@ public class OptionsMenu : MonoBehaviour
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Slider bgSlider;
 
+    private static bool isFirstTime = true;
+
     private void Start()
     {
         try
         {
-            sfxSlider.value = PlayerPrefs.GetFloat("SFX_Vol");
-            bgSlider.value = PlayerPrefs.GetFloat("BG_Vol");
+            if (isFirstTime)
+            {
+                SetSFXVolume(0f);
+                SetBGVolume(0f);
+                sfxSlider.value = 0f;
+                bgSlider.value = 0f;
+            }
+            else
+            {
+                sfxSlider.value = PlayerPrefs.GetFloat("SFX_Vol");
+                bgSlider.value = PlayerPrefs.GetFloat("BG_Vol");
+            }
         }
         catch
         {
             Debug.Log("No player prefs registered in options");
+        }
+        finally
+        {
+            isFirstTime = false;
         }
     }
 
