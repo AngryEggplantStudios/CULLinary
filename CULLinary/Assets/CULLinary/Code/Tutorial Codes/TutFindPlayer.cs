@@ -12,6 +12,9 @@ public class TutFindPlayer : MonoBehaviour
     public DungeonPlayerLocomotion playerLocomotion;
     public float playerRotateSpeed = 5.0f;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] stepSounds;
+
     public delegate void ReachedPlayerDelegate();
 
     private bool isPathfinding = true;
@@ -63,5 +66,14 @@ public class TutFindPlayer : MonoBehaviour
     public void SetReachedPlayerCallback(ReachedPlayerDelegate del)
     {
         ReachedPlayerCallback = del;
+    }
+
+    public void StepSound(AnimationEvent evt)
+    {
+        if (evt.animatorClipInfo.weight > 0.5)
+        {
+            audioSource.clip = stepSounds[Random.Range(0, stepSounds.Length)];
+            audioSource.Play();
+        }
     }
 }

@@ -39,6 +39,7 @@ public class InventoryUI : MonoBehaviour
 		if (inventoryCapacityText)
 		{
 			inventoryCapacityText.text = itemList.Count + "/" + inventoryLimit;
+			inventoryCapacityText.color = itemList.Count == inventoryLimit ? Color.red : Color.black;
 		}
 	}
 

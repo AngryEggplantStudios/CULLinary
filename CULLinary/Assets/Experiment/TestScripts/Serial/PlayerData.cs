@@ -14,6 +14,8 @@ public class PlayerData
     public float critRate;
     public bool[] weaponsBought;
     public bool[] keyItemsBought;
+    public int noOfMobsCulled;
+    public int noOfCustomersServed;
 
     public PlayerData()
     {
@@ -28,6 +30,7 @@ public class PlayerData
         this.critRate = 0f;
         this.weaponsBought = new bool[50];
         this.keyItemsBought = new bool[50];
+        this.noOfMobsCulled = 0;
         for (int i = 0; i < this.weaponsBought.Length; i++)
         {
             this.weaponsBought[i] = false;
@@ -88,6 +91,26 @@ public class PlayerData
     public int GetMeleeDamage()
     {
         return this.meleeDamage;
+    }
+
+    public int GetNoOfMobsCulled()
+    {
+        return this.noOfMobsCulled;
+    }
+
+    public int GetNoOfCustomersServed()
+    {
+        return this.noOfCustomersServed;
+    }
+
+    public void SetNoOfCustomersServed(int i)
+    {
+        this.noOfCustomersServed = i;
+    }
+
+    public void SetNoOfMobsCulled(int i)
+    {
+        this.noOfMobsCulled = i;
     }
 
     public void SetCritRate(float cr)

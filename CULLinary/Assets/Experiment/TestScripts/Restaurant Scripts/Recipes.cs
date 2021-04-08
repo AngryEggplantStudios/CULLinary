@@ -40,7 +40,7 @@ public static class Recipes
     public static RecipeTest[] recipes = new RecipeTest[]{
         new RecipeTest("Fried Eggplant", 0, new int[]{4, 4, 4}),
         new RecipeTest("Golden Fried Eggplant", 1, new int[]{6, 6, 6}),
-        new RecipeTest("Pizza", 2, new int[]{4, 11, 12}),
+        new RecipeTest("Pizza", 2, new int[]{4, 12, 11}),
         new RecipeTest("Burrito", 3, new int[]{11, 12, 12})
     };
 }
