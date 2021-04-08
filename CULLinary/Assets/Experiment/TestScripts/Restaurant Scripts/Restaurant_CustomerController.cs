@@ -31,7 +31,6 @@ public class Restaurant_CustomerController : MonoBehaviour
         // Play the sitting down animation  
         Animator animator = gameObject.GetComponent<Animator>();
         animator.SetBool("SitDown", true);
-        Debug.Log("animator is: " + animator.ToString());
 
         Scene currScene = SceneManager.GetActiveScene();
         if (currScene.buildIndex == (int)SceneIndexes.TUT_RETURN)

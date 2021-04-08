@@ -16,6 +16,8 @@ public class TutorialController_Return : MonoBehaviour
     public Restaurant_CustomerController customerController;
     // CookingStation to disable movement when speaking to ClownerCust
     public CookingStation movementController;
+    public InventoryUI inventoryUI;
+    public List<Item> startingItems;
 
     bool cookedDish = false;
     bool pickedUpDish = false;
@@ -28,6 +30,7 @@ public class TutorialController_Return : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        inventoryUI.PopulateUI(startingItems);
         StartCoroutine("StartWelcome");
     }
 
