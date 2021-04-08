@@ -14,6 +14,8 @@ public class PlayerData
     public float critRate;
     public bool[] weaponsBought;
     public bool[] keyItemsBought;
+    public int noOfMobsCulled;
+    public int noOfCustomersServed;
 
     public PlayerData()
     {
@@ -28,6 +30,7 @@ public class PlayerData
         this.critRate = 0f;
         this.weaponsBought = new bool[50];
         this.keyItemsBought = new bool[50];
+        this.noOfMobsCulled = 0;
         for (int i = 0; i < this.weaponsBought.Length; i++)
         {
             this.weaponsBought[i] = false;
@@ -90,6 +93,26 @@ public class PlayerData
         return this.meleeDamage;
     }
 
+    public int GetNoOfMobsCulled()
+    {
+        return this.noOfMobsCulled;
+    }
+
+    public int GetNoOfCustomersServed()
+    {
+        return this.noOfCustomersServed;
+    }
+
+    public void SetNoOfCustomersServed(int i)
+    {
+        this.noOfCustomersServed = i;
+    }
+
+    public void SetNoOfMobsCulled(int i)
+    {
+        this.noOfMobsCulled = i;
+    }
+
     public void SetCritRate(float cr)
     {
         this.critRate = Mathf.Max(this.critRate, cr);
@@ -142,7 +165,8 @@ public class PlayerData
 
     public void SetCurrentHealth(int currentHealth)
     {
-        this.currentHealth = Mathf.Min(Mathf.Max(100, currentHealth),this.maxHealth); //Clamp
+        this.currentHealth = currentHealth;
+        //this.currentHealth = Mathf.Min(Mathf.Max(100, currentHealth),this.maxHealth); //Clamp
     }
 
     public string ToJson()

@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
 
     public static float currHealth;
+    public static int noOfMobsCulled;
+    public static int noOfCustomersServed;
 
     private void Awake()
     {
@@ -20,6 +22,9 @@ public class PlayerManager : MonoBehaviour
     public static void SaveData(List<Item> items)
     {
         itemList = items;
+        playerData.SetCurrentHealth((int)Mathf.Min(Mathf.Max(100, currHealth), playerData.maxHealth));
+        playerData.SetNoOfMobsCulled(noOfMobsCulled);
+        playerData.SetNoOfCustomersServed(noOfCustomersServed);
         playerData.SetInventoryString(SerializeInventory(itemList));
         SaveSystem.SaveData(playerData);
     }
@@ -33,6 +38,9 @@ public class PlayerManager : MonoBehaviour
     public static void LoadData()
     {
         playerData = SaveSystem.LoadData();
+        currHealth = playerData.GetCurrentHealth();
+        noOfMobsCulled = playerData.GetNoOfMobsCulled();
+        noOfCustomersServed = playerData.GetNoOfCustomersServed();
         if (playerData == null)
         {
             playerData = new PlayerData();
@@ -85,4 +93,5 @@ public class PlayerManager : MonoBehaviour
         }
         return JsonArrayParser.ToJson(items, true);
     }
+
 }
