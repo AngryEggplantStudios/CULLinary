@@ -8,6 +8,7 @@ public class FinaleController : MonoBehaviour
 {
     public Animator blackscreenAnimator;
     public Animator rollingCreditsAnimator;
+    public GameObject creditsCanvas;
 
     public GameObject clownerCust;
     public DialogueLoader dialogueLoader;
@@ -43,6 +44,7 @@ public class FinaleController : MonoBehaviour
                 dialogueLoader.LoadAndRun(clownerDialogue, customerController);
                 dialogueLoader.SetDialogueEndCallback(() => {
                     Debug.Log("Rolling the credits ~");
+                    movementController.DisableMovementOfPlayer();
                     ShowCredits(); // not sure if should change this to coroutine?
                 });
             });
@@ -52,8 +54,8 @@ public class FinaleController : MonoBehaviour
     // Call this method to start showing the Credits
     void ShowCredits()
     {
+        creditsCanvas.SetActive(true);
         blackscreenAnimator.SetBool("TurnBlack", true); // Fade credits black bg
-
         StartCoroutine(RollCredits());
     }
 
