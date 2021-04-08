@@ -10,6 +10,7 @@ public class ShopMenu : MonoBehaviour
     [SerializeField] private GameObject secondaryCanvas;
     [SerializeField] private GameObject confirmPopup;
     [SerializeField] private GameObject noMoneyPopup;
+
     [Header("Calculations")]
     [SerializeField] private Text moneyText;
     [SerializeField] private Text currentText;
@@ -25,6 +26,11 @@ public class ShopMenu : MonoBehaviour
     [SerializeField] private GameObject vitaminPanel;
     [SerializeField] private GameObject weaponPanel;
     [SerializeField] private GameObject keyItemPanel;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource kachingSound;
+
+
     private Vitamin currentVitaminSelected;
     private Weapon currentWeaponSelected;
     private KeyItem currentKeyItemSelected;
@@ -136,6 +142,7 @@ public class ShopMenu : MonoBehaviour
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
         PlayerManager.playerData.SetKeyItemBoughtById(itemAsset.GetID(), true);
         yesButton.onClick.RemoveAllListeners();
+        kachingSound.Play();
         DeselectItem();
         UpdateUI();
     }
@@ -146,6 +153,7 @@ public class ShopMenu : MonoBehaviour
         PlayerManager.playerData.SetCritRate(itemAsset.critRate);
         PlayerManager.playerData.SetWeaponBoughtById(itemAsset.GetID(), true);
         yesButton.onClick.RemoveAllListeners();
+        kachingSound.Play();
         DeselectItem();
         UpdateUI();
     }
@@ -158,6 +166,7 @@ public class ShopMenu : MonoBehaviour
         PlayerManager.playerData.SetCurrentHealth(PlayerManager.playerData.GetCurrentHealth() + currentVitaminSelected.healthHeal);
         PlayerManager.playerData.SetMoney(PlayerManager.playerData.GetMoney() - itemAsset.GetPrice());
         yesButton.onClick.RemoveAllListeners();
+        kachingSound.Play();
         DeselectItem();
         UpdateUI();
     }
