@@ -7,7 +7,8 @@ public enum Keybind {
     OpenInventory,
     OpenRecipeBook,
     Trash,
-    CloseMenu
+    CloseMenu,
+    StatsMenu
 }
 
 public class Keybinds {    
@@ -16,7 +17,8 @@ public class Keybinds {
         { Keybind.OpenInventory, KeyCode.I },
         { Keybind.OpenRecipeBook, KeyCode.R },
         { Keybind.Trash, KeyCode.Delete },
-        { Keybind.CloseMenu, KeyCode.Escape }
+        { Keybind.CloseMenu, KeyCode.Escape },
+        { Keybind.StatsMenu, KeyCode.Q }
     };
 
     public static bool WasTriggered(Keybind key) {

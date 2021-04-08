@@ -142,7 +142,8 @@ public class PlayerData
 
     public void SetCurrentHealth(int currentHealth)
     {
-        this.currentHealth = Mathf.Min(Mathf.Max(100, currentHealth),this.maxHealth); //Clamp
+        this.currentHealth = currentHealth;
+        //this.currentHealth = Mathf.Min(Mathf.Max(100, currentHealth),this.maxHealth); //Clamp
     }
 
     public string ToJson()
