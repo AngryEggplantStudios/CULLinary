@@ -63,6 +63,11 @@ public class CheatSystem : MonoBehaviour
                     ChangeSuccessStatus("Resetting save file to default");
                     ResetSaveFile();
                     break;
+                case "makemegordonramsay":
+                    cheatInput.text = "";
+                    ChangeSuccessStatus("It's fooking raw!!!");
+                    SetInventoryOnSaveFile(3);
+                    break;
             }
         }
     }
@@ -71,6 +76,22 @@ public class CheatSystem : MonoBehaviour
     {
         cheatScreen.SetActive(false);
         isCheatScreenActivated = false;
+    }
+
+    private void SetInventoryOnSaveFile(int count)
+    {
+        //4,6,7,11 
+
+        PlayerData data = SaveSystem.LoadData();
+        int[] currentItems = new int[4]{4, 6, 12, 11};
+        InventoryItemData[] items = new InventoryItemData[4];
+        for (int i=0; i < items.Length; i++)
+        {
+            InventoryItemData gameItem = new InventoryItemData(currentItems[i], count);
+            items[i] = gameItem;
+        }
+        data.SetInventoryString(JsonArrayParser.ToJson(items, true));
+        SaveSystem.SaveData(data);
     }
 
     private void ChangeSuccessStatus(string str)
