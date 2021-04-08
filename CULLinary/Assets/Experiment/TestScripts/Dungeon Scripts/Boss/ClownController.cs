@@ -22,6 +22,13 @@ public class ClownController : MonoBehaviour
     [SerializeField] private GameObject enemyAlert_prefab;
     [SerializeField] private GameObject endingBurgers;
 
+    // Audio
+    [SerializeField] private AudioSource audioSourceDamage;
+    [SerializeField] private AudioClip[] stabSounds;
+    [SerializeField] private AudioSource audioSourceAttack;
+    [SerializeField] private AudioClip alertSound;
+    [SerializeField] private AudioClip rangedSound;
+
     private GameObject hpBar;
     private Image hpBarFull;
     private float health;
@@ -99,6 +106,8 @@ public class ClownController : MonoBehaviour
         this.health -= damage;
         hpBarFull.fillAmount = health / maxHealth;
         SpawnDamageCounter(damage);
+        audioSourceDamage.clip = stabSounds[Random.Range(0, stabSounds.Length)];
+        audioSourceDamage.Play();
 
         if (this.health <= 0)
         {
@@ -275,6 +284,8 @@ public class ClownController : MonoBehaviour
         idleCooldownRunning = true;
         yield return new WaitForSeconds(2);
         SetupUI(Instantiate(enemyAlert_prefab));
+        audioSourceAttack.clip = alertSound;
+        audioSourceAttack.Play();
         yield return new WaitForSeconds(1);
         idleCooldownRunning = false;
         int chooseAttack = Random.Range(1, 6);
@@ -306,6 +317,8 @@ public class ClownController : MonoBehaviour
         rangedAttackScript.attackPlayerStartFlashing();
         yield return new WaitForSeconds(1f);
         rangedAttackScript.attackPlayerDealDamage();
+        audioSourceAttack.clip = rangedSound;
+        audioSourceAttack.Play();
         yield return new WaitForSeconds(0.5f);
         rangedAttackScript.attackPlayerEnd();
         elapsedFrames = 0;

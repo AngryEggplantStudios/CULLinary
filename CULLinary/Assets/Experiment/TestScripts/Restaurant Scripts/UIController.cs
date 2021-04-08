@@ -261,7 +261,7 @@ public class UIController : MonoBehaviour
     private void AddToGameData()
     {
         PlayerManager.noOfCustomersServed++;
-        PlayerManager.playerData.SetMoney(totalAmt);
+        if (PlayerManager.playerData != null) PlayerManager.playerData.SetMoney(totalAmt);
     }
 
     // Check inventory to see what food can be cooked

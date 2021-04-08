@@ -12,6 +12,12 @@ public class IKFootSolver : Enemy
     [SerializeField] float stepHeight = 1;
     [SerializeField] Vector3 footOffset = default;
     [SerializeField] GameObject collision;
+
+    // Audio
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip meleeSound;
+    [SerializeField] private AudioClip stepSound;
+
     float footSpacing;
     public Vector3 oldPosition, currentPosition, newPosition;
     Vector3 oldNormal, currentNormal, newNormal;
@@ -62,6 +68,7 @@ public class IKFootSolver : Enemy
                 }
                 meleeAttackScript.enableSprite(true);
             }
+
             collision.transform.position = new Vector3(newPosition.x, 0.05f, newPosition.z);
             Vector3 tempPosition = Vector3.Lerp(oldPosition, newPosition, lerp);
             tempPosition.y += Mathf.Sin(lerp * Mathf.PI) * stepHeight;
@@ -69,12 +76,21 @@ public class IKFootSolver : Enemy
             currentPosition = tempPosition;
             currentNormal = Vector3.Lerp(oldNormal, newNormal, lerp);
             lerp += Time.deltaTime * speed;
-        }
-        if (!IsMoving())
-        {
-            meleeAttackScript.enableCollider(false);
-            meleeAttackScript.enableSprite(false);
-            isAttacking = false;
+
+            if (!IsMoving())
+            {
+                meleeAttackScript.enableCollider(false);
+                meleeAttackScript.enableSprite(false);
+                if (isAttacking)
+                {
+                    audioSource.clip = meleeSound;
+                    audioSource.Play();
+                } else {
+                    audioSource.clip = stepSound;
+                    audioSource.Play();
+                }
+                isAttacking = false;
+            }
         }
     }
 
