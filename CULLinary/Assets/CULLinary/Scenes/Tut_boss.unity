@@ -1464,7 +1464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa2ff4c63009c24c898b1fc88f4ce87e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryUI: {fileID: 0}
+  inventoryUI: {fileID: 1603846296}
 --- !u!1 &1509940565
 GameObject:
   m_ObjectHideFlags: 0
@@ -2095,6 +2095,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
+--- !u!114 &1603846296 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5941063238679330064, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
+  m_PrefabInstance: {fileID: 1603846295}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e8d56ccb9f69a947a5e20be2e2cee81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1603846304 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2874660427135895510, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
@@ -2328,6 +2339,9 @@ MonoBehaviour:
   dungeonAim: {fileID: 507797698}
   dungeonSlash: {fileID: 507797696}
   dialogueLoader: {fileID: 1603846304}
+  sceneIndex: 9
+  saveGameDataSystem: {fileID: 1164760533}
+  enableGameSave: 1
 --- !u!4 &2033185613
 Transform:
   m_ObjectHideFlags: 0

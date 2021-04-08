@@ -821,6 +821,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5941063238679330065, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
   m_PrefabInstance: {fileID: 419837125}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &419837127 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5941063238679330064, guid: 953fc872206a87f7ea24488d6f7f7f1c, type: 3}
+  m_PrefabInstance: {fileID: 419837125}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e8d56ccb9f69a947a5e20be2e2cee81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &432984884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2640,10 +2651,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1440714588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa2ff4c63009c24c898b1fc88f4ce87e, type: 3}
+  m_Script: {fileID: 11500000, guid: d3e43439f4a287948b9fbf5211ba11c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryUI: {fileID: 0}
+  inventoryUI: {fileID: 419837127}
+  threeEggplants:
+  - {fileID: 11400000, guid: 458bde64ac140b24da871ad43d84bbf9, type: 2}
+  - {fileID: 11400000, guid: 458bde64ac140b24da871ad43d84bbf9, type: 2}
+  - {fileID: 11400000, guid: 458bde64ac140b24da871ad43d84bbf9, type: 2}
 --- !u!65 &1440714590 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 2062472786286145478, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
