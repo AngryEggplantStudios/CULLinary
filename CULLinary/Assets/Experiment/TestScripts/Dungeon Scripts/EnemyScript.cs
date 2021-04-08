@@ -270,17 +270,27 @@ public class EnemyScript : Enemy
         dist = Vector3.Distance(player.position, transform.position);
         if (dist <= distanceTriggered)
         {
-            timer = 0;
-            state = State.ChaseTarget;
-            
-            SetupUI(Instantiate(enemyAlert_prefab));
-            audioSourceAttack.clip = alertSound;
-            audioSourceAttack.Play();
+            Alert();
         }
+    }
+
+    private void Alert()
+    {
+        timer = 0;
+        state = State.ChaseTarget;
+        
+        SetupUI(Instantiate(enemyAlert_prefab));
+        audioSourceAttack.clip = alertSound;
+        audioSourceAttack.Play();
     }
 
     public override void HandleHit(float damage)
     {
+        if (state == State.Idle || state == State.Roaming)
+        {
+            Alert();
+        }
+        
         this.health -= damage;
         hpBarFull.fillAmount = health/maxHealth;
         StartCoroutine(FlashOnDamage());
