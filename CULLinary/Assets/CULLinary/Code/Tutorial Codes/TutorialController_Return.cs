@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class TutorialController_Return : MonoBehaviour
@@ -16,6 +17,8 @@ public class TutorialController_Return : MonoBehaviour
     public Restaurant_CustomerController customerController;
     // CookingStation to disable movement when speaking to ClownerCust
     public CookingStation movementController;
+
+    public AudioMixer audio; // to fade sounds
 
     bool cookedDish = false;
     bool pickedUpDish = false;
@@ -115,7 +118,9 @@ public class TutorialController_Return : MonoBehaviour
 
     IEnumerator LoadGameScene()
     {
-        yield return new WaitForSeconds(2.5f); // Have some time for player to process everything before loading the game scene
+        float duration = 2.5f;
+        StartCoroutine(AudioHelper.FadeAudio(audio, "Master_Vol", duration));
+        yield return new WaitForSeconds(duration); // Have some time for player to process everything before loading the game scene
 
         // OPTIONAL: Add shaking effect to camera??
 

@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class FinaleController : MonoBehaviour
 {
     public Animator blackscreenAnimator;
     public Animator rollingCreditsAnimator;
+    public GameObject creditsCanvas;
 
     public GameObject clownerCust;
     public DialogueLoader dialogueLoader;
     public Restaurant_CustomerController customerController;   
     public CookingStation movementController; // CookingStation to disable movement when speaking to ClownerCust
+
+    public AudioMixer audio; // to fade sounds
+
+    private float creditsDuration = 27.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +44,7 @@ public class FinaleController : MonoBehaviour
                 dialogueLoader.LoadAndRun(clownerDialogue, customerController);
                 dialogueLoader.SetDialogueEndCallback(() => {
                     Debug.Log("Rolling the credits ~");
+                    movementController.DisableMovementOfPlayer();
                     ShowCredits(); // not sure if should change this to coroutine?
                 });
             });
@@ -47,8 +54,8 @@ public class FinaleController : MonoBehaviour
     // Call this method to start showing the Credits
     void ShowCredits()
     {
+        creditsCanvas.SetActive(true);
         blackscreenAnimator.SetBool("TurnBlack", true); // Fade credits black bg
-
         StartCoroutine(RollCredits());
     }
 
@@ -57,23 +64,26 @@ public class FinaleController : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         rollingCreditsAnimator.SetBool("LetsRoll", true); // Roll da credits
-        
-        yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(GoBackMenu()); // initially GoBackRestaurant() but i think loading back to main menu makes more sense??
     }
 
     IEnumerator GoBackRestaurant()
     {
-        yield return new WaitForSeconds(27);
+        yield return new WaitForSeconds(creditsDuration);
 
         SceneManager.LoadScene((int)SceneIndexes.REST); // Load restaurant scene 
     }
 
     IEnumerator GoBackMenu()
     {
-        yield return new WaitForSeconds(27);
+        float fadeDuration = 1.5f;
+        yield return new WaitForSeconds(creditsDuration - fadeDuration);
 
-        SceneManager.LoadScene((int)SceneIndexes.MAINMENU); // Load restaurant scene 
+        StartCoroutine(AudioHelper.FadeAudio(audio, "Master_Vol", fadeDuration));
+        yield return new WaitForSeconds(fadeDuration);
+
+        PlayerPrefs.SetInt("Just_Won_Game", 1);             // Trigger victory music in main menu
+        SceneManager.LoadScene((int)SceneIndexes.MAINMENU); // Load main menu scene 
     }
 }

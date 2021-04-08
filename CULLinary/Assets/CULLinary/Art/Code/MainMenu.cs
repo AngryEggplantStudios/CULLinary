@@ -16,6 +16,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject mainButtonsMenu;
     [SerializeField] private GameObject loadGameButton;
+
+    public AudioMixer audioMixer;
     
     private Animator animator;
 
@@ -46,12 +48,23 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
+        float targetVolume = 0.0001f;
+        string channel = "Master_Vol";
         if (fading) {
             if (foreground.color.a <= 0.95f) {
+
+                float rawVolume;
+                audioMixer.GetFloat(channel, out rawVolume);
+                float currentVolume = Mathf.Pow(10, rawVolume / 20);
+                float newVolume = Mathf.Lerp(currentVolume, targetVolume, fadeSpeed * Time.deltaTime);
+                audioMixer.SetFloat("Master_Vol", Mathf.Log10(newVolume) * 20);
+
                 foreground.color = Color.Lerp(foreground.color, Color.black, fadeSpeed * Time.deltaTime);
             } else {
                 fading = false;
                 foreground.color = Color.black;
+                // Options Menu will handle setting Master_Vol
+                // back to 0 on new scene load
                 afterFade();
             }
         }
