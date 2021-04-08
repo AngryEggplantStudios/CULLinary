@@ -83,7 +83,7 @@ public class CheatSystem : MonoBehaviour
         //4,6,7,11 
 
         PlayerData data = SaveSystem.LoadData();
-        int[] currentItems = new int[4]{4, 6, 7, 11};
+        int[] currentItems = new int[4]{4, 6, 12, 11};
         InventoryItemData[] items = new InventoryItemData[4];
         for (int i=0; i < items.Length; i++)
         {
