@@ -102,7 +102,7 @@ public class ServingController : MonoBehaviour
                     Restaurant_CustomerController customerController =
                         closestCustomer.GetComponent<Restaurant_CustomerController>();
                     // Only serve food to Customers not already eating
-                    if (customerController.HasReceivedFood() && customerController.HasDialogue()) {
+                    if (customerController && customerController.HasReceivedFood() && customerController.HasDialogue()) {
                         movementController.DisableMovementOfPlayer();
                         dialogueLoader.LoadAndRun(DialogueDatabase.GetRandomDialogue(), customerController);
                         customerController.SetToNoDialogue();

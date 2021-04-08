@@ -84,13 +84,13 @@ public class Restaurant_CustomerController : MonoBehaviour
         if (dishReceived == correctDishName) // Player served the correct dish
         {
             // Debug.Log("You served the correct dish!");
-            moneyText.GetComponent<Text>().text = "+100";
+            moneyText.GetComponent<Text>().text = "+$100";
             uiController.AddCorrectDishEarnings();
         }
         else // Player served the wrong dish
         {
             // Debug.Log("Customer wants: "+ correctDishName + " but received: " + dishReceived + " >:(");
-            moneyText.GetComponent<Text>().text = "+50";
+            moneyText.GetComponent<Text>().text = "+$50";
             uiController.AddWrongDishEarnings(); 
         }
 

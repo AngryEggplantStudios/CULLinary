@@ -40,11 +40,8 @@ public class DialogueLoader : MonoBehaviour
             currentDialogue = nextDialogue;
             RunCurrentDialogue();
         } else {
-            if (movementController != null)
-            {
-                movementController.EnableMovementOfPlayer();
-            }
-            StartCoroutine(currentCustomer.TimeToLeave());
+            if (movementController != null) movementController.EnableMovementOfPlayer();
+            if (currentCustomer != null) StartCoroutine(currentCustomer.TimeToLeave());
             // Invoke the ending action
             endDialogueAction.Invoke();
             endDialogueAction = defaultDialogueAction;
