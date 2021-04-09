@@ -16,6 +16,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject mainButtonsMenu;
     [SerializeField] private GameObject loadGameButton;
+    [SerializeField] private GameObject warningNewGame;
 
     public AudioMixer audioMixer;
     
@@ -73,12 +74,29 @@ public class MainMenu : MonoBehaviour
     public void NewGame()
     {
         Select();
+        if (hasSavedData)
+        {
+            warningNewGame.SetActive(true);
+        }
+        else
+        {
+            PlayNewGame();
+        }
+    }
+
+    public void CancelNewGame()
+    {
+        warningNewGame.SetActive(false);
+    }
+
+    public void PlayNewGame()
+    {
         FadeToBlack(() => {
             PlayerData newPlayerData = new PlayerData();
             SaveSystem.SaveData(newPlayerData);
             PlayerManager.LoadData();
             SceneManager.LoadScene((int) SceneIndexes.TUT_REST); //Restaurant -1
-             //Need to be changed to go to the loading screen in the future
+            //Need to be changed to go to the loading screen in the future
         });
     }
 
