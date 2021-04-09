@@ -312,15 +312,21 @@ public class ClownController : MonoBehaviour
     {
         coroutineRangedRunning = true;
         // suspend execution for 5 seconds
-        rangedAttackScript.attackPlayerStart();
-        yield return new WaitForSeconds(2f);
-        rangedAttackScript.attackPlayerStartFlashing();
-        yield return new WaitForSeconds(1f);
-        rangedAttackScript.attackPlayerDealDamage();
-        audioSourceAttack.clip = rangedSound;
-        audioSourceAttack.Play();
-        yield return new WaitForSeconds(0.5f);
-        rangedAttackScript.attackPlayerEnd();
+        //ranged barrage
+        int barrage = 0;
+        while (barrage < 3)
+        {
+            rangedAttackScript.attackPlayerStart();
+            yield return new WaitForSeconds(2f);
+            rangedAttackScript.attackPlayerStartFlashing();
+            yield return new WaitForSeconds(1f);
+            rangedAttackScript.attackPlayerDealDamage();
+            audioSourceAttack.clip = rangedSound;
+            audioSourceAttack.Play();
+            yield return new WaitForSeconds(0.5f);
+            rangedAttackScript.attackPlayerEnd();
+            barrage++;
+        }
         elapsedFrames = 0;
         coroutineRangedRunning = false;
         state = State.Idle;

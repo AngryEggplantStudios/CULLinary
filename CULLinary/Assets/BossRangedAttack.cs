@@ -35,10 +35,10 @@ public class BossRangedAttack : EnemyAttack
             LineRenderer lRend = gameObjectChild.AddComponent<LineRenderer>();
             lRend.positionCount = 2;
             lRend.startWidth = 0.01f;
-            lRend.endWidth = 0.02f;
+            lRend.endWidth = 0.01f;
             lRend.enabled = false;
             lRend.material = lineMaterial;
-            lRend.SetColors(Color.red, Color.clear);
+            lRend.SetColors(Color.red, Color.red);
             listOfRenderers.Add(lRend);
         }
         activateStage1();
