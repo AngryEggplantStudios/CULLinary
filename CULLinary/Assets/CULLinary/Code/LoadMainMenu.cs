@@ -11,6 +11,8 @@ public class LoadMainMenu : MonoBehaviour
     public AudioClip victoryMusic;
     public AudioSource backgroundMusic;
 
+    [SerializeField] private GameObject congratsScreen;
+
     void Start()
     {
         OnMainMenuLoad();
@@ -24,6 +26,7 @@ public class LoadMainMenu : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("Just_Won_Game") == 1) {
                 backgroundMusic.clip = victoryMusic;
+                congratsScreen.SetActive(true);
                 PlayerPrefs.SetInt("Just_Won_Game", 0);
                 backgroundMusic.Play();
             }
@@ -33,5 +36,10 @@ public class LoadMainMenu : MonoBehaviour
             Debug.Log("No player prefs registered in options");
             Debug.Log(e);
         }
+    }
+
+    public void CloseCongratsScreen()
+    {
+        congratsScreen.SetActive(false);
     }
 }

@@ -10,7 +10,6 @@ public class StatsLoader : MonoBehaviour
     [SerializeField] private Text ranged;
     [SerializeField] private Text melee;
     [SerializeField] private Text crit;
-    [SerializeField] private Text playTime;
     [SerializeField] private Text noOfMobsCulled;
     [SerializeField] private Text customersServed;
 
@@ -22,6 +21,6 @@ public class StatsLoader : MonoBehaviour
         melee.text = "Melee: " + PlayerManager.playerData.meleeDamage + "dmg";
         crit.text = "Crit Rate: " + PlayerManager.playerData.critRate + "%";
         noOfMobsCulled.text = "Culled: " + PlayerManager.noOfMobsCulled + " mobs";
-        customersServed.text = "Served: " + PlayerManager.noOfCustomersServed + " customers";
+        customersServed.text = "Served: " + (PlayerManager.wrongCustomersServed + PlayerManager.rightCustomersServed) + " customers";
     }
 }

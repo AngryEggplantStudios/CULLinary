@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Ending sequence of boss scene
 public class SpawnBurger : MonoBehaviour
 {
     [SerializeField] public GameObject burgerToSpawn;
@@ -11,6 +12,10 @@ public class SpawnBurger : MonoBehaviour
     // Start is called before the first frame update
     public void callRainBurger()
     {
+        if (PlayerManager.instance != null)
+        {
+            PlayerManager.SaveDataBoss();
+        }
         StartCoroutine("rainBurgers");
     }
 

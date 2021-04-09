@@ -11,7 +11,7 @@ public class ForceThreeEggplantsSave : SaveGameDataSystem
         if (playerManager != null)
         {
             PlayerManager.playerData.SetCurrentIndex(index);
-            PlayerManager.SaveData(threeEggplants);
+            PlayerManager.SaveDataTutorial(threeEggplants);
         } else {
             Debug.Log("Rip, failed to save the 3 eggplants :(");
         }

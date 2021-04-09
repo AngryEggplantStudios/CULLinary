@@ -247,6 +247,10 @@ public class UIController : MonoBehaviour
     public void AddWrongDishEarnings()
     {
         totalAmt += 50;
+        if (PlayerManager.playerData != null)
+        {
+            PlayerManager.wrongCustomersServed++;
+        }
         moneyText.GetComponent<Text>().text = "Amount earned: $" + totalAmt.ToString();
         AddToGameData();
     }
@@ -254,14 +258,20 @@ public class UIController : MonoBehaviour
     public void AddCorrectDishEarnings()
     {
         totalAmt += 100;
+        if (PlayerManager.playerData != null)
+        {
+            PlayerManager.rightCustomersServed++;
+        }
         moneyText.GetComponent<Text>().text = "Amount earned: $" + totalAmt.ToString();
         AddToGameData();
     }
 
     private void AddToGameData()
     {
-        PlayerManager.noOfCustomersServed++;
-        if (PlayerManager.playerData != null) PlayerManager.playerData.SetMoney(totalAmt);
+        if (PlayerManager.playerData != null) 
+        {
+            PlayerManager.playerData.SetMoney(totalAmt);
+        }
     }
 
     // Check inventory to see what food can be cooked
