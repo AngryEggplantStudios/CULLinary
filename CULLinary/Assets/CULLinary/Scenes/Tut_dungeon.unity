@@ -180,6 +180,72 @@ Transform:
   m_Father: {fileID: 761928009}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &42348351
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 865066571}
+    m_Modifications:
+    - target: {fileID: 666300789314955927, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: attackDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7236917708904857293, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_Name
+      value: EnemyPotato
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.920018
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.759995
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+--- !u!4 &42348352 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8008916349616235639, guid: b7994354aab3c5446a9eda9627515638, type: 3}
+  m_PrefabInstance: {fileID: 42348351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &60709070
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1422,11 +1488,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!4 &723835357 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-  m_PrefabInstance: {fileID: 1452987064}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &761928007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,7 +1577,7 @@ Transform:
   m_Children:
   - {fileID: 1473112233}
   - {fileID: 1624855970}
-  - {fileID: 723835357}
+  - {fileID: 42348352}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2664,87 +2725,6 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 2062472786286145478, guid: 2da84791356249721a5b79b74254c2cd, type: 3}
   m_PrefabInstance: {fileID: 1440714586}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1452987064
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 865066571}
-    m_Modifications:
-    - target: {fileID: 1899975033449201685, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: attackDamage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4757314950517091208, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_Name
-      value: EnemyEggplant 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4757314950517091208, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.70000005
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.70000005
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.9200182
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4.7599945
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.38086075
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.9246325
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 135.226
-      objectReference: {fileID: 0}
-    - target: {fileID: 5282353001699848498, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6978228103297125724, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: lootTuples.Array.data[0].ratio
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6978228103297125724, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
-      propertyPath: lootTuples.Array.data[1].ratio
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d7e3089f8be1b45dd8b57fdd38f71b68, type: 3}
 --- !u!1 &1461629823
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,18 +3798,18 @@ MonoBehaviour:
     - 'Good job! You successfully killed one monster!
 
       Did you pick up the
-      eggplant loot?'
+      loot?'
     - 'Any loot picked up will be stored in your inventory.
 
       [''I'' key toggles
       inventory menu]'
-    - 'However, we need 3 eggplants at least to cook an eggplant dish!
+    - 'However, we need 2 eggplants and 1 potato to cook Fried Eggplant!
 
       [''R''
       key toggles recipe menu]'
     - 'You can only store 16 items at any time, so manage your inventory well! '
     - You can also clear items by clicking the red 'x' button if your inventory lacks
-      space. Don't try it now though, we need all the eggplant we can get!
+      space. Don't try it now though, we need all the ingredients we can get!
     - Also, don't worry about getting lost - you can always refer to the minimap
       at the bottom right to find your way back!
-    - What are you waiting for? Time to cull more eggplant monsters!
+    - What are you waiting for? Time to cull more veggie monsters!
