@@ -11,7 +11,10 @@ public class PlayerManager : MonoBehaviour
 
     public static float currHealth;
     public static int noOfMobsCulled;
-    public static int noOfCustomersServed;
+    public static int wrongCustomersServed;
+    public static int rightCustomersServed;
+
+    public static float gameTime;
 
     private void Awake()
     {
@@ -24,15 +27,45 @@ public class PlayerManager : MonoBehaviour
         itemList = items;
         playerData.SetCurrentHealth((int)Mathf.Min(Mathf.Max(100, currHealth), playerData.maxHealth));
         playerData.SetNoOfMobsCulled(noOfMobsCulled);
-        playerData.SetNoOfCustomersServed(noOfCustomersServed);
+        playerData.SetRightCustomersServed(rightCustomersServed);
+        playerData.SetWrongCustomersServed(wrongCustomersServed);
+        playerData.SetInventoryString(SerializeInventory(itemList));
+        SaveGameTime();
+        SaveSystem.SaveData(playerData);
+    }
+
+    public static void SaveDataTutorial(List<Item> items)
+    {
+        itemList = items;
         playerData.SetInventoryString(SerializeInventory(itemList));
         SaveSystem.SaveData(playerData);
     }
 
-    public static void SaveData()
+    public static void SaveDataShop()
     {
         playerData.SetInventoryString(SerializeInventory(itemList));
+        SaveGameTime();
         SaveSystem.SaveData(playerData);
+    }
+
+    public static void SaveDataBoss()
+    {
+        playerData.SetCurrentIndex((int)SceneIndexes.REST);
+        playerData.SetCurrentHealth((int)Mathf.Min(Mathf.Max(100, currHealth), playerData.maxHealth));
+        playerData.SetInventoryString(SerializeInventory(itemList));
+        SaveGameTime();
+        SaveBossTime();
+        SaveSystem.SaveData(playerData);
+    }
+
+    public static void SaveGameTime()
+    {
+        playerData.SetGameTime(GameTimer.GetTime() + playerData.GetGameTime());
+    }
+
+    public static void SaveBossTime()
+    {
+        playerData.SetBossTime(BossTimer.GetTime());
     }
 
     public static void LoadData()
@@ -40,7 +73,8 @@ public class PlayerManager : MonoBehaviour
         playerData = SaveSystem.LoadData();
         currHealth = playerData.GetCurrentHealth();
         noOfMobsCulled = playerData.GetNoOfMobsCulled();
-        noOfCustomersServed = playerData.GetNoOfCustomersServed();
+        wrongCustomersServed = playerData.GetWrongCustomersServed();
+        rightCustomersServed = playerData.GetRightCustomersServed();
         if (playerData == null)
         {
             playerData = new PlayerData();

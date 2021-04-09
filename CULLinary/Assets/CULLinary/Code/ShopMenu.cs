@@ -49,7 +49,7 @@ public class ShopMenu : MonoBehaviour
     public void LoadDungeon()
     {
         PlayerManager.playerData.SetCurrentIndex((int)SceneIndexes.DUNGEON);
-        PlayerManager.SaveData();
+        PlayerManager.SaveDataShop();
         SceneManager.LoadScene((int)SceneIndexes.DUNGEON);
     }
 

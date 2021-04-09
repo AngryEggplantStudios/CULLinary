@@ -15,7 +15,12 @@ public class PlayerData
     public bool[] weaponsBought;
     public bool[] keyItemsBought;
     public int noOfMobsCulled;
-    public int noOfCustomersServed;
+    public int wrongCustomersServed;
+    public int rightCustomersServed;
+
+    public float gameTime;
+
+    public float bossTime;
 
     public PlayerData()
     {
@@ -28,14 +33,38 @@ public class PlayerData
         this.rangeDamage = 20;
         this.meleeDamage = 20;
         this.critRate = 0f;
+        this.wrongCustomersServed = 0;
+        this.rightCustomersServed = 0;
         this.weaponsBought = new bool[50];
         this.keyItemsBought = new bool[50];
         this.noOfMobsCulled = 0;
+        this.gameTime = 0f;
+        this.bossTime = 0f;
         for (int i = 0; i < this.weaponsBought.Length; i++)
         {
             this.weaponsBought[i] = false;
             this.keyItemsBought[i] = false;
         }
+    }
+
+    public float GetGameTime()
+    {
+        return this.gameTime;
+    }
+
+    public float GetBossTime()
+    {
+        return this.bossTime;
+    }
+
+    public int GetRightCustomersServed()
+    {
+        return this.rightCustomersServed;
+    }
+
+    public int GetWrongCustomersServed()
+    {
+        return this.wrongCustomersServed;
     }
 
     public float GetCritRate()
@@ -92,22 +121,20 @@ public class PlayerData
     {
         return this.meleeDamage;
     }
-
     public int GetNoOfMobsCulled()
     {
         return this.noOfMobsCulled;
     }
 
-    public int GetNoOfCustomersServed()
+    public void SetWrongCustomersServed(int i)
     {
-        return this.noOfCustomersServed;
+        this.wrongCustomersServed = i;
     }
 
-    public void SetNoOfCustomersServed(int i)
+    public void SetRightCustomersServed(int i)
     {
-        this.noOfCustomersServed = i;
+        this.rightCustomersServed = i;
     }
-
     public void SetNoOfMobsCulled(int i)
     {
         this.noOfMobsCulled = i;
@@ -163,9 +190,19 @@ public class PlayerData
         this.maxHealth = maxHealth;
     }
 
+    public void SetGameTime(float i)
+    {
+        this.gameTime = i;
+    }
+
+    public void SetBossTime(float i)
+    {
+        this.bossTime = i;
+    }
+
     public void SetCurrentHealth(int currentHealth)
     {
-        this.currentHealth = currentHealth;
+        this.currentHealth = Mathf.Min(currentHealth, this.maxHealth);
         //this.currentHealth = Mathf.Min(Mathf.Max(100, currentHealth),this.maxHealth); //Clamp
     }
 
