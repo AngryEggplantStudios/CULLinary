@@ -24,6 +24,9 @@ public class TutorialController_Return : MonoBehaviour
     public LocateCamera cameraScript; // for shaking
     public GameObject blackscreen;
 
+    public AudioSource EarthquakeSFX;
+    public AudioSource ClownStepSFX;
+
     bool cookedDish = false;
     bool pickedUpDish = false;
     bool firstCustArrived = false;
@@ -138,6 +141,8 @@ public class TutorialController_Return : MonoBehaviour
         StartCoroutine(AudioHelper.FadeAudio(audio, "Master_Vol", duration));
         // Add shaking effect to camera
         StartCoroutine(ShakeCamera(duration));
+        EarthquakeSFX.Play();
+        ClownStepSFX.Play();
         blackscreen.SetActive(true);
         Animator blackscreenAnimator = blackscreen.GetComponent<Animator>();
         blackscreenAnimator.SetBool("TurnBlack", true); // Fade to black
