@@ -51,7 +51,16 @@ public class CongratsStats : MonoBehaviour
     private string ProcessGrade(PlayerData pd)
     {
         float bossTime = pd.GetBossTime();
-        float numServedCorrectly = pd.GetRightCustomersServed() / (pd.GetRightCustomersServed() + pd.GetWrongCustomersServed());
+        float numServedCorrectly;
+        int total = pd.GetRightCustomersServed() + pd.GetWrongCustomersServed();
+        if (total == 0)
+        {
+            numServedCorrectly = 1f;
+        }
+        else
+        {
+            numServedCorrectly = pd.GetRightCustomersServed() / total;
+        }
         if (bossTime < 30f && numServedCorrectly > 0.8f)
         {
             return "A+";
