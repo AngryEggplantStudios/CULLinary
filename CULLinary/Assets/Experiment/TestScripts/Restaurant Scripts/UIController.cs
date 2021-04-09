@@ -147,11 +147,11 @@ public class UIController : MonoBehaviour
 
         // Debug.Log("current ing count (ep/gep/c/p): " + eggplantNum + "; " + goldeggplantNum + "; " + cornNum + "; "+ potatoNum);
 
-        if (eggplantNum < 3)
+        if (eggplantNum < 2 || potatoNum < 1)
         {
             recipeMenuButtons[0].GetComponent<Button>().interactable = false;
         }
-        if (goldeggplantNum < 3)
+        if (goldeggplantNum < 1)
         {
             recipeMenuButtons[1].GetComponent<Button>().interactable = false;
         }
