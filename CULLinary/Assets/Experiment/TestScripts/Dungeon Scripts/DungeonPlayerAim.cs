@@ -139,6 +139,7 @@ public class DungeonPlayerAim : MonoBehaviour
     }
     public void disableMovement()
     {
+        canShoot = false;
         dungeonPlayerRange.OnPlayerAim -= Aim;
         dungeonPlayerRange.OnPlayerStop -= StopAim;
     }
