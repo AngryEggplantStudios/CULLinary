@@ -20,6 +20,8 @@ public class TutBossSceneManager : MonoBehaviour
         if (enableGameSave)
         {
             // save at Tut_Fainted
+            PlayerManager.playerData.SetMoney(100);
+            PlayerManager.rightCustomersServed = 1;
             saveGameDataSystem.SaveGameData((int)sceneIndex);
         }
     }
