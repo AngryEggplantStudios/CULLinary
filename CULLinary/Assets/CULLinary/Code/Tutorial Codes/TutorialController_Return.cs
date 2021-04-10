@@ -149,7 +149,7 @@ public class TutorialController_Return : MonoBehaviour
 
         yield return new WaitForSeconds(duration); // Have some time for player to process everything before loading the game scene
 
-        SceneManager.LoadScene((int)SceneIndexes.TUT_BOSS); // CHANGE TO INITIAL BOSS SCENE HERE
+        SceneManager.LoadScene((int)SceneIndexes.TUT_BOSS); 
     }
 
     IEnumerator AdvanceInstructions()

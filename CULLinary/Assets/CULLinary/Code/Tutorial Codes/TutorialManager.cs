@@ -23,7 +23,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)) // Show next sentence if player presses Enter key
+        if (Input.GetKeyDown("f")) // Show next sentence if player presses 'F' key
             DisplayNextSentence();
     }
 
