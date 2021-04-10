@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TutorialManager : MonoBehaviour
 {
     public Text instructionsText;
+    public GameObject nextButton;
 
     public Animator animator;
 
@@ -18,7 +19,7 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sentences = new Queue<string>();
+        sentences = new Queue<string>();       
     }
 
     private void Update()
@@ -29,7 +30,9 @@ public class TutorialManager : MonoBehaviour
 
     public void StartInstruction(Instruction instruction)
     {
+        nextButton.SetActive(false);
         animator.SetBool("isOpen", true);
+
 
         sentences.Clear();
 
@@ -82,6 +85,8 @@ public class TutorialManager : MonoBehaviour
 
     IEnumerator TypeSentence(string sentence)
     {
+        nextButton.SetActive(false);
+
         stillTyping = true;
         currSentence = sentence;
 
@@ -105,6 +110,7 @@ public class TutorialManager : MonoBehaviour
 
         yield return new WaitForSeconds(delay);
 
+        nextButton.SetActive(true);
         stillTyping = false;
         currWaiting = false;
         //animator.SetBool("CanGoNext", true);
