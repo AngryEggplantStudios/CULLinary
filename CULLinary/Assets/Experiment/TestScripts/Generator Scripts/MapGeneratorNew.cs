@@ -16,6 +16,8 @@ public class MapGeneratorNew : MonoBehaviour
     public int mapSize = 5;
     public float fillerRatio = 0.2f;
     public int randomness = 30;
+    // This dialogue is for the clown room
+    public DialogueLoader dialogueForClownRoom;
 
     private static GameObject parent;
     private static List<GameObject> roomPool = new List<GameObject>();
@@ -186,6 +188,20 @@ public class MapGeneratorNew : MonoBehaviour
                 }
             }
         }
+
+        // Assign dialogue loader to the clown room
+        GameObject clownRoom = GameObject.Find("ClownPortal");
+        if (clownRoom != null) {
+            BossPortal portal = clownRoom.GetComponentInChildren(typeof(BossPortal)) as BossPortal;
+            if (portal != null) {
+                portal.dialogueLoader = dialogueForClownRoom;
+            } else {
+                Debug.Log("No found portal. No load dialogue for portal");
+            }
+        } else {
+            Debug.Log("No found clown room. No load dialogue for portal");
+        }
+
         isLoadingGame = false;
         isGenerated = true;
     }

@@ -18,7 +18,9 @@ public class PopulateShop : MonoBehaviour
    private List<Vitamin> vitaminList = new List<Vitamin>();
    private List<Weapon> weaponList = new List<Weapon>();
    private List<KeyItem> keyItemList = new List<KeyItem>();
-
+   private List<Button> vitaminButtons = new List<Button>();
+   private List<Button> weaponButtons = new List<Button>();
+   private List<Button> keyItemButtons = new List<Button>();
    private void Start()
    {
         isPopulated = false;
@@ -30,39 +32,33 @@ public class PopulateShop : MonoBehaviour
 
    private IEnumerator Populate()
    {
-        yield return StartCoroutine(PopulateVitaminPanel());
-        yield return StartCoroutine(PopulateWeaponPanel());
-        yield return StartCoroutine(PopulateKeyItemPanel());
-        shopMenu.SelectVitaminPanel();
-        isPopulated = true;
-   }
-
-   public IEnumerator UpdateUI(int currentPanelSelected)
-   {
         shopMenu.SetAllPanelsActive();
         yield return StartCoroutine(PopulateVitaminPanel());
         yield return StartCoroutine(PopulateWeaponPanel());
         yield return StartCoroutine(PopulateKeyItemPanel());
+        shopMenu.SelectUponStart();
+        isPopulated = true;
+   }
+
+   public IEnumerator UpdatePanel(int currentPanelSelected)
+   {
+        yield return null;
         switch (currentPanelSelected)
         {
             case 0:
-                shopMenu.SelectVitaminPanel();
+                yield return StartCoroutine(UpdateVitaminPanel());
                 break;
             case 1:
-                shopMenu.SelectWeaponPanel();
+                yield return StartCoroutine(UpdateWeaponPanel());
                 break;
             case 2:
-                shopMenu.SelectKeyItemPanel();
+                yield return StartCoroutine(UpdateKeyItemPanel());
                 break;
         }
    }
 
-   private IEnumerator PopulateKeyItemPanel()
+   public IEnumerator PopulateKeyItemPanel()
    {
-       foreach (Transform child in keyItemGrid)
-       {
-           Destroy(child.gameObject);
-       }
        foreach (KeyItem k in keyItemList)
        {
             yield return null;
@@ -74,25 +70,27 @@ public class PopulateShop : MonoBehaviour
 
             if (PlayerManager.playerData.GetIfKeyItemBoughtById(k.GetID())) //Should combine with the below else if statement and make the button uninteractable
             {
+                BlankOutButton(btn);
                 btn.onClick.AddListener(() => { shopMenu.SelectAlreadyBought(); });
             }
             else if (PlayerManager.playerData.GetMoney() < k.GetPrice())
             {
+                BlankOutButton(btn);
                 btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
             }
             else 
             {
+                BlankOutButton(btn);
+                ReactivateButton(btn);
                 btn.onClick.AddListener(() => { shopMenu.SelectItem(k); });
             }
+            keyItemButtons.Add(btn);
        }
+       
    }
 
-   private IEnumerator PopulateWeaponPanel()
+   public IEnumerator PopulateWeaponPanel()
    {
-        foreach (Transform child in weaponGrid)
-        {
-           Destroy(child.gameObject);
-        }
         foreach (Weapon w in weaponList)
         {
             yield return null;
@@ -104,25 +102,25 @@ public class PopulateShop : MonoBehaviour
 
             if (PlayerManager.playerData.GetIfWeaponBoughtById(w.GetID())) //Should combine with the below else if statement and make the button uninteractable
             {
+                BlankOutButton(btn);
                 btn.onClick.AddListener(() => { shopMenu.SelectAlreadyBought(); });
             }
             else if (PlayerManager.playerData.GetMoney() < w.GetPrice())
             {
+                BlankOutButton(btn);
                 btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
             }
             else 
             {
+                ReactivateButton(btn);
                 btn.onClick.AddListener(() => { shopMenu.SelectItem(w); });
             }
+            weaponButtons.Add(btn);
         }
     }
 
-   private IEnumerator PopulateVitaminPanel()
+   public IEnumerator PopulateVitaminPanel()
    {
-        foreach (Transform child in vitaminGrid)
-       {
-           Destroy(child.gameObject);
-       }
        foreach (Vitamin v in vitaminList)
        {
             yield return null;
@@ -131,15 +129,121 @@ public class PopulateShop : MonoBehaviour
             btn.onClick.RemoveAllListeners();
             SetupSlot(v, slot, btn);
             yield return null;
-
-            if (PlayerManager.playerData.GetMoney() < v.GetPrice())
+            if (v.healthHeal > 0 && PlayerManager.playerData.GetMaxHealth() == PlayerManager.playerData.GetCurrentHealth())
             {
+                BlankOutButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.MaxHealthWarning(); });
+            }
+            else if (PlayerManager.playerData.GetMoney() < v.GetPrice())
+            {
+                BlankOutButton(btn);
                 btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
             }
             else
             {
+                ReactivateButton(btn);
                 btn.onClick.AddListener(() => { shopMenu.SelectItem(v); });
             }
+            vitaminButtons.Add(btn);
+       }
+   }
+
+   public IEnumerator UpdateVitaminPanel()
+   {
+       int count = 0;
+       foreach (Vitamin v in vitaminList)
+       {
+            yield return null;
+            Button btn = vitaminButtons[count];
+            btn.onClick.RemoveAllListeners();
+            if (v.healthHeal > 0 && PlayerManager.playerData.GetMaxHealth() == PlayerManager.playerData.GetCurrentHealth())
+            {
+                BlankOutButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.MaxHealthWarning(); });
+            }
+            else if (PlayerManager.playerData.GetMoney() < v.GetPrice())
+            {
+                BlankOutButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
+            }
+            else
+            {
+                ReactivateButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.SelectItem(v); });
+            }
+            count++;
+       }
+   }
+
+    public IEnumerator UpdateWeaponPanel()
+    {
+        int count = 0;
+        foreach (Weapon w in weaponList)
+        {
+            yield return null;
+            Button btn = weaponButtons[count];
+            btn.onClick.RemoveAllListeners();
+            if (PlayerManager.playerData.GetIfWeaponBoughtById(w.GetID())) //Should combine with the below else if statement and make the button uninteractable
+            {
+                BlankOutButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.SelectAlreadyBought(); });
+            }
+            else if (PlayerManager.playerData.GetMoney() < w.GetPrice())
+            {
+                BlankOutButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
+            }
+            else 
+            {
+                ReactivateButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.SelectItem(w); });
+            }
+            count++;
+        }
+    }
+
+    public IEnumerator UpdateKeyItemPanel()
+    {
+        int count = 0;
+        foreach (KeyItem k in keyItemList)
+        {
+            yield return null;
+            Button btn = keyItemButtons[count];
+            btn.onClick.RemoveAllListeners();
+            if (PlayerManager.playerData.GetIfKeyItemBoughtById(k.GetID())) //Should combine with the below else if statement and make the button uninteractable
+            {
+                BlankOutButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.SelectAlreadyBought(); });
+            }
+            else if (PlayerManager.playerData.GetMoney() < k.GetPrice())
+            {
+                BlankOutButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.SelectNoMoney(); });
+            }
+            else 
+            {
+                ReactivateButton(btn);
+                btn.onClick.AddListener(() => { shopMenu.SelectItem(k); });
+            }
+            count++;
+        }
+    }
+
+   private void BlankOutButton(Button button)
+   {
+       Image[] imgs = button.GetComponentsInChildren<Image>();
+       foreach (Image img in imgs)
+       {
+           img.color = Color.grey;
+       }
+   }
+
+   private void ReactivateButton(Button button)
+   {
+       Image[] imgs = button.GetComponentsInChildren<Image>();
+       foreach (Image img in imgs)
+       {
+           img.color = Color.white;
        }
    }
 
@@ -153,16 +257,6 @@ public class PopulateShop : MonoBehaviour
         tooltipTrigger.SetHeader(item.GetName());
         Image[] image = slot.GetComponentsInChildren<Image>();
         image[1].sprite = item.GetSprite();
-   }
-
-   private void OnDestroy()
-   {
-       // What does this even do...
-       /* foreach(GameObject slot in vitaminSlots)
-       {
-           Button btn = slot.GetComponent<Button>();
-           btn.onClick.RemoveAllListeners();
-       } */
    }
 
 }
