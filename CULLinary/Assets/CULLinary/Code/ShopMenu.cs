@@ -62,10 +62,11 @@ public class ShopMenu : MonoBehaviour
 
     public void SelectVitaminPanel()
     {
-        currentPanelSelected = 0;   
+        currentPanelSelected = 0;
         vitaminPanel.SetActive(true);
         weaponPanel.SetActive(false);
         keyItemPanel.SetActive(false);
+        StartCoroutine(populateShop.UpdatePanel(currentPanelSelected));
     }
 
     public void SelectWeaponPanel()
@@ -74,6 +75,7 @@ public class ShopMenu : MonoBehaviour
         vitaminPanel.SetActive(false);
         weaponPanel.SetActive(true);
         keyItemPanel.SetActive(false);
+        StartCoroutine(populateShop.UpdatePanel(currentPanelSelected));
     }
 
     public void SelectKeyItemPanel()
@@ -82,6 +84,7 @@ public class ShopMenu : MonoBehaviour
         vitaminPanel.SetActive(false);
         weaponPanel.SetActive(false);
         keyItemPanel.SetActive(true);
+        StartCoroutine(populateShop.UpdatePanel(currentPanelSelected));
     }
 
     public void SelectNoMoney()
@@ -96,6 +99,13 @@ public class ShopMenu : MonoBehaviour
         secondaryCanvas.SetActive(true);
         noMoneyPopup.SetActive(true);
         noMoneyPopup.GetComponentInChildren<Text>().text = "You already bought this!";
+    }
+
+    public void MaxHealthWarning()
+    {
+        secondaryCanvas.SetActive(true);
+        noMoneyPopup.SetActive(true);
+        noMoneyPopup.GetComponentInChildren<Text>().text = "You already have max health!";
     }
 
     public void BackToShop()
@@ -177,12 +187,13 @@ public class ShopMenu : MonoBehaviour
         confirmPopup.SetActive(false);
         currentVitaminSelected = null;
         currentWeaponSelected = null;
+        currentKeyItemSelected = null;
     }
 
     private void UpdateUI()
     {
         moneyText.text = "Money: $" + PlayerManager.playerData.GetMoney();
         currentStats.UpdateUI();
-        StartCoroutine(populateShop.UpdateUI(currentPanelSelected));
+        StartCoroutine(populateShop.UpdatePanel(currentPanelSelected));
     }
 }
