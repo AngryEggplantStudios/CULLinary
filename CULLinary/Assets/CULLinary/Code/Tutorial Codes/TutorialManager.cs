@@ -6,29 +6,33 @@ using UnityEngine.UI;
 public class TutorialManager : MonoBehaviour
 {
     public Text instructionsText;
+    public GameObject nextButton;
 
     public Animator animator;
 
     public Queue<string> sentences;
 
     bool stillTyping = false;
+    bool currWaiting = false;
     string currSentence = "";
 
     // Start is called before the first frame update
     void Start()
     {
-        sentences = new Queue<string>();
+        sentences = new Queue<string>();       
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)) // Show next sentence if player presses Enter key
+        if (Input.GetKeyDown("f")) // Show next sentence if player presses 'F' key
             DisplayNextSentence();
     }
 
     public void StartInstruction(Instruction instruction)
     {
+        nextButton.SetActive(false);
         animator.SetBool("isOpen", true);
+
 
         sentences.Clear();
 
@@ -42,43 +46,47 @@ public class TutorialManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
-        if (sentences.Count == 0)
+        if (!currWaiting)
         {
-            // EndInstructions(); // make this a coroutine instead? so auto close once reach the last sentence?
-            // StartCoroutine(WaitBeforeClosing());
-            animator.SetBool("CanGoNext", false);
+            if (sentences.Count == 0)
+            {
+                animator.SetBool("CanGoNext", false);
 
-            if (stillTyping == true)
+                if (stillTyping == true)
+                {
+                    StopAllCoroutines();
+                    instructionsText.text = currSentence;
+                    StartCoroutine(WaitBeforeClosing());
+                }
+                else
+                {
+                    EndInstructions();
+                }
+
+
+                return;
+            }
+
+            if (stillTyping == true) // show the complete sentence before moving on
             {
                 StopAllCoroutines();
                 instructionsText.text = currSentence;
-                StartCoroutine(WaitBeforeClosing());
-            } else
-            {
-                EndInstructions();
+                StartCoroutine(WaitAWhile(1.5f)); // Short delay before showing the next sentence
             }
-            
+            else
+            {
+                string sentence = sentences.Dequeue();
+                StartCoroutine(TypeSentence(sentence));
+            }
 
-            return;
         }
-
-        if (stillTyping == true) // show the complete sentence before moving on
-        {
-            StopAllCoroutines();
-            instructionsText.text = currSentence;
-            StartCoroutine(WaitAWhile(0.5f)); // Short delay before showing the next sentence
-            // stillTyping = false;
-        } else
-        {
-            string sentence = sentences.Dequeue();
-            StartCoroutine(TypeSentence(sentence));
-        }
-
         
     }
 
     IEnumerator TypeSentence(string sentence)
     {
+        nextButton.SetActive(false);
+
         stillTyping = true;
         currSentence = sentence;
 
@@ -89,15 +97,22 @@ public class TutorialManager : MonoBehaviour
             yield return null;
         }
         stillTyping = false;
+        StartCoroutine(WaitAWhile(1.5f)); // Short delay before showing the next sentence
         animator.SetBool("CanGoNext", true);
         Debug.Log("Yo I set the bool to go next");
     }
 
     IEnumerator WaitAWhile(float delay)
     {
+        currWaiting = true;
+
+        Debug.Log("Waiting for " + delay + " seconds!");
+
         yield return new WaitForSeconds(delay);
 
+        nextButton.SetActive(true);
         stillTyping = false;
+        currWaiting = false;
         //animator.SetBool("CanGoNext", true);
         //Debug.Log("Yo I set the bool to go next");
         // where to put animator.SetBool("CanGoNext", false);??
@@ -105,7 +120,7 @@ public class TutorialManager : MonoBehaviour
 
     IEnumerator WaitBeforeClosing() 
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.5f);
         stillTyping = false;
 
         EndInstructions();
