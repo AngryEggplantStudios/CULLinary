@@ -13,6 +13,10 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] private GameObject mainPauseButtons;
     [SerializeField] private GameObject optionButtons;
+
+    [SerializeField] private GameObject warningScreen;
+    [SerializeField] private GameObject warningRestart;
+    [SerializeField] private GameObject controlsScreen;
  
     // Update is called once per frame
     private void Update()
@@ -35,6 +39,9 @@ public class PauseMenu : MonoBehaviour
         mainPauseButtons.SetActive(true);
         optionButtons.SetActive(false);
         pauseMenuUI.SetActive(false);
+        warningRestart.SetActive(false);
+        warningScreen.SetActive(false);
+        controlsScreen.SetActive(false);
         Time.timeScale = 1f;
         isGamePaused = false;
 
@@ -56,7 +63,16 @@ public class PauseMenu : MonoBehaviour
     public void Back()
     {
         optionButtons.SetActive(false);
+        controlsScreen.SetActive(false);
+        warningScreen.SetActive(false);
+        warningRestart.SetActive(false);
         mainPauseButtons.SetActive(true);
+    }
+
+    public void Controls()
+    {
+        controlsScreen.SetActive(true);
+        mainPauseButtons.SetActive(false);
     }
 
     public void Pause()
@@ -71,6 +87,18 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene((int)levelToRestart);
         pauseMenuUI.SetActive(false);
+    }
+
+    public void WarningBeforeRestart()
+    {
+        warningRestart.SetActive(true);
+        mainPauseButtons.SetActive(false);
+    }
+
+    public void WarningBeforeMainMenu()
+    {
+        warningScreen.SetActive(true);
+        mainPauseButtons.SetActive(false);
     }
 
     public void GoToMainMenu()
