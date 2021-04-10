@@ -38,9 +38,9 @@ public static class Recipes
     //     new RecipeTest("Burrito", 3, new int[]{4, 7, 8, 9, 10})
     // };
     public static RecipeTest[] recipes = new RecipeTest[]{
-        new RecipeTest("Fried Eggplant", 0, new int[]{4, 4, 4}),
-        new RecipeTest("Golden Fried Eggplant", 1, new int[]{6, 6, 6}),
-        new RecipeTest("Pizza", 2, new int[]{4, 12, 11}),
-        new RecipeTest("Burrito", 3, new int[]{11, 12, 12})
+        new RecipeTest("Fried Eggplant", 0, new int[]{4, 4, 11}),  // 2 Eggplant(4) + Potato(11)
+        new RecipeTest("Golden Fried Eggplant", 1, new int[]{6}),  // GoldenEggplant(6)
+        new RecipeTest("Pizza", 2, new int[]{4, 12, 11}),          // Eggplant(4) + Corn(12) + Potato(11)
+        new RecipeTest("Burrito", 3, new int[]{11, 12, 12})        // Potato(11) + 2 Corn(12)
     };
 }

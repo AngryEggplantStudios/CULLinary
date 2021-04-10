@@ -13,8 +13,9 @@ public class MapGeneratorNew : MonoBehaviour
     public GameObject specialClownRoom;
     public GameObject deadendEdge;
     public GameObject deadendCorner;
-    public int mapSize;
-    public float fillerRatio = 0.5f;
+    public int mapSize = 5;
+    public float fillerRatio = 0.2f;
+    public int randomness = 30;
 
     private static GameObject parent;
     private static List<GameObject> roomPool = new List<GameObject>();
@@ -92,7 +93,7 @@ public class MapGeneratorNew : MonoBehaviour
         }
 
         roomPool = MergeShuffle(fillerRoomPool, spawnRoomPool).ToList();
-        GentlyShuffle(roomPool, 10);
+        GentlyShuffle(roomPool, randomness);
 
         // Spiral out from the center and spawn rooms
         /*
@@ -208,10 +209,10 @@ public class MapGeneratorNew : MonoBehaviour
     static void GentlyShuffle<T>(IList<T> list, int dist)
     {
         int n = list.Count;
-        while (n > dist)
+        while (n > 1)
         {
             n--;
-            int k = n - rng.Next(dist);
+            int k = n - rng.Next(Mathf.Min(dist, n));
             T value = list[k];
             list[k] = list[n];
             list[n] = value;

@@ -54,6 +54,11 @@ public class Projectile : MonoBehaviour
             target.HandleHit(damage);
             Destroy(gameObject);
         }
+        //To Handle 
+        if (collider.gameObject.tag == "Environment")
+        {
+            Destroy(gameObject);
+        }
     }
 
 
