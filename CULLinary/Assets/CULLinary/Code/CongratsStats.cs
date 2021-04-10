@@ -61,7 +61,7 @@ public class CongratsStats : MonoBehaviour
         {
             numServedCorrectly = pd.GetRightCustomersServed() / total;
         }
-        if (bossTime < 30f && numServedCorrectly > 0.8f)
+        if (bossTime < 30f && numServedCorrectly > 0.9f)
         {
             return "A+";
         }
@@ -71,9 +71,9 @@ public class CongratsStats : MonoBehaviour
         }
         else if (bossTime < 120f || numServedCorrectly > 0.5f)
         {
-            return "B - Maybe you should S/U";
+            return "B (Maybe you should S/U)";
         }
-        return "C - It's time to S/U!";
+        return "C (It's time to S/U!)";
     }
 
 }
