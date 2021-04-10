@@ -36,7 +36,7 @@ public class PopulateShop : MonoBehaviour
         yield return StartCoroutine(PopulateVitaminPanel());
         yield return StartCoroutine(PopulateWeaponPanel());
         yield return StartCoroutine(PopulateKeyItemPanel());
-        shopMenu.SelectVitaminPanel();
+        shopMenu.SelectUponStart();
         isPopulated = true;
    }
 

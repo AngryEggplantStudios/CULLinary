@@ -60,8 +60,20 @@ public class ShopMenu : MonoBehaviour
         keyItemPanel.SetActive(true);
     }
 
+    public void SelectUponStart()
+    {
+        currentPanelSelected = 0;
+        vitaminPanel.SetActive(true);
+        weaponPanel.SetActive(false);
+        keyItemPanel.SetActive(false);
+    }
+
     public void SelectVitaminPanel()
     {
+        if (currentPanelSelected == 0)
+        {
+            return;
+        }
         currentPanelSelected = 0;
         vitaminPanel.SetActive(true);
         weaponPanel.SetActive(false);
@@ -71,6 +83,10 @@ public class ShopMenu : MonoBehaviour
 
     public void SelectWeaponPanel()
     {
+        if (currentPanelSelected == 1)
+        {
+            return;
+        }
         currentPanelSelected = 1;
         vitaminPanel.SetActive(false);
         weaponPanel.SetActive(true);
@@ -80,6 +96,10 @@ public class ShopMenu : MonoBehaviour
 
     public void SelectKeyItemPanel()
     {
+        if (currentPanelSelected == 2)
+        {
+            return;
+        }
         currentPanelSelected = 2;
         vitaminPanel.SetActive(false);
         weaponPanel.SetActive(false);
