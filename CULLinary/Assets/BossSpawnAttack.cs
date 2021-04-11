@@ -20,10 +20,11 @@ public class BossSpawnAttack : MonoBehaviour
             {
                 spawnPoint1[i].activateSpawn();
             }
-        } else
+        }
+
+        for (int i = 0; i < totalSpawnPoints; i++)
         {
-            spawnPoint1[currSpawnPoint].activateSpawn();
-            currSpawnPoint = (currSpawnPoint + 1) % 3;
+            spawnPoint1[i].activateSpawn();
         }
 
     }
