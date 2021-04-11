@@ -160,14 +160,13 @@ public class ClownController : MonoBehaviour
                 } 
                 if (!coroutineRangedRunning)
                 {
-                    if (health / maxHealth < 0.3f)
+                    if (health / maxHealth <= 0.3f)
                     {
                         rangedAttackScript.activateStage3();
                     }
-                    else if (health / maxHealth < 0.7f)
+                    else if (health / maxHealth <= 0.7f)
                     {
                         rangedAttackScript.activateStage2();
-                        spawnAttackScript.activateStage2();
                     }
                     else
                     {
@@ -245,6 +244,11 @@ public class ClownController : MonoBehaviour
             case State.SpawnAttack:
                 if (!coroutineSpawnRunning)
                 {
+                    if (health/maxHealth < 0.3f)
+                    {
+                        spawnAttackScript.activateStage2();
+                    }
+
                     StartCoroutine("spawnCoroutine");
                 }
                 lowerJaw.localPosition = new Vector3(
