@@ -13,5 +13,6 @@ public enum SceneIndexes
   BOSS = 7,
   FINALE = 8,
   TUT_BOSS = 9,
-  TUT_FAINTED = 10
+  TUT_FAINTED = 10,
+  INTRO = 11,
 }
