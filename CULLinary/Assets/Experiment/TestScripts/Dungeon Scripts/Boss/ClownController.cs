@@ -163,11 +163,11 @@ public class ClownController : MonoBehaviour
                     if (health / maxHealth < 0.3f)
                     {
                         rangedAttackScript.activateStage3();
-                        spawnAttackScript.activateStage2();
                     }
                     else if (health / maxHealth < 0.7f)
                     {
                         rangedAttackScript.activateStage2();
+                        spawnAttackScript.activateStage2();
                     }
                     else
                     {
@@ -282,25 +282,23 @@ public class ClownController : MonoBehaviour
     IEnumerator idleCooldownCoroutine()
     {
         idleCooldownRunning = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
         SetupUI(Instantiate(enemyAlert_prefab));
         audioSourceAttack.clip = alertSound;
         audioSourceAttack.Play();
         yield return new WaitForSeconds(1);
         idleCooldownRunning = false;
-        int chooseAttack = Random.Range(1, 6);
+        int chooseAttack = Random.Range(1, 4);
         switch (chooseAttack)
         {
             default:
             case 1:
-            case 2:
                 state = State.MeleeAttack;
                 break;
-            case 3:
+            case 2:
                 state = State.SpawnAttack;
                 break;
-            case 4:
-            case 5:
+            case 3:
                 state = State.RangedAttack;
                 break;
         }
@@ -345,7 +343,7 @@ public class ClownController : MonoBehaviour
     {
         coroutineSpawnRunning = true;
         spawnAttackScript.spawnMobs();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         coroutineSpawnRunning = false;
         state = State.Idle;
     }
