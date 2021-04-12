@@ -316,16 +316,25 @@ public class ClownController : MonoBehaviour
         // suspend execution for 5 seconds
         //ranged barrage
         int barrage = 0;
+        rangedAttackScript.attackPlayerStart();
+        yield return new WaitForSeconds(2f);
+        rangedAttackScript.attackPlayerStartFlashing();
+        yield return new WaitForSeconds(1f);
+        rangedAttackScript.attackPlayerDealDamage();
+        audioSourceAttack.clip = rangedSound;
+        audioSourceAttack.Play();
+        yield return new WaitForSeconds(0.5f);
+        rangedAttackScript.attackPlayerEnd();
+        barrage++;
         while (barrage < 3)
         {
             rangedAttackScript.attackPlayerStart();
-            yield return new WaitForSeconds(2f);
             rangedAttackScript.attackPlayerStartFlashing();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             rangedAttackScript.attackPlayerDealDamage();
             audioSourceAttack.clip = rangedSound;
             audioSourceAttack.Play();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
             rangedAttackScript.attackPlayerEnd();
             barrage++;
         }
