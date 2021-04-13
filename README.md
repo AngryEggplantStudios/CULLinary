@@ -11,19 +11,21 @@ You are an owner of a humble restaurant in your hometown. Recently, chemical was
 As a result, the number of visitors to the town is declining rapidly, running your restaurant out of business. Now your job is to kill off the monsters, grow your restaurant so that you can attract visitors back to your town and make it great again!
 
 ## Contents
-  * [System Requirements (Recommended)](#system-requirements)
+  * [System Requirements](#system-requirements)
   * [Download](#download)
       - [Windows10](#Windows10)
       - [MacOS](#MacOS)
+      - [Linux](#Linux)
   * [Control Instructions](#control-instructions)
       - [General](#general)
       - [Restaurant](#restaurant)
       - [Dungeon](#dungeon)
 
 ## System Requirements
-- ~200MB of Storage Space
-- 8GB RAM (Recommended for optimal performance)
-- Nvidia GeForce 1050 or Higher (Recommended for optimal performance)
+- Space required: 200MB
+- RAM: 8GB RAM (Recommended for optimal performance)
+- Graphics: Nvidia GeForce 1050 or Higher (Recommended for optimal performance)
+- Platforms Supported: Windows10, MacOS, Linux (Tested on Ubuntu 18.04)
 
 ## Download 
 
@@ -34,7 +36,6 @@ As a result, the number of visitors to the town is declining rapidly, running yo
 2) Unzip the file.
 ![Image Of Step 3](STEPS/step3.png)
 3) Click on CULLinary icon to start the game.
-4) Hope you enjoy our game! Thank you for playing!
 
 ### MacOS
 
@@ -49,8 +50,12 @@ As a result, the number of visitors to the town is declining rapidly, running yo
 5) Input `sudo xattr -rd com.apple.quarantine "v1.4.1.app"` onto Terminal and hit Enter
 ![Image of Step4](STEPS/macos-step4.jpg)
 6) Enter your MacBook password when prompted on Terminal and hit Enter.
-
 7) You should be able to run CULLinary now!
+
+### Linux
+1) If you do not have the zip file, download the latest Linux (.x86_64 file) release from https://github.com/AngryEggplantStudios/CULLinary/releases
+2) Unzip the file.
+3) Double-click `v1.4.x86_64` to launch the game!
 
 ## Control Instructions
 
