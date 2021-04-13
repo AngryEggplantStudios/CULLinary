@@ -58,7 +58,7 @@ Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE
 ### Linux
 1) Download the latest Linux (.x86_64 file) release [here](https://github.com/AngryEggplantStudios/CULLinary/releases)  
 2) Unzip the file.  
-3) Double-click `v1.4.x86_64` to launch the game!  
+3) Double-click `v1.4.1.x86_64` to launch the game!  
 
 ## Control Instructions
 
