@@ -34,32 +34,31 @@ Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE
 ## Download 
 
 ### Windows10
-![Image Of Step 1](STEPS/step1.png)
-
-1) Download the latest Windows10 release [here](https://github.com/AngryEggplantStudios/CULLinary/releases)
-2) Unzip the file.
-![Image Of Step 3](STEPS/step3.png)
-3) Click on CULLinary icon to start the game.
+![Image Of Step 1](STEPS/step1.png)  
+1) Download the latest Windows10 release [here](https://github.com/AngryEggplantStudios/CULLinary/releases)  
+2) Unzip the file.  
+![Image Of Step 3](STEPS/step3.png)  
+3) Click on CULLinary icon to start the game.  
 
 ### MacOS
 
-1) Download the latest MacOS release [here](https://github.com/AngryEggplantStudios/CULLinary/releases)
-![Image of Step5](STEPS/macos-step5.jpg)
-2) Unzip file and place the `v1.4.1.app` on Desktop (Remember the filepath to CULLinary, but the instructions will use Desktop as an example)
-![Image Of Step 1](STEPS/macos-step1.jpg)
-3) Open Terminal (Search Terminal on your MacOS)
-![Image Of Step 2](STEPS/macos-step2.jpg)
-4) Input `cd ~/Desktop` onto Terminal and hit Enter.
-![Image of Step3](STEPS/macos-step3.jpg)
-5) Input `sudo xattr -rd com.apple.quarantine "v1.4.1.app"` onto Terminal and hit Enter
-![Image of Step4](STEPS/macos-step4.jpg)
-6) Enter your MacBook password when prompted on Terminal and hit Enter.
-7) You should be able to run CULLinary now!
+1) Download the latest MacOS release [here](https://github.com/AngryEggplantStudios/CULLinary/releases)  
+![Image of Step5](STEPS/macos-step5.jpg)  
+2) Unzip file and place the `v1.4.1.app` on Desktop (Remember the filepath to CULLinary, but the instructions will use Desktop as an example)  
+![Image Of Step 1](STEPS/macos-step1.jpg)  
+3) Open Terminal (Search Terminal on your MacOS)  
+![Image Of Step 2](STEPS/macos-step2.jpg)  
+4) Input `cd ~/Desktop` onto Terminal and hit Enter.  
+![Image of Step3](STEPS/macos-step3.jpg)  
+5) Input `sudo xattr -rd com.apple.quarantine "v1.4.1.app"` onto Terminal and hit Enter  
+![Image of Step4](STEPS/macos-step4.jpg)  
+6) Enter your MacBook password when prompted on Terminal and hit Enter.  
+7) You should be able to run CULLinary now!  
 
 ### Linux
-1) Download the latest Linux (.x86_64 file) release [here](https://github.com/AngryEggplantStudios/CULLinary/releases)
-2) Unzip the file.
-3) Double-click `v1.4.x86_64` to launch the game!
+1) Download the latest Linux (.x86_64 file) release [here](https://github.com/AngryEggplantStudios/CULLinary/releases)  
+2) Unzip the file.  
+3) Double-click `v1.4.x86_64` to launch the game!  
 
 ## Control Instructions
 
