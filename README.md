@@ -53,7 +53,7 @@ Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE
 5) Input `sudo xattr -rd com.apple.quarantine "v1.4.1.app"` onto Terminal and hit Enter  
 ![Image of Step4](STEPS/macos-step4.jpg)  
 6) Enter your MacBook password when prompted on Terminal and hit Enter.  
-7) You should be able to run CULLinary now!  
+7) Double click on the `v1.4.1` application on your Desktop (or wherever you placed it) and you should be able to run CULLinary now!  
 
 ### Linux
 1) Download the latest Linux (.x86_64 file) release [here](https://github.com/AngryEggplantStudios/CULLinary/releases)  
