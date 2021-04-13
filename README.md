@@ -11,7 +11,7 @@ You are an owner of a humble restaurant in your hometown. Recently, chemical was
 As a result, the number of visitors to the town is declining rapidly, running your restaurant out of business. Now your job is to kill off the monsters, grow your restaurant so that you can attract visitors back to your town and make it great again!
 
 ## Contents
-  * [System Requirements](#System Requirements)
+  * [System Requirements (Recommended)](#system-requirements)
   * [Download](#download)
       - [Windows10](#Windows10)
       - [MacOS](#MacOS)
@@ -20,10 +20,10 @@ As a result, the number of visitors to the town is declining rapidly, running yo
       - [Restaurant](#restaurant)
       - [Dungeon](#dungeon)
 
-## System Requirements (Recommended)
+## System Requirements
 - ~200MB of Storage Space
-- 8GB RAM
-- Nvidia GeForce 1050 & Higher
+- 8GB RAM (Recommended for optimal performance)
+- Nvidia GeForce 1050 or Higher (Recommended for optimal performance)
 
 ## Download 
 
