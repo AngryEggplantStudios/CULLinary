@@ -39,6 +39,7 @@ As a result, the number of visitors to the town is declining rapidly, running yo
 ### MacOS
 
 1) If you do not have the zip file, download the latest MacOS release from https://github.com/AngryEggplantStudios/CULLinary/releases
+![Image of Step5](STEPS/macos-step5.jpg)
 2) Unzip file and place the `v1.4.1.app` on Desktop (Remember the filepath to CULLinary, but the instructions will use Desktop as an example)
 ![Image Of Step 1](STEPS/macos-step1.jpg)
 3) Open Terminal (Search Terminal on your MacOS)
@@ -48,7 +49,7 @@ As a result, the number of visitors to the town is declining rapidly, running yo
 5) Input `sudo xattr -rd com.apple.quarantine "v1.4.1.app"` onto Terminal and hit Enter
 ![Image of Step4](STEPS/macos-step4.jpg)
 6) Enter your MacBook password when prompted on Terminal and hit Enter.
-![Image of Step5](STEPS/macos-step5.jpg)
+
 7) You should be able to run CULLinary now!
 
 ## Control Instructions
