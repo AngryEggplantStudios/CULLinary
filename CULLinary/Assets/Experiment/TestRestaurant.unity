@@ -945,7 +945,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: e0314528a5353e04680f607a545ca5b1, type: 3}
 --- !u!4 &69097097 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e0314528a5353e04680f607a545ca5b1, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 69097096}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &82004890 stripped
@@ -2407,7 +2407,7 @@ Transform:
   - {fileID: 1551319140}
   - {fileID: 1381119305}
   m_Father: {fileID: 1426407654}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &134386586
 PrefabInstance:
@@ -20868,10 +20868,10 @@ Transform:
   - {fileID: 1263976910}
   - {fileID: 489177145}
   - {fileID: 1780070395}
-  - {fileID: 133797002}
+  - {fileID: 69097097}
   - {fileID: 798892042}
   - {fileID: 1049652238}
-  - {fileID: 69097097}
+  - {fileID: 133797002}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -28314,8 +28314,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1217089845}
   m_HandleRect: {fileID: 1217089844}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.5
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -31222,11 +31222,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7816196680083583245, guid: cb0a8d8957c00944f86a4e67df7a10f8, type: 3}
       propertyPath: m_HDR
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7816196680083583245, guid: cb0a8d8957c00944f86a4e67df7a10f8, type: 3}
       propertyPath: m_AllowMSAA
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7816196680083583245, guid: cb0a8d8957c00944f86a4e67df7a10f8, type: 3}
       propertyPath: m_ClearFlags
