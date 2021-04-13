@@ -16,7 +16,7 @@ Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE
 
 ## Contents
   * [System Requirements](#system-requirements)
-  * [Download](#download)
+  * [Download Instructions](#download-instructions)
       - [Windows10](#Windows10)
       - [MacOS](#MacOS)
       - [Linux](#Linux)
@@ -31,7 +31,7 @@ Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE
 - Graphics: Nvidia GeForce 1050 or Higher (Recommended for optimal performance)
 - Platforms Supported: Windows10, MacOS, Linux (Tested on Ubuntu 18.04)
 
-## Download 
+## Download Instructions
 
 ### Windows10
 ![Image Of Step 1](STEPS/step1.png)  
