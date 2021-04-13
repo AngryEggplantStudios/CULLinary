@@ -11,7 +11,8 @@ You are an owner of a humble restaurant in your hometown. Recently, chemical was
 As a result, the number of visitors to the town is declining rapidly, running your restaurant out of business. Now your job is to kill off the monsters, grow your restaurant so that you can attract visitors back to your town and make it great again!
 
 Our 18th STePS (AY20/21 S2) Submission: https://uvents.nus.edu.sg/event/18th-steps/module/CS3247/project/7
-Our Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE
+
+Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE
 
 ## Contents
   * [System Requirements](#system-requirements)
