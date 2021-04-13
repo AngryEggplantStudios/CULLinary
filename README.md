@@ -13,7 +13,7 @@ As a result, the number of visitors to the town is declining rapidly, running yo
 ## Contents
   * [System Requirements](#System Requirements)
   * [Download](#download)
-      - [Windows 10](#Windows 10)
+      - [Windows10](#Windows10)
       - [MacOS](#MacOS)
   * [Control Instructions](#control-instructions)
       - [General](#general)
@@ -27,7 +27,7 @@ As a result, the number of visitors to the town is declining rapidly, running yo
 
 ## Download 
 
-### Windows 10
+### Windows10
 ![Image Of Step 1](STEPS/step1.png)
 
 1) If you do not have the zip file, download the latest Windows10 release from https://github.com/AngryEggplantStudios/CULLinary/releases
