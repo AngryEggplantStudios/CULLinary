@@ -12,7 +12,9 @@ As a result, the number of visitors to the town is declining rapidly, running yo
 
 Our 18th STePS (AY20/21 S2) Submission: https://uvents.nus.edu.sg/event/18th-steps/module/CS3247/project/7
 
-Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE
+Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE  
+
+Update (15/04/2021): We won 1st place at 18th STePS! Thanks to all who voted :)
 
 ## Contents
   * [System Requirements](#system-requirements)
@@ -27,8 +29,8 @@ Trailer: https://www.youtube.com/watch?v=SKpQ_maMmHE
 
 ## System Requirements
 - Space required: 200MB
-- RAM: 8GB RAM (Recommended for optimal performance)
-- Graphics: Nvidia GeForce 1050 or Higher (Recommended for optimal performance)
+- RAM: 8GB (Recommended for optimal performance)
+- Graphics: Nvidia GeForce GTX 1050 or Higher (Recommended for optimal performance)
 - Platforms Supported: Windows10, MacOS, Linux (Tested on Ubuntu 18.04)
 
 ## Download Instructions
