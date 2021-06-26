@@ -7,6 +7,7 @@ public class DungeonPlayerStamina : MonoBehaviour
 {
 
     [SerializeField] private GameObject staminaBarUI;
+    [SerializeField] private GameObject outLine;
 
     private float maxStamina = 100.0f;
     private float currStamina;
@@ -15,30 +16,45 @@ public class DungeonPlayerStamina : MonoBehaviour
     private Coroutine regen;
     private GameObject staminaBar;
     private Image stmBarFull;
+    private float coroutineFlash = 0.1f;
+    private GameObject flashyOutline;
+    private Coroutine regenZero;
 
     // Start is called before the first frame update
     void Start()
     {
         staminaBar = staminaBarUI;
         currStamina = maxStamina;
+        flashyOutline = outLine;
         stmBarFull = staminaBar.transform.Find("StaminaBar")?.gameObject.GetComponent<Image>();
+        flashyOutline.gameObject.SetActive(false);
         stmBarFull.fillAmount = currStamina / maxStamina;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     //Query if enough stamina to perform sprint
     public bool hasStamina()
     {
+
+        resetStaminaRegen();
         if (currStamina - staminaConsumed < 0.0f)
         {
+            if (regenZero == null)
+            {
+                regenZero = StartCoroutine(flashBar());
+            }
             return false;
-        } else
+        }
+        else
         {
+            StopCoroutine(flashBar());
+            flashyOutline.gameObject.SetActive(false);
+            regenZero = null;
             return true;
         }
     }
@@ -48,12 +64,7 @@ public class DungeonPlayerStamina : MonoBehaviour
     {
         currStamina = currStamina - staminaConsumed;
         stmBarFull.fillAmount = currStamina / maxStamina;
-        if (regen != null)
-        {
-            StopCoroutine(regen);
-        }
-
-        regen = StartCoroutine(RegenStamina());
+        resetStaminaRegen();
     }
 
     private IEnumerator RegenStamina()
@@ -65,6 +76,41 @@ public class DungeonPlayerStamina : MonoBehaviour
             currStamina = currStamina + maxStamina / 100;
             stmBarFull.fillAmount = currStamina / maxStamina;
             yield return timeTakenRegen;
+        }
+    }
+
+    private void resetStaminaRegen()
+    {
+        if (regen != null)
+        {
+            StopCoroutine(regen);
+        }
+
+        regen = StartCoroutine(RegenStamina());
+    }
+
+    private IEnumerator flashBar()
+    {
+        bool isFlashing = false;
+        while (true)
+        {
+            if (currStamina - staminaConsumed >= 0)
+            {
+                StopCoroutine(flashBar());
+                flashyOutline.gameObject.SetActive(false);
+                yield break;
+            }
+            // Alternate between 0 and 1 scale to simulate flashing
+            if (isFlashing)
+            {
+                flashyOutline.gameObject.SetActive(true);
+            }
+            else
+            {
+                flashyOutline.gameObject.SetActive(false);
+            }
+            isFlashing = !isFlashing;
+            yield return new WaitForSeconds(coroutineFlash);
         }
     }
 }
