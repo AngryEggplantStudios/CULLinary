@@ -5,140 +5,145 @@ using UnityEngine.UI;
 
 public class DungeonPlayerHealth : MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverUI;
-    [SerializeField] private float maxHealth;
-    [SerializeField] private GameObject hpBarUI;
-    [SerializeField] private float invincibilityDurationSeconds;
-    [SerializeField] private GameObject model;
-    [SerializeField] private GameObject damageCounter_prefab;
-    [SerializeField] private AudioSource audioSource;
+  [SerializeField] private GameObject gameOverUI;
+  [SerializeField] private float maxHealth;
+  [SerializeField] private GameObject hpBarUI;
+  [SerializeField] private float invincibilityDurationSeconds;
+  [SerializeField] private GameObject model;
+  [SerializeField] private GameObject damageCounter_prefab;
+  [SerializeField] private AudioSource audioSource;
 
-    private GameObject hpBar;
-    private Image hpBarFull;
-    private Text hpText;
-    private bool isInvincible;
-    private float invincibilityDeltaTime = 0.025f;
+  private GameObject hpBar;
+  private Image hpBarFull;
+  private Text hpText;
+  private bool isInvincible;
+  private float invincibilityDeltaTime = 0.025f;
 
-    private Renderer rend;
-    private Color[] originalColors;
-    private Color onDamageColor = Color.white;
-    DungeonPlayerLocomotion dpl;
-    private Camera cam;
+  private Renderer rend;
+  private Color[] originalColors;
+  private Color onDamageColor = Color.white;
+  DungeonPlayerLocomotion dpl;
+  private Camera cam;
 
-    private float health;
+  private float health;
 
-    // Start is called before the first frame update
-    void Start()
+  // Start is called before the first frame update
+  void Start()
+  {
+    isInvincible = false;
+    health = PlayerManager.playerData == null ? 100 : PlayerManager.playerData.GetCurrentHealth();
+    PlayerManager.currHealth = health;
+    maxHealth = PlayerManager.playerData == null ? 100 : PlayerManager.playerData.GetMaxHealth();
+    hpBar = hpBarUI;
+    hpBarFull = hpBar.transform.Find("HpBar")?.gameObject.GetComponent<Image>();
+    hpText = hpBar.transform.Find("HpText")?.gameObject.GetComponent<Text>();
+    if (hpBarFull)
     {
-        isInvincible = false;
-        health = PlayerManager.playerData == null ? 100 : PlayerManager.playerData.GetCurrentHealth();
-        PlayerManager.currHealth = health;
-        maxHealth = PlayerManager.playerData == null ? 100: PlayerManager.playerData.GetMaxHealth();
-        hpBar = hpBarUI;
-        hpBarFull = hpBar.transform.Find("HpBar")?.gameObject.GetComponent<Image>();
-        hpText = hpBar.transform.Find("HpText")?.gameObject.GetComponent<Text>();
-        if (hpBarFull) {
-            hpBarFull.fillAmount = health / maxHealth;
-        }
-        if (hpText) {
-            hpText.text = health + "/" + maxHealth;
-        }
-        SetupFlash();
-        dpl = this.gameObject.GetComponent<DungeonPlayerLocomotion>();
-        cam = transform.GetComponentInChildren<Camera>();
+      hpBarFull.fillAmount = health / maxHealth;
     }
-
-    public float GetHealth()
+    if (hpText)
     {
-        return this.health;
+      hpText.text = health + "/" + maxHealth;
     }
+    SetupFlash();
+    dpl = this.gameObject.GetComponent<DungeonPlayerLocomotion>();
+    cam = transform.GetComponentInChildren<Camera>();
+  }
 
-    private void SetupFlash()
+  public float GetHealth()
+  {
+    return this.health;
+  }
+
+  private void SetupFlash()
+  {
+    rend = model.GetComponentInChildren<Renderer>();
+    if (rend)
     {
-        rend = model.GetComponentInChildren<Renderer>();
-        if (rend) {
-            originalColors = new Color[rend.materials.Length];
-            for (var i = 0; i < rend.materials.Length; i++)
-            {
-                originalColors[i] = rend.materials[i].color;
-            }
-        }
+      originalColors = new Color[rend.materials.Length];
+      for (var i = 0; i < rend.materials.Length; i++)
+      {
+        originalColors[i] = rend.materials[i].color;
+      }
     }
+  }
 
-    //bool value is for if successfully hit the player, so can knockback.
-    public bool HandleHit(float damage)
+  //bool value is for if successfully hit the player, so can knockback.
+  public bool HandleHit(float damage)
+  {
+    if (isInvincible) return false;
+
+    this.health -= damage;
+    PlayerManager.currHealth = health;
+    hpBarFull.fillAmount = health / maxHealth;
+    hpText.text = health + "/" + maxHealth;
+    SpawnDamageCounter(damage);
+    audioSource.Play();
+
+    if (this.health <= 0)
     {
-        if (isInvincible) return false;
+      gameOverUI.GetComponent<GameManager>().GameOver();
+      //Die();
+    }
+    StartCoroutine(BecomeTemporarilyInvincible());
+    return true;
+  }
 
-        this.health -= damage;
-        PlayerManager.currHealth = health;
-        hpBarFull.fillAmount = health / maxHealth;
-        hpText.text = health + "/" + maxHealth;
-        SpawnDamageCounter(damage);
-        audioSource.Play();
+  private void SpawnDamageCounter(float damage)
+  {
+    GameObject damageCounter = Instantiate(damageCounter_prefab);
+    Debug.Log(damageCounter.transform.position);
+    damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
+    Debug.Log(GameObject.FindObjectOfType<InventoryUI>().transform.position);
+    damageCounter.transform.SetParent(GameObject.FindObjectOfType<InventoryUI>().transform);
+    damageCounter.transform.position = cam.WorldToScreenPoint(transform.position);
+  }
 
-        if (this.health <= 0)
+  public void KnockbackPlayer(Vector3 positionOfEnemy)
+  {
+    //ToImplementKnockback
+    //StartCoroutine(KnockCoroutine(positionOfEnemy));
+    Vector3 forceDirection = transform.position - positionOfEnemy;
+    forceDirection.y = 0;
+    Vector3 force = forceDirection.normalized;
+    //dpl.KnockBack(force, 50, 3, true);
+  }
+
+  private IEnumerator KnockCoroutine(Vector3 positionOfEnemy)
+  {
+
+    Vector3 forceDirection = transform.position - positionOfEnemy;
+    Vector3 force = forceDirection.normalized;
+    gameObject.GetComponent<Rigidbody>().velocity = force * 4;
+    yield return new WaitForSeconds(0.3f);
+    gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+  }
+
+  private IEnumerator BecomeTemporarilyInvincible()
+  {
+    isInvincible = true;
+    bool isFlashing = false;
+    for (float i = 0; i < invincibilityDurationSeconds; i += invincibilityDeltaTime)
+    {
+      // Alternate between 0 and 1 scale to simulate flashing
+      if (isFlashing)
+      {
+        for (var k = 0; k < rend.materials.Length; k++)
         {
-            gameOverUI.GetComponent<GameManager>().GameOver();
-           //Die();
+          rend.materials[k].color = onDamageColor;
         }
-        StartCoroutine(BecomeTemporarilyInvincible());
-        return true;
-    }
-
-    private void SpawnDamageCounter(float damage)
-    {
-        GameObject damageCounter = Instantiate(damageCounter_prefab);
-        damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
-        damageCounter.transform.SetParent(GameObject.FindObjectOfType<InventoryUI>().transform);
-        damageCounter.transform.position = cam.WorldToScreenPoint(transform.position);
-    }
-
-    public void KnockbackPlayer(Vector3 positionOfEnemy)
-    {
-        //ToImplementKnockback
-        //StartCoroutine(KnockCoroutine(positionOfEnemy));
-        Vector3 forceDirection = transform.position - positionOfEnemy;
-        forceDirection.y = 0;
-        Vector3 force = forceDirection.normalized;
-        //dpl.KnockBack(force, 50, 3, true);
-    }
-
-    private IEnumerator KnockCoroutine(Vector3 positionOfEnemy)
-    {
-
-        Vector3 forceDirection = transform.position - positionOfEnemy;
-        Vector3 force = forceDirection.normalized;
-        gameObject.GetComponent<Rigidbody>().velocity = force * 4;
-        yield return new WaitForSeconds(0.3f);
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-
-    }
-
-    private IEnumerator BecomeTemporarilyInvincible()
-    {
-        isInvincible = true;
-        bool isFlashing = false;
-        for (float i = 0; i < invincibilityDurationSeconds; i += invincibilityDeltaTime)
+      }
+      else
+      {
+        for (var k = 0; k < rend.materials.Length; k++)
         {
-            // Alternate between 0 and 1 scale to simulate flashing
-            if (isFlashing)
-            {
-                for (var k = 0; k < rend.materials.Length; k++)
-                {
-                    rend.materials[k].color = onDamageColor;
-                }
-            }
-            else
-            {
-                for (var k = 0; k < rend.materials.Length; k++)
-                {
-                    rend.materials[k].color = originalColors[k];
-                }
-            }
-            isFlashing = !isFlashing;
-            yield return new WaitForSeconds(invincibilityDeltaTime);
+          rend.materials[k].color = originalColors[k];
         }
-        isInvincible = false;
+      }
+      isFlashing = !isFlashing;
+      yield return new WaitForSeconds(invincibilityDeltaTime);
     }
+    isInvincible = false;
+  }
 }
