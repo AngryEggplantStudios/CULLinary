@@ -92,9 +92,7 @@ public class DungeonPlayerHealth : MonoBehaviour
   private void SpawnDamageCounter(float damage)
   {
     GameObject damageCounter = Instantiate(damageCounter_prefab);
-    Debug.Log(damageCounter.transform.position);
     damageCounter.transform.GetComponentInChildren<Text>().text = damage.ToString();
-    Debug.Log(GameObject.FindObjectOfType<InventoryUI>().transform.position);
     damageCounter.transform.SetParent(GameObject.FindObjectOfType<InventoryUI>().transform);
     damageCounter.transform.position = cam.WorldToScreenPoint(transform.position);
   }
