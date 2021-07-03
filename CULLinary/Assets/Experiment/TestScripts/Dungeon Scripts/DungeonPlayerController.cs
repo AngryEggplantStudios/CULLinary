@@ -21,11 +21,13 @@ public class DungeonPlayerController : DungeonPlayerAction
     [SerializeField] private bool invertKeys = false;
     // Whether run is enabled
     [SerializeField] private bool canRun = true;
+    [SerializeField] private DungeonPlayerStamina staminaBar;
     public bool gameOverBool;
     //Directions
     private Vector3 direction;
     private Vector3 normalizedDirection;
     private Vector3 moveDirection;
+
 
     //Actions prevented
     private DungeonPlayerRange dungeonPlayerRange;
@@ -86,9 +88,10 @@ public class DungeonPlayerController : DungeonPlayerAction
                 }
                 else
                 {
-                    if (canRun && Input.GetKey(KeyCode.LeftShift))
+                    if (canRun && Input.GetKey(KeyCode.LeftShift) && staminaBar.hasStamina())
                     {
                         OnPlayerMove?.Invoke(moveDirection.normalized, runSpeed, 1.0f, true);
+                        staminaBar.useStamina();
                     }
                     else
                     {

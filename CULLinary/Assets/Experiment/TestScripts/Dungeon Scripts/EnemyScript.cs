@@ -286,7 +286,7 @@ public class EnemyScript : Enemy
 
     public override void HandleHit(float damage)
     {
-        if (state == State.Idle || state == State.Roaming)
+        if (state != State.AttackTarget)
         {
             Alert();
         }
